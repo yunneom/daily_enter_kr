@@ -118,9 +118,19 @@ def make_card(
     
     # 3. 상단 액센트 라인
     draw.rectangle([(60, 60), (220, 70)], fill=colors["accent"])
-    
+
     # 4. 랭크 (큰 숫자)
     draw.text((60, 90), f"#{rank}", font=font_rank, fill=colors["accent"])
+
+    # 4-b. 우상단 페이지 인디케이터 (캐러셀 위치 안내)
+    page_label = f"{rank:02d} / 09"
+    page_bbox = font_source.getbbox(page_label)
+    draw.text(
+        (size[0] - 60 - (page_bbox[2] - page_bbox[0]), 90),
+        page_label,
+        font=font_source,
+        fill=colors["subtext"],
+    )
     
     # 5. 제목 (자동 줄바꿈)
     y_pos = 280

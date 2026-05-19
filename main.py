@@ -47,13 +47,13 @@ def main():
     if os.environ.get("ANTHROPIC_API_KEY"):
         summaries = summarize_news(news_items)
     else:
-        print("⚠️  ANTHROPIC_API_KEY 미설정 → 원제목을 카드 내용으로 사용")
+        print("⚠️  ANTHROPIC_API_KEY 미설정 → 원제목을 카드 제목으로 사용")
         from summarize import SummarizedNews
         summaries = [
             SummarizedNews(
                 original_title=n.title,
-                card_title=n.title[:18],
-                card_body=n.title,
+                card_title=n.title,
+                card_body="",
                 hashtags=["#오늘의뉴스"],
                 source=n.source,
                 link=n.link,
