@@ -138,7 +138,7 @@ def make_card(
     
     # 7. 하단 출처 + 액센트 라인
     draw.rectangle([(60, size[1] - 100), (220, size[1] - 95)], fill=colors["accent"])
-    draw.text((60, size[1] - 75), f"📰 {source} | 오늘의 핫이슈", 
+    draw.text((60, size[1] - 75), f"{source}  |  오늘의 핫이슈",
               font=font_source, fill=colors["subtext"])
     
     # 저장
@@ -158,6 +158,8 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "default",
         font_path,
         "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
         "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+        "/System/Library/Fonts/AppleSDGothicNeo.ttc",
+        "C:/Windows/Fonts/malgunbd.ttf",
     ]
     font_file = next((c for c in candidates if c and Path(c).exists()), None)
     

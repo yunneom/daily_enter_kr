@@ -44,7 +44,22 @@ def main():
     print("\n" + "="*60)
     print("2️⃣  Claude API로 요약")
     print("="*60)
-    summaries = summarize_news(news_items)
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        summaries = summarize_news(news_items)
+    else:
+        print("⚠️  ANTHROPIC_API_KEY 미설정 → 원제목을 카드 내용으로 사용")
+        from summarize import SummarizedNews
+        summaries = [
+            SummarizedNews(
+                original_title=n.title,
+                card_title=n.title[:18],
+                card_body=n.title,
+                hashtags=["#오늘의뉴스"],
+                source=n.source,
+                link=n.link,
+            )
+            for n in news_items
+        ]
     for i, s in enumerate(summaries, 1):
         print(f"  [{i}] {s.card_title}")
     
