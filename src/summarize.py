@@ -86,11 +86,11 @@ def summarize_news(news_items: List[NewsItem], api_key: str = None) -> List[Summ
             ))
         except Exception as e:
             print(f"⚠️  요약 실패 ({item.title[:30]}...): {e}")
-            # 실패 시 원본 제목만이라도 사용
+            # 실패 시 원제목을 카드 제목으로, 본문은 비워서 깔끔하게 표시
             results.append(SummarizedNews(
                 original_title=item.title,
-                card_title=item.title[:15],
-                card_body=item.title,
+                card_title=item.title,
+                card_body="",
                 hashtags=["#뉴스"],
                 source=item.source,
                 link=item.link,
