@@ -182,8 +182,8 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "default",
 if __name__ == "__main__":
     from datetime import datetime
     
-    # 테스트 카드 생성
-    output_dir = Path("/home/claude/news-instagram/output")
+    # 테스트 카드 생성 (스크립트 위치 기준 상대 경로)
+    output_dir = Path(__file__).parent.parent / "output" / "sample"
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # 표지
