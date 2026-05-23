@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news
 from make_card import make_card, make_cover_card
-from post_instagram import InstagramPublisher, upload_to_imgur, build_caption
+from post_instagram import InstagramPublisher, upload_image, build_caption
 
 
 # 카드별 색상 테마 순환
@@ -92,20 +92,22 @@ def main():
     # === 4. 인스타그램 업로드 ===
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
-    imgur_id = os.environ.get("IMGUR_CLIENT_ID")
-    
-    if not (ig_user_id and ig_token and imgur_id):
-        print("\n⚠️  인스타그램 환경변수 미설정 → 업로드 스킵")
+    has_hosting = (
+        os.environ.get("CLOUDINARY_CLOUD_NAME") and os.environ.get("CLOUDINARY_UPLOAD_PRESET")
+    ) or os.environ.get("IMGUR_CLIENT_ID")
+
+    if not (ig_user_id and ig_token and has_hosting):
+        print("\n⚠️  인스타그램/호스팅 환경변수 미설정 → 업로드 스킵")
         print("    이미지는 output 폴더에서 확인 가능합니다.")
         print(f"    위치: {output_dir}")
         return
-    
+
     print("\n" + "="*60)
-    print("4️⃣  Imgur에 이미지 업로드")
+    print("4️⃣  이미지 호스팅 업로드")
     print("="*60)
     image_urls = []
     for path in image_paths:
-        url = upload_to_imgur(path, imgur_id)
+        url = upload_image(path)
         image_urls.append(url)
         print(f"  ✓ {path.name} → {url}")
     

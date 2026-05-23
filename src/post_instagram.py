@@ -30,7 +30,9 @@ from typing import List
 
 
 GRAPH_API_VERSION = "v22.0"
-GRAPH_API_BASE = f"https://graph.facebook.com/{GRAPH_API_VERSION}"
+# Instagram API for Business 사용 (IGAA 토큰).
+# Meta가 권장하는 신버전 API. graph.facebook.com이 아닌 graph.instagram.com 사용.
+GRAPH_API_BASE = f"https://graph.instagram.com/{GRAPH_API_VERSION}"
 
 
 class InstagramPublisher:
@@ -148,6 +150,53 @@ def upload_to_imgur(image_path: Path, client_id: str) -> str:
         )
     resp.raise_for_status()
     return resp.json()["data"]["link"]
+
+
+# ============================================================
+# 이미지 호스팅 - Cloudinary (Imgur 대안, 더 안정적)
+# ============================================================
+def upload_to_cloudinary(image_path: Path, cloud_name: str, upload_preset: str) -> str:
+    """
+    Cloudinary에 이미지 업로드하고 공개 URL 반환 (Unsigned upload preset 사용).
+    https://cloudinary.com 에서 무료 가입 후 Unsigned preset 만들기.
+
+    Args:
+        cloud_name: Cloudinary 대시보드 상단의 Cloud name
+        upload_preset: Settings → Upload → Unsigned preset 이름
+    """
+    url = f"https://api.cloudinary.com/v1_1/{cloud_name}/image/upload"
+    with open(image_path, "rb") as f:
+        resp = requests.post(
+            url,
+            files={"file": f},
+            data={"upload_preset": upload_preset},
+            timeout=30,
+        )
+    resp.raise_for_status()
+    return resp.json()["secure_url"]
+
+
+def upload_image(image_path: Path) -> str:
+    """
+    설정된 환경변수에 따라 자동으로 적합한 호스팅 서비스 선택.
+    Cloudinary가 설정되어 있으면 우선 사용, 없으면 Imgur 폴백.
+    """
+    import os
+
+    cloudinary_name = os.environ.get("CLOUDINARY_CLOUD_NAME")
+    cloudinary_preset = os.environ.get("CLOUDINARY_UPLOAD_PRESET")
+    if cloudinary_name and cloudinary_preset:
+        return upload_to_cloudinary(image_path, cloudinary_name, cloudinary_preset)
+
+    imgur_id = os.environ.get("IMGUR_CLIENT_ID")
+    if imgur_id:
+        return upload_to_imgur(image_path, imgur_id)
+
+    raise RuntimeError(
+        "이미지 호스팅 환경변수가 설정되지 않았습니다. "
+        "CLOUDINARY_CLOUD_NAME + CLOUDINARY_UPLOAD_PRESET, "
+        "또는 IMGUR_CLIENT_ID 중 하나를 설정하세요."
+    )
 
 
 def build_caption(summaries, date_str: str) -> str:
