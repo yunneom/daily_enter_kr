@@ -200,30 +200,33 @@ def upload_image(image_path: Path) -> str:
 
 
 def build_caption(summaries, date_str: str) -> str:
-    """인스타 캡션 생성"""
+    """인스타 캡션 생성 (K-연예 톤)"""
     lines = [
-        f"📰 오늘의 핫이슈 TOP 10 ({date_str})",
+        f"오늘의 K-연예 TOP 10 ({date_str})",
         "",
-        "👇 슬라이드를 넘겨 자세히 확인하세요",
+        "오늘 안 보면 손해. 슬라이드 →",
         "",
     ]
-    
-    # 본문에 각 뉴스 한 줄씩
+
+    # 본문에 각 뉴스 한 줄씩 (제목만 노출 = 슬라이드 안 보면 모름 → 클릭 유도)
     for i, s in enumerate(summaries, 1):
         lines.append(f"{i}. {s.card_title}")
-    
+
     lines.append("")
-    lines.append("⚠️ 본 게시물은 자동 큐레이션된 뉴스 요약이며,")
-    lines.append("정확한 내용은 원문 기사를 확인해주세요.")
+    lines.append("자세한 내용은 슬라이드를 넘겨주세요.")
+    lines.append("본 게시물은 자동 큐레이션이며 원문 기사를 함께 확인해주세요.")
     lines.append("")
-    
-    # 해시태그 수집 + 중복 제거
-    all_hashtags = ["#오늘의뉴스", "#핫이슈", "#뉴스요약", "#카드뉴스"]
+
+    # 해시태그 수집 + 중복 제거 (K-연예 우선 태그를 앞에 배치)
+    all_hashtags = [
+        "#K연예", "#연예뉴스", "#오늘의연예", "#연예핫이슈",
+        "#카드뉴스", "#연예TOP10", "#kpop", "#kdrama", "#한국연예",
+    ]
     for s in summaries:
         all_hashtags.extend(s.hashtags)
     unique_tags = list(dict.fromkeys(all_hashtags))[:30]  # 인스타 해시태그 최대 30개
     lines.append(" ".join(unique_tags))
-    
+
     return "\n".join(lines)
 
 

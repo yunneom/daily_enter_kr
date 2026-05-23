@@ -11,31 +11,56 @@ PIL(Pillow)로 템플릿 기반 카드뉴스 이미지를 생성합니다.
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from pathlib import Path
 from typing import Tuple
+import random
 import textwrap
 
 
-# 색상 팔레트 (카테고리별)
+# K-엔터 색상 팔레트 (5가지 시네마틱 톤)
 COLOR_THEMES = {
-    "default": {
-        "bg_top": (30, 41, 59),     # 진한 남색
-        "bg_bottom": (15, 23, 42),   # 거의 검정
-        "accent": (251, 191, 36),    # 골드
+    "neon_seoul": {
+        # 한국 야경/네온사인 무드 — 마젠타+시안+딥 네이비
+        "bg_top": (20, 10, 50),
+        "bg_bottom": (5, 0, 25),
+        "bokeh": [(255, 80, 180), (80, 200, 255), (180, 100, 255), (255, 220, 100)],
+        "accent": (255, 220, 100),
         "text": (255, 255, 255),
-        "subtext": (203, 213, 225),
+        "subtext": (210, 210, 240),
     },
-    "warm": {
-        "bg_top": (190, 18, 60),
-        "bg_bottom": (88, 28, 135),
-        "accent": (251, 191, 36),
+    "stage_gold": {
+        # 콘서트 스테이지 — 다크 레드+골드+블랙
+        "bg_top": (70, 15, 15),
+        "bg_bottom": (15, 5, 5),
+        "bokeh": [(255, 200, 80), (255, 100, 50), (220, 150, 100), (255, 230, 150)],
+        "accent": (255, 215, 0),
         "text": (255, 255, 255),
-        "subtext": (253, 224, 71),
+        "subtext": (255, 220, 180),
     },
-    "cool": {
-        "bg_top": (37, 99, 235),
-        "bg_bottom": (16, 185, 129),
-        "accent": (255, 255, 255),
+    "kpop_pastel": {
+        # 아이돌 / 화보 무드 — 핑크+라벤더+페일 옐로우
+        "bg_top": (110, 60, 130),
+        "bg_bottom": (60, 30, 80),
+        "bokeh": [(255, 200, 230), (200, 220, 255), (255, 240, 200), (255, 180, 220)],
+        "accent": (255, 255, 220),
         "text": (255, 255, 255),
-        "subtext": (219, 234, 254),
+        "subtext": (255, 230, 240),
+    },
+    "noir_cinema": {
+        # 드라마/영화 — 와인+버건디+골드
+        "bg_top": (45, 15, 25),
+        "bg_bottom": (10, 5, 10),
+        "bokeh": [(220, 60, 70), (250, 200, 100), (140, 100, 90), (255, 180, 130)],
+        "accent": (240, 200, 100),
+        "text": (255, 255, 255),
+        "subtext": (230, 210, 200),
+    },
+    "dream_purple": {
+        # 모던 MV — 퍼플+마젠타+딥 블루
+        "bg_top": (60, 25, 100),
+        "bg_bottom": (20, 10, 60),
+        "bokeh": [(180, 100, 255), (255, 100, 200), (100, 150, 255), (255, 220, 120)],
+        "accent": (255, 220, 100),
+        "text": (255, 255, 255),
+        "subtext": (220, 200, 255),
     },
 }
 
@@ -53,6 +78,63 @@ def create_gradient(size: Tuple[int, int], top_color, bottom_color) -> Image.Ima
     mask.putdata(mask_data)
     base = Image.composite(bottom, top, mask)
     return base
+
+
+def make_cinematic_background(
+    size: Tuple[int, int],
+    palette: dict,
+    seed: int = None,
+) -> Image.Image:
+    """K-엔터 시네마틱 배경 — 그라데이션 + 보케 라이트 + 비네팅
+
+    Args:
+        size: (w, h)
+        palette: COLOR_THEMES의 한 항목
+        seed: 결정론적 결과를 위한 시드 (없으면 랜덤)
+    """
+    rng = random.Random(seed)
+    w, h = size
+
+    # 1. 베이스 그라데이션
+    img = create_gradient(size, palette["bg_top"], palette["bg_bottom"]).convert("RGBA")
+
+    # 2. 보케 원 12-20개를 별도 레이어에 그리고 강하게 블러
+    bokeh_layer = Image.new("RGBA", size, (0, 0, 0, 0))
+    bdraw = ImageDraw.Draw(bokeh_layer)
+    n = rng.randint(12, 20)
+    for _ in range(n):
+        # 일부는 화면 밖으로 살짝 걸치게 (자연스러운 비네팅 효과)
+        cx = rng.randint(-150, w + 150)
+        cy = rng.randint(-150, h + 150)
+        radius = rng.randint(80, 280)
+        color = rng.choice(palette["bokeh"])
+        alpha = rng.randint(40, 110)
+        bdraw.ellipse(
+            [cx - radius, cy - radius, cx + radius, cy + radius],
+            fill=color + (alpha,),
+        )
+    # 부드럽고 dreamy한 보케를 위한 강한 블러
+    bokeh_layer = bokeh_layer.filter(ImageFilter.GaussianBlur(radius=50))
+    img = Image.alpha_composite(img, bokeh_layer)
+
+    # 3. 비네팅 — 가장자리 어둡게 (시네마틱)
+    vignette = Image.new("L", size, 0)
+    vdraw = ImageDraw.Draw(vignette)
+    # 중앙은 밝게(흰색), 가장자리로 갈수록 검게 — radial mask
+    margin = int(min(w, h) * 0.35)
+    vdraw.ellipse(
+        [-margin, -margin, w + margin, h + margin],
+        fill=255,
+    )
+    vignette = vignette.filter(ImageFilter.GaussianBlur(radius=int(min(w, h) * 0.25)))
+    # 비네팅 마스크를 사용해 검정색을 합성
+    dark_layer = Image.new("RGBA", size, (0, 0, 0, 180))
+    # vignette가 흰색(255)인 곳은 alpha=0, 검정(0)인 곳은 alpha=180
+    inverted = Image.eval(vignette, lambda v: 255 - v)
+    dark_layer.putalpha(Image.eval(inverted, lambda v: int(v * 0.5)))
+    img = Image.alpha_composite(img, dark_layer)
+
+    return img.convert("RGB")
 
 
 def wrap_text(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list:
@@ -78,15 +160,20 @@ def make_card(
     body: str,
     source: str,
     output_path: Path,
-    theme: str = "default",
+    theme: str = "neon_seoul",
     font_path: str = None,
     size: Tuple[int, int] = (1080, 1080),
+    seed: int = None,
 ):
-    """단일 카드뉴스 이미지 생성"""
+    """단일 카드뉴스 이미지 생성 (K-엔터 시네마틱 배경)"""
+    if theme not in COLOR_THEMES:
+        theme = "neon_seoul"
     colors = COLOR_THEMES[theme]
-    
-    # 1. 배경 그라데이션
-    img = create_gradient(size, colors["bg_top"], colors["bg_bottom"])
+
+    # 1. 시네마틱 배경 (그라데이션 + 보케 라이트 + 비네팅)
+    if seed is None:
+        seed = hash(title) % (2 ** 31)
+    img = make_cinematic_background(size, colors, seed=seed)
     draw = ImageDraw.Draw(img)
     
     # 2. 폰트 로드 (없으면 기본)
@@ -148,7 +235,7 @@ def make_card(
     
     # 7. 하단 출처 + 액센트 라인
     draw.rectangle([(60, size[1] - 100), (220, size[1] - 95)], fill=colors["accent"])
-    draw.text((60, size[1] - 75), f"{source}  |  오늘의 핫이슈",
+    draw.text((60, size[1] - 75), f"{source}  |  오늘의 K-연예",
               font=font_source, fill=colors["subtext"])
     
     # 저장
@@ -157,11 +244,15 @@ def make_card(
     return output_path
 
 
-def make_cover_card(date_str: str, output_path: Path, theme: str = "default", 
-                    font_path: str = None, size=(1080, 1080)):
-    """캐러셀 첫 장(표지) 생성"""
+def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
+                    font_path: str = None, size=(1080, 1080), seed: int = None):
+    """캐러셀 첫 장(표지) 생성 — K-엔터 시네마틱 배경"""
+    if theme not in COLOR_THEMES:
+        theme = "neon_seoul"
     colors = COLOR_THEMES[theme]
-    img = create_gradient(size, colors["bg_top"], colors["bg_bottom"])
+    if seed is None:
+        seed = hash(date_str) % (2 ** 31)
+    img = make_cinematic_background(size, colors, seed=seed)
     draw = ImageDraw.Draw(img)
     
     candidates = [
@@ -182,7 +273,7 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "default",
     
     # 중앙 정렬
     draw.text((100, 380), "오늘의", font=font_mid, fill=colors["subtext"])
-    draw.text((100, 470), "핫이슈", font=font_big, fill=colors["accent"])
+    draw.text((100, 470), "K-연예", font=font_big, fill=colors["accent"])
     draw.text((100, 640), "TOP 10", font=font_big, fill=colors["text"])
     draw.text((100, 820), date_str, font=font_small, fill=colors["subtext"])
     

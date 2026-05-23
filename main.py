@@ -21,9 +21,9 @@ from make_card import make_card, make_cover_card
 from post_instagram import InstagramPublisher, upload_image, build_caption
 
 
-# 카드별 색상 테마 순환
-THEMES = ["default", "warm", "cool", "default", "warm", 
-          "cool", "default", "warm", "cool", "default"]
+# K-엔터 시네마틱 팔레트 순환 (5종)
+THEMES = ["neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
+          "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple"]
 
 
 def main():

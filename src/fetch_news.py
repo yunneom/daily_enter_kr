@@ -29,23 +29,34 @@ class NewsItem:
 # ============================================================
 # 옵션 A: 구글 뉴스 RSS (한국어, 즉시 사용 가능 - 추천)
 # ============================================================
-def fetch_google_news_korea(topic: str = "headlines", limit: int = 10) -> List[NewsItem]:
+def fetch_google_news_korea(topic: str = "entertainment", limit: int = 10) -> List[NewsItem]:
     """
-    구글 뉴스 한국판 RSS에서 핫토픽 뉴스 수집
-    별도 API 키 불필요, 즉시 사용 가능
+    구글 뉴스 한국판 RSS에서 핫토픽 뉴스 수집.
+    별도 API 키 불필요, 즉시 사용 가능.
+
+    Args:
+        topic: 카테고리. "entertainment"(연예), "sports", "technology", "headlines"(종합)
+        limit: 최대 수집 건수
     """
-    # 한국 헤드라인 뉴스
-    url = "https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko"
-    
+    # 카테고리별 Google News RSS URL
+    TOPIC_URLS = {
+        "headlines":     "https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko",
+        "entertainment": "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=ko&gl=KR&ceid=KR:ko",
+        "sports":        "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=ko&gl=KR&ceid=KR:ko",
+        "technology":    "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=ko&gl=KR&ceid=KR:ko",
+        "business":      "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=ko&gl=KR&ceid=KR:ko",
+    }
+    url = TOPIC_URLS.get(topic, TOPIC_URLS["entertainment"])
+
     feed = feedparser.parse(url)
     items = []
-    
+
     for entry in feed.entries[:limit]:
         # 구글뉴스 제목은 "제목 - 언론사" 형식
         title_parts = entry.title.rsplit(" - ", 1)
         title = title_parts[0]
         source = title_parts[1] if len(title_parts) > 1 else "Unknown"
-        
+
         items.append(NewsItem(
             title=title,
             link=entry.link,
@@ -53,7 +64,7 @@ def fetch_google_news_korea(topic: str = "headlines", limit: int = 10) -> List[N
             published=entry.get("published", ""),
             source=source,
         ))
-    
+
     return items
 
 
