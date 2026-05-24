@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "last_run_at": "2026-05-24T18:52:59.787824+09:00",
-  "last_run_status": "skipped_no_upload_credentials",
+  "last_run_at": "2026-05-24T19:25:21.603268+09:00",
+  "last_run_status": "success",
   "posted_history": [
     {
       "date": "2026-05-24",
@@ -47,6 +47,51 @@
       "date": "2026-05-24",
       "title_hash": "71e68960909f0d99",
       "card_title": "제니, 독립 활동으로 K팝 판도 변화"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "7563d8ef2f840664",
+      "card_title": "영화 '군체', 개봉 4일 만에 100만 관객 돌파"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "1b5439887648fe43",
+      "card_title": "최준희, 외할머니와의 따뜻한 만남"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "a657b22df45a8565",
+      "card_title": "탈북 요리사 이순실, 만두 CEO로 성공 거머쥐다"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "9b368ec3cff60fce",
+      "card_title": "박효진 아나운서, KBS 간판 아나운서로"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "544a2db7c7776eb6",
+      "card_title": "고태용, 단순 디자인으로 큰 성공 거두다"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "2a21645e1dbceadb",
+      "card_title": "모델 여연희, 셰프 손종원과의 열애설 부인"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "54e7c448ed22cea6",
+      "card_title": "문지우, 칸영화제 황금종려상 2번째 수상"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "e429b36d8999e9c4",
+      "card_title": "31기 영숙, 뒷담화 논란 공식 입장"
+    },
+    {
+      "date": "2026-05-24",
+      "title_hash": "30204802ac028489",
+      "card_title": "박소영, 남편과 함께한 특별한 여행"
     }
   ]
 }
