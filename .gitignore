@@ -17,6 +17,9 @@ output/
 verify_run.log
 *.log
 
+# Unsplash 다운로드 캐시 (API 호출 절약용, 깃에 안 올림)
+.image_cache/
+
 # IDE
 .vscode/
 .idea/

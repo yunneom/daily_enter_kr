@@ -80,35 +80,68 @@ def create_gradient(size: Tuple[int, int], top_color, bottom_color) -> Image.Ima
     return base
 
 
+def _square_crop_resize(img: Image.Image, size: Tuple[int, int]) -> Image.Image:
+    """이미지를 정사각 center-crop 후 size로 리사이즈."""
+    w, h = img.size
+    side = min(w, h)
+    left = (w - side) // 2
+    top = (h - side) // 2
+    img = img.crop((left, top, left + side, top + side))
+    return img.resize(size, Image.LANCZOS)
+
+
 def make_cinematic_background(
     size: Tuple[int, int],
     palette: dict,
     seed: int = None,
+    bg_image_path: Path = None,
 ) -> Image.Image:
-    """K-엔터 시네마틱 배경 — 그라데이션 + 보케 라이트 + 비네팅
+    """시네마틱 배경 — (선택) 기사 컨텍스트 이미지 + 그라데이션 + 보케 + 비네팅.
 
     Args:
         size: (w, h)
         palette: COLOR_THEMES의 한 항목
         seed: 결정론적 결과를 위한 시드 (없으면 랜덤)
+        bg_image_path: 배경으로 사용할 외부 이미지. 강한 블러+다크 오버레이 자동 적용.
     """
     rng = random.Random(seed)
     w, h = size
 
-    # 1. 베이스 그라데이션
-    img = create_gradient(size, palette["bg_top"], palette["bg_bottom"]).convert("RGBA")
+    # 1. 베이스 — 외부 이미지가 있으면 사용, 없으면 팔레트 그라데이션
+    base_image_used = False
+    if bg_image_path and Path(bg_image_path).exists():
+        try:
+            raw = Image.open(bg_image_path).convert("RGB")
+            raw = _square_crop_resize(raw, size)
+            # 강한 가우시안 블러: 피사체 식별 불가 + 색감/무드만 유지 (저작권 안전선)
+            raw = raw.filter(ImageFilter.GaussianBlur(radius=35))
+            # 팔레트 색조로 살짝 틴트 — 채널 톤 통일감
+            tint = Image.new("RGB", size, palette["bg_bottom"])
+            raw = Image.blend(raw, tint, 0.35)
+            img = raw.convert("RGBA")
+            base_image_used = True
+        except Exception as e:
+            print(f"   ⚠️  배경 이미지 로드 실패 ({bg_image_path}): {e} → 그라데이션 폴백")
+            img = create_gradient(size, palette["bg_top"], palette["bg_bottom"]).convert("RGBA")
+    else:
+        img = create_gradient(size, palette["bg_top"], palette["bg_bottom"]).convert("RGBA")
 
-    # 2. 보케 원 12-20개를 별도 레이어에 그리고 강하게 블러
+    # 2. 보케 원 — 배경 이미지 있을 땐 개수/투명도 줄여서 이미지 가리지 않음
     bokeh_layer = Image.new("RGBA", size, (0, 0, 0, 0))
     bdraw = ImageDraw.Draw(bokeh_layer)
-    n = rng.randint(12, 20)
+    if base_image_used:
+        n = rng.randint(5, 9)
+        alpha_range = (20, 60)
+    else:
+        n = rng.randint(12, 20)
+        alpha_range = (40, 110)
     for _ in range(n):
         # 일부는 화면 밖으로 살짝 걸치게 (자연스러운 비네팅 효과)
         cx = rng.randint(-150, w + 150)
         cy = rng.randint(-150, h + 150)
         radius = rng.randint(80, 280)
         color = rng.choice(palette["bokeh"])
-        alpha = rng.randint(40, 110)
+        alpha = rng.randint(*alpha_range)
         bdraw.ellipse(
             [cx - radius, cy - radius, cx + radius, cy + radius],
             fill=color + (alpha,),
@@ -117,20 +150,21 @@ def make_cinematic_background(
     bokeh_layer = bokeh_layer.filter(ImageFilter.GaussianBlur(radius=50))
     img = Image.alpha_composite(img, bokeh_layer)
 
-    # 3. 비네팅 — 가장자리 어둡게 (시네마틱)
+    # 3. 비네팅 + 텍스트 가독성 보조 다크 오버레이
+    #    배경 이미지 사용 시: 더 강한 글로벌 다크 (텍스트 대비 확보)
+    #    그라데이션만 사용 시: 비네팅만 (가장자리 어둡게)
+    if base_image_used:
+        # 전체 톤다운 + 약한 비네팅
+        global_dim = Image.new("RGBA", size, (0, 0, 0, 90))
+        img = Image.alpha_composite(img, global_dim)
+
     vignette = Image.new("L", size, 0)
     vdraw = ImageDraw.Draw(vignette)
-    # 중앙은 밝게(흰색), 가장자리로 갈수록 검게 — radial mask
     margin = int(min(w, h) * 0.35)
-    vdraw.ellipse(
-        [-margin, -margin, w + margin, h + margin],
-        fill=255,
-    )
+    vdraw.ellipse([-margin, -margin, w + margin, h + margin], fill=255)
     vignette = vignette.filter(ImageFilter.GaussianBlur(radius=int(min(w, h) * 0.25)))
-    # 비네팅 마스크를 사용해 검정색을 합성
-    dark_layer = Image.new("RGBA", size, (0, 0, 0, 180))
-    # vignette가 흰색(255)인 곳은 alpha=0, 검정(0)인 곳은 alpha=180
     inverted = Image.eval(vignette, lambda v: 255 - v)
+    dark_layer = Image.new("RGBA", size, (0, 0, 0, 0))
     dark_layer.putalpha(Image.eval(inverted, lambda v: int(v * 0.5)))
     img = Image.alpha_composite(img, dark_layer)
 
@@ -166,21 +200,24 @@ def make_card(
     seed: int = None,
     total_cards: int = 9,
     label_short: str = "K-연예",
+    bg_image_path: Path = None,
 ):
     """단일 카드뉴스 이미지 생성 (시네마틱 배경).
 
     Args:
         total_cards: 캐러셀의 총 카드 수 (표지 제외). 페이지 인디케이터용.
         label_short: 푸터 라벨 (예: "K-연예", "K-스포츠"). 채널별로 다름.
+        bg_image_path: 배경으로 사용할 이미지. 강한 블러+다크 오버레이 후 텍스트 합성.
+                       None이면 팔레트 그라데이션 + 보케.
     """
     if theme not in COLOR_THEMES:
         theme = "neon_seoul"
     colors = COLOR_THEMES[theme]
 
-    # 1. 시네마틱 배경 (그라데이션 + 보케 라이트 + 비네팅)
+    # 1. 시네마틱 배경 (이미지 or 그라데이션 + 보케 + 비네팅)
     if seed is None:
         seed = hash(title) % (2 ** 31)
-    img = make_cinematic_background(size, colors, seed=seed)
+    img = make_cinematic_background(size, colors, seed=seed, bg_image_path=bg_image_path)
     draw = ImageDraw.Draw(img)
     
     # 2. 폰트 로드 (없으면 기본)
@@ -253,7 +290,8 @@ def make_card(
 
 def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
                     font_path: str = None, size=(1080, 1080), seed: int = None,
-                    total_cards: int = None, label_short: str = "K-연예"):
+                    total_cards: int = None, label_short: str = "K-연예",
+                    bg_image_path: Path = None):
     """캐러셀 첫 장(표지) 생성 — 시네마틱 배경
 
     Args:
@@ -266,7 +304,7 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
     colors = COLOR_THEMES[theme]
     if seed is None:
         seed = hash(date_str) % (2 ** 31)
-    img = make_cinematic_background(size, colors, seed=seed)
+    img = make_cinematic_background(size, colors, seed=seed, bg_image_path=bg_image_path)
     draw = ImageDraw.Draw(img)
 
     candidates = [

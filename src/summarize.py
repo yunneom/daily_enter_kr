@@ -32,6 +32,7 @@ class SummarizedNews:
     link: str
     decision: str = "post"          # "post" | "respectful" | "skip"
     skip_reason: str = ""           # decision=="skip" 일 때만 사용
+    visual_concept: str = ""        # 영문 Unsplash 검색 쿼리 (예: "concert lights stage")
 
 
 SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터다. 다음 뉴스를 안전하고 품격 있는 카드뉴스로 만들어줘.
@@ -46,7 +47,8 @@ SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터
   "skip_reason": "skip일 때만 한 줄로 사유",
   "card_title": "12-20자",
   "card_body": "70-110자",
-  "hashtags": ["#태그1", "#태그2", "#태그3", "#태그4"]
+  "hashtags": ["#태그1", "#태그2", "#태그3", "#태그4"],
+  "visual_concept": "2-4 영문 단어 (예: 'concert stage lights', 'movie premiere red carpet', 'recording studio')"
 }}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -100,6 +102,17 @@ SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터
 - 인물/그룹명 직접 (#아이브 #IVE), 장르(#kpop #kdrama), 메타(#연예뉴스).
 - 자극 키워드(#충격, #논란 등) 금지.
 
+[visual_concept] — Unsplash 검색용 영문 키워드
+- 2-4 단어. 보편적 영어 명사 위주. 구체적 한국 인물명/그룹명 금지 (Unsplash엔 거의 없음).
+- 뉴스 분위기/장면을 연상시키는 일반적 컨셉:
+  * 음악/공연: "concert stage lights", "music studio recording", "microphone close up"
+  * 영화/드라마: "movie premiere", "film set camera", "cinema theater"
+  * 예능/방송: "tv studio lights", "broadcasting set"
+  * 시상식/이벤트: "red carpet event", "award ceremony"
+  * 일상/인터뷰: "celebrity interview", "magazine cover photoshoot"
+- respectful 톤 카드: 차분한 컨셉 ("candle light memorial", "flower bouquet white")
+- skip 카드: 빈 문자열
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 자, 위 규칙을 엄격히 지켜서 JSON으로만 응답하라.
@@ -149,6 +162,7 @@ def summarize_news(news_items: List[NewsItem], api_key: str = None) -> List[Summ
                 link=item.link,
                 decision=decision,
                 skip_reason=parsed.get("skip_reason", "") if decision == "skip" else "",
+                visual_concept=parsed.get("visual_concept", "") if decision != "skip" else "",
             ))
         except Exception as e:
             print(f"⚠️  요약 실패 ({item.title[:30]}...): {e}")

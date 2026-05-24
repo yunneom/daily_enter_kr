@@ -42,28 +42,39 @@ import requests
 
 GRAPH_API_VERSION = "v22.0"
 GRAPH_BASE = f"https://graph.instagram.com/{GRAPH_API_VERSION}"
-INSIGHTS_PATH = Path(__file__).parent / "insights.json"
 MEDIA_FETCH_LIMIT = 14         # 최근 N개 게시물 조회
 SNAPSHOT_RETENTION_DAYS = 90
 CAPTION_EXCERPT_CHARS = 80
+
+
+def _insights_path() -> Path:
+    """채널별 insights 파일 경로. INSIGHTS_PATH 환경변수 또는 기본 insights.json."""
+    custom = os.environ.get("INSIGHTS_PATH")
+    if custom:
+        return Path(__file__).parent / custom
+    return Path(__file__).parent / "insights.json"
+
+
+INSIGHTS_PATH = _insights_path()  # 하위 호환 (런타임에 다시 계산은 _insights_path() 사용)
 
 KST = timezone(timedelta(hours=9))
 
 
 def load_insights() -> dict:
-    if not INSIGHTS_PATH.exists():
+    path = _insights_path()
+    if not path.exists():
         return {"version": 1, "snapshots": []}
     try:
-        return json.loads(INSIGHTS_PATH.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except Exception as e:
-        print(f"⚠️  insights.json 파싱 실패, 빈 상태로 시작: {e}")
+        print(f"⚠️  {path.name} 파싱 실패, 빈 상태로 시작: {e}")
         return {"version": 1, "snapshots": []}
 
 
 def save_insights(data: dict):
     cutoff = (datetime.now(KST) - timedelta(days=SNAPSHOT_RETENTION_DAYS)).isoformat()
     data["snapshots"] = [s for s in data["snapshots"] if s.get("snapshot_at", "") >= cutoff]
-    INSIGHTS_PATH.write_text(
+    _insights_path().write_text(
         json.dumps(data, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )

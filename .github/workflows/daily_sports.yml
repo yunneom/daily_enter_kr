@@ -1,17 +1,25 @@
-name: Daily — daily_enter_kr (K-연예)
+name: Daily — daily_sports_kr (K-스포츠)
+
+# 사용 전 사전 준비 (CLAUDE.md '두 번째 토픽 채널 추가' 섹션 참고):
+#   1. IG 비즈니스 계정 'daily_sports_kr' 생성 + FB 페이지 연결
+#   2. Meta dev 앱에서 daily_sports_kr 을 Instagram 테스터로 등록
+#   3. 토큰 발급 → exchange_token.py로 장기화 후
+#   4. 아래 secrets 추가:
+#      INSTAGRAM_USER_ID_SPORTS, INSTAGRAM_ACCESS_TOKEN_SPORTS,
+#      INSTAGRAM_APP_SECRET_SPORTS (또는 기존 _ 재사용)
 
 on:
   schedule:
-    # 한국시간 오전 8시 (UTC 23:00). main.py가 0-30분 랜덤 jitter 적용.
-    - cron: '0 23 * * *'
+    # 한국시간 오전 9시 (UTC 00:00). daily_enter와 1시간 간격 (동시 게시 의심 회피).
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write  # state.json + insights.json commit-back
+  contents: write
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-  CHANNEL: daily_enter_kr
+  CHANNEL: daily_sports_kr
 
 jobs:
   post-news:
@@ -39,62 +47,59 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run news posting pipeline
-        id: post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-          INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID_SPORTS }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN_SPORTS }}
+          INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET_SPORTS || secrets.INSTAGRAM_APP_SECRET }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: python main.py
 
-      - name: Fetch insights snapshot (likes/comments on recent posts)
+      - name: Fetch insights snapshot
         if: success()
         env:
-          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID_SPORTS }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN_SPORTS }}
+          INSIGHTS_PATH: insights_sports.json
         run: python fetch_insights.py
-        continue-on-error: true  # 인사이트 실패해도 메인 워크플로우는 성공으로 처리
+        continue-on-error: true
 
-      - name: Commit state.json + insights.json
+      - name: Commit state + insights
         if: always()
         run: |
           changes=""
-          if ! git diff --quiet state.json 2>/dev/null; then changes="$changes state.json"; fi
-          if [ -f insights.json ] && ! git diff --quiet insights.json 2>/dev/null; then changes="$changes insights.json"; fi
+          if [ -f state_sports.json ] && ! git diff --quiet state_sports.json 2>/dev/null; then changes="$changes state_sports.json"; fi
+          if [ -f insights_sports.json ] && ! git diff --quiet insights_sports.json 2>/dev/null; then changes="$changes insights_sports.json"; fi
           if [ -z "$changes" ]; then
-            echo "No state/insights changes — skipping commit"
+            echo "No changes — skipping commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add $changes
-          git commit -m "state: $(date -u '+%Y-%m-%d %H:%M UTC') run [skip ci]"
-          # rebase-on-push to handle concurrent commits gracefully
+          git commit -m "state(sports): $(date -u '+%Y-%m-%d %H:%M UTC') run [skip ci]"
           git pull --rebase --autostash origin main || true
           git push
 
-      - name: Upload generated images as artifact (backup)
+      - name: Upload generated images as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cards-${{ github.run_number }}
+          name: cards-sports-${{ github.run_number }}
           path: output/
           retention-days: 7
           if-no-files-found: ignore
 
-      - name: Notify on failure (Discord webhook, optional)
+      - name: Notify on failure
         if: failure() && env.DISCORD_WEBHOOK_URL != ''
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           payload=$(cat <<EOF
-          {
-            "content": "🚨 **daily_enter_kr 워크플로우 실패**\n\n실행 ID: \`${{ github.run_id }}\`\n워크플로우 로그: $RUN_URL\n\n로그 확인 후 조치 필요."
-          }
+          {"content": "🚨 **daily_sports_kr 워크플로우 실패**\n\n실행 ID: \`${{ github.run_id }}\`\n로그: $RUN_URL"}
           EOF
           )
           curl -fsS -X POST -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL" || echo "webhook send failed"

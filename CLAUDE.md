@@ -128,28 +128,63 @@ python fetch_insights.py     # 최근 게시 인사이트 (IG 토큰 필요)
 python main.py               # 전체 파이프라인
 ```
 
-## 두 번째 토픽 채널 추가 (예: K-스포츠)
+## 배경 이미지 시스템
 
-코드는 이미 channel-aware (`main.py`의 `CHANNELS` dict).
+`make_card.py`의 `make_cinematic_background()`는 두 가지 경로:
 
-1. **새 IG 계정 + FB 페이지 + Meta 앱 세팅** (Phase 1 반복)
-   - daily_enter_kr 세팅과 동일한 단계
-2. **`main.py`의 `CHANNELS` dict에 항목 추가**
-   ```python
-   "daily_sports_kr": {
-       "topic": "sports",
-       "label_short": "K-스포츠",
-       "themes": ["stage_gold", "noir_cinema", ...],
-       "state_path": "state_sports.json",
-       "default_hashtags": ["#스포츠", "#sports_kr", ...],
-   },
-   ```
-3. **새 GitHub repo 만들거나 같은 repo에 시크릿 prefix로 분리**
-   - 같은 repo 권장: `INSTAGRAM_USER_ID_SPORTS`, `INSTAGRAM_ACCESS_TOKEN_SPORTS` 등 (또는 별도 repo로 격리)
-4. **`.github/workflows/daily_sports.yml` 생성** — daily.yml 복사 후:
-   - env에 `CHANNEL: daily_sports_kr` 추가
-   - 시크릿 참조를 sports 버전으로 교체
-   - cron 시각을 다르게 (예: `30 0 * * *` = 09:30 KST) — 같은 시간 두 채널 동시 게시는 IG가 의심할 수 있음
-5. **state/insights 파일이 채널마다 분리** — 위 config의 `state_path` 다르게 설정
+1. **bg_image_path 있음**: 외부 이미지(보통 Unsplash) → 정사각 crop → 강한 블러(35) → 팔레트 색조 틴트 → 가벼운 보케 + 강한 다크 오버레이 → 텍스트
+2. **bg_image_path 없음**: 팔레트 그라데이션 → 짙은 보케 + 비네팅 → 텍스트
 
-채널 추가 작업: 약 1시간 (대부분 Meta 콘솔 세팅).
+이미지 경로는 `image_provider.search_and_download()`가 결정. Claude가 만든 영문 `visual_concept` 쿼리로 Unsplash 검색, 첫 적합 결과 캐싱+사용.
+
+`UNSPLASH_ACCESS_KEY` 미설정 시 자동으로 procedural 폴백. 운영 중단 안 됨.
+
+저작권 안전선:
+- Unsplash 라이센스: 상업적 사용 가능, attribution 불필요
+- 추가 변형: blur 35 + tint blend 0.35 + dark overlay 90/255 → 원본 식별 불가
+- skip 분류된 민감 뉴스는 visual_concept도 빈 문자열로 강제 → 부적절한 이미지 검색 차단
+
+## 다중 채널 운영
+
+현재 구성된 채널: `daily_enter_kr` (운영 중), `daily_sports_kr`, `daily_economy_kr` (코드/워크플로우 준비, 계정 미세팅).
+
+### 새 채널 활성화 — Meta 측 (수동, 약 30-60분)
+
+1. **새 IG 비즈니스 계정 생성**: 인스타 앱에서 `daily_sports_kr` 등 새 계정 추가 → 비즈니스 전환
+2. **새 FB 페이지 생성 + IG 연결**: facebook.com/pages/create → 만든 페이지의 Settings → Linked accounts → Instagram 연결
+3. **기존 Meta 앱에 새 IG 계정 추가**: developers.facebook.com → news-instagram-bot 앱 → 앱 역할 → Instagram 테스터 → 새 IG 계정 사용자명 입력 → 초대
+4. **새 IG 계정으로 초대 수락**: https://www.instagram.com/accounts/manage_access/ 직접 접속 → Tester Invites 탭 → 수락
+5. **새 IG 계정의 단기 토큰 발급**: Meta 앱 → Instagram → API setup → Generate access tokens → 새 IG 계정 선택
+6. **단기 토큰 → 장기**: `.env` INSTAGRAM_ACCESS_TOKEN 임시 교체 후 `python exchange_token.py` (또는 `--refresh`)
+
+### 새 채널 활성화 — GitHub 시크릿
+
+기존 시크릿 외에 채널별로 추가:
+
+| Sports | Economy |
+|---|---|
+| `INSTAGRAM_USER_ID_SPORTS` | `INSTAGRAM_USER_ID_ECONOMY` |
+| `INSTAGRAM_ACCESS_TOKEN_SPORTS` | `INSTAGRAM_ACCESS_TOKEN_ECONOMY` |
+| `INSTAGRAM_APP_SECRET_SPORTS` (선택; 미설정 시 기본 _ 재사용) | `INSTAGRAM_APP_SECRET_ECONOMY` (동) |
+
+CLI 한 줄로:
+```
+gh secret set INSTAGRAM_USER_ID_SPORTS --repo yunneom/daily_enter_kr --body "17841..."
+gh secret set INSTAGRAM_ACCESS_TOKEN_SPORTS --repo yunneom/daily_enter_kr --body "IGAA..."
+```
+
+### 새 채널 활성화 — 워크플로우
+
+이미 `.github/workflows/daily_sports.yml`, `daily_economy.yml` 생성됨. 시크릿만 세팅되면 자동 활성화. cron 시각:
+
+| 채널 | cron (UTC) | KST |
+|---|---|---|
+| daily_enter_kr | `0 23 * * *` | 08:00 |
+| daily_sports_kr | `0 0 * * *` | 09:00 |
+| daily_economy_kr | `0 1 * * *` | 10:00 |
+
+각 jitter 0-30분 적용 → 실제 게시는 08:00-08:30, 09:00-09:30, 10:00-10:30.
+
+### 새 채널 추가 (sports/economy 외)
+
+`main.py`의 `CHANNELS` dict에 항목 + 새 워크플로우 파일 복제. ~10분 코드 작업.

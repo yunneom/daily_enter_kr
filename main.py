@@ -25,14 +25,16 @@ from state import (
     load_state, save_state, filter_duplicates, record_post, record_run,
     days_until_token_expiry,
 )
+from image_provider import search_and_download as fetch_bg_image
 
 
 # === 채널 설정 (CHANNEL 환경변수로 선택; 기본 daily_enter_kr) ===
 # 새 채널 추가 방법은 CLAUDE.md 의 "두 번째 토픽 채널 추가" 섹션 참고
 CHANNELS = {
     "daily_enter_kr": {
-        "topic": "entertainment",        # fetch_news.py의 TOPIC_URLS 키
-        "label_short": "K-연예",         # 표지/푸터/캡션 라벨 (예: "오늘의 K-연예")
+        "topic": "entertainment",         # fetch_news.py의 TOPIC_URLS 키
+        "label_short": "K-연예",          # 표지/푸터/캡션 라벨 (한글)
+        "label_short_en": "korean entertainment",  # Unsplash 검색용 영문 라벨
         "themes": [
             "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
             "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
@@ -41,18 +43,37 @@ CHANNELS = {
         "default_hashtags": ["#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
                              "#카드뉴스", "#kpop", "#kdrama", "#한국연예"],
     },
-    # 추가 채널 예시 (사용하려면 별도 워크플로우 + 별도 시크릿 prefix 필요):
-    # "daily_sports_kr": {
-    #     "topic": "sports",
-    #     "label_short": "K-스포츠",
-    #     "themes": ["stage_gold", "noir_cinema", ...],
-    #     "state_path": "state_sports.json",
-    #     "default_hashtags": ["#스포츠", "#sports_kr", ...],
-    # },
+    "daily_sports_kr": {
+        "topic": "sports",
+        "label_short": "K-스포츠",
+        "label_short_en": "stadium sports",
+        "themes": [
+            "stage_gold", "noir_cinema", "neon_seoul", "dream_purple", "stage_gold",
+            "noir_cinema", "neon_seoul", "dream_purple", "stage_gold", "noir_cinema",
+        ],
+        "state_path": "state_sports.json",
+        "default_hashtags": ["#스포츠", "#sports", "#오늘의스포츠", "#스포츠뉴스",
+                             "#카드뉴스", "#야구", "#축구", "#골프", "#KBO", "#K리그"],
+    },
+    "daily_economy_kr": {
+        "topic": "business",
+        "label_short": "K-경제",
+        "label_short_en": "stock market finance",
+        "themes": [
+            "noir_cinema", "stage_gold", "dream_purple", "neon_seoul", "noir_cinema",
+            "stage_gold", "dream_purple", "neon_seoul", "noir_cinema", "stage_gold",
+        ],
+        "state_path": "state_economy.json",
+        "default_hashtags": ["#경제", "#economy", "#오늘의경제", "#경제뉴스",
+                             "#카드뉴스", "#주식", "#투자", "#증시", "#재테크"],
+    },
 }
 CHANNEL_ID = os.environ.get("CHANNEL", "daily_enter_kr")
 CHANNEL = CHANNELS.get(CHANNEL_ID, CHANNELS["daily_enter_kr"])
 THEMES = CHANNEL["themes"]
+
+# state.py가 채널별 state 파일을 쓰도록 환경변수 export (import 시점 이전에 설정해야 효과 있음)
+os.environ.setdefault("STATE_PATH", CHANNEL["state_path"])
 
 # === 운영 설정 ===
 FETCH_LIMIT = 20       # 안전/중복 필터 후 9건 확보를 위해 여유롭게 수집
@@ -177,14 +198,20 @@ def main():
 
     total_cards = len(summaries)
 
+    # 표지용 배경 이미지 (채널 라벨 컨셉으로 fetch)
+    cover_bg_query = f"cinematic {CHANNEL['label_short_en']} dramatic lighting" if CHANNEL.get("label_short_en") else None
+    cover_bg = fetch_bg_image(cover_bg_query) if cover_bg_query else None
     cover_path = output_dir / "00_cover.jpg"
     make_cover_card(date_str=date_str, output_path=cover_path,
-                    total_cards=total_cards, label_short=CHANNEL["label_short"])
+                    total_cards=total_cards, label_short=CHANNEL["label_short"],
+                    bg_image_path=cover_bg)
     image_paths.append(cover_path)
-    print(f"  ✓ 표지: {cover_path.name} (TOP {total_cards})")
+    print(f"  ✓ 표지: {cover_path.name} (TOP {total_cards}){' [bg]' if cover_bg else ''}")
 
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
+        # 뉴스마다 visual_concept으로 배경 이미지 fetch (Unsplash). 실패 시 None 폴백.
+        bg_path = fetch_bg_image(s.visual_concept) if s.visual_concept else None
         make_card(
             rank=i,
             title=s.card_title,
@@ -194,9 +221,11 @@ def main():
             theme=THEMES[(i - 1) % len(THEMES)],
             total_cards=total_cards,
             label_short=CHANNEL["label_short"],
+            bg_image_path=bg_path,
         )
         image_paths.append(path)
-        print(f"  ✓ {path.name}: {s.card_title}")
+        bg_indicator = " [bg]" if bg_path else " [proc]"
+        print(f"  ✓ {path.name}{bg_indicator}: {s.card_title}")
 
     # === 4. 인스타그램 업로드 사전 체크 ===
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")

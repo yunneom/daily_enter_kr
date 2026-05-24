@@ -19,15 +19,24 @@ token_expires_at은 exchange_token.py가 (재)발급할 때 업데이트.
 
 import hashlib
 import json
+import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List
 
-STATE_PATH = Path(__file__).parent.parent / "state.json"
+PROJECT_ROOT = Path(__file__).parent.parent
 HISTORY_RETENTION_DAYS = 30
 DEDUP_WINDOW_DAYS = 14   # 14일 안에 게시한 제목과 중복되면 스킵
 
 KST = timezone(timedelta(hours=9))
+
+
+def _state_path() -> Path:
+    """채널별 state 파일 경로. STATE_PATH 환경변수 또는 기본 state.json."""
+    custom = os.environ.get("STATE_PATH")
+    if custom:
+        return PROJECT_ROOT / custom
+    return PROJECT_ROOT / "state.json"
 
 
 def title_hash(title: str) -> str:
@@ -37,10 +46,10 @@ def title_hash(title: str) -> str:
 
 
 def load_state() -> dict:
-    if not STATE_PATH.exists():
+    if not _state_path().exists():
         return {"version": 1, "last_run_at": None, "last_run_status": None, "posted_history": []}
     try:
-        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+        return json.loads(_state_path().read_text(encoding="utf-8"))
     except Exception as e:
         print(f"⚠️  state.json 파싱 실패, 빈 state로 시작: {e}")
         return {"version": 1, "last_run_at": None, "last_run_status": None, "posted_history": []}
@@ -50,7 +59,7 @@ def save_state(state: dict):
     # 30일 이상 된 history 자동 prune
     cutoff = (datetime.now(KST) - timedelta(days=HISTORY_RETENTION_DAYS)).date().isoformat()
     state["posted_history"] = [h for h in state["posted_history"] if h.get("date", "") >= cutoff]
-    STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    _state_path().write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def get_recent_hashes(state: dict, window_days: int = DEDUP_WINDOW_DAYS) -> set:
