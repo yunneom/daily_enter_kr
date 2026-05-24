@@ -165,11 +165,13 @@ def make_card(
     size: Tuple[int, int] = (1080, 1080),
     seed: int = None,
     total_cards: int = 9,
+    label_short: str = "K-연예",
 ):
-    """단일 카드뉴스 이미지 생성 (K-엔터 시네마틱 배경).
+    """단일 카드뉴스 이미지 생성 (시네마틱 배경).
 
     Args:
-        total_cards: 캐러셀의 총 카드 수 (표지 제외). 페이지 인디케이터 표시용.
+        total_cards: 캐러셀의 총 카드 수 (표지 제외). 페이지 인디케이터용.
+        label_short: 푸터 라벨 (예: "K-연예", "K-스포츠"). 채널별로 다름.
     """
     if theme not in COLOR_THEMES:
         theme = "neon_seoul"
@@ -240,7 +242,7 @@ def make_card(
     
     # 7. 하단 출처 + 액센트 라인
     draw.rectangle([(60, size[1] - 100), (220, size[1] - 95)], fill=colors["accent"])
-    draw.text((60, size[1] - 75), f"{source}  |  오늘의 K-연예",
+    draw.text((60, size[1] - 75), f"{source}  |  오늘의 {label_short}",
               font=font_source, fill=colors["subtext"])
     
     # 저장
@@ -251,12 +253,13 @@ def make_card(
 
 def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
                     font_path: str = None, size=(1080, 1080), seed: int = None,
-                    total_cards: int = None):
-    """캐러셀 첫 장(표지) 생성 — K-엔터 시네마틱 배경
+                    total_cards: int = None, label_short: str = "K-연예"):
+    """캐러셀 첫 장(표지) 생성 — 시네마틱 배경
 
     Args:
         total_cards: 본문 카드 수 (표지 제외). None이면 'HOT NEWS' 라벨 사용.
                      그 외에는 'TOP {N}' 동적 표시.
+        label_short: 채널 라벨 (예: "K-연예", "K-스포츠").
     """
     if theme not in COLOR_THEMES:
         theme = "neon_seoul"
@@ -290,7 +293,7 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
 
     # 중앙 정렬
     draw.text((100, 380), "오늘의", font=font_mid, fill=colors["subtext"])
-    draw.text((100, 470), "K-연예", font=font_big, fill=colors["accent"])
+    draw.text((100, 470), label_short, font=font_big, fill=colors["accent"])
     draw.text((100, 640), rank_label, font=font_big, fill=colors["text"])
     draw.text((100, 820), date_str, font=font_small, fill=colors["subtext"])
     

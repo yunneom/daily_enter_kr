@@ -227,11 +227,22 @@ def upload_image(image_path: Path) -> str:
     )
 
 
-def build_caption(summaries, date_str: str) -> str:
-    """인스타 캡션 생성 (K-연예 톤, 클릭베이트 회피)"""
+def build_caption(summaries, date_str: str, label_short: str = "K-연예",
+                  default_hashtags=None) -> str:
+    """인스타 캡션 생성 (채널 라벨 + 클릭베이트 회피).
+
+    Args:
+        label_short: 채널 라벨 (예: "K-연예", "K-스포츠").
+        default_hashtags: 기본 해시태그 리스트. None이면 K-연예 기본값 사용.
+    """
+    if default_hashtags is None:
+        default_hashtags = [
+            "#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
+            "#카드뉴스", "#kpop", "#kdrama", "#한국연예",
+        ]
     n = len(summaries)
     lines = [
-        f"오늘의 K-연예 TOP {n} · {date_str}",
+        f"오늘의 {label_short} TOP {n} · {date_str}",
         "",
         "→ 슬라이드를 넘겨 하나씩 확인해보세요",
         "",
@@ -245,14 +256,11 @@ def build_caption(summaries, date_str: str) -> str:
     lines.append("정확한 내용은 원문 기사를 함께 확인해 주세요.")
     lines.append("")
 
-    # 해시태그 수집 + 중복 제거. 자극 키워드(#충격 #논란) 등은 summarize 단계에서 이미 차단됨.
-    all_hashtags = [
-        "#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
-        "#카드뉴스", "#kpop", "#kdrama", "#한국연예",
-    ]
+    # 채널 기본 태그 + 뉴스별 태그 (자극 키워드는 summarize에서 이미 차단)
+    all_hashtags = list(default_hashtags)
     for s in summaries:
         all_hashtags.extend(s.hashtags)
-    unique_tags = list(dict.fromkeys(all_hashtags))[:30]  # 인스타 해시태그 최대 30개
+    unique_tags = list(dict.fromkeys(all_hashtags))[:30]  # IG 한도 30개
     lines.append(" ".join(unique_tags))
 
     return "\n".join(lines)

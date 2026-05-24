@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "snapshots": [
+    {
+      "snapshot_at": "2026-05-24T18:48:05.284537+09:00",
+      "posts": [
+        {
+          "media_id": "18009812735911013",
+          "permalink": "https://www.instagram.com/p/DYtBZDoETOS/",
+          "timestamp": "2026-05-24T01:46:15+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 나홍진 감독 '호프', 칸영화제 황금종려",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 8.0
+        },
+        {
+          "media_id": "18108701459501613",
+          "permalink": "https://www.instagram.com/p/DYsz4RGjYdK/",
+          "timestamp": "2026-05-23T23:48:09+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 10 (2026년 05월 23일)\n\n오늘 안 보면 손해. 슬라이드 →\n\n1. 나홍진 '호프' 칸영화제 수상 불발...결국",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 10.0
+        },
+        {
+          "media_id": "18101010809032684",
+          "permalink": "https://www.instagram.com/p/DYsIjbxkV3N/",
+          "timestamp": "2026-05-23T17:29:31+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 10 (2026년 05월 23일)\n\n오늘 안 보면 손해. 슬라이드 →\n\n1. 최준희, LA 신혼여행 중 '죽을 거 같애'",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 16.3
+        },
+        {
+          "media_id": "17999063729933123",
+          "permalink": "https://www.instagram.com/p/DYsF4k3kUtQ/",
+          "timestamp": "2026-05-23T17:06:15+0000",
+          "caption_excerpt": "📰 오늘의 핫이슈 TOP 10 (2026년 05월 23일)\n\n👇 슬라이드를 넘겨 자세히 확인하세요\n\n1. 스타벅스 '4·16 사이렌' 이벤트 논",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 16.7
+        },
+        {
+          "media_id": "17988788255798717",
+          "permalink": "https://www.instagram.com/p/DYsEHV9kgfP/",
+          "timestamp": "2026-05-23T16:50:50+0000",
+          "caption_excerpt": "📰 오늘의 핫이슈 TOP 10 (2026년 05월 24일)\n\n👇 슬라이드를 넘겨 자세히 확인하세요\n\n1. 스타벅스 '4·16 사이렌' 이벤트 논",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 17.0
+        }
+      ]
+    }
+  ]
+}

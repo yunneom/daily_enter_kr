@@ -1,11 +1,12 @@
 """
-운영 state 관리 — 중복 게시 방지, 실행 이력 추적.
+운영 state 관리 — 중복 게시 방지, 실행 이력 추적, 토큰 만료 추적.
 
 state.json 구조 (프로젝트 루트에 저장, git에 커밋):
 {
   "version": 1,
   "last_run_at": "2026-05-24T08:00:00+09:00",
   "last_run_status": "success" | "failed" | "skipped",
+  "token_expires_at": "2026-07-23T08:00:00+09:00",   # IG 토큰 만료 시각 (선택)
   "posted_history": [
     {"date": "2026-05-24", "title_hash": "abc123...", "card_title": "..."},
     ...
@@ -13,6 +14,7 @@ state.json 구조 (프로젝트 루트에 저장, git에 커밋):
 }
 
 posted_history는 최근 30일치만 유지 (그 이상은 자동 prune).
+token_expires_at은 exchange_token.py가 (재)발급할 때 업데이트.
 """
 
 import hashlib
@@ -89,3 +91,22 @@ def record_run(state: dict, status: str):
     """게시 안 한 실행 (skip / 실패)도 기록."""
     state["last_run_at"] = datetime.now(KST).isoformat()
     state["last_run_status"] = status
+
+
+def days_until_token_expiry(state: dict) -> float:
+    """토큰 만료까지 며칠 남았는지. 만료시각 정보 없으면 None."""
+    expires_iso = state.get("token_expires_at")
+    if not expires_iso:
+        return None
+    try:
+        expires = datetime.fromisoformat(expires_iso)
+        delta = expires - datetime.now(KST)
+        return delta.total_seconds() / 86400
+    except Exception:
+        return None
+
+
+def update_token_expiry(state: dict, expires_in_seconds: int):
+    """토큰 갱신 후 만료 시각 기록 (exchange_token.py에서 호출)."""
+    expires_at = datetime.now(KST) + timedelta(seconds=int(expires_in_seconds))
+    state["token_expires_at"] = expires_at.isoformat()

@@ -2,17 +2,21 @@ name: Daily Instagram News Posting
 
 on:
   schedule:
-    # 매일 한국시간 오전 8시 (UTC 23:00) 실행. 봇 패턴 회피용 jitter는 main.py가 적용 (0-30분 랜덤 지연).
+    # 매일 한국시간 오전 8시 (UTC 23:00). main.py가 0-30분 랜덤 jitter 적용 (봇 패턴 회피).
     - cron: '0 23 * * *'
-  workflow_dispatch:  # 수동 실행도 가능
+  workflow_dispatch:
 
 permissions:
-  contents: write  # state.json 커밋용
+  contents: write  # state.json + insights.json commit-back
+
+env:
+  # Node.js 20 → 24 마이그레이션 (2026-06-02 강제 전환 대비 선제 opt-in)
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   post-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 50  # jitter(최대 30분) + 실행(최대 5분) + 여유
+    timeout-minutes: 50  # jitter(최대 30분) + 실행(최대 5분) + 인사이트 + 여유
 
     steps:
       - name: Checkout repository
@@ -35,6 +39,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run news posting pipeline
+        id: post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
@@ -44,18 +49,31 @@ jobs:
           CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
         run: python main.py
 
-      - name: Commit updated state.json
-        if: always()  # 실패해도 state는 기록되도록
+      - name: Fetch insights snapshot (likes/comments on recent posts)
+        if: success()
+        env:
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: python fetch_insights.py
+        continue-on-error: true  # 인사이트 실패해도 메인 워크플로우는 성공으로 처리
+
+      - name: Commit state.json + insights.json
+        if: always()
         run: |
-          if git diff --quiet state.json 2>/dev/null; then
-            echo "state.json unchanged — skipping commit"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add state.json
-            git commit -m "state: $(date -u '+%Y-%m-%d %H:%M UTC') run [skip ci]"
-            git push
+          changes=""
+          if ! git diff --quiet state.json 2>/dev/null; then changes="$changes state.json"; fi
+          if [ -f insights.json ] && ! git diff --quiet insights.json 2>/dev/null; then changes="$changes insights.json"; fi
+          if [ -z "$changes" ]; then
+            echo "No state/insights changes — skipping commit"
+            exit 0
           fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $changes
+          git commit -m "state: $(date -u '+%Y-%m-%d %H:%M UTC') run [skip ci]"
+          # rebase-on-push to handle concurrent commits gracefully
+          git pull --rebase --autostash origin main || true
+          git push
 
       - name: Upload generated images as artifact (backup)
         if: always()
@@ -65,3 +83,17 @@ jobs:
           path: output/
           retention-days: 7
           if-no-files-found: ignore
+
+      - name: Notify on failure (Discord webhook, optional)
+        if: failure() && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          payload=$(cat <<EOF
+          {
+            "content": "🚨 **daily_enter_kr 워크플로우 실패**\n\n실행 ID: \`${{ github.run_id }}\`\n워크플로우 로그: $RUN_URL\n\n로그 확인 후 조치 필요."
+          }
+          EOF
+          )
+          curl -fsS -X POST -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL" || echo "webhook send failed"

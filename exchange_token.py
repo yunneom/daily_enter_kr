@@ -32,6 +32,9 @@ import re
 from pathlib import Path
 import requests
 
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+from state import load_state, save_state, update_token_expiry  # noqa: E402
+
 
 GRAPH_BASE = "https://graph.instagram.com"
 ENV_PATH = Path(__file__).parent / ".env"
@@ -172,6 +175,7 @@ def main():
         data = exchange_to_long_lived(ig_app_secret, current_token)
 
     new_token = data["access_token"]
+    expires_in = data.get("expires_in", 0)
     verify_token(new_token, ig_user_id)
 
     print()
@@ -180,10 +184,21 @@ def main():
     print("=" * 60)
     update_env_value("INSTAGRAM_ACCESS_TOKEN", new_token)
     print(f"💾 .env의 INSTAGRAM_ACCESS_TOKEN 이 갱신되었습니다.")
+
+    # state.json에 만료 시각 기록
+    if expires_in:
+        state = load_state()
+        update_token_expiry(state, expires_in)
+        save_state(state)
+        print(f"💾 state.json에 토큰 만료 정보 기록: {state['token_expires_at']}")
+
     print()
     if not refresh_mode:
         print("   이제 'python main.py' 를 실행하면 인스타 자동 게시까지 진행됩니다.")
-        print("   60일 후 만료 전에 'python exchange_token.py --refresh' 로 갱신할 수 있습니다.")
+    print("   60일 후 만료 전에 'python exchange_token.py --refresh' 로 갱신할 수 있습니다.")
+    print()
+    print("   ⚠️  GitHub Secrets의 INSTAGRAM_ACCESS_TOKEN도 같이 업데이트하세요:")
+    print(f"       gh secret set INSTAGRAM_ACCESS_TOKEN --repo yunneom/daily_enter_kr --body \"$(grep ^INSTAGRAM_ACCESS_TOKEN .env | cut -d= -f2-)\"")
 
 
 if __name__ == "__main__":

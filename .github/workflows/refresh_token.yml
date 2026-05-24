@@ -1,0 +1,73 @@
+name: Refresh Instagram Token (manual)
+
+# 사용법:
+# 1. GitHub repo → Actions 탭 → "Refresh Instagram Token (manual)" 선택
+# 2. "Run workflow" 클릭 → 워크플로우 실행
+# 3. 결과 로그에서 새 토큰 확인
+# 4. Settings → Secrets → INSTAGRAM_ACCESS_TOKEN 을 새 값으로 업데이트
+#
+# 자동 secret 업데이트는 PAT 가 필요해 미적용. 수동 갱신 6개월에 한 번 정도면 됨.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Refresh token + show new value
+        env:
+          INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET }}
+          CURRENT_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: |
+          python <<'PY'
+          import os, json, requests, sys
+          token = os.environ["CURRENT_TOKEN"]
+          # IGAA refresh API
+          r = requests.get(
+              "https://graph.instagram.com/refresh_access_token",
+              params={"grant_type": "ig_refresh_token", "access_token": token},
+              timeout=15,
+          )
+          if not r.ok:
+              print(f"❌ Refresh 실패: HTTP {r.status_code}", file=sys.stderr)
+              print(r.text, file=sys.stderr)
+              sys.exit(1)
+          data = r.json()
+          new_token = data["access_token"]
+          expires_in_days = data.get("expires_in", 0) / 86400
+
+          print("✅ 토큰 갱신 성공")
+          print(f"   유효기간: {expires_in_days:.0f}일")
+          print()
+          print("=" * 60)
+          print("📋 다음 단계 (수동):")
+          print("=" * 60)
+          print()
+          print("1. GitHub repo Settings → Secrets and variables → Actions")
+          print("2. INSTAGRAM_ACCESS_TOKEN 옆 'Update' 클릭")
+          print("3. 아래 값을 통째로 붙여넣기:")
+          print()
+          print(new_token)
+          print()
+          print("4. Update secret 클릭 → 완료")
+          print()
+          # 로컬 .env에 새 토큰을 쓰지는 않음 (CI는 휘발성). 사용자가 보고 손수 업데이트.
+          PY

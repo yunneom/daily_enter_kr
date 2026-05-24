@@ -21,12 +21,38 @@ from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
 from make_card import make_card, make_cover_card
 from post_instagram import InstagramPublisher, upload_image, build_caption
-from state import load_state, save_state, filter_duplicates, record_post, record_run
+from state import (
+    load_state, save_state, filter_duplicates, record_post, record_run,
+    days_until_token_expiry,
+)
 
 
-# K-엔터 시네마틱 팔레트 순환 (5종)
-THEMES = ["neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
-          "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple"]
+# === 채널 설정 (CHANNEL 환경변수로 선택; 기본 daily_enter_kr) ===
+# 새 채널 추가 방법은 CLAUDE.md 의 "두 번째 토픽 채널 추가" 섹션 참고
+CHANNELS = {
+    "daily_enter_kr": {
+        "topic": "entertainment",        # fetch_news.py의 TOPIC_URLS 키
+        "label_short": "K-연예",         # 표지/푸터/캡션 라벨 (예: "오늘의 K-연예")
+        "themes": [
+            "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
+            "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
+        ],
+        "state_path": "state.json",
+        "default_hashtags": ["#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
+                             "#카드뉴스", "#kpop", "#kdrama", "#한국연예"],
+    },
+    # 추가 채널 예시 (사용하려면 별도 워크플로우 + 별도 시크릿 prefix 필요):
+    # "daily_sports_kr": {
+    #     "topic": "sports",
+    #     "label_short": "K-스포츠",
+    #     "themes": ["stage_gold", "noir_cinema", ...],
+    #     "state_path": "state_sports.json",
+    #     "default_hashtags": ["#스포츠", "#sports_kr", ...],
+    # },
+}
+CHANNEL_ID = os.environ.get("CHANNEL", "daily_enter_kr")
+CHANNEL = CHANNELS.get(CHANNEL_ID, CHANNELS["daily_enter_kr"])
+THEMES = CHANNEL["themes"]
 
 # === 운영 설정 ===
 FETCH_LIMIT = 20       # 안전/중복 필터 후 9건 확보를 위해 여유롭게 수집
@@ -68,14 +94,22 @@ def main():
     output_dir = Path(__file__).parent / "output" / today.strftime("%Y%m%d")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # state 로드 (중복 게시 방지용)
+    # state 로드 (중복 게시 방지 + 토큰 만료 추적)
     state = load_state()
+
+    # 토큰 만료 임박 경고 (정보가 있는 경우만)
+    days_left = days_until_token_expiry(state)
+    if days_left is not None:
+        if days_left < 7:
+            print(f"🚨🚨 IG 토큰 만료 {days_left:.1f}일 남음 — 지금 'python exchange_token.py --refresh' 실행 필요")
+        elif days_left < 14:
+            print(f"⚠️  IG 토큰 만료 {days_left:.1f}일 남음 — 곧 갱신 필요")
 
     # === 1. 뉴스 수집 ===
     print("\n" + "="*60)
     print("1️⃣  뉴스 수집")
     print("="*60)
-    news_items = fetch_google_news_korea(limit=FETCH_LIMIT)
+    news_items = fetch_google_news_korea(topic=CHANNEL["topic"], limit=FETCH_LIMIT)
     if not news_items:
         print("❌ 수집된 뉴스가 0건입니다. RSS 응답 이상 가능성. 종료.")
         record_run(state, "failed_no_news")
@@ -144,7 +178,8 @@ def main():
     total_cards = len(summaries)
 
     cover_path = output_dir / "00_cover.jpg"
-    make_cover_card(date_str=date_str, output_path=cover_path, total_cards=total_cards)
+    make_cover_card(date_str=date_str, output_path=cover_path,
+                    total_cards=total_cards, label_short=CHANNEL["label_short"])
     image_paths.append(cover_path)
     print(f"  ✓ 표지: {cover_path.name} (TOP {total_cards})")
 
@@ -158,6 +193,7 @@ def main():
             output_path=path,
             theme=THEMES[(i - 1) % len(THEMES)],
             total_cards=total_cards,
+            label_short=CHANNEL["label_short"],
         )
         image_paths.append(path)
         print(f"  ✓ {path.name}: {s.card_title}")
@@ -204,7 +240,8 @@ def main():
         sys.exit(1)
     print(f"✓ 토큰 유효: @{health['username']} ({health['account_type']})")
 
-    caption = build_caption(summaries, date_str)
+    caption = build_caption(summaries, date_str, label_short=CHANNEL["label_short"],
+                            default_hashtags=CHANNEL["default_hashtags"])
     media_id = publisher.post_carousel(image_urls, caption)
 
     print(f"\n🎉 완료! 게시물 ID: {media_id}")

@@ -18,10 +18,13 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 | `src/summarize.py` | Claude Haiku 4.5. **안전 분류 (post/respectful/skip) + SEO 카피 + 변형 강제** |
 | `src/make_card.py` | PIL 1080x1080. 5가지 시네마틱 팔레트 (neon_seoul, stage_gold, kpop_pastel, noir_cinema, dream_purple) + 보케 + 비네팅 |
 | `src/post_instagram.py` | Instagram Graph (`graph.instagram.com`) v22.0. IGAA 토큰 + Cloudinary 우선 + health_check |
-| `src/state.py` | 중복 게시 방지 (14일 윈도우) + 실행 이력 추적. `state.json` 읽고 씀 |
-| `exchange_token.py` | IGAA 단기→장기 토큰 교환, refresh 폴백 자동, `.env` 자동 업데이트 |
+| `src/state.py` | 중복 게시 방지 (14일 윈도우) + 실행 이력 + 토큰 만료 추적. `state.json` 읽고 씀 |
+| `exchange_token.py` | IGAA 단기→장기 토큰 교환, refresh 폴백 자동, `.env` + state 자동 업데이트 |
+| `fetch_insights.py` | 최근 게시물 like/comment 스냅샷 → `insights.json` (A/B 분석 기반) |
 | `state.json` | 운영 state — 매 실행마다 워크플로우가 git에 commit 함 |
-| `.github/workflows/daily.yml` | 매일 실행 + state.json commit-back |
+| `insights.json` | 게시물 인사이트 시계열 — 매 실행 끝에 워크플로우가 commit |
+| `.github/workflows/daily.yml` | 매일 실행 + state/insights commit-back + Discord 알림(선택) |
+| `.github/workflows/refresh_token.yml` | 수동 트리거 — IGAA 장기 토큰 refresh (60일 만료 임박 시) |
 
 생성된 이미지는 `output/YYYYMMDD/` 폴더에 저장 (gitignore).
 
@@ -35,6 +38,8 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 | `INSTAGRAM_APP_SECRET` | 토큰 갱신 시 | `exchange_token.py`가 사용 |
 | `CLOUDINARY_CLOUD_NAME` | 업로드 시 | dwiq...같은 호스트 식별자 |
 | `CLOUDINARY_UPLOAD_PRESET` | 업로드 시 | Unsigned upload preset 이름 |
+| `DISCORD_WEBHOOK_URL` | 선택 | 워크플로우 실패 시 Discord 알림 (없으면 GH 이메일 폴백) |
+| `CHANNEL` | 선택 | 채널 ID (예: `daily_enter_kr`). 미설정 시 기본값 사용 |
 
 API 키 누락 시 안전 분류 없이 게시하는 것을 차단 (안전 우선). 카드 이미지는 생성하지만 인스타 업로드는 스킵됨.
 
@@ -119,5 +124,32 @@ python exchange_token.py --refresh
 python src/fetch_news.py     # 뉴스 수집 (API 키 불필요)
 python src/summarize.py      # 안전 분류 + 요약 5건 (ANTHROPIC_API_KEY 필요)
 python src/make_card.py      # 5팔레트 샘플 카드 (폰트만 있으면 됨)
+python fetch_insights.py     # 최근 게시 인사이트 (IG 토큰 필요)
 python main.py               # 전체 파이프라인
 ```
+
+## 두 번째 토픽 채널 추가 (예: K-스포츠)
+
+코드는 이미 channel-aware (`main.py`의 `CHANNELS` dict).
+
+1. **새 IG 계정 + FB 페이지 + Meta 앱 세팅** (Phase 1 반복)
+   - daily_enter_kr 세팅과 동일한 단계
+2. **`main.py`의 `CHANNELS` dict에 항목 추가**
+   ```python
+   "daily_sports_kr": {
+       "topic": "sports",
+       "label_short": "K-스포츠",
+       "themes": ["stage_gold", "noir_cinema", ...],
+       "state_path": "state_sports.json",
+       "default_hashtags": ["#스포츠", "#sports_kr", ...],
+   },
+   ```
+3. **새 GitHub repo 만들거나 같은 repo에 시크릿 prefix로 분리**
+   - 같은 repo 권장: `INSTAGRAM_USER_ID_SPORTS`, `INSTAGRAM_ACCESS_TOKEN_SPORTS` 등 (또는 별도 repo로 격리)
+4. **`.github/workflows/daily_sports.yml` 생성** — daily.yml 복사 후:
+   - env에 `CHANNEL: daily_sports_kr` 추가
+   - 시크릿 참조를 sports 버전으로 교체
+   - cron 시각을 다르게 (예: `30 0 * * *` = 09:30 KST) — 같은 시간 두 채널 동시 게시는 IG가 의심할 수 있음
+5. **state/insights 파일이 채널마다 분리** — 위 config의 `state_path` 다르게 설정
+
+채널 추가 작업: 약 1시간 (대부분 Meta 콘솔 세팅).
