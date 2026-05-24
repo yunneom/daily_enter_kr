@@ -174,7 +174,7 @@ def main():
             for n in news_items[:MAX_CARDS]
         ]
     else:
-        summaries_all = summarize_news(news_items)
+        summaries_all = summarize_news(news_items, channel_label=CHANNEL["label_short"])
         summaries = filter_postable(summaries_all)
         print(f"\n  → 안전 분류 후 {len(summaries)}/{len(summaries_all)}건 게시 가능")
 

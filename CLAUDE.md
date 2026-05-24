@@ -125,8 +125,24 @@ python src/fetch_news.py     # 뉴스 수집 (API 키 불필요)
 python src/summarize.py      # 안전 분류 + 요약 5건 (ANTHROPIC_API_KEY 필요)
 python src/make_card.py      # 5팔레트 샘플 카드 (폰트만 있으면 됨)
 python fetch_insights.py     # 최근 게시 인사이트 (IG 토큰 필요)
-python main.py               # 전체 파이프라인
+python main.py               # 전체 파이프라인 (CHANNEL 환경변수로 채널 선택)
+
+# 다른 채널 테스트:
+$env:CHANNEL="daily_sports_kr"; python main.py
+$env:CHANNEL="daily_economy_kr"; python main.py
 ```
+
+## 시크릿 관리
+
+`python sync_secrets.py` 한 번으로 `.env`의 모든 값을 GitHub Secrets에 동기화. gh CLI 필요.
+
+```powershell
+python sync_secrets.py                  # .env에 있는 모든 알려진 시크릿 동기화
+python sync_secrets.py UNSPLASH_ACCESS_KEY  # 특정 키만
+python sync_secrets.py --dry-run        # 무엇이 바뀔지만 미리보기
+```
+
+값은 화면에 마스킹 표시. stdin으로 gh에 전달해 커맨드라인 노출 없음.
 
 ## 배경 이미지 시스템
 

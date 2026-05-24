@@ -35,8 +35,9 @@ class SummarizedNews:
     visual_concept: str = ""        # 영문 Unsplash 검색 쿼리 (예: "concert lights stage")
 
 
-SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터다. 다음 뉴스를 안전하고 품격 있는 카드뉴스로 만들어줘.
+SUMMARY_PROMPT = """너는 {channel_label} 인스타그램 카드뉴스 카피라이터다. 다음 뉴스를 안전하고 품격 있는 카드뉴스로 만들어줘.
 
+[채널] {channel_label} (이 채널의 주제 범위와 무관한 뉴스는 skip)
 [뉴스 제목] {title}
 [뉴스 내용/설명] {summary}
 [출처] {source}
@@ -63,8 +64,9 @@ SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터
 - 동의 없는 연인 추측, 임신 루머, 결혼 강요 톤
 - 신체/성형 비교 평가, 다이어트 강요
 - 인종/성별/지역 차별 가능성 있는 표현
-- 단순 광고/협찬/홍보 (예능 PPL 후일담 제외)
-- 정치 인물/정쟁 (연예 채널 톤에 안 맞음)
+- 단순 광고/협찬/홍보
+- 정치 정쟁 (선거/입법 갈등; 단, 채널 주제와 관련된 정책 뉴스는 OK)
+- 채널 주제 범위와 명백히 무관한 뉴스 (예: 스포츠 채널에 연예 가십, 경제 채널에 스포츠 결과)
 - 사실 확인이 안 된 단독 보도가 자극적인 경우
 
 다음에 해당하면 decision = "respectful":
@@ -85,9 +87,9 @@ SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터
 - 이모지(🔥❤️ 등) 절대 사용 금지 (카드에서 두부박스로 깨짐)
 - 인용("...") 안에 자극적 발화를 강조하지 말 것
 
-★ decision == "post" — 일반 K-연예 카피
-- card_title: 인물명/작품명/숫자를 앞에 배치. 호기심 갭 사용 가능 (?, ... 가능).
-- 허용 어휘: "공개", "예고", "포착", "예능 출연", "콜라보", "리얼리티"
+★ decision == "post" — 일반 카피
+- card_title: 인물명/팀명/작품명/숫자를 앞에 배치. 호기심 갭 사용 가능 (?, ... 가능).
+- 허용 어휘: "공개", "예고", "포착", "출연", "콜라보", "달성", "기록", "선언"
 - 금지 어휘: "충격", "발칵", "경악", "오열", "폭로", "이럴 수가", "결국", "도대체"
 - card_body: 1문장 핵심 사실 + 1-2문장 맥락. 추측 금지.
 
@@ -99,17 +101,22 @@ SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터
 
 [hashtags]
 - 4-6개. 한국어 + 영문 혼합.
-- 인물/그룹명 직접 (#아이브 #IVE), 장르(#kpop #kdrama), 메타(#연예뉴스).
+- 인물/팀/그룹/작품명 직접, 채널 분야 태그, 메타 태그 (예: #뉴스, #카드뉴스).
 - 자극 키워드(#충격, #논란 등) 금지.
 
 [visual_concept] — Unsplash 검색용 영문 키워드
-- 2-4 단어. 보편적 영어 명사 위주. 구체적 한국 인물명/그룹명 금지 (Unsplash엔 거의 없음).
-- 뉴스 분위기/장면을 연상시키는 일반적 컨셉:
+- 2-4 단어. 보편적 영어 명사 위주. 구체적 한국 인물명/팀명 금지 (Unsplash엔 거의 없음).
+- 뉴스 분위기/장면을 연상시키는 일반적 컨셉 (분야별 예시):
   * 음악/공연: "concert stage lights", "music studio recording", "microphone close up"
   * 영화/드라마: "movie premiere", "film set camera", "cinema theater"
   * 예능/방송: "tv studio lights", "broadcasting set"
-  * 시상식/이벤트: "red carpet event", "award ceremony"
-  * 일상/인터뷰: "celebrity interview", "magazine cover photoshoot"
+  * 시상식: "red carpet event", "award ceremony"
+  * 야구: "baseball stadium night", "baseball pitcher mound"
+  * 축구: "soccer stadium crowd", "football match action"
+  * 골프: "golf course green", "golf swing close up"
+  * 농구/배구/기타: "basketball arena", "athlete training gym"
+  * 경제/주식: "stock market chart", "trading floor screens", "skyscraper finance district"
+  * 부동산: "city skyline real estate", "modern apartment building"
 - respectful 톤 카드: 차분한 컨셉 ("candle light memorial", "flower bouquet white")
 - skip 카드: 빈 문자열
 
@@ -119,9 +126,14 @@ SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터
 """
 
 
-def summarize_news(news_items: List[NewsItem], api_key: str = None) -> List[SummarizedNews]:
+def summarize_news(news_items: List[NewsItem], api_key: str = None,
+                   channel_label: str = "K-연예") -> List[SummarizedNews]:
     """
     뉴스 리스트를 카드뉴스용으로 요약 + 안전 분류.
+
+    Args:
+        channel_label: 채널 정체성 (예: "K-연예", "K-스포츠", "K-경제").
+                       프롬프트에 주입돼 채널 주제와 맞지 않는 뉴스를 skip 판단에 활용.
     decision=="skip"인 항목도 포함해서 반환하므로, 호출자가 필터링해야 함.
     """
     client = Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
@@ -129,6 +141,7 @@ def summarize_news(news_items: List[NewsItem], api_key: str = None) -> List[Summ
     results = []
     for item in news_items:
         prompt = SUMMARY_PROMPT.format(
+            channel_label=channel_label,
             title=item.title,
             summary=item.summary[:500],
             source=item.source,
