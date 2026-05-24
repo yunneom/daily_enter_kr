@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "last_run_at": "2026-05-24T23:26:20.200161+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-05-25T08:54:27.436099+09:00",
+  "last_run_status": "failed: HTTPError",
   "posted_history": [
     {
       "date": "2026-05-24",
