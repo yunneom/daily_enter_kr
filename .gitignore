@@ -14,6 +14,8 @@ env/
 
 # 생성 결과물
 output/
+verify_run.log
+*.log
 
 # IDE
 .vscode/

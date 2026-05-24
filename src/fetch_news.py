@@ -1,13 +1,10 @@
 """
 뉴스 수집 모듈
-네이버 뉴스 검색 RSS를 활용하여 핫토픽 뉴스를 수집합니다.
 
-[중요] 네이버는 직접 크롤링을 차단하고 있으므로,
-공식적으로 제공하는 RSS 피드 또는 검색 API를 사용해야 합니다.
+기본은 Google News RSS (한국어). API 키 불필요, 즉시 사용 가능.
+다른 옵션 (Naver Search API, 직접 언론사 RSS) 도 참고용으로 포함.
 
-방법 1: 네이버 검색 OpenAPI (권장) - 클라이언트 ID 필요
-방법 2: 주요 언론사의 RSS 피드 직접 구독
-방법 3: 구글 뉴스 RSS (한국어 필터)
+지원 카테고리: entertainment(기본), sports, technology, business, headlines
 """
 
 import feedparser

@@ -64,8 +64,13 @@ def update_env_value(key: str, new_value: str):
 
 
 def exchange_to_long_lived(app_secret: str, short_token: str) -> dict:
-    """단기 IGAA 토큰 → 장기 IGAA 토큰 (60일)"""
-    print("[1/2] 단기 IGAA 토큰 → 장기 토큰(60일) 교환 중...")
+    """단기 IGAA 토큰 → 장기 IGAA 토큰 (60일).
+
+    토큰이 이미 장기인 경우 (Meta 콘솔의 'Generate access tokens' 결과는
+    이미 장기 토큰임) 'Session key invalid' 에러가 발생한다. 이때는
+    자동으로 refresh 시도로 폴백.
+    """
+    print("[1/2] 단기 IGAA 토큰 → 장기 토큰(60일) 교환 시도...")
     resp = requests.get(
         f"{GRAPH_BASE}/access_token",
         params={
@@ -75,15 +80,28 @@ def exchange_to_long_lived(app_secret: str, short_token: str) -> dict:
         },
         timeout=15,
     )
-    if not resp.ok:
-        print(f"   ❌ 교환 실패: HTTP {resp.status_code}")
-        print(f"   응답: {resp.text}")
-        sys.exit(1)
-    data = resp.json()
-    expires = data.get("expires_in", 0)
-    days = expires / 86400
-    print(f"   ✓ 장기 토큰 확보 (유효기간: 약 {days:.0f}일)")
-    return data
+    if resp.ok:
+        data = resp.json()
+        expires = data.get("expires_in", 0)
+        print(f"   ✓ 장기 토큰 확보 (유효기간: 약 {expires/86400:.0f}일)")
+        return data
+
+    # 실패 처리 — 'Session key invalid' 이면 이미 장기 토큰일 가능성
+    err_text = resp.text
+    body = {}
+    try:
+        body = resp.json().get("error", {})
+    except Exception:
+        pass
+    msg = body.get("message", err_text[:300])
+    print(f"   ⚠️  교환 실패: {msg}")
+
+    if "Session key invalid" in err_text or body.get("error_subcode") == 2207055:
+        print("   → 토큰이 이미 장기일 가능성. refresh 모드로 폴백 시도...")
+        return refresh_long_lived(short_token)
+
+    print(f"   ❌ 교환 실패 (응답: {err_text[:300]})")
+    sys.exit(1)
 
 
 def refresh_long_lived(long_token: str) -> dict:

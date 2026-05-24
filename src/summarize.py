@@ -1,17 +1,21 @@
 """
 뉴스 요약 모듈
-Claude API를 사용하여 뉴스를 인스타그램 카드뉴스용으로 요약합니다.
+Claude API를 사용하여 K-연예 뉴스를 인스타그램 카드뉴스용으로 요약합니다.
 
-[비용 비교]
-- Claude Haiku 4.5: 가장 저렴, 일 10건 ≈ $0.01
-- Claude Sonnet 4.5: 품질↑, 일 10건 ≈ $0.05
-- 추천: Haiku 4.5 (요약은 충분히 잘 함)
+[모델]
+- Claude Haiku 4.5: 가성비 최고, 일 10건 ≈ $0.01
+
+[보안/평판 안전장치]
+- 민감 주제(자살/사망/미성년자/성형/연애 추측 등) 자동 분류 → skip
+- 사망/질환/가족사 등은 respectful 톤으로 자동 전환
+- 클릭베이트/황색 표현 금지
+- 본문 충분히 변형해서 원기사 substitute가 되지 않도록 (저작권 안전선)
 """
 
 import os
 import json
 from anthropic import Anthropic
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 # fetch_news.py의 NewsItem import
@@ -21,115 +25,175 @@ from fetch_news import NewsItem
 @dataclass
 class SummarizedNews:
     original_title: str
-    card_title: str       # 카드 제목 (짧고 강렬하게)
-    card_body: str        # 카드 본문 (2-3문장 요약)
-    hashtags: list        # 추천 해시태그
+    card_title: str
+    card_body: str
+    hashtags: list
     source: str
     link: str
+    decision: str = "post"          # "post" | "respectful" | "skip"
+    skip_reason: str = ""           # decision=="skip" 일 때만 사용
 
 
-SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터다. 다음 뉴스를 인스타에서 스크롤을 멈추게 하는 카드뉴스로 만들어줘.
+SUMMARY_PROMPT = """너는 K-연예 인스타그램 카드뉴스 카피라이터다. 다음 뉴스를 안전하고 품격 있는 카드뉴스로 만들어줘.
 
 [뉴스 제목] {title}
 [뉴스 내용/설명] {summary}
 [출처] {source}
 
-다음 JSON 형식으로만 응답해줘 (다른 텍스트 절대 포함하지 말 것):
+응답은 다음 JSON 형식 한 가지만. 다른 텍스트 절대 포함 금지:
 {{
-  "card_title": "12-20자, 호기심 자극하는 후킹 제목",
-  "card_body": "70-110자 핵심 요약. 첫 문장은 후킹, 마지막 문장은 여운/궁금증.",
-  "hashtags": ["#관련해시태그1", "#관련해시태그2", "#관련해시태그3", "#관련해시태그4"]
+  "decision": "post" | "respectful" | "skip",
+  "skip_reason": "skip일 때만 한 줄로 사유",
+  "card_title": "12-20자",
+  "card_body": "70-110자",
+  "hashtags": ["#태그1", "#태그2", "#태그3", "#태그4"]
 }}
 
-[card_title 작성 규칙 — SEO 최적화]
-- 인물명/작품명/숫자를 제목 앞쪽에 배치 (검색 최적화)
-- 호기심 갭(curiosity gap) 활용: "왜", "결국", "충격", "전격", "최초", "갑자기" 같은 단어
-- 줄임표(...)나 물음표(?)로 다음 슬라이드 클릭 욕구 자극 가능
-- 단, '경악', '발칵' 같은 황색 표현, 허위 과장, 자극적 어휘는 금지 (인스타 정책 위반)
-- 이모지(🔥❤️ 등)는 카드에서 두부박스로 깨지므로 절대 사용 금지. 텍스트만 사용
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[STEP 1 — 분류 (decision)]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[card_body 작성 규칙]
-- 객관적 사실 위주, 추측 금지
-- 1문장: 핵심 사건/팩트를 강하게
-- 2문장: 맥락 또는 반응
-- 3문장(선택): 향후 전개/궁금증으로 마무리
+다음 중 하나라도 해당하면 즉시 decision = "skip" (다른 필드는 빈 문자열/배열로):
+- 자살/극단적 선택/유서/투신 관련 (인용·암시 포함)
+- 폭력/성범죄/학대 피해자 신원이 추측 가능
+- 만 18세 미만 미성년자의 외모/몸매/사생활/연애
+- 의학적 진단명·정신건강 이슈를 가십화
+- 동의 없는 연인 추측, 임신 루머, 결혼 강요 톤
+- 신체/성형 비교 평가, 다이어트 강요
+- 인종/성별/지역 차별 가능성 있는 표현
+- 단순 광고/협찬/홍보 (예능 PPL 후일담 제외)
+- 정치 인물/정쟁 (연예 채널 톤에 안 맞음)
+- 사실 확인이 안 된 단독 보도가 자극적인 경우
 
-[hashtags 작성 규칙]
-- 한국어 + 영문 혼합 (검색 노출 확대)
-- 인물/그룹명 직접 태그 (예: #뉴진스 #NewJeans)
-- 장르 태그 (예: #K팝 #드라마 #영화 #예능)
-- 메타 태그 (예: #핫이슈 #연예뉴스 #오늘의이슈)
-- 4개 이상
+다음에 해당하면 decision = "respectful":
+- 부고/별세 (공식 발표만 인용, 사인 추측 없이)
+- 본인이 공개적으로 알린 가정사/투병/회복 이야기
+- 사회적 메시지 있는 인터뷰/사회공헌
+- 사회적 합의가 정리된 과거 사건 회고
 
-[톤]
-- "이거 안 보면 손해" 느낌이지만 품격 있게
-- 팬들이 공유하고 싶게
+그 외 일반 K-연예 소식은 decision = "post".
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[STEP 2 — 카드 내용 (decision != "skip"일 때만)]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+★ 공통 규칙 (post / respectful 모두)
+- 본문은 원기사 문장을 그대로 옮기지 말 것. 핵심 사실만 추출해 다른 표현으로 재구성.
+- 본문은 110자 이하. 너무 길면 원기사 대체효과 발생 → 저작권 위험.
+- 이모지(🔥❤️ 등) 절대 사용 금지 (카드에서 두부박스로 깨짐)
+- 인용("...") 안에 자극적 발화를 강조하지 말 것
+
+★ decision == "post" — 일반 K-연예 카피
+- card_title: 인물명/작품명/숫자를 앞에 배치. 호기심 갭 사용 가능 (?, ... 가능).
+- 허용 어휘: "공개", "예고", "포착", "예능 출연", "콜라보", "리얼리티"
+- 금지 어휘: "충격", "발칵", "경악", "오열", "폭로", "이럴 수가", "결국", "도대체"
+- card_body: 1문장 핵심 사실 + 1-2문장 맥락. 추측 금지.
+
+★ decision == "respectful" — 민감 주제 톤
+- card_title: 호기심 갭/따옴표 인용/물음표/줄임표 모두 금지. 사실만 명확히.
+  예) "故 OOO 별세, 향년 OO세" / "OOO, 투병 사실 공개"
+- card_body: 위로·존중 톤. "고인의 명복을 빕니다" 같은 표현 자연스럽게 포함 가능.
+- 호기심 자극 어휘 금지.
+
+[hashtags]
+- 4-6개. 한국어 + 영문 혼합.
+- 인물/그룹명 직접 (#아이브 #IVE), 장르(#kpop #kdrama), 메타(#연예뉴스).
+- 자극 키워드(#충격, #논란 등) 금지.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+자, 위 규칙을 엄격히 지켜서 JSON으로만 응답하라.
 """
 
 
 def summarize_news(news_items: List[NewsItem], api_key: str = None) -> List[SummarizedNews]:
-    """뉴스 리스트를 카드뉴스용으로 요약"""
+    """
+    뉴스 리스트를 카드뉴스용으로 요약 + 안전 분류.
+    decision=="skip"인 항목도 포함해서 반환하므로, 호출자가 필터링해야 함.
+    """
     client = Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
-    
+
     results = []
     for item in news_items:
         prompt = SUMMARY_PROMPT.format(
             title=item.title,
-            summary=item.summary[:500],  # 너무 길면 토큰 낭비
+            summary=item.summary[:500],
             source=item.source,
         )
-        
+
         try:
             message = client.messages.create(
-                model="claude-haiku-4-5-20251001",  # 가성비 최고
-                max_tokens=500,
+                model="claude-haiku-4-5-20251001",
+                max_tokens=600,
                 messages=[{"role": "user", "content": prompt}],
             )
-            
+
             response_text = message.content[0].text.strip()
-            # JSON만 추출 (혹시 ```json 같은 게 붙은 경우 제거)
+            # 마크다운 코드펜스 제거
             if response_text.startswith("```"):
                 response_text = response_text.split("```")[1]
                 if response_text.startswith("json"):
                     response_text = response_text[4:]
-            
             parsed = json.loads(response_text.strip())
-            
+
+            decision = parsed.get("decision", "post").lower()
+            if decision not in ("post", "respectful", "skip"):
+                decision = "post"
+
             results.append(SummarizedNews(
                 original_title=item.title,
-                card_title=parsed["card_title"],
-                card_body=parsed["card_body"],
-                hashtags=parsed.get("hashtags", []),
+                card_title=parsed.get("card_title", "") if decision != "skip" else "",
+                card_body=parsed.get("card_body", "") if decision != "skip" else "",
+                hashtags=parsed.get("hashtags", []) if decision != "skip" else [],
                 source=item.source,
                 link=item.link,
+                decision=decision,
+                skip_reason=parsed.get("skip_reason", "") if decision == "skip" else "",
             ))
         except Exception as e:
             print(f"⚠️  요약 실패 ({item.title[:30]}...): {e}")
-            # 실패 시 원제목을 카드 제목으로, 본문은 비워서 깔끔하게 표시
+            # API 실패 시: 보수적으로 skip 처리 (안전 우선).
+            # 원제목을 그대로 카드로 만드는 폴백은 안전 분류를 거치지 않아 위험.
             results.append(SummarizedNews(
                 original_title=item.title,
-                card_title=item.title,
+                card_title="",
                 card_body="",
-                hashtags=["#뉴스"],
+                hashtags=[],
                 source=item.source,
                 link=item.link,
+                decision="skip",
+                skip_reason=f"summarization_error: {type(e).__name__}",
             ))
-    
+
     return results
+
+
+def filter_postable(summaries: List[SummarizedNews]) -> List[SummarizedNews]:
+    """skip된 항목 제거 + 결과 로깅"""
+    postable = []
+    for s in summaries:
+        if s.decision == "skip":
+            print(f"  ⊘ SKIP: {s.original_title[:50]} ({s.skip_reason})")
+        else:
+            postable.append(s)
+    return postable
 
 
 if __name__ == "__main__":
     from fetch_news import fetch_google_news_korea
-    
-    # 테스트: 3건만
-    news = fetch_google_news_korea(limit=3)
+
+    news = fetch_google_news_korea(limit=5)
     summaries = summarize_news(news)
-    
+
     print("=" * 60)
-    print("📝 요약 결과")
+    print("📝 요약 결과 (안전 분류 포함)")
     print("=" * 60)
     for i, s in enumerate(summaries, 1):
-        print(f"\n[{i}] {s.card_title}")
-        print(f"    본문: {s.card_body}")
-        print(f"    해시태그: {' '.join(s.hashtags)}")
-        print(f"    출처: {s.source}")
+        print(f"\n[{i}] decision={s.decision}")
+        print(f"    원제목: {s.original_title[:60]}")
+        if s.decision == "skip":
+            print(f"    SKIP 사유: {s.skip_reason}")
+        else:
+            print(f"    카드 제목: {s.card_title}")
+            print(f"    본문: {s.card_body}")
+            print(f"    해시태그: {' '.join(s.hashtags)}")

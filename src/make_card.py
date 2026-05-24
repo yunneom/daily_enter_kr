@@ -164,8 +164,13 @@ def make_card(
     font_path: str = None,
     size: Tuple[int, int] = (1080, 1080),
     seed: int = None,
+    total_cards: int = 9,
 ):
-    """단일 카드뉴스 이미지 생성 (K-엔터 시네마틱 배경)"""
+    """단일 카드뉴스 이미지 생성 (K-엔터 시네마틱 배경).
+
+    Args:
+        total_cards: 캐러셀의 총 카드 수 (표지 제외). 페이지 인디케이터 표시용.
+    """
     if theme not in COLOR_THEMES:
         theme = "neon_seoul"
     colors = COLOR_THEMES[theme]
@@ -210,7 +215,7 @@ def make_card(
     draw.text((60, 90), f"#{rank}", font=font_rank, fill=colors["accent"])
 
     # 4-b. 우상단 페이지 인디케이터 (캐러셀 위치 안내)
-    page_label = f"{rank:02d} / 09"
+    page_label = f"{rank:02d} / {total_cards:02d}"
     page_bbox = font_source.getbbox(page_label)
     draw.text(
         (size[0] - 60 - (page_bbox[2] - page_bbox[0]), 90),
@@ -245,8 +250,14 @@ def make_card(
 
 
 def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
-                    font_path: str = None, size=(1080, 1080), seed: int = None):
-    """캐러셀 첫 장(표지) 생성 — K-엔터 시네마틱 배경"""
+                    font_path: str = None, size=(1080, 1080), seed: int = None,
+                    total_cards: int = None):
+    """캐러셀 첫 장(표지) 생성 — K-엔터 시네마틱 배경
+
+    Args:
+        total_cards: 본문 카드 수 (표지 제외). None이면 'HOT NEWS' 라벨 사용.
+                     그 외에는 'TOP {N}' 동적 표시.
+    """
     if theme not in COLOR_THEMES:
         theme = "neon_seoul"
     colors = COLOR_THEMES[theme]
@@ -254,7 +265,7 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
         seed = hash(date_str) % (2 ** 31)
     img = make_cinematic_background(size, colors, seed=seed)
     draw = ImageDraw.Draw(img)
-    
+
     candidates = [
         font_path,
         "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
@@ -263,18 +274,24 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
         "C:/Windows/Fonts/malgunbd.ttf",
     ]
     font_file = next((c for c in candidates if c and Path(c).exists()), None)
-    
+
     if font_file:
         font_big = ImageFont.truetype(font_file, 140)
         font_mid = ImageFont.truetype(font_file, 80)
         font_small = ImageFont.truetype(font_file, 40)
     else:
         font_big = font_mid = font_small = ImageFont.load_default()
-    
+
+    # 본문 카드 수에 맞춰 라벨 결정 (불일치 방지)
+    if total_cards is None or total_cards <= 0:
+        rank_label = "HOT NEWS"
+    else:
+        rank_label = f"TOP {total_cards}"
+
     # 중앙 정렬
     draw.text((100, 380), "오늘의", font=font_mid, fill=colors["subtext"])
     draw.text((100, 470), "K-연예", font=font_big, fill=colors["accent"])
-    draw.text((100, 640), "TOP 10", font=font_big, fill=colors["text"])
+    draw.text((100, 640), rank_label, font=font_big, fill=colors["text"])
     draw.text((100, 820), date_str, font=font_small, fill=colors["subtext"])
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -284,29 +301,28 @@ def make_cover_card(date_str: str, output_path: Path, theme: str = "neon_seoul",
 
 if __name__ == "__main__":
     from datetime import datetime
-    
-    # 테스트 카드 생성 (스크립트 위치 기준 상대 경로)
+
+    # 5가지 K-엔터 팔레트 미리보기 (테스트용)
     output_dir = Path(__file__).parent.parent / "output" / "sample"
     output_dir.mkdir(parents=True, exist_ok=True)
-    
-    # 표지
+
     make_cover_card(
         date_str=datetime.now().strftime("%Y년 %m월 %d일"),
         output_path=output_dir / "00_cover.jpg",
-        theme="default",
+        theme="neon_seoul",
     )
-    
-    # 샘플 카드들
+
     samples = [
-        (1, "삼성전자 총파업 위기", "노조와의 최후 협상이 오늘 진행됩니다. 합의 실패 시 사상 첫 총파업으로 이어질 전망입니다.", "매일경제", "default"),
-        (2, "이란-미국 일촉즉발", "이란이 새 협상안을 제출했고 트럼프는 공격 중단을 지시했습니다. 긴장은 여전히 남아있는 상황입니다.", "경향신문", "warm"),
-        (3, "초여름 더위 31도", "오늘 낮 최고기온이 31도까지 오르며 초여름 더위가 절정에 달합니다. 밤부터 비 소식이 있습니다.", "한겨레", "cool"),
+        (1, "neon_seoul",   "아이브 새 앨범 티저 공개",      "신곡 'XYZ' 콘셉트 영상이 깜짝 공개됐다. 비주얼 디렉터는 누구일지 팬들 관심 집중.",          "스포츠동아"),
+        (2, "stage_gold",   "지드래곤, 월드투어 8개 도시 추가", "기존 발표된 12개 도시에 8개가 추가됐다. 아시아 우선, 북미는 9월부터 시작 예정.",                "OSEN"),
+        (3, "kpop_pastel",  "뉴진스 컴백, 음악 방송 1위",     "발매 첫 주 음원 차트 상위권 진입에 이어 지상파 음악 방송에서 1위를 차지했다.",                "마이데일리"),
+        (4, "noir_cinema",  "박찬욱 감독 신작, 칸 출품 확정",  "이번 작품은 미스터리 스릴러 장르로, 주연 배우 라인업이 곧 공개될 예정이다.",                  "씨네21"),
+        (5, "dream_purple", "유재석, 신규 예능 진행 합류",     "케이블 채널 새 프로그램에 단독 MC로 합류한다. 첫 녹화는 다음 달 초로 알려졌다.",              "스타뉴스"),
     ]
-    
-    for rank, title, body, source, theme in samples:
-        path = output_dir / f"{rank:02d}_card.jpg"
-        make_card(rank, title, body, source, path, theme=theme)
+    for rank, theme, title, body, source in samples:
+        path = output_dir / f"{rank:02d}_{theme}.jpg"
+        make_card(rank, title, body, source, path, theme=theme, total_cards=len(samples))
         print(f"✅ 생성: {path}")
-    
+
     print(f"\n총 {len(samples) + 1}개 이미지 생성 완료")
     print(f"출력 폴더: {output_dir}")

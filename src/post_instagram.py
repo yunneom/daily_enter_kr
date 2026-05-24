@@ -44,6 +44,34 @@ class InstagramPublisher:
         """
         self.ig_user_id = ig_user_id
         self.access_token = access_token
+
+    def health_check(self) -> dict:
+        """토큰 유효성 + 연결된 IG 계정 정보 확인.
+
+        Returns: dict {ok: bool, username, account_type, error_message}
+        토큰이 만료됐거나 잘못된 경우 ok=False와 함께 error_message 반환.
+        """
+        try:
+            resp = requests.get(
+                f"{GRAPH_API_BASE}/me",
+                params={
+                    "fields": "user_id,username,account_type",
+                    "access_token": self.access_token,
+                },
+                timeout=15,
+            )
+            if not resp.ok:
+                err = resp.json().get("error", {}).get("message", resp.text[:200])
+                return {"ok": False, "error_message": f"HTTP {resp.status_code}: {err}"}
+            data = resp.json()
+            return {
+                "ok": True,
+                "username": data.get("username"),
+                "account_type": data.get("account_type"),
+                "user_id": data.get("user_id") or data.get("id"),
+            }
+        except Exception as e:
+            return {"ok": False, "error_message": f"{type(e).__name__}: {e}"}
     
     def _create_image_container(self, image_url: str, is_carousel_item: bool = True) -> str:
         """캐러셀 자식 컨테이너 생성"""
@@ -200,27 +228,27 @@ def upload_image(image_path: Path) -> str:
 
 
 def build_caption(summaries, date_str: str) -> str:
-    """인스타 캡션 생성 (K-연예 톤)"""
+    """인스타 캡션 생성 (K-연예 톤, 클릭베이트 회피)"""
+    n = len(summaries)
     lines = [
-        f"오늘의 K-연예 TOP 10 ({date_str})",
+        f"오늘의 K-연예 TOP {n} · {date_str}",
         "",
-        "오늘 안 보면 손해. 슬라이드 →",
+        "→ 슬라이드를 넘겨 하나씩 확인해보세요",
         "",
     ]
 
-    # 본문에 각 뉴스 한 줄씩 (제목만 노출 = 슬라이드 안 보면 모름 → 클릭 유도)
     for i, s in enumerate(summaries, 1):
         lines.append(f"{i}. {s.card_title}")
 
     lines.append("")
-    lines.append("자세한 내용은 슬라이드를 넘겨주세요.")
-    lines.append("본 게시물은 자동 큐레이션이며 원문 기사를 함께 확인해주세요.")
+    lines.append("본 게시물은 공개된 보도 내용을 자동 큐레이션한 카드뉴스이며,")
+    lines.append("정확한 내용은 원문 기사를 함께 확인해 주세요.")
     lines.append("")
 
-    # 해시태그 수집 + 중복 제거 (K-연예 우선 태그를 앞에 배치)
+    # 해시태그 수집 + 중복 제거. 자극 키워드(#충격 #논란) 등은 summarize 단계에서 이미 차단됨.
     all_hashtags = [
-        "#K연예", "#연예뉴스", "#오늘의연예", "#연예핫이슈",
-        "#카드뉴스", "#연예TOP10", "#kpop", "#kdrama", "#한국연예",
+        "#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
+        "#카드뉴스", "#kpop", "#kdrama", "#한국연예",
     ]
     for s in summaries:
         all_hashtags.extend(s.hashtags)
@@ -235,4 +263,4 @@ if __name__ == "__main__":
     print("필요 환경변수:")
     print("  - INSTAGRAM_USER_ID")
     print("  - INSTAGRAM_ACCESS_TOKEN")
-    print("  - IMGUR_CLIENT_ID")
+    print("  - CLOUDINARY_CLOUD_NAME + CLOUDINARY_UPLOAD_PRESET (또는 IMGUR_CLIENT_ID)")
