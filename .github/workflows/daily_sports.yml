@@ -9,9 +9,9 @@ name: Daily — daily_sports_kr (K-스포츠)
 #      INSTAGRAM_APP_SECRET_SPORTS (또는 기존 _ 재사용)
 
 on:
-  schedule:
-    # 한국시간 오전 9시 (UTC 00:00). daily_enter와 1시간 간격 (동시 게시 의심 회피).
-    - cron: '0 0 * * *'
+  # 시크릿(INSTAGRAM_USER_ID_SPORTS 등) 세팅 후 schedule 줄 주석 해제하세요.
+  # schedule:
+  #   - cron: '0 0 * * *'   # 한국시간 09:00 (daily_enter와 1시간 간격)
   workflow_dispatch:
 
 permissions:

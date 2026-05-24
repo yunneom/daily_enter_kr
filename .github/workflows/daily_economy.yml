@@ -8,9 +8,9 @@ name: Daily — daily_economy_kr (K-경제)
 #      (INSTAGRAM_APP_SECRET_ECONOMY는 같은 Meta 앱 쓰면 기본 _ 재사용 가능)
 
 on:
-  schedule:
-    # 한국시간 오전 10시 (UTC 01:00). 다른 채널과 시간차 두기.
-    - cron: '0 1 * * *'
+  # 시크릿(INSTAGRAM_USER_ID_ECONOMY 등) 세팅 후 schedule 줄 주석 해제하세요.
+  # schedule:
+  #   - cron: '0 1 * * *'   # 한국시간 10:00 (다른 채널과 시간차)
   workflow_dispatch:
 
 permissions:
