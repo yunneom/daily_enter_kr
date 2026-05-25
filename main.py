@@ -294,10 +294,12 @@ if __name__ == "__main__":
         print(f"\n❌ 오류 발생: {e}")
         import traceback
         traceback.print_exc()
-        # state에 실패 기록 (가능하면)
+        # state에 실패 기록 (가능하면) — 타입명 + 메시지 일부도 남겨 사후 진단 가능하도록
         try:
             st = load_state()
-            record_run(st, f"failed: {type(e).__name__}")
+            msg = str(e).strip().replace("\n", " ")[:240]
+            status = f"failed: {type(e).__name__}: {msg}" if msg else f"failed: {type(e).__name__}"
+            record_run(st, status)
             save_state(st)
         except Exception:
             pass

@@ -73,6 +73,26 @@ class InstagramPublisher:
         except Exception as e:
             return {"ok": False, "error_message": f"{type(e).__name__}: {e}"}
     
+    @staticmethod
+    def _post_ig(url: str, params: dict, step: str, timeout: int = 30):
+        """IG Graph API POST 래퍼. 실패 시 응답 본문의 error.message/code/subcode를 메시지에 포함시켜
+        re-raise. raise_for_status만 호출하면 'HTTPError: 400 Client Error'만 남아 진단이 어렵다."""
+        resp = requests.post(url, params=params, timeout=timeout)
+        if not resp.ok:
+            try:
+                err = resp.json().get("error", {}) or {}
+                detail = (
+                    f"code={err.get('code')} subcode={err.get('error_subcode')} "
+                    f"type={err.get('type')} msg={err.get('message', '')[:240]}"
+                )
+            except Exception:
+                detail = resp.text[:300]
+            raise requests.HTTPError(
+                f"IG {step} HTTP {resp.status_code} — {detail}",
+                response=resp,
+            )
+        return resp
+
     def _create_image_container(self, image_url: str, is_carousel_item: bool = True) -> str:
         """캐러셀 자식 컨테이너 생성"""
         url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
@@ -81,10 +101,9 @@ class InstagramPublisher:
             "is_carousel_item": str(is_carousel_item).lower(),
             "access_token": self.access_token,
         }
-        resp = requests.post(url, params=params, timeout=30)
-        resp.raise_for_status()
+        resp = self._post_ig(url, params, step="create_child")
         return resp.json()["id"]
-    
+
     def _create_carousel_container(self, child_ids: List[str], caption: str) -> str:
         """캐러셀 메인 컨테이너 생성"""
         url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
@@ -94,10 +113,9 @@ class InstagramPublisher:
             "caption": caption,
             "access_token": self.access_token,
         }
-        resp = requests.post(url, params=params, timeout=30)
-        resp.raise_for_status()
+        resp = self._post_ig(url, params, step="create_carousel")
         return resp.json()["id"]
-    
+
     def _publish_container(self, container_id: str) -> str:
         """컨테이너 게시"""
         url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media_publish"
@@ -105,22 +123,26 @@ class InstagramPublisher:
             "creation_id": container_id,
             "access_token": self.access_token,
         }
-        resp = requests.post(url, params=params, timeout=30)
-        resp.raise_for_status()
+        resp = self._post_ig(url, params, step="publish")
         return resp.json()["id"]
     
     def _wait_container_ready(self, container_id: str, timeout: int = 60):
-        """컨테이너가 FINISHED 상태가 될 때까지 대기"""
+        """컨테이너가 FINISHED 상태가 될 때까지 대기.
+        ERROR 상태이면 status 필드(IG가 사람-가독한 reason을 담아 줌)를 같이 fetch 해 메시지에 포함."""
         url = f"{GRAPH_API_BASE}/{container_id}"
-        params = {"fields": "status_code", "access_token": self.access_token}
+        params = {"fields": "status_code,status", "access_token": self.access_token}
         elapsed = 0
         while elapsed < timeout:
             resp = requests.get(url, params=params, timeout=10)
-            status = resp.json().get("status_code")
-            if status == "FINISHED":
+            data = resp.json() if resp.ok else {}
+            status_code = data.get("status_code")
+            if status_code == "FINISHED":
                 return
-            if status == "ERROR":
-                raise Exception(f"Container {container_id} failed")
+            if status_code in ("ERROR", "EXPIRED"):
+                reason = data.get("status") or resp.text[:200]
+                raise requests.HTTPError(
+                    f"IG container {container_id} {status_code}: {reason}"
+                )
             time.sleep(3)
             elapsed += 3
         raise TimeoutError(f"Container {container_id} not ready in {timeout}s")
