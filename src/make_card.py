@@ -51,25 +51,30 @@ def _wrap_text(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> List[
     return lines
 
 
-def _fit_title(
+def _fit_title_single_line(
     text: str,
     font_path: str,
     max_width: int,
-    max_lines: int = 4,
     size_max: int = 110,
-    size_min: int = 56,
-) -> Tuple[ImageFont.FreeTypeFont, List[str]]:
-    """제목 길이에 따라 폰트 크기 자동 조정 — max_lines 안에 들어오는 가장 큰 사이즈 선택."""
+    size_min: int = 36,
+) -> Tuple[ImageFont.FreeTypeFont, str]:
+    """제목을 무조건 한 줄로. 폰트 크기 자동 조정.
+    size_min 으로도 안 들어오면 끝을 '…' 로 잘라냄.
+    """
     if not font_path:
         f = ImageFont.load_default()
-        return f, _wrap_text(text, f, max_width)
-    for size in range(size_max, size_min - 1, -6):
+        return f, text
+    for size in range(size_max, size_min - 1, -4):
         font = ImageFont.truetype(font_path, size)
-        lines = _wrap_text(text, font, max_width)
-        if len(lines) <= max_lines:
-            return font, lines
+        bbox = font.getbbox(text)
+        if bbox[2] - bbox[0] <= max_width:
+            return font, text
+    # 그래도 안 맞으면 size_min 에서 잘라내기
     font = ImageFont.truetype(font_path, size_min)
-    return font, _wrap_text(text, font, max_width)
+    truncated = text
+    while truncated and font.getbbox(truncated + "…")[2] > max_width:
+        truncated = truncated[:-1]
+    return font, (truncated + "…") if truncated != text else text
 
 
 def _draw_centered(draw, y: int, text: str, font: ImageFont.FreeTypeFont,
@@ -85,21 +90,61 @@ def make_card(
     font_path: str = None,
     size: Tuple[int, int] = CARD_SIZE,
 ):
-    """본문 카드 — 흰 배경 위 검정 제목 중앙 정렬."""
+    """본문 카드 — 흰 배경 + 검정 제목 한 줄(중앙 정렬). 폰트 크기 자동 축소."""
     img = Image.new("RGB", size, BG_COLOR)
     draw = ImageDraw.Draw(img)
 
     resolved = _resolve_font(font_path)
-    font, lines = _fit_title(title, resolved, max_width=size[0] - SIDE_MARGIN * 2)
+    font, rendered = _fit_title_single_line(
+        title, resolved, max_width=size[0] - SIDE_MARGIN * 2,
+    )
 
-    # 줄 높이 = ascent+descent + 25% 행간
     ascent, descent = font.getmetrics() if hasattr(font, "getmetrics") else (60, 12)
-    line_height = int((ascent + descent) * 1.25)
-    block_h = line_height * len(lines)
-    y0 = (size[1] - block_h) // 2
+    y = (size[1] - (ascent + descent)) // 2
+    _draw_centered(draw, y, rendered, font, size[0])
 
-    for i, line in enumerate(lines):
-        _draw_centered(draw, y0 + i * line_height, line, font, size[0])
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(output_path, "JPEG", quality=95)
+    return output_path
+
+
+def make_sources_card(
+    sources: List[str],
+    output_path: Path,
+    font_path: str = None,
+    size: Tuple[int, int] = CARD_SIZE,
+):
+    """출처 카드 — '출처' 라벨 + 고유 출처 리스트 (중앙 정렬, 검정/회색)."""
+    img = Image.new("RGB", size, BG_COLOR)
+    draw = ImageDraw.Draw(img)
+
+    resolved = _resolve_font(font_path)
+    if resolved:
+        f_label = ImageFont.truetype(resolved, 64)
+        f_item = ImageFont.truetype(resolved, 46)
+    else:
+        f_label = f_item = ImageFont.load_default()
+
+    # 중복 제거하되 순서 보존
+    seen = set()
+    unique = []
+    for s in sources:
+        if s and s not in seen:
+            seen.add(s)
+            unique.append(s)
+
+    # 라벨 + 빈 줄 + 출처들 — 전체 블록을 수직 중앙 정렬
+    label_h = f_label.getbbox("출처")[3]
+    item_h = int(f_item.getbbox("가")[3] * 1.7)  # 행간 1.7
+    gap_after_label = 60
+    block_h = label_h + gap_after_label + item_h * len(unique)
+    y = (size[1] - block_h) // 2
+
+    _draw_centered(draw, y, "출처", f_label, size[0], fill=SUBTLE_COLOR)
+    y += label_h + gap_after_label
+    for src in unique:
+        _draw_centered(draw, y, src, f_item, size[0])
+        y += item_h
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=95)
@@ -144,25 +189,31 @@ if __name__ == "__main__":
     output_dir = Path(__file__).parent.parent / "output" / "sample"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    make_cover_card(
-        date_str=datetime.now().strftime("%Y년 %m월 %d일"),
-        output_path=output_dir / "00_cover.jpg",
-        label_short="K-연예",
-        total_cards=5,
-    )
-    print(f"✅ 표지: {output_dir / '00_cover.jpg'}")
-
+    # 캐러셀 순서: 본문 N장 → 출처 → 표지(아웃트로)
     samples = [
-        "아이브 새 앨범 티저 공개",
-        "지드래곤, 월드투어 8개 도시 추가",
-        "뉴진스 컴백, 음악 방송 1위",
-        "박찬욱 감독 신작, 칸 출품 확정",
-        "유재석, 신규 예능 진행 합류",
+        ("아이브 새 앨범 티저 공개", "스포츠동아"),
+        ("지드래곤, 월드투어 8개 도시 추가", "OSEN"),
+        ("뉴진스 컴백, 음악 방송 1위", "마이데일리"),
+        ("박찬욱 감독 신작 '미스트리스', 칸영화제 경쟁 부문 출품 확정", "씨네21"),
+        ("유재석, 신규 예능 진행 합류", "스타뉴스"),
     ]
-    for i, title in enumerate(samples, 1):
+    for i, (title, _src) in enumerate(samples, 1):
         path = output_dir / f"{i:02d}_card.jpg"
         make_card(title, path)
         print(f"✅ {i:02d}: {title}")
 
-    print(f"\n총 {len(samples) + 1}개 이미지 생성")
+    sources_path = output_dir / "90_sources.jpg"
+    make_sources_card([src for _, src in samples], sources_path)
+    print(f"✅ 출처: {sources_path.name}")
+
+    outro_path = output_dir / "99_outro.jpg"
+    make_cover_card(
+        date_str=datetime.now().strftime("%Y년 %m월 %d일"),
+        output_path=outro_path,
+        label_short="K-연예",
+        total_cards=len(samples),
+    )
+    print(f"✅ 표지(아웃트로): {outro_path.name}")
+
+    print(f"\n총 {len(samples) + 2}개 이미지 생성")
     print(f"출력 폴더: {output_dir}")

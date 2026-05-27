@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_cover_card
+from make_card import make_card, make_cover_card, make_sources_card
 from post_instagram import InstagramPublisher, upload_image, build_caption
 from state import (
     load_state, save_state, filter_duplicates, record_post, record_run,
@@ -59,9 +59,9 @@ CHANNEL = CHANNELS.get(CHANNEL_ID, CHANNELS["daily_enter_kr"])
 os.environ.setdefault("STATE_PATH", CHANNEL["state_path"])
 
 # === 운영 설정 ===
-FETCH_LIMIT = 20       # 안전/중복 필터 후 9건 확보를 위해 여유롭게 수집
-MIN_CARDS = 3          # 게시 가능한 최소 카드 수 (이보다 적으면 게시 스킵)
-MAX_CARDS = 9          # 표지 + 9 = 캐러셀 10장 한도
+FETCH_LIMIT = 20       # 안전/중복 필터 후 충분히 확보를 위해 여유롭게 수집
+MIN_CARDS = 3          # 게시 가능한 최소 본문 카드 수 (이보다 적으면 게시 스킵)
+MAX_CARDS = 8          # 본문 8 + 출처 + 표지(아웃트로) = 캐러셀 10장 한도
 UPLOAD_RETRIES = 3     # 호스팅 업로드 재시도 횟수
 UPLOAD_BACKOFF = 2.0   # 지수 백오프 base (sec)
 CRON_JITTER_MAX_SEC = 5400  # CI에서만 적용 (0-90분 랜덤 지연 — 봇 패턴 회피 강화)
@@ -176,27 +176,36 @@ def main():
         print(f"  [{i}]{marker} {s.card_title}")
 
     # === 3. 카드 이미지 생성 (미니멀: 흰 배경 + 검정 제목) ===
+    # 캐러셀 순서: 본문 N장 → 출처 → 표지(아웃트로)
     print("\n" + "="*60)
     print("3️⃣  카드뉴스 이미지 생성")
     print("="*60)
     image_paths = []
     total_cards = len(summaries)
 
-    cover_path = output_dir / "00_cover.jpg"
-    make_cover_card(
-        date_str=date_str,
-        output_path=cover_path,
-        label_short=CHANNEL["label_short"],
-        total_cards=total_cards,
-    )
-    image_paths.append(cover_path)
-    print(f"  ✓ 표지: {cover_path.name} (TOP {total_cards})")
-
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
         make_card(title=s.card_title, output_path=path)
         image_paths.append(path)
         print(f"  ✓ {path.name}: {s.card_title}")
+
+    sources_path = output_dir / "90_sources.jpg"
+    make_sources_card(
+        sources=[s.source for s in summaries],
+        output_path=sources_path,
+    )
+    image_paths.append(sources_path)
+    print(f"  ✓ {sources_path.name}: 출처 카드")
+
+    outro_path = output_dir / "99_outro.jpg"
+    make_cover_card(
+        date_str=date_str,
+        output_path=outro_path,
+        label_short=CHANNEL["label_short"],
+        total_cards=total_cards,
+    )
+    image_paths.append(outro_path)
+    print(f"  ✓ {outro_path.name}: 표지(아웃트로) — TOP {total_cards}")
 
     # === 4. 인스타그램 업로드 사전 체크 ===
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
