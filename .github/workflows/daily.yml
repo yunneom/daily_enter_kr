@@ -28,10 +28,11 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Korean fonts
+      - name: Install Korean fonts + ffmpeg
         run: |
           sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk
+          # ffmpeg 는 ubuntu-latest 에 기본 설치돼 있지만 명시적으로 보장 (Reels mp4 빌드용)
+          sudo apt-get install -y fonts-noto-cjk ffmpeg
 
       - name: Install Python dependencies
         run: |

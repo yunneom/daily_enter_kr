@@ -15,7 +15,7 @@ BG_COLOR = (255, 255, 255)        # 순백
 TEXT_COLOR = (17, 17, 17)         # 거의 검정 (#111)
 SUBTLE_COLOR = (170, 170, 170)    # 옅은 회색 (cover 날짜용)
 
-CARD_SIZE = (1080, 1080)
+CARD_SIZE = (1080, 1920)          # 9:16 (Reels/Stories 표준)
 SIDE_MARGIN = 110                 # 좌우 여백
 
 # 시스템 한글 폰트 자동 탐색 후보 (대부분 Bold/Heavy 자체가 미니멀 룩에 어울림)
@@ -55,8 +55,8 @@ def _fit_title_single_line(
     text: str,
     font_path: str,
     max_width: int,
-    size_max: int = 110,
-    size_min: int = 36,
+    size_max: int = 140,
+    size_min: int = 44,
 ) -> Tuple[ImageFont.FreeTypeFont, str]:
     """제목을 무조건 한 줄로. 폰트 크기 자동 조정.
     size_min 으로도 안 들어오면 끝을 '…' 로 잘라냄.
@@ -120,8 +120,8 @@ def make_sources_card(
 
     resolved = _resolve_font(font_path)
     if resolved:
-        f_label = ImageFont.truetype(resolved, 64)
-        f_item = ImageFont.truetype(resolved, 46)
+        f_label = ImageFont.truetype(resolved, 84)
+        f_item = ImageFont.truetype(resolved, 58)
     else:
         f_label = f_item = ImageFont.load_default()
 
@@ -165,18 +165,19 @@ def make_cover_card(
 
     resolved = _resolve_font(font_path)
     if resolved:
-        f_big = ImageFont.truetype(resolved, 140)
-        f_mid = ImageFont.truetype(resolved, 70)
-        f_date = ImageFont.truetype(resolved, 40)
+        f_big = ImageFont.truetype(resolved, 180)
+        f_mid = ImageFont.truetype(resolved, 90)
+        f_date = ImageFont.truetype(resolved, 52)
     else:
         f_big = f_mid = f_date = ImageFont.load_default()
 
     rank_label = f"TOP {total_cards}" if total_cards and total_cards > 0 else "HOT NEWS"
 
-    _draw_centered(draw, 320, "오늘의", f_mid, size[0])
-    _draw_centered(draw, 420, label_short, f_big, size[0])
-    _draw_centered(draw, 620, rank_label, f_big, size[0])
-    _draw_centered(draw, 840, date_str, f_date, size[0], fill=SUBTLE_COLOR)
+    # 9:16 캔버스를 4단으로 분할 — 시각 중심을 살짝 위로(약 y=720) 두고 날짜는 하단 1/4
+    _draw_centered(draw, 620, "오늘의", f_mid, size[0])
+    _draw_centered(draw, 740, label_short, f_big, size[0])
+    _draw_centered(draw, 1000, rank_label, f_big, size[0])
+    _draw_centered(draw, 1280, date_str, f_date, size[0], fill=SUBTLE_COLOR)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=95)
