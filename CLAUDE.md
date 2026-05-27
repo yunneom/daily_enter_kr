@@ -109,10 +109,19 @@ python exchange_token.py --refresh
 - 슬라이드 순서: 본문 N장 → 출처(`90_sources.jpg`) → 표지(`99_outro.jpg`). 변경은 `main.py`의 image_paths 순서 조정
 
 ### Reels 영상 수정
-- 카드당 노출 초: `src/make_video.py`의 `SECONDS_PER_CARD` (기본 3.0초)
-- 카드 사이 페이드: `CROSSFADE_SEC` (기본 0.4초; 0 이면 컷)
+- 카드당 노출 초: `src/make_video.py`의 `SECONDS_PER_CARD` (기본 2.0초)
+- 카드 사이 페이드: `CROSSFADE_SEC` (기본 0.3초; 0 이면 컷)
 - 해상도/fps: `TARGET_W`/`TARGET_H`/`FPS`
-- 총 길이 = (N + 2) × 초 − N × 페이드. N=8 + 출처/표지(=10) → 약 26초
+- 총 길이 = (N+2) × 초 − (N+1) × 페이드. N=8 + 출처/표지(=10) → 약 17초
+
+### 폰트 변경
+- 1순위 `Pretendard` (Bold/SemiBold/Medium/Regular 4 weight) — 워크플로우가 GitHub release zip 에서 자동 설치
+- 폴백 `NotoSansCJK-Bold/Regular`. 폴백 시 weight 위계가 무너져 살짝 단조로워짐
+- 함수별 weight 매핑:
+  - `make_card` 제목: SemiBold (Bold 보다 영상에서 덜 딱딱)
+  - `make_cover_card`: '오늘의'=Medium / '{label}','TOP N'=Bold / 날짜=Regular
+  - `make_sources_card`: '출처'=SemiBold / 항목=Medium
+- 폰트 추가는 `_find_pretendard()` + `_resolve_font(weight=...)` 호출부만 수정
 
 ### 토픽 변경
 - `fetch_news.py`의 `TOPIC_URLS`에 다른 토픽 추가 또는

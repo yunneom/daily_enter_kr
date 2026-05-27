@@ -18,19 +18,46 @@ SUBTLE_COLOR = (170, 170, 170)    # 옅은 회색 (cover 날짜용)
 CARD_SIZE = (1080, 1920)          # 9:16 (Reels/Stories 표준)
 SIDE_MARGIN = 110                 # 좌우 여백
 
-# 시스템 한글 폰트 자동 탐색 후보 (대부분 Bold/Heavy 자체가 미니멀 룩에 어울림)
-FONT_CANDIDATES = [
-    "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
-    "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
-    "/System/Library/Fonts/AppleSDGothicNeo.ttc",
-    "C:/Windows/Fonts/malgunbd.ttf",
+# Pretendard (한국 모던 디자인의 사실상 표준) 우선, 시스템 Noto 폴백.
+# weight 별로 다른 파일을 쓰므로 dict 로 관리.
+_PRETENDARD_DIRS = [
+    "/usr/share/fonts/truetype/pretendard",
+    "/usr/share/fonts/opentype/pretendard",  # 워크플로우 설치 위치 후보
 ]
+_NOTO_BOLD = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
+_NOTO_REGULAR = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
 
 
-def _resolve_font(font_path: str = None) -> str:
-    """첫 번째로 존재하는 폰트 경로 반환. 못 찾으면 None → load_default 폴백."""
-    for c in [font_path] + FONT_CANDIDATES:
-        if c and Path(c).exists():
+def _find_pretendard(weight: str) -> str:
+    for d in _PRETENDARD_DIRS:
+        p = Path(d) / f"Pretendard-{weight}.otf"
+        if p.exists():
+            return str(p)
+    return None
+
+
+def _resolve_font(weight: str = "Bold", font_path: str = None) -> str:
+    """가중치별 폰트 경로 — Pretendard 우선, 없으면 Noto Sans CJK.
+    weight: 'Bold' | 'SemiBold' | 'Medium' | 'Regular'
+    """
+    if font_path and Path(font_path).exists():
+        return font_path
+    p = _find_pretendard(weight)
+    if p:
+        return p
+    # Noto 폴백 (가중치는 Bold/Regular 두 단계만)
+    if weight in ("Bold", "SemiBold") and Path(_NOTO_BOLD).exists():
+        return _NOTO_BOLD
+    if Path(_NOTO_REGULAR).exists():
+        return _NOTO_REGULAR
+    # 마지막 폴백 — 시스템 어디든
+    legacy = [
+        "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
+        "/System/Library/Fonts/AppleSDGothicNeo.ttc",
+        "C:/Windows/Fonts/malgunbd.ttf",
+    ]
+    for c in legacy:
+        if Path(c).exists():
             return c
     return None
 
@@ -64,7 +91,7 @@ def _fit_title_single_line(
     if not font_path:
         f = ImageFont.load_default()
         return f, text
-    for size in range(size_max, size_min - 1, -4):
+    for size in range(size_max, size_min - 1, -2):
         font = ImageFont.truetype(font_path, size)
         bbox = font.getbbox(text)
         if bbox[2] - bbox[0] <= max_width:
@@ -90,11 +117,14 @@ def make_card(
     font_path: str = None,
     size: Tuple[int, int] = CARD_SIZE,
 ):
-    """본문 카드 — 흰 배경 + 검정 제목 한 줄(중앙 정렬). 폰트 크기 자동 축소."""
+    """본문 카드 — 흰 배경 + 검정 제목 한 줄(중앙 정렬). 폰트 크기 자동 축소.
+
+    제목은 Pretendard SemiBold 사용 — Bold 보다 살짝 가벼워서 영상에서 덜 딱딱해 보임.
+    """
     img = Image.new("RGB", size, BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    resolved = _resolve_font(font_path)
+    resolved = _resolve_font(weight="SemiBold", font_path=font_path)
     font, rendered = _fit_title_single_line(
         title, resolved, max_width=size[0] - SIDE_MARGIN * 2,
     )
@@ -118,10 +148,12 @@ def make_sources_card(
     img = Image.new("RGB", size, BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    resolved = _resolve_font(font_path)
-    if resolved:
-        f_label = ImageFont.truetype(resolved, 84)
-        f_item = ImageFont.truetype(resolved, 58)
+    # 라벨(SemiBold 84) + 항목(Medium 58) — 가중치 분리로 위계 만들기
+    label_font_path = _resolve_font(weight="SemiBold", font_path=font_path)
+    item_font_path = _resolve_font(weight="Medium", font_path=font_path)
+    if label_font_path and item_font_path:
+        f_label = ImageFont.truetype(label_font_path, 84)
+        f_item = ImageFont.truetype(item_font_path, 58)
     else:
         f_label = f_item = ImageFont.load_default()
 
@@ -163,11 +195,14 @@ def make_cover_card(
     img = Image.new("RGB", size, BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    resolved = _resolve_font(font_path)
-    if resolved:
-        f_big = ImageFont.truetype(resolved, 180)
-        f_mid = ImageFont.truetype(resolved, 90)
-        f_date = ImageFont.truetype(resolved, 52)
+    # 위계: 라벨/TOP(Bold) > '오늘의'(Medium) > 날짜(Regular)
+    bold_path = _resolve_font(weight="Bold", font_path=font_path)
+    medium_path = _resolve_font(weight="Medium", font_path=font_path)
+    regular_path = _resolve_font(weight="Regular", font_path=font_path)
+    if bold_path and medium_path and regular_path:
+        f_big = ImageFont.truetype(bold_path, 180)
+        f_mid = ImageFont.truetype(medium_path, 90)
+        f_date = ImageFont.truetype(regular_path, 52)
     else:
         f_big = f_mid = f_date = ImageFont.load_default()
 

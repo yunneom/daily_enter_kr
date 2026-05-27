@@ -20,8 +20,8 @@ from pathlib import Path
 from typing import List
 
 
-SECONDS_PER_CARD = 3.0      # 카드당 노출 시간
-CROSSFADE_SEC = 0.4         # 카드 전환 페이드 길이 (0이면 컷)
+SECONDS_PER_CARD = 2.0      # 카드당 노출 시간 (3초 → 2초, Reels 페이스에 맞춰 짧게)
+CROSSFADE_SEC = 0.3         # 카드 전환 페이드 길이 (2초 카드에 0.4는 무겁다 → 0.3)
 TARGET_W, TARGET_H = 1080, 1920
 FPS = 30
 

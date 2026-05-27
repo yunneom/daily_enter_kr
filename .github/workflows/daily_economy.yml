@@ -35,10 +35,18 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Korean fonts + ffmpeg
+      - name: Install Korean fonts (Pretendard + Noto fallback) + ffmpeg
         run: |
           sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk ffmpeg
+          sudo apt-get install -y fonts-noto-cjk ffmpeg unzip
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f /usr/share/fonts/opentype/pretendard/
 
       - name: Install Python dependencies
         run: |

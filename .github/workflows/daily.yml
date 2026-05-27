@@ -28,11 +28,21 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Korean fonts + ffmpeg
+      - name: Install Korean fonts (Pretendard + Noto fallback) + ffmpeg
         run: |
           sudo apt-get update
           # ffmpeg 는 ubuntu-latest 에 기본 설치돼 있지만 명시적으로 보장 (Reels mp4 빌드용)
-          sudo apt-get install -y fonts-noto-cjk ffmpeg
+          # Noto CJK 는 Pretendard 다운로드 실패 시 폴백용
+          sudo apt-get install -y fonts-noto-cjk ffmpeg unzip
+          # Pretendard — 한국 모던 디자인 표준 폰트. GitHub release zip 받아 4개 weight 만 설치
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f /usr/share/fonts/opentype/pretendard/
 
       - name: Install Python dependencies
         run: |
