@@ -4,7 +4,7 @@
 
 ## 프로젝트 개요
 
-K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분류·SEO 카피 생성 → PIL로 시네마틱 카드뉴스 생성 → Cloudinary 호스팅 → Instagram 캐러셀로 자동 게시.
+K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분류·SEO 카피 생성 → PIL로 미니멀 카드뉴스 생성 (흰 배경 + 검정 제목) → Cloudinary 호스팅 → Instagram 캐러셀로 자동 게시.
 
 운영 계정: `@daily_enter_kr`
 스케줄: 매일 한국시간 오전 8시 (UTC 23:00) + 0–90분 random jitter (봇 패턴 회피)
@@ -15,8 +15,8 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 |---|---|
 | `main.py` | 전체 파이프라인 오케스트레이션 + 중복 체크 + jitter + 토큰 health check |
 | `src/fetch_news.py` | Google News RSS (`entertainment` topic 기본). 20건 수집 |
-| `src/summarize.py` | Claude Haiku 4.5. **안전 분류 (post/respectful/skip) + SEO 카피 + 변형 강제** |
-| `src/make_card.py` | PIL 1080x1080. 5가지 시네마틱 팔레트 (neon_seoul, stage_gold, kpop_pastel, noir_cinema, dream_purple) + 보케 + 비네팅 |
+| `src/summarize.py` | Claude Haiku 4.5. **안전 분류 (post/respectful/skip) + 제목-only SEO 카피** |
+| `src/make_card.py` | PIL 1080x1080. 미니멀 — 흰 배경 + 검정 제목만 (제목 길이에 따른 자동 폰트 사이즈) |
 | `src/post_instagram.py` | Instagram Graph (`graph.instagram.com`) v22.0. IGAA 토큰 + Cloudinary 우선 + health_check |
 | `src/state.py` | 중복 게시 방지 (14일 윈도우) + 실행 이력 + 토큰 만료 추적. `state.json` 읽고 씀 |
 | `exchange_token.py` | IGAA 단기→장기 토큰 교환, refresh 폴백 자동, `.env` + state 자동 업데이트 |
@@ -97,10 +97,10 @@ python exchange_token.py --refresh
 ## 자주 나오는 작업 패턴
 
 ### 카드 디자인 수정
-- 색상: `src/make_card.py`의 `COLOR_THEMES` (5개 팔레트)
-- 보케 개수/투명도/크기: `make_cinematic_background()` 내부
-- 폰트 크기: `make_card()` 안의 `font_rank/title/body/source` 변수
-- 팔레트 순환: `main.py`의 `THEMES` 리스트
+- 색상/배경: `src/make_card.py` 상단의 `BG_COLOR` / `TEXT_COLOR` / `SUBTLE_COLOR`
+- 본문 카드 폰트 사이즈 범위: `_fit_title()`의 `size_max`(기본 110) / `size_min`(56) / `max_lines`(4)
+- 표지 폰트 사이즈: `make_cover_card()` 내부의 `f_big` / `f_mid` / `f_date`
+- 좌우 여백: `SIDE_MARGIN`
 
 ### 토픽 변경
 - `fetch_news.py`의 `TOPIC_URLS`에 다른 토픽 추가 또는
@@ -113,7 +113,7 @@ python exchange_token.py --refresh
 
 - **안전 프롬프트 수정 시**: skip 목록 약화 금지. 추가만 허용
 - **클릭베이트 어휘 추가 금지**: IG 정책 위반 위험. 인용/따옴표 강조도 자제
-- **본문 길이**: 110자 초과 금지 (저작권 substitution 효과 방지)
+- **제목 길이**: 카드엔 본문이 없고 제목만 노출. summarize 프롬프트의 16-28자 가이드 준수 (한 카드 4줄 안에 들어오게 자동 wrap)
 - **모델 ID**: `claude-haiku-4-5-20251001` 사용. 변경 시 비용/품질 영향 평가
 - **인스타 API 제약**: 캐러셀 최대 10장, 1:1 비율 고정, 24시간 100건 한도
 - **토큰 60일 만료**: 만료 전 갱신. 자동 갱신은 GitHub Actions에서 PAT 필요 (현재 미적용)
@@ -123,7 +123,7 @@ python exchange_token.py --refresh
 ```powershell
 python src/fetch_news.py     # 뉴스 수집 (API 키 불필요)
 python src/summarize.py      # 안전 분류 + 요약 5건 (ANTHROPIC_API_KEY 필요)
-python src/make_card.py      # 5팔레트 샘플 카드 (폰트만 있으면 됨)
+python src/make_card.py      # 미니멀 표지+5장 샘플 (한글 폰트만 있으면 됨)
 python fetch_insights.py     # 최근 게시 인사이트 (IG 토큰 필요)
 python main.py               # 전체 파이프라인 (CHANNEL 환경변수로 채널 선택)
 
@@ -144,21 +144,12 @@ python sync_secrets.py --dry-run        # 무엇이 바뀔지만 미리보기
 
 값은 화면에 마스킹 표시. stdin으로 gh에 전달해 커맨드라인 노출 없음.
 
-## 배경 이미지 시스템
+## 배경 이미지 시스템 (현재 미사용)
 
-`make_card.py`의 `make_cinematic_background()`는 두 가지 경로:
+카드 디자인이 미니멀(흰 배경)로 전환되며 외부 이미지가 더 이상 합성되지 않음. 다만 `src/image_provider.py` 와 summarize 프롬프트의 `visual_concept` 필드는 보존(나중에 다른 디자인 변형이 필요해질 때 즉시 활용 가능).
 
-1. **bg_image_path 있음**: 외부 이미지(보통 Unsplash) → 정사각 crop → 강한 블러(35) → 팔레트 색조 틴트 → 가벼운 보케 + 강한 다크 오버레이 → 텍스트
-2. **bg_image_path 없음**: 팔레트 그라데이션 → 짙은 보케 + 비네팅 → 텍스트
-
-이미지 경로는 `image_provider.search_and_download()`가 결정. Claude가 만든 영문 `visual_concept` 쿼리로 Unsplash 검색, 첫 적합 결과 캐싱+사용.
-
-`UNSPLASH_ACCESS_KEY` 미설정 시 자동으로 procedural 폴백. 운영 중단 안 됨.
-
-저작권 안전선:
-- Unsplash 라이센스: 상업적 사용 가능, attribution 불필요
-- 추가 변형: blur 35 + tint blend 0.35 + dark overlay 90/255 → 원본 식별 불가
-- skip 분류된 민감 뉴스는 visual_concept도 빈 문자열로 강제 → 부적절한 이미지 검색 차단
+- 현재 `main.py` 는 `image_provider` 를 import 하지 않음 → 호출 0건 → Unsplash 쿼터 소모 없음
+- `UNSPLASH_ACCESS_KEY` 시크릿도 사실상 불필요해졌으나 제거하지 않아도 무해
 
 ## 다중 채널 운영
 
