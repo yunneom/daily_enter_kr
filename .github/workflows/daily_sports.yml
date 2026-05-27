@@ -24,7 +24,7 @@ env:
 jobs:
   post-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 110  # jitter 최대 90분 + 파이프라인 처리 여유
 
     steps:
       - name: Checkout repository

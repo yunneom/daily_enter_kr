@@ -87,6 +87,14 @@ class InstagramPublisher:
                 )
             except Exception:
                 detail = resp.text[:300]
+            # publish 단계 403은 토큰/스코프는 살아있는데 계정 레벨에서 게시만 거부되는 패턴.
+            # 응답 본문 없이 raise 만 하면 사용자가 다음에 뭘 해야 할지 모르므로 가이드 출력.
+            if resp.status_code == 403 and step == "publish":
+                print("\n💡 IG /media_publish 403 — 흔한 원인 4가지:")
+                print("   1. 계정 일시 게시 제한 (IG 봇 패턴 탐지) → IG 앱에서 알림/배너 확인, 본인 확인")
+                print("   2. instagram_content_publish 스코프 누락 → 'python exchange_token.py --refresh'")
+                print("   3. 일일 게시 한도(50건) 초과 → 시간 두고 재시도")
+                print("   4. Meta App 정책 플래그 → developers.facebook.com → App Review/Alerts 확인\n")
             raise requests.HTTPError(
                 f"IG {step} HTTP {resp.status_code} — {detail}",
                 response=resp,

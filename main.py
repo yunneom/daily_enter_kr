@@ -81,11 +81,13 @@ MIN_CARDS = 3          # 게시 가능한 최소 카드 수 (이보다 적으면
 MAX_CARDS = 9          # 표지 + 9 = 캐러셀 10장 한도
 UPLOAD_RETRIES = 3     # 호스팅 업로드 재시도 횟수
 UPLOAD_BACKOFF = 2.0   # 지수 백오프 base (sec)
-CRON_JITTER_MAX_SEC = 1800  # CI에서만 적용 (0-30분 랜덤 지연)
+CRON_JITTER_MAX_SEC = 5400  # CI에서만 적용 (0-90분 랜덤 지연 — 봇 패턴 회피 강화)
 
 
 def apply_cron_jitter():
-    """CI에서만 봇 패턴 회피용 0-30분 랜덤 지연."""
+    """CI에서만 봇 패턴 회피용 0-90분 랜덤 지연.
+    cron 시각(KST 08:00)부터 90분 윈도우 내 무작위 지연 → IG 봇 탐지 약화.
+    워크플로우 timeout-minutes는 jitter 최대값 + 처리 시간 여유를 합쳐 책정해야 함."""
     if not os.environ.get("GITHUB_ACTIONS"):
         return
     jitter = random.randint(0, CRON_JITTER_MAX_SEC)
