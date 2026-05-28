@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "last_run_at": "2026-05-28T09:06:05.246145+09:00",
-  "last_run_status": "failed: HTTPError",
+  "last_run_at": "2026-05-28T12:20:44.756250+09:00",
+  "last_run_status": "success",
   "posted_history": [
     {
       "date": "2026-05-24",
@@ -122,6 +122,46 @@
       "date": "2026-05-24",
       "title_hash": "e429b36d8999e9c4",
       "card_title": "31기 영숙, 뒷담화 논란 해명"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "04ac9e5c2f58abd3",
+      "card_title": "정국, 인스타그램 일시 차단 후 정상 복구"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "6cfd4fbcc91a8725",
+      "card_title": "씨스타 효린, 응급 상황으로 병원 이송..대만 공연 불참"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "10846fed2e572927",
+      "card_title": "서인영, '강남스타일' 여자 버전 주인공이었다는 뒤늦은 고백"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "6cfe2e8f5ccbd11b",
+      "card_title": "도운, 유지유 열애설에 직접 입장…'미안'"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "d4ce84542c340d8f",
+      "card_title": "故 피에르 드니 별세, 향년 93세"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "e6aecfa8ca412434",
+      "card_title": "이지훈, '무염 논란' 후 심경 전했다 '다시 한 번 죄송'"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "3711c67247c3a51b",
+      "card_title": "한다감, 47세 최고령 산모로 찰떡이 첫 공개"
+    },
+    {
+      "date": "2026-05-28",
+      "title_hash": "b9655676d52badc9",
+      "card_title": "제니·지드래곤·더 셀럽들, 샤넬 2026 공방 컬렉션 무대 밝혀"
     }
   ]
 }
