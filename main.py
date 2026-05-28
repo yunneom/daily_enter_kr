@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_cover_card, make_sources_card
+from make_card import make_card, make_sources_card
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video, build_caption
 from state import (
@@ -192,23 +192,12 @@ def main():
         print(f"  [{i}]{marker} {s.card_title}")
 
     # === 3. 카드 이미지 생성 (9:16 미니멀: 흰 배경 + 검정 제목) ===
-    # 슬라이드 순서: 표지(맨앞, 1.5s) → 본문 N장 (2.5s) → 출처 (2.5s)
-    # 표지가 맨 앞에 있어야 Reels 첫 1.5초에 컨텍스트 전달 → retention ↑
+    # 슬라이드 순서: 본문 N장 (2.5s) → 출처 (2.5s). 표지는 사용자 피드백으로 제거.
     print("\n" + "="*60)
     print("3️⃣  카드 이미지 생성 (9:16)")
     print("="*60)
     image_paths = []
     total_cards = len(summaries)
-
-    cover_path = output_dir / "00_cover.jpg"
-    make_cover_card(
-        date_str=date_str,
-        output_path=cover_path,
-        cover_label=CHANNEL.get("cover_label", CHANNEL["label_short"]),
-        total_cards=total_cards,
-    )
-    image_paths.append(cover_path)
-    print(f"  ✓ {cover_path.name}: 표지 — {CHANNEL.get('cover_label')} TOP {total_cards}")
 
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
@@ -225,12 +214,12 @@ def main():
     print(f"  ✓ {sources_path.name}: 출처 카드")
 
     # === 3-b. 슬라이드쇼 mp4 빌드 (FFmpeg) ===
-    # 표지 1.5초 + 본문/출처 각 2.5초. BGM: assets/bgm/ 에서 랜덤 선택.
+    # 모든 카드 2.5초 균일. BGM: assets/bgm/ 에서 랜덤 선택.
     print("\n" + "="*60)
     print("3️⃣b 슬라이드쇼 mp4 생성 (BGM mux)")
     print("="*60)
-    from make_video import COVER_SECONDS, SECONDS_PER_CARD
-    durations = [COVER_SECONDS] + [SECONDS_PER_CARD] * (len(image_paths) - 1)
+    from make_video import SECONDS_PER_CARD
+    durations = [SECONDS_PER_CARD] * len(image_paths)
 
     bgm_dir = Path(__file__).parent / "assets" / "bgm"
     bgm_path = None

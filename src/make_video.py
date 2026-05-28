@@ -164,8 +164,8 @@ if __name__ == "__main__":
         print(f"❌ 샘플 이미지 없음. 먼저 'python src/make_card.py' 실행")
         raise SystemExit(1)
 
-    # 첫 카드(표지)는 1.5초, 나머지 2.5초
-    durations = [COVER_SECONDS] + [SECONDS_PER_CARD] * (len(images) - 1)
+    # 카드 전부 균일 2.5초 (표지 제거됨)
+    durations = [SECONDS_PER_CARD] * len(images)
 
     out = sample_dir / "reel.mp4"
     bgm_dir = Path(__file__).parent.parent / "assets" / "bgm"
@@ -178,6 +178,6 @@ if __name__ == "__main__":
             print(f"🎵 BGM: {bgm.name}")
 
     total = sum(durations) - max(0, (len(images) - 1) * CROSSFADE_SEC)
-    print(f"🎬 {len(images)}장 → {out.name} (표지 {COVER_SECONDS}s + 본문 {SECONDS_PER_CARD}s × {len(images)-1}, fade {CROSSFADE_SEC}s, ≈{total:.1f}s)")
+    print(f"🎬 {len(images)}장 → {out.name} ({SECONDS_PER_CARD}s × {len(images)}, fade {CROSSFADE_SEC}s, ≈{total:.1f}s)")
     make_slideshow_video(images, out, durations=durations, bgm_path=bgm)
     print(f"✅ {out}")

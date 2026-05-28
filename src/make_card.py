@@ -243,7 +243,7 @@ if __name__ == "__main__":
     output_dir = Path(__file__).parent.parent / "output" / "sample"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # 슬라이드 순서: 표지(맨앞) → 본문 N장 → 출처
+    # 슬라이드 순서: 본문 N장 → 출처 (표지 제거됨)
     samples = [
         ("아이브 새 앨범 티저 공개", "스포츠동아"),
         ("지드래곤, 월드투어 8개 도시 추가", "OSEN"),
@@ -251,15 +251,6 @@ if __name__ == "__main__":
         ("박찬욱 감독 신작 '미스트리스', 칸영화제 경쟁 부문 출품 확정", "씨네21"),
         ("유재석, 신규 예능 진행 합류", "스타뉴스"),
     ]
-
-    cover_path = output_dir / "00_cover.jpg"
-    make_cover_card(
-        date_str=datetime.now().strftime("%Y년 %m월 %d일"),
-        output_path=cover_path,
-        cover_label="연예",
-        total_cards=len(samples),
-    )
-    print(f"✅ 표지: {cover_path.name}")
 
     for i, (title, _src) in enumerate(samples, 1):
         path = output_dir / f"{i:02d}_card.jpg"
@@ -270,5 +261,6 @@ if __name__ == "__main__":
     make_sources_card([src for _, src in samples], sources_path)
     print(f"✅ 출처: {sources_path.name}")
 
-    print(f"\n총 {len(samples) + 2}개 이미지 생성")
+    # make_cover_card 함수는 유지되어 있어 필요 시 직접 호출 가능 (현재 production 미사용)
+    print(f"\n총 {len(samples) + 1}개 이미지 생성")
     print(f"출력 폴더: {output_dir}")
