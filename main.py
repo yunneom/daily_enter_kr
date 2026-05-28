@@ -33,7 +33,8 @@ from state import (
 CHANNELS = {
     "daily_enter_kr": {
         "topic": "entertainment",         # fetch_news.py의 TOPIC_URLS 키
-        "label_short": "K-연예",          # 표지/캡션 라벨 (한글)
+        "label_short": "K-연예",          # 캡션/요약 프롬프트 라벨
+        "cover_label": "연예",            # 표지 한 줄 라벨 — '{cover_label} TOP N' 식으로 표시
         "state_path": "state.json",
         "default_hashtags": ["#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
                              "#카드뉴스", "#kpop", "#kdrama", "#한국연예"],
@@ -41,6 +42,7 @@ CHANNELS = {
     "daily_sports_kr": {
         "topic": "sports",
         "label_short": "K-스포츠",
+        "cover_label": "스포츠",
         "state_path": "state_sports.json",
         "default_hashtags": ["#스포츠", "#sports", "#오늘의스포츠", "#스포츠뉴스",
                              "#카드뉴스", "#야구", "#축구", "#골프", "#KBO", "#K리그"],
@@ -48,6 +50,7 @@ CHANNELS = {
     "daily_economy_kr": {
         "topic": "business",
         "label_short": "K-경제",
+        "cover_label": "경제",
         "state_path": "state_economy.json",
         "default_hashtags": ["#경제", "#economy", "#오늘의경제", "#경제뉴스",
                              "#카드뉴스", "#주식", "#투자", "#증시", "#재테크"],
@@ -189,12 +192,23 @@ def main():
         print(f"  [{i}]{marker} {s.card_title}")
 
     # === 3. 카드 이미지 생성 (9:16 미니멀: 흰 배경 + 검정 제목) ===
-    # 슬라이드 순서: 본문 N장 → 출처 → 표지(아웃트로)
+    # 슬라이드 순서: 표지(맨앞, 1.5s) → 본문 N장 (2.5s) → 출처 (2.5s)
+    # 표지가 맨 앞에 있어야 Reels 첫 1.5초에 컨텍스트 전달 → retention ↑
     print("\n" + "="*60)
     print("3️⃣  카드 이미지 생성 (9:16)")
     print("="*60)
     image_paths = []
     total_cards = len(summaries)
+
+    cover_path = output_dir / "00_cover.jpg"
+    make_cover_card(
+        date_str=date_str,
+        output_path=cover_path,
+        cover_label=CHANNEL.get("cover_label", CHANNEL["label_short"]),
+        total_cards=total_cards,
+    )
+    image_paths.append(cover_path)
+    print(f"  ✓ {cover_path.name}: 표지 — {CHANNEL.get('cover_label')} TOP {total_cards}")
 
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
@@ -210,23 +224,26 @@ def main():
     image_paths.append(sources_path)
     print(f"  ✓ {sources_path.name}: 출처 카드")
 
-    outro_path = output_dir / "99_outro.jpg"
-    make_cover_card(
-        date_str=date_str,
-        output_path=outro_path,
-        label_short=CHANNEL["label_short"],
-        total_cards=total_cards,
-    )
-    image_paths.append(outro_path)
-    print(f"  ✓ {outro_path.name}: 표지(아웃트로) — TOP {total_cards}")
-
     # === 3-b. 슬라이드쇼 mp4 빌드 (FFmpeg) ===
+    # 표지 1.5초 + 본문/출처 각 2.5초. BGM: assets/bgm/ 에서 랜덤 선택.
     print("\n" + "="*60)
-    print("3️⃣b 슬라이드쇼 mp4 생성")
+    print("3️⃣b 슬라이드쇼 mp4 생성 (BGM mux)")
     print("="*60)
+    from make_video import COVER_SECONDS, SECONDS_PER_CARD
+    durations = [COVER_SECONDS] + [SECONDS_PER_CARD] * (len(image_paths) - 1)
+
+    bgm_dir = Path(__file__).parent / "assets" / "bgm"
+    bgm_path = None
+    if bgm_dir.exists():
+        candidates = sorted(bgm_dir.glob("*.mp3"))
+        if candidates:
+            bgm_path = random.choice(candidates)
+            print(f"  🎵 BGM 선택: {bgm_path.name}")
+
     video_path = output_dir / "reel.mp4"
-    make_slideshow_video(image_paths, video_path)
-    print(f"  ✓ {video_path.name} ({video_path.stat().st_size / 1024 / 1024:.1f} MB)")
+    make_slideshow_video(image_paths, video_path, durations=durations, bgm_path=bgm_path)
+    total_sec = sum(durations) - max(0, (len(image_paths) - 1) * 0.3)
+    print(f"  ✓ {video_path.name} ({video_path.stat().st_size / 1024 / 1024:.1f} MB, ≈{total_sec:.1f}s)")
 
     # === 4. 인스타그램 업로드 사전 체크 ===
     # Reels 는 mp4 만 받음 → Cloudinary 비디오 업로드 필수 (Imgur 비디오 미지원).

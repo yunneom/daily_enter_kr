@@ -287,11 +287,19 @@ def upload_video(video_path: Path) -> str:
 
 def build_caption(summaries, date_str: str, label_short: str = "K-연예",
                   default_hashtags=None) -> str:
-    """인스타 캡션 생성 (채널 라벨 + 클릭베이트 회피).
+    """인스타 캡션 생성 — 첫 줄 훅 + 본문 + 해시태그 mix.
 
-    Args:
-        label_short: 채널 라벨 (예: "K-연예", "K-스포츠").
-        default_hashtags: 기본 해시태그 리스트. None이면 K-연예 기본값 사용.
+    [캡션 첫 줄 = 훅]
+    IG 피드는 첫 줄만 미리 보이고 나머지는 'see more' 뒤에 숨음. 첫 줄이 약하면
+    클릭 안 함 → engagement velocity 떨어짐. '오늘의 K-연예 TOP N' 식의 정형 문구는
+    훅으로 약함 → 상위 3개 헤드라인을 ' · ' 로 연결해 티저로 사용.
+
+    [해시태그 mix 전략 — 3-tier]
+    1. niche : 각 뉴스에서 추출한 인물/작품/이벤트별 태그 (#뉴진스컴백 같은) — summary.hashtags
+    2. medium: 채널 카테고리 태그 (#K연예, #연예뉴스 등) — default_hashtags
+    3. broad : 글로벌 영문 태그 (#kpop, #korea, #koreantrend) — 채널 무관 도달 확장
+
+    IG 한도 30개. niche → medium → broad 순으로 우선 채우고 dedup.
     """
     if default_hashtags is None:
         default_hashtags = [
@@ -299,26 +307,51 @@ def build_caption(summaries, date_str: str, label_short: str = "K-연예",
             "#카드뉴스", "#kpop", "#kdrama", "#한국연예",
         ]
     n = len(summaries)
+
+    # === 첫 줄 훅 — 상위 3개 헤드라인 티저 ===
+    top_titles = [s.card_title for s in summaries[:3]]
+    hook = " · ".join(top_titles)
+    if len(hook) > 120:  # IG 첫 줄 truncate 위치 대비
+        hook = " · ".join(top_titles[:2])
     lines = [
-        f"오늘의 {label_short} TOP {n} · {date_str}",
+        hook,
         "",
-        "▶ 영상으로 한눈에 확인",
+        f"오늘 {label_short} 핫이슈 {n}건 — 영상으로 한눈에 보세요 ▶",
         "",
     ]
 
+    # === 본문 — 번호 매긴 헤드라인 목록 ===
     for i, s in enumerate(summaries, 1):
         lines.append(f"{i}. {s.card_title}")
 
     lines.append("")
-    lines.append("본 게시물은 공개된 보도 내용을 자동 큐레이션한 카드뉴스이며,")
-    lines.append("정확한 내용은 원문 기사를 함께 확인해 주세요.")
+    lines.append("⌁ 매일 아침 8시 K-연예 핫이슈 큐레이션. 팔로우하고 받아보세요.")
+    lines.append("")
+    lines.append("본 게시물은 공개 보도를 자동 큐레이션한 카드뉴스로,")
+    lines.append("정확한 내용은 원문을 함께 확인해 주세요.")
     lines.append("")
 
-    # 채널 기본 태그 + 뉴스별 태그 (자극 키워드는 summarize에서 이미 차단)
-    all_hashtags = list(default_hashtags)
+    # === 해시태그 mix (niche → medium → broad) ===
+    broad_global = ["#kpop", "#korea", "#koreantrend", "#kculture",
+                    "#asianentertainment", "#dailynews", "#newsupdate"]
+    niche = []
     for s in summaries:
-        all_hashtags.extend(s.hashtags)
-    unique_tags = list(dict.fromkeys(all_hashtags))[:30]  # IG 한도 30개
+        niche.extend(s.hashtags or [])
+    # 우선순위: niche 가 가장 강한 시그널 (구체적 검색어 매칭). 그다음 medium, 마지막 broad.
+    ordered = list(niche) + list(default_hashtags) + broad_global
+    seen = set()
+    unique_tags = []
+    for tag in ordered:
+        # 정규화: 소문자, # 없으면 추가, 공백 제거
+        normalized = tag.strip().lower()
+        if not normalized.startswith("#"):
+            normalized = "#" + normalized
+        if normalized in seen or " " in normalized:
+            continue
+        seen.add(normalized)
+        unique_tags.append(tag.strip())
+        if len(unique_tags) >= 30:
+            break
     lines.append(" ".join(unique_tags))
 
     return "\n".join(lines)

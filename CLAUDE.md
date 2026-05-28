@@ -19,7 +19,8 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 | `src/fetch_news.py` | Google News RSS (`entertainment` topic 기본). 20건 수집 |
 | `src/summarize.py` | Claude Haiku 4.5. **안전 분류 (post/respectful/skip) + 제목-only SEO 카피** |
 | `src/make_card.py` | PIL 1080x1920 (9:16). 미니멀 — 흰 배경 + 검정 제목 한 줄(자동 축소·트렁케이트) + 출처/아웃트로 카드 |
-| `src/make_video.py` | FFmpeg 슬라이드쇼 빌더. 카드 N장 → mp4 (h264, 1080x1920, 30fps, 무음). 카드당 3s + 0.4s xfade |
+| `src/make_video.py` | FFmpeg 슬라이드쇼 빌더 (2-pass: 비디오 xfade → BGM mux). 표지 1.5s + 본문/출처 2.5s, 0.3s xfade. BGM: assets/bgm/ 에서 선택 |
+| `assets/bgm/` | 자체 합성 ambient pad mp3 3종 (warm/calm/light). FFmpeg sine 합성이라 저작권 0% |
 | `src/post_instagram.py` | Instagram Graph v22.0. **Reels 전용** (mp4 업로드 → 트랜스코딩 대기 → publish). IGAA 토큰 + Cloudinary 비디오 호스팅 + health_check |
 | `src/state.py` | 중복 게시 방지 (14일 윈도우) + 실행 이력 + 토큰 만료 추적. `state.json` 읽고 씀 |
 | `exchange_token.py` | IGAA 단기→장기 토큰 교환, refresh 폴백 자동, `.env` + state 자동 업데이트 |
@@ -109,10 +110,18 @@ python exchange_token.py --refresh
 - 슬라이드 순서: 본문 N장 → 출처(`90_sources.jpg`) → 표지(`99_outro.jpg`). 변경은 `main.py`의 image_paths 순서 조정
 
 ### Reels 영상 수정
-- 카드당 노출 초: `src/make_video.py`의 `SECONDS_PER_CARD` (기본 2.5초)
+- 표지 노출 초: `src/make_video.py`의 `COVER_SECONDS` (기본 1.5초 — 즉시 콘텐츠로)
+- 본문/출처 노출 초: `SECONDS_PER_CARD` (기본 2.5초)
 - 카드 사이 페이드: `CROSSFADE_SEC` (기본 0.3초; 0 이면 컷)
 - 해상도/fps: `TARGET_W`/`TARGET_H`/`FPS`
-- 총 길이 = (N+2) × 초 − (N+1) × 페이드. N=8 + 출처/표지(=10) → 약 22초
+- BGM 볼륨: `BGM_VOLUME` (기본 0.35)
+- 슬라이드 순서: 표지 → 본문 N장 → 출처 (표지가 맨앞으로 와야 retention ↑)
+- 총 길이 ≈ COVER_SECONDS + N × SECONDS_PER_CARD − (N+1) × crossfade. N=8 + 출처 → 약 21초
+
+### BGM
+- `assets/bgm/*.mp3` 에서 매 실행마다 랜덤 선택 (main.py)
+- 새 트랙 추가: 같은 폴더에 mp3 드롭하면 됨. assets/bgm/README.md 의 합성 명령 참고
+- 모두 자체 합성이라 저작권 0%. 외부 음원 라이선스 트랙 추가도 OK
 
 ### 폰트 변경
 - 1순위 `Pretendard` (Bold/SemiBold/Medium/Regular 4 weight) — 워크플로우가 GitHub release zip 에서 자동 설치

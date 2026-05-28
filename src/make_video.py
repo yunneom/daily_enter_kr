@@ -1,29 +1,28 @@
 """
-슬라이드쇼 mp4 빌더 — 9:16 카드 이미지 리스트 → 단일 mp4 (h264, no audio).
+슬라이드쇼 mp4 빌더 — 9:16 카드 이미지 리스트 → mp4 + (선택) BGM mux.
 
 [설계]
-- FFmpeg concat demuxer 사용 (정렬 강제 위해)
-- 카드당 SECONDS_PER_CARD 초씩 노출 + 카드 사이 짧은 페이드(crossfade)
-- 출력: 1080x1920, h264 high-profile, yuv420p (IG Reels 호환)
-- 오디오 트랙 없음 (BGM 필요 시 별도 단계로 mux)
+- FFmpeg 직접 호출. 카드별 가변 노출 시간 지원 (durations 리스트).
+- BGM: bgm_path 지정 시 ffmpeg 가 자동 mux. 음원이 영상보다 짧으면 loop, 길면 -shortest 로 자름.
+- 출력: 1080x1920, h264 high-profile, yuv420p, AAC 128kbps (BGM 있을 때).
+- 카드 사이 짧은 xfade.
 
 [IG Reels 제약]
-- 길이: 3~90초
-- 비율: 9:16 권장 (1080x1920)
-- 코덱: H.264 video, AAC audio(있다면) — 우리는 무음
-- 컨테이너: MP4
+- 길이 3-90초, 9:16 권장, H.264 + AAC, mp4 컨테이너.
 """
 
 import shutil
 import subprocess
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 
-SECONDS_PER_CARD = 2.5      # 카드당 노출 시간 (2초는 살짝 짧다 → 2.5초로 가독성 확보)
-CROSSFADE_SEC = 0.3         # 카드 전환 페이드 길이
+SECONDS_PER_CARD = 2.5      # 본문 카드 기본 노출 시간
+COVER_SECONDS = 1.5         # 표지(첫 카드)는 더 짧게 — 즉시 콘텐츠로 진입
+CROSSFADE_SEC = 0.3         # 카드 전환 페이드
 TARGET_W, TARGET_H = 1080, 1920
 FPS = 30
+BGM_VOLUME = 0.35           # BGM 볼륨 (0~1). 텍스트 카드라 너무 크면 산만함
 
 
 def _ensure_ffmpeg():
@@ -36,80 +35,65 @@ def _ensure_ffmpeg():
 def make_slideshow_video(
     image_paths: List[Path],
     output_path: Path,
-    seconds_per_card: float = SECONDS_PER_CARD,
+    durations: Optional[List[float]] = None,
     crossfade: float = CROSSFADE_SEC,
+    bgm_path: Optional[Path] = None,
+    bgm_volume: float = BGM_VOLUME,
 ) -> Path:
-    """이미지 리스트 → mp4 (h264, yuv420p, 무음).
+    """이미지 리스트 → mp4 (h264, yuv420p). BGM 있으면 AAC 트랙 추가.
 
     Args:
-        image_paths: 카드 이미지 경로 리스트 (게시 순서대로)
+        image_paths: 카드 이미지 경로 리스트 (순서대로)
         output_path: 출력 mp4 경로
-        seconds_per_card: 카드당 노출 초
-        crossfade: 카드 사이 페이드 길이(초). 0 이면 하드 컷.
-
-    Returns: output_path
+        durations: 카드별 노출 초 리스트. None 이면 모든 카드 SECONDS_PER_CARD.
+        crossfade: 카드 사이 페이드 (초)
+        bgm_path: 선택적 BGM mp3. None 이면 무음.
+        bgm_volume: 0~1, BGM 볼륨 배율.
     """
     _ensure_ffmpeg()
     if not image_paths:
         raise ValueError("image_paths is empty")
 
+    if durations is None:
+        durations = [SECONDS_PER_CARD] * len(image_paths)
+    if len(durations) != len(image_paths):
+        raise ValueError(f"durations({len(durations)}) != image_paths({len(image_paths)})")
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # crossfade > 0 이면 filter_complex 로 합성(품질 좋음·코드 복잡), 0 이면 concat demuxer (단순).
-    if crossfade > 0:
-        cmd = _build_crossfade_cmd(image_paths, output_path, seconds_per_card, crossfade)
-    else:
-        cmd = _build_concat_cmd(image_paths, output_path, seconds_per_card)
+    # 1단계: 비디오만 빌드 (xfade 체인). filter_complex 가 안 복잡할 때 더 안정적.
+    video_only = output_path.with_name(output_path.stem + "_v.mp4")
+    cmd_v = _build_video_cmd(image_paths, durations, crossfade, video_only)
+    _run_ffmpeg(cmd_v, step="video")
 
-    proc = subprocess.run(cmd, capture_output=True, text=True)
-    if proc.returncode != 0:
-        # stderr 가 길어서 마지막 1500자만 표시 (디스크 사용량 안내·warning 컷)
-        tail = proc.stderr[-1500:] if proc.stderr else "(no stderr)"
-        raise RuntimeError(f"ffmpeg failed (rc={proc.returncode}):\n{tail}")
+    # 2단계: BGM 있으면 mux (오디오 전용 패스 — 가볍고 빠름)
+    if bgm_path:
+        cmd_a = _build_mux_cmd(video_only, bgm_path, bgm_volume,
+                               total_duration=sum(durations) - max(0, (len(image_paths) - 1) * crossfade),
+                               output_path=output_path)
+        _run_ffmpeg(cmd_a, step="mux")
+        video_only.unlink(missing_ok=True)
+    else:
+        video_only.rename(output_path)
     return output_path
 
 
-def _build_concat_cmd(image_paths: List[Path], output_path: Path,
-                      seconds_per_card: float) -> List[str]:
-    """간단한 concat demuxer — 컷 전환만."""
-    # concat 데모서는 텍스트 파일 입력이 필요
-    list_file = output_path.with_suffix(".txt")
-    lines = []
-    for p in image_paths:
-        lines.append(f"file '{p.resolve()}'")
-        lines.append(f"duration {seconds_per_card}")
-    # concat demuxer 의 알려진 quirk: 마지막 파일은 duration 없이 한 번 더 명시해야 함
-    lines.append(f"file '{image_paths[-1].resolve()}'")
-    list_file.write_text("\n".join(lines), encoding="utf-8")
-
-    return [
-        "ffmpeg", "-y",
-        "-f", "concat", "-safe", "0",
-        "-i", str(list_file),
-        "-vf", f"scale={TARGET_W}:{TARGET_H}:force_original_aspect_ratio=decrease,"
-               f"pad={TARGET_W}:{TARGET_H}:(ow-iw)/2:(oh-ih)/2:white,setsar=1,fps={FPS}",
-        "-c:v", "libx264", "-profile:v", "high", "-preset", "medium",
-        "-pix_fmt", "yuv420p",
-        "-movflags", "+faststart",
-        "-an",
-        str(output_path),
-    ]
+def _run_ffmpeg(cmd: List[str], step: str):
+    proc = subprocess.run(cmd, capture_output=True, text=True)
+    if proc.returncode != 0:
+        tail = proc.stderr[-1500:] if proc.stderr else "(no stderr)"
+        raise RuntimeError(f"ffmpeg {step} failed (rc={proc.returncode}):\n{tail}")
 
 
-def _build_crossfade_cmd(image_paths: List[Path], output_path: Path,
-                         seconds_per_card: float, crossfade: float) -> List[str]:
-    """xfade 체인으로 카드 간 페이드. 짧은 슬라이드쇼에 적합."""
+def _build_video_cmd(image_paths: List[Path], durations: List[float],
+                     crossfade: float, output_path: Path) -> List[str]:
+    """비디오 트랙만 빌드 (xfade 체인). 오디오는 별도 mux 단계에서 처리."""
     n = len(image_paths)
-    # 입력: 각 이미지를 seconds_per_card 길이의 영상으로 (loop)
-    inputs: List[str] = []
-    for p in image_paths:
-        inputs += [
-            "-loop", "1",
-            "-t", f"{seconds_per_card}",
-            "-i", str(p.resolve()),
-        ]
 
-    # 각 입력을 9:16 캔버스에 맞춰 정규화
+    inputs: List[str] = []
+    for p, d in zip(image_paths, durations):
+        inputs += ["-loop", "1", "-t", f"{d:.3f}", "-i", str(p.resolve())]
+
     fc_parts = []
     for i in range(n):
         fc_parts.append(
@@ -118,34 +102,57 @@ def _build_crossfade_cmd(image_paths: List[Path], output_path: Path,
             f"setsar=1,fps={FPS},format=yuv420p[v{i}]"
         )
 
-    # xfade 체인: [v0][v1] -> [x1], [x1][v2] -> [x2], ...
-    last_label = "v0"
-    offset = seconds_per_card - crossfade
-    for i in range(1, n):
-        out = f"x{i}" if i < n - 1 else "vout"
-        fc_parts.append(
-            f"[{last_label}][v{i}]xfade=transition=fade:duration={crossfade}:"
-            f"offset={offset:.3f}[{out}]"
-        )
-        last_label = out
-        offset += seconds_per_card - crossfade
-
+    # xfade 체인. i-th xfade 의 offset = sum(durations[:i]) - i*crossfade
     if n == 1:
-        # 단일 카드는 xfade 가 의미 없음 → v0 그대로 사용
+        map_label = "v0"
+    else:
         last_label = "v0"
-
-    filter_complex = ";".join(fc_parts)
+        cumulative = durations[0]
+        for i in range(1, n):
+            out = f"x{i}" if i < n - 1 else "vout"
+            offset = cumulative - crossfade
+            fc_parts.append(
+                f"[{last_label}][v{i}]xfade=transition=fade:duration={crossfade}:"
+                f"offset={offset:.3f}[{out}]"
+            )
+            last_label = out
+            cumulative += durations[i] - crossfade
+        map_label = last_label
 
     return [
-        "ffmpeg", "-y",
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
         *inputs,
-        "-filter_complex", filter_complex,
-        "-map", f"[{last_label}]",
+        "-filter_complex", ";".join(fc_parts),
+        "-map", f"[{map_label}]",
         "-c:v", "libx264", "-profile:v", "high", "-preset", "medium",
         "-pix_fmt", "yuv420p",
         "-movflags", "+faststart",
         "-r", str(FPS),
         "-an",
+        str(output_path),
+    ]
+
+
+def _build_mux_cmd(video_path: Path, bgm_path: Path, bgm_volume: float,
+                   total_duration: float, output_path: Path) -> List[str]:
+    """완성된 mp4 비디오에 BGM 트랙 추가 (별도 인코딩 패스).
+
+    BGM 이 영상보다 짧으면 -stream_loop -1 으로 반복 → -shortest 로 영상 길이에 맞춤.
+    afade in/out 으로 자연스러운 entry/exit.
+    """
+    fade_out_start = max(0.0, total_duration - 1.5)
+    return [
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-i", str(video_path.resolve()),
+        "-stream_loop", "-1", "-i", str(bgm_path.resolve()),
+        "-filter_complex",
+        f"[1:a]volume={bgm_volume},"
+        f"afade=t=in:d=0.8,afade=t=out:st={fade_out_start:.2f}:d=1.5[aout]",
+        "-map", "0:v", "-map", "[aout]",
+        "-c:v", "copy",  # 비디오 재인코딩 안 함 (속도 +, 품질 손실 0)
+        "-c:a", "aac", "-b:a", "128k",
+        "-movflags", "+faststart",
+        "-shortest",
         str(output_path),
     ]
 
@@ -157,7 +164,20 @@ if __name__ == "__main__":
         print(f"❌ 샘플 이미지 없음. 먼저 'python src/make_card.py' 실행")
         raise SystemExit(1)
 
+    # 첫 카드(표지)는 1.5초, 나머지 2.5초
+    durations = [COVER_SECONDS] + [SECONDS_PER_CARD] * (len(images) - 1)
+
     out = sample_dir / "reel.mp4"
-    print(f"🎬 {len(images)}장 → {out.name} (카드당 {SECONDS_PER_CARD}s, fade {CROSSFADE_SEC}s)")
-    make_slideshow_video(images, out)
+    bgm_dir = Path(__file__).parent.parent / "assets" / "bgm"
+    bgm = None
+    if bgm_dir.exists():
+        candidates = sorted(bgm_dir.glob("*.mp3"))
+        if candidates:
+            import random
+            bgm = random.choice(candidates)
+            print(f"🎵 BGM: {bgm.name}")
+
+    total = sum(durations) - max(0, (len(images) - 1) * CROSSFADE_SEC)
+    print(f"🎬 {len(images)}장 → {out.name} (표지 {COVER_SECONDS}s + 본문 {SECONDS_PER_CARD}s × {len(images)-1}, fade {CROSSFADE_SEC}s, ≈{total:.1f}s)")
+    make_slideshow_video(images, out, durations=durations, bgm_path=bgm)
     print(f"✅ {out}")

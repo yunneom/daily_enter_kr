@@ -197,33 +197,40 @@ def make_sources_card(
 def make_cover_card(
     date_str: str,
     output_path: Path,
-    label_short: str = "K-연예",
+    cover_label: str = "연예",
     total_cards: int = None,
     font_path: str = None,
     size: Tuple[int, int] = CARD_SIZE,
 ):
-    """표지 — '오늘의 / {label_short} / TOP N' + 날짜. 동일 미니멀 룩 유지."""
+    """표지 — '{cover_label} TOP N' 한 줄 + 날짜. 영상 맨 앞에 들어가는 1.5초 카드.
+
+    이전 디자인의 '오늘의 / K-연예 / TOP N' 3단 → '연예 TOP 8' 한 줄로 단순화.
+    Reels 첫 1.5초에 즉시 컨텍스트 전달 → 시청자 retention ↑.
+    """
     img = Image.new("RGB", size, BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    # 위계: 라벨/TOP(Bold) > '오늘의'(Medium) > 날짜(Regular)
     bold_path = _resolve_font(weight="Bold", font_path=font_path)
-    medium_path = _resolve_font(weight="Medium", font_path=font_path)
     regular_path = _resolve_font(weight="Regular", font_path=font_path)
-    if bold_path and medium_path and regular_path:
-        f_big = ImageFont.truetype(bold_path, 180)
-        f_mid = ImageFont.truetype(medium_path, 90)
-        f_date = ImageFont.truetype(regular_path, 52)
-    else:
-        f_big = f_mid = f_date = ImageFont.load_default()
+    if not bold_path:
+        bold_path = regular_path
 
-    rank_label = f"TOP {total_cards}" if total_cards and total_cards > 0 else "HOT NEWS"
+    n = total_cards if total_cards and total_cards > 0 else 8
+    headline = f"{cover_label} TOP {n}"
 
-    # 9:16 캔버스를 4단으로 분할 — 시각 중심을 살짝 위로(약 y=720) 두고 날짜는 하단 1/4
-    _draw_centered(draw, 620, "오늘의", f_mid, size[0])
-    _draw_centered(draw, 740, label_short, f_big, size[0])
-    _draw_centered(draw, 1000, rank_label, f_big, size[0])
-    _draw_centered(draw, 1280, date_str, f_date, size[0], fill=SUBTLE_COLOR)
+    # 헤드라인 크기는 가로폭에 맞춰 자동. 글자 수가 많아질 채널(스포츠 TOP 10 등) 대비
+    max_w = size[0] - SIDE_MARGIN * 2
+    for hsize in range(220, 120 - 1, -4):
+        f_big = ImageFont.truetype(bold_path, hsize)
+        if f_big.getbbox(headline)[2] <= max_w:
+            break
+    f_date = ImageFont.truetype(regular_path, 48)
+
+    # 헤드라인은 수직 중앙보다 살짝 위(y=820), 날짜는 하단 안전영역(y=1180)
+    h_bbox = f_big.getbbox(headline)
+    h_h = h_bbox[3] - h_bbox[1]
+    _draw_centered(draw, (size[1] - h_h) // 2 - 40, headline, f_big, size[0])
+    _draw_centered(draw, size[1] // 2 + h_h // 2 + 80, date_str, f_date, size[0], fill=SUBTLE_COLOR)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=95)
@@ -236,7 +243,7 @@ if __name__ == "__main__":
     output_dir = Path(__file__).parent.parent / "output" / "sample"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # 캐러셀 순서: 본문 N장 → 출처 → 표지(아웃트로)
+    # 슬라이드 순서: 표지(맨앞) → 본문 N장 → 출처
     samples = [
         ("아이브 새 앨범 티저 공개", "스포츠동아"),
         ("지드래곤, 월드투어 8개 도시 추가", "OSEN"),
@@ -244,6 +251,16 @@ if __name__ == "__main__":
         ("박찬욱 감독 신작 '미스트리스', 칸영화제 경쟁 부문 출품 확정", "씨네21"),
         ("유재석, 신규 예능 진행 합류", "스타뉴스"),
     ]
+
+    cover_path = output_dir / "00_cover.jpg"
+    make_cover_card(
+        date_str=datetime.now().strftime("%Y년 %m월 %d일"),
+        output_path=cover_path,
+        cover_label="연예",
+        total_cards=len(samples),
+    )
+    print(f"✅ 표지: {cover_path.name}")
+
     for i, (title, _src) in enumerate(samples, 1):
         path = output_dir / f"{i:02d}_card.jpg"
         make_card(title, path)
@@ -252,15 +269,6 @@ if __name__ == "__main__":
     sources_path = output_dir / "90_sources.jpg"
     make_sources_card([src for _, src in samples], sources_path)
     print(f"✅ 출처: {sources_path.name}")
-
-    outro_path = output_dir / "99_outro.jpg"
-    make_cover_card(
-        date_str=datetime.now().strftime("%Y년 %m월 %d일"),
-        output_path=outro_path,
-        label_short="K-연예",
-        total_cards=len(samples),
-    )
-    print(f"✅ 표지(아웃트로): {outro_path.name}")
 
     print(f"\n총 {len(samples) + 2}개 이미지 생성")
     print(f"출력 폴더: {output_dir}")
