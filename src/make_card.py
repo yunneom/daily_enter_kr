@@ -78,30 +78,36 @@ def _wrap_text(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> List[
     return lines
 
 
-def _fit_title_single_line(
+def _fit_title(
     text: str,
     font_path: str,
     max_width: int,
     size_max: int = 140,
     size_min: int = 44,
-) -> Tuple[ImageFont.FreeTypeFont, str]:
-    """제목을 무조건 한 줄로. 폰트 크기 자동 조정.
-    size_min 으로도 안 들어오면 끝을 '…' 로 잘라냄.
+) -> Tuple[ImageFont.FreeTypeFont, List[str]]:
+    """제목 자동 fit — 한 줄 우선, 안 들어가면 두 줄 wrap. 트렁케이트 없음.
+
+    알고리즘 (size_max → size_min 으로 폰트 줄여가며):
+      1. 현재 크기로 한 줄에 들어가면 → (font, [text])
+      2. 두 줄에 정확히 들어가면 → (font, [line1, line2])
+      3. 둘 다 아니면 다음 더 작은 크기 시도
+    size_min 까지 가도 두 줄로 못 담으면 size_min 으로 wrap 한 결과 그대로 반환
+    (3줄 이상이 될 수도 있지만, 보통 22자 가이드 범위 내에선 발생 안 함).
     """
     if not font_path:
         f = ImageFont.load_default()
-        return f, text
+        return f, [text]
     for size in range(size_max, size_min - 1, -2):
         font = ImageFont.truetype(font_path, size)
         bbox = font.getbbox(text)
         if bbox[2] - bbox[0] <= max_width:
-            return font, text
-    # 그래도 안 맞으면 size_min 에서 잘라내기
+            return font, [text]
+        lines = _wrap_text(text, font, max_width)
+        if len(lines) <= 2:
+            return font, lines
+    # 폴백: size_min 에서 wrap (트렁케이트 안 함 — 매우 드문 케이스)
     font = ImageFont.truetype(font_path, size_min)
-    truncated = text
-    while truncated and font.getbbox(truncated + "…")[2] > max_width:
-        truncated = truncated[:-1]
-    return font, (truncated + "…") if truncated != text else text
+    return font, _wrap_text(text, font, max_width)
 
 
 def _draw_centered(draw, y: int, text: str, font: ImageFont.FreeTypeFont,
@@ -117,7 +123,7 @@ def make_card(
     font_path: str = None,
     size: Tuple[int, int] = CARD_SIZE,
 ):
-    """본문 카드 — 흰 배경 + 검정 제목 한 줄(중앙 정렬). 폰트 크기 자동 축소.
+    """본문 카드 — 흰 배경 + 검정 제목(중앙 정렬). 1줄 우선, 안 들어가면 2줄.
 
     제목은 Pretendard SemiBold 사용 — Bold 보다 살짝 가벼워서 영상에서 덜 딱딱해 보임.
     """
@@ -125,13 +131,18 @@ def make_card(
     draw = ImageDraw.Draw(img)
 
     resolved = _resolve_font(weight="SemiBold", font_path=font_path)
-    font, rendered = _fit_title_single_line(
+    font, lines = _fit_title(
         title, resolved, max_width=size[0] - SIDE_MARGIN * 2,
     )
 
+    # 줄 단위 중앙 정렬 — 행간은 ascent+descent × 1.15 (느슨하지 않게 빼곡)
     ascent, descent = font.getmetrics() if hasattr(font, "getmetrics") else (60, 12)
-    y = (size[1] - (ascent + descent)) // 2
-    _draw_centered(draw, y, rendered, font, size[0])
+    line_h = int((ascent + descent) * 1.15)
+    block_h = line_h * len(lines) - int(line_h * 0.15)  # 마지막 줄 아래엔 행간 공백 빼기
+    y = (size[1] - block_h) // 2
+    for line in lines:
+        _draw_centered(draw, y, line, font, size[0])
+        y += line_h
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=95)

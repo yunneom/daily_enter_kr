@@ -102,17 +102,17 @@ python exchange_token.py --refresh
 ### 카드 디자인 수정
 - 색상/배경: `src/make_card.py` 상단의 `BG_COLOR` / `TEXT_COLOR` / `SUBTLE_COLOR`
 - 캔버스: `CARD_SIZE = (1080, 1920)` 9:16 Reels 표준
-- 본문 카드 폰트 사이즈 범위 (1줄 강제): `_fit_title_single_line()`의 `size_max`(기본 140) / `size_min`(44). 안 들어가면 '…' 트렁케이트
+- 본문 카드 폰트 사이즈 범위: `_fit_title()`의 `size_max`(기본 140) / `size_min`(44). 1줄 우선, 안 들어가면 2줄 wrap (트렁케이트 안 함)
 - 표지(아웃트로) 폰트 사이즈: `make_cover_card()` 내부의 `f_big` / `f_mid` / `f_date`
 - 출처 카드 폰트 사이즈: `make_sources_card()` 내부의 `f_label` / `f_item`
 - 좌우 여백: `SIDE_MARGIN`
 - 슬라이드 순서: 본문 N장 → 출처(`90_sources.jpg`) → 표지(`99_outro.jpg`). 변경은 `main.py`의 image_paths 순서 조정
 
 ### Reels 영상 수정
-- 카드당 노출 초: `src/make_video.py`의 `SECONDS_PER_CARD` (기본 2.0초)
+- 카드당 노출 초: `src/make_video.py`의 `SECONDS_PER_CARD` (기본 2.5초)
 - 카드 사이 페이드: `CROSSFADE_SEC` (기본 0.3초; 0 이면 컷)
 - 해상도/fps: `TARGET_W`/`TARGET_H`/`FPS`
-- 총 길이 = (N+2) × 초 − (N+1) × 페이드. N=8 + 출처/표지(=10) → 약 17초
+- 총 길이 = (N+2) × 초 − (N+1) × 페이드. N=8 + 출처/표지(=10) → 약 22초
 
 ### 폰트 변경
 - 1순위 `Pretendard` (Bold/SemiBold/Medium/Regular 4 weight) — 워크플로우가 GitHub release zip 에서 자동 설치
