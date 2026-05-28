@@ -69,10 +69,14 @@ CRON_JITTER_MAX_SEC = 5400  # CI에서만 적용 (0-90분 랜덤 지연 — 봇 
 
 
 def apply_cron_jitter():
-    """CI에서만 봇 패턴 회피용 0-90분 랜덤 지연.
+    """CI cron 실행에서만 봇 패턴 회피용 0-90분 랜덤 지연.
     cron 시각(KST 08:00)부터 90분 윈도우 내 무작위 지연 → IG 봇 탐지 약화.
+    workflow_dispatch(수동 트리거) 와 로컬은 jitter 스킵 — 테스트 시 즉시 실행되게.
     워크플로우 timeout-minutes는 jitter 최대값 + 처리 시간 여유를 합쳐 책정해야 함."""
     if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        print("⏭️  manual dispatch — jitter 스킵 (테스트 모드)")
         return
     jitter = random.randint(0, CRON_JITTER_MAX_SEC)
     print(f"⏱️  cron jitter: {jitter}초 대기 (봇 패턴 회피)")
