@@ -1,32 +1,30 @@
 """
 Instagram 업로드 모듈
-Instagram Graph API를 사용하여 카드뉴스를 캐러셀 포스트로 업로드합니다.
+Instagram Graph API 로 카드뉴스를 **Reels** (mp4 슬라이드쇼) 로 업로드합니다.
+
+[2026-05 변경]
+- 캐러셀 이미지 게시 → Reels (mp4) 게시로 전환. IG 알고리즘이 캐러셀에 거의 도달을 안 줘서 폐기.
+- 카드 이미지(9:16)는 make_video.py 에서 mp4 슬라이드쇼로 합쳐진 뒤 이 모듈로 들어옴.
 
 [사전 준비 - 필수]
-1. Facebook 페이지 생성
-2. 인스타그램 계정을 비즈니스/크리에이터로 전환
-3. Facebook 페이지와 인스타 계정 연결
-4. https://developers.facebook.com 에서 앱 생성
-5. Instagram Graph API 추가, 권한 요청:
-   - instagram_basic
-   - instagram_content_publish
-   - pages_show_list
-   - pages_read_engagement
-6. 장기 액세스 토큰 발급 (60일짜리, 자동 갱신 필요)
-7. Instagram Business Account ID 확인
+1. Facebook 페이지 + IG 비즈니스/크리에이터 계정 + 두 계정 연결
+2. https://developers.facebook.com 앱 생성 + Instagram Graph API 추가
+3. 필요 권한: instagram_basic, instagram_content_publish, pages_show_list, pages_read_engagement
+4. 장기 액세스 토큰 (60일, 자동 갱신 필요)
+5. Instagram Business Account ID 확보
 
-[중요한 제약]
-- 이미지가 공개 URL로 호스팅되어 있어야 함 (S3, Cloudinary, Imgur 등)
-- 캐러셀은 최대 10장
-- 첫 이미지의 비율에 맞춰 모두 크롭됨 → 모두 1:1로 통일 권장
-- 24시간 내 100건 게시 제한
+[Reels 제약]
+- 비디오가 공개 URL 로 호스팅돼 있어야 함 (Cloudinary 비디오 업로드 권장)
+- 길이: 3 ~ 90초
+- 비율: 9:16 (1080x1920) 권장 — 다른 비율은 letterbox 됨
+- 24시간 내 100건 게시 제한 (이미지/Reels 공통 풀)
 """
 
 import os
 import time
 import requests
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 
 GRAPH_API_VERSION = "v22.0"
@@ -73,31 +71,52 @@ class InstagramPublisher:
         except Exception as e:
             return {"ok": False, "error_message": f"{type(e).__name__}: {e}"}
     
-    def _create_image_container(self, image_url: str, is_carousel_item: bool = True) -> str:
-        """캐러셀 자식 컨테이너 생성"""
+    @staticmethod
+    def _post_ig(url: str, params: dict, step: str, timeout: int = 30):
+        """IG Graph API POST 래퍼. 실패 시 응답 본문의 error.message/code/subcode를 메시지에 포함시켜
+        re-raise. raise_for_status만 호출하면 'HTTPError: 400 Client Error'만 남아 진단이 어렵다."""
+        resp = requests.post(url, params=params, timeout=timeout)
+        if not resp.ok:
+            try:
+                err = resp.json().get("error", {}) or {}
+                detail = (
+                    f"code={err.get('code')} subcode={err.get('error_subcode')} "
+                    f"type={err.get('type')} msg={err.get('message', '')[:240]}"
+                )
+            except Exception:
+                detail = resp.text[:300]
+            # publish 단계 403은 토큰/스코프는 살아있는데 계정 레벨에서 게시만 거부되는 패턴.
+            # 응답 본문 없이 raise 만 하면 사용자가 다음에 뭘 해야 할지 모르므로 가이드 출력.
+            if resp.status_code == 403 and step == "publish":
+                print("\n💡 IG /media_publish 403 — 흔한 원인 4가지:")
+                print("   1. 계정 일시 게시 제한 (IG 봇 패턴 탐지) → IG 앱에서 알림/배너 확인, 본인 확인")
+                print("   2. instagram_content_publish 스코프 누락 → 'python exchange_token.py --refresh'")
+                print("   3. 일일 게시 한도(50건) 초과 → 시간 두고 재시도")
+                print("   4. Meta App 정책 플래그 → developers.facebook.com → App Review/Alerts 확인\n")
+            raise requests.HTTPError(
+                f"IG {step} HTTP {resp.status_code} — {detail}",
+                response=resp,
+            )
+        return resp
+
+    def _create_reel_container(self, video_url: str, caption: str,
+                               cover_url: Optional[str] = None,
+                               share_to_feed: bool = True) -> str:
+        """Reels 컨테이너 생성. video_url 은 mp4 공개 URL."""
         url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
         params = {
-            "image_url": image_url,
-            "is_carousel_item": str(is_carousel_item).lower(),
-            "access_token": self.access_token,
-        }
-        resp = requests.post(url, params=params, timeout=30)
-        resp.raise_for_status()
-        return resp.json()["id"]
-    
-    def _create_carousel_container(self, child_ids: List[str], caption: str) -> str:
-        """캐러셀 메인 컨테이너 생성"""
-        url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
-        params = {
-            "media_type": "CAROUSEL",
-            "children": ",".join(child_ids),
+            "media_type": "REELS",
+            "video_url": video_url,
             "caption": caption,
+            "share_to_feed": str(share_to_feed).lower(),
             "access_token": self.access_token,
         }
-        resp = requests.post(url, params=params, timeout=30)
-        resp.raise_for_status()
+        if cover_url:
+            # 커버는 IG가 첫 프레임을 자동 추출하므로 미지정 시 자동. 명시 시 정사각/9:16 권장.
+            params["cover_url"] = cover_url
+        resp = self._post_ig(url, params, step="create_reel")
         return resp.json()["id"]
-    
+
     def _publish_container(self, container_id: str) -> str:
         """컨테이너 게시"""
         url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media_publish"
@@ -105,59 +124,62 @@ class InstagramPublisher:
             "creation_id": container_id,
             "access_token": self.access_token,
         }
-        resp = requests.post(url, params=params, timeout=30)
-        resp.raise_for_status()
+        resp = self._post_ig(url, params, step="publish")
         return resp.json()["id"]
-    
-    def _wait_container_ready(self, container_id: str, timeout: int = 60):
-        """컨테이너가 FINISHED 상태가 될 때까지 대기"""
+
+    def _wait_container_ready(self, container_id: str, timeout: int = 300):
+        """컨테이너가 FINISHED 상태가 될 때까지 대기.
+
+        Reels 는 비디오 트랜스코딩 때문에 이미지 컨테이너보다 훨씬 오래 걸림 (수십초 ~ 수분).
+        default timeout 을 60s → 300s 로 늘렸다.
+
+        ERROR 상태이면 status 필드(IG가 사람-가독한 reason)를 같이 메시지에 포함.
+        """
         url = f"{GRAPH_API_BASE}/{container_id}"
-        params = {"fields": "status_code", "access_token": self.access_token}
+        params = {"fields": "status_code,status", "access_token": self.access_token}
         elapsed = 0
         while elapsed < timeout:
             resp = requests.get(url, params=params, timeout=10)
-            status = resp.json().get("status_code")
-            if status == "FINISHED":
+            data = resp.json() if resp.ok else {}
+            status_code = data.get("status_code")
+            if status_code == "FINISHED":
                 return
-            if status == "ERROR":
-                raise Exception(f"Container {container_id} failed")
-            time.sleep(3)
-            elapsed += 3
+            if status_code in ("ERROR", "EXPIRED"):
+                reason = data.get("status") or resp.text[:200]
+                raise requests.HTTPError(
+                    f"IG container {container_id} {status_code}: {reason}"
+                )
+            time.sleep(5)
+            elapsed += 5
         raise TimeoutError(f"Container {container_id} not ready in {timeout}s")
-    
-    def post_carousel(self, image_urls: List[str], caption: str) -> str:
-        """
-        캐러셀 포스트 게시
-        
+
+    def post_reel(self, video_url: str, caption: str,
+                  cover_url: Optional[str] = None,
+                  share_to_feed: bool = True) -> str:
+        """Reels 게시 — 비디오 업로드 → 컨테이너 → 트랜스코딩 대기 → publish.
+
         Args:
-            image_urls: 공개 접근 가능한 이미지 URL 리스트 (최대 10개)
+            video_url: 공개 접근 가능한 mp4 URL (Cloudinary 등)
             caption: 게시물 캡션 (해시태그 포함)
-        Returns:
-            published media id
+            cover_url: 커버 이미지(URL). 미지정 시 IG가 첫 프레임 자동 사용
+            share_to_feed: True 면 피드에도 같이 표시 (도달 +)
+
+        Returns: published media id
         """
-        if len(image_urls) > 10:
-            raise ValueError("캐러셀은 최대 10장까지만 가능합니다")
-        
-        print(f"[1/4] {len(image_urls)}개 자식 컨테이너 생성...")
-        child_ids = []
-        for i, url in enumerate(image_urls, 1):
-            child_id = self._create_image_container(url, is_carousel_item=True)
-            child_ids.append(child_id)
-            print(f"  ✓ ({i}/{len(image_urls)}) {child_id}")
-        
-        print("[2/4] 자식 컨테이너 처리 대기...")
-        for cid in child_ids:
-            self._wait_container_ready(cid)
-        
-        print("[3/4] 캐러셀 메인 컨테이너 생성...")
-        carousel_id = self._create_carousel_container(child_ids, caption)
-        self._wait_container_ready(carousel_id)
-        print(f"  ✓ {carousel_id}")
-        
-        print("[4/4] 게시...")
-        media_id = self._publish_container(carousel_id)
-        print(f"  ✅ 게시 완료! Media ID: {media_id}")
-        
+        print(f"[1/3] Reels 컨테이너 생성 (video_url 길이: {len(video_url)})...")
+        container_id = self._create_reel_container(
+            video_url=video_url, caption=caption,
+            cover_url=cover_url, share_to_feed=share_to_feed,
+        )
+        print(f"  ✓ container_id: {container_id}")
+
+        print("[2/3] 비디오 트랜스코딩 대기 (보통 30-90초)...")
+        self._wait_container_ready(container_id)
+        print("  ✓ FINISHED")
+
+        print("[3/3] 게시...")
+        media_id = self._publish_container(container_id)
+        print(f"  ✅ Reels 게시 완료! Media ID: {media_id}")
         return media_id
 
 
@@ -204,13 +226,36 @@ def upload_to_cloudinary(image_path: Path, cloud_name: str, upload_preset: str) 
     return resp.json()["secure_url"]
 
 
+def upload_to_cloudinary_video(video_path: Path, cloud_name: str,
+                               upload_preset: str) -> str:
+    """Cloudinary 비디오 업로드. 이미지 endpoint 와 분리된 /video/upload 사용.
+
+    주의: upload preset 이 'Video' resource 를 허용해야 함. Cloudinary 대시보드 →
+    Settings → Upload → 해당 preset → Resource type: Auto 또는 Video.
+    이미지 전용 preset 이면 400 떨어지므로 그때 'Resource type: Auto' 로 변경.
+    """
+    url = f"https://api.cloudinary.com/v1_1/{cloud_name}/video/upload"
+    with open(video_path, "rb") as f:
+        resp = requests.post(
+            url,
+            files={"file": f},
+            data={"upload_preset": upload_preset, "resource_type": "video"},
+            timeout=180,  # 비디오라 업로드 시간 김 (~30MB 가량 가능)
+        )
+    if not resp.ok:
+        try:
+            err = resp.json().get("error", {}).get("message", "")
+        except Exception:
+            err = resp.text[:300]
+        raise requests.HTTPError(f"Cloudinary video upload {resp.status_code}: {err}")
+    return resp.json()["secure_url"]
+
+
 def upload_image(image_path: Path) -> str:
     """
-    설정된 환경변수에 따라 자동으로 적합한 호스팅 서비스 선택.
-    Cloudinary가 설정되어 있으면 우선 사용, 없으면 Imgur 폴백.
+    이미지 호스팅 라우터 — Cloudinary 우선, 없으면 Imgur 폴백.
+    Reels 본 게시 경로엔 더 이상 쓰이지 않지만 (커버 이미지·디버그용으로 남김).
     """
-    import os
-
     cloudinary_name = os.environ.get("CLOUDINARY_CLOUD_NAME")
     cloudinary_preset = os.environ.get("CLOUDINARY_UPLOAD_PRESET")
     if cloudinary_name and cloudinary_preset:
@@ -227,13 +272,34 @@ def upload_image(image_path: Path) -> str:
     )
 
 
+def upload_video(video_path: Path) -> str:
+    """비디오 호스팅 라우터 — 현재는 Cloudinary 만 지원 (Imgur 는 mp4 불가)."""
+    cloudinary_name = os.environ.get("CLOUDINARY_CLOUD_NAME")
+    cloudinary_preset = os.environ.get("CLOUDINARY_UPLOAD_PRESET")
+    if cloudinary_name and cloudinary_preset:
+        return upload_to_cloudinary_video(video_path, cloudinary_name, cloudinary_preset)
+    raise RuntimeError(
+        "비디오 호스팅 환경변수가 설정되지 않았습니다. "
+        "CLOUDINARY_CLOUD_NAME + CLOUDINARY_UPLOAD_PRESET 가 필요합니다 "
+        "(preset 의 Resource type 이 'Auto' 또는 'Video' 여야 함)."
+    )
+
+
 def build_caption(summaries, date_str: str, label_short: str = "K-연예",
                   default_hashtags=None) -> str:
-    """인스타 캡션 생성 (채널 라벨 + 클릭베이트 회피).
+    """인스타 캡션 생성 — 첫 줄 훅 + 본문 + 해시태그 mix.
 
-    Args:
-        label_short: 채널 라벨 (예: "K-연예", "K-스포츠").
-        default_hashtags: 기본 해시태그 리스트. None이면 K-연예 기본값 사용.
+    [캡션 첫 줄 = 훅]
+    IG 피드는 첫 줄만 미리 보이고 나머지는 'see more' 뒤에 숨음. 첫 줄이 약하면
+    클릭 안 함 → engagement velocity 떨어짐. '오늘의 K-연예 TOP N' 식의 정형 문구는
+    훅으로 약함 → 상위 3개 헤드라인을 ' · ' 로 연결해 티저로 사용.
+
+    [해시태그 mix 전략 — 3-tier]
+    1. niche : 각 뉴스에서 추출한 인물/작품/이벤트별 태그 (#뉴진스컴백 같은) — summary.hashtags
+    2. medium: 채널 카테고리 태그 (#K연예, #연예뉴스 등) — default_hashtags
+    3. broad : 글로벌 영문 태그 (#kpop, #korea, #koreantrend) — 채널 무관 도달 확장
+
+    IG 한도 30개. niche → medium → broad 순으로 우선 채우고 dedup.
     """
     if default_hashtags is None:
         default_hashtags = [
@@ -241,26 +307,51 @@ def build_caption(summaries, date_str: str, label_short: str = "K-연예",
             "#카드뉴스", "#kpop", "#kdrama", "#한국연예",
         ]
     n = len(summaries)
+
+    # === 첫 줄 훅 — 상위 3개 헤드라인 티저 ===
+    top_titles = [s.card_title for s in summaries[:3]]
+    hook = " · ".join(top_titles)
+    if len(hook) > 120:  # IG 첫 줄 truncate 위치 대비
+        hook = " · ".join(top_titles[:2])
     lines = [
-        f"오늘의 {label_short} TOP {n} · {date_str}",
+        hook,
         "",
-        "→ 슬라이드를 넘겨 하나씩 확인해보세요",
+        f"오늘 {label_short} 핫이슈 {n}건 — 영상으로 한눈에 보세요 ▶",
         "",
     ]
 
+    # === 본문 — 번호 매긴 헤드라인 목록 ===
     for i, s in enumerate(summaries, 1):
         lines.append(f"{i}. {s.card_title}")
 
     lines.append("")
-    lines.append("본 게시물은 공개된 보도 내용을 자동 큐레이션한 카드뉴스이며,")
-    lines.append("정확한 내용은 원문 기사를 함께 확인해 주세요.")
+    lines.append("⌁ 매일 아침 8시 K-연예 핫이슈 큐레이션. 팔로우하고 받아보세요.")
+    lines.append("")
+    lines.append("본 게시물은 공개 보도를 자동 큐레이션한 카드뉴스로,")
+    lines.append("정확한 내용은 원문을 함께 확인해 주세요.")
     lines.append("")
 
-    # 채널 기본 태그 + 뉴스별 태그 (자극 키워드는 summarize에서 이미 차단)
-    all_hashtags = list(default_hashtags)
+    # === 해시태그 mix (niche → medium → broad) ===
+    broad_global = ["#kpop", "#korea", "#koreantrend", "#kculture",
+                    "#asianentertainment", "#dailynews", "#newsupdate"]
+    niche = []
     for s in summaries:
-        all_hashtags.extend(s.hashtags)
-    unique_tags = list(dict.fromkeys(all_hashtags))[:30]  # IG 한도 30개
+        niche.extend(s.hashtags or [])
+    # 우선순위: niche 가 가장 강한 시그널 (구체적 검색어 매칭). 그다음 medium, 마지막 broad.
+    ordered = list(niche) + list(default_hashtags) + broad_global
+    seen = set()
+    unique_tags = []
+    for tag in ordered:
+        # 정규화: 소문자, # 없으면 추가, 공백 제거
+        normalized = tag.strip().lower()
+        if not normalized.startswith("#"):
+            normalized = "#" + normalized
+        if normalized in seen or " " in normalized:
+            continue
+        seen.add(normalized)
+        unique_tags.append(tag.strip())
+        if len(unique_tags) >= 30:
+            break
     lines.append(" ".join(unique_tags))
 
     return "\n".join(lines)

@@ -280,6 +280,286 @@
           "age_hours": 21.6
         }
       ]
+    },
+    {
+      "snapshot_at": "2026-05-28T12:20:45.311214+09:00",
+      "posts": [
+        {
+          "media_id": "18069375230358280",
+          "permalink": "https://www.instagram.com/reel/DY3fWXqDrKf/",
+          "timestamp": "2026-05-28T03:20:40+0000",
+          "caption_excerpt": "정국, 인스타그램 일시 차단 후 정상 복구 · 씨스타 효린, 응급 상황으로 병원 이송..대만 공연 불참 · 서인영, '강남스타일' 여자 버전 주",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 0.0
+        },
+        {
+          "media_id": "18100301797852080",
+          "permalink": "https://www.instagram.com/p/DY3JGr_DaQU/",
+          "timestamp": "2026-05-28T00:06:02+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 28일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 이지훈, 어린이집 논란에 공식 사과\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 3.2
+        },
+        {
+          "media_id": "18410934739149286",
+          "permalink": "https://www.instagram.com/reel/DY2dhf0ghVG/",
+          "timestamp": "2026-05-27T17:45:28+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 8 · 2026년 05월 27일\n\n▶ 영상으로 한눈에 확인\n\n1. 이준, 유퀴즈에서 공개한 어린 시절 생활 환경\n2. 제",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 9.6
+        },
+        {
+          "media_id": "18057598718505458",
+          "permalink": "https://www.instagram.com/p/DY0mF5-FCZO/",
+          "timestamp": "2026-05-27T00:21:43+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 27일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 김수현 명예훼손 사건, 가세연 대표 구속",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 27.0
+        },
+        {
+          "media_id": "18044305091790265",
+          "permalink": "https://www.instagram.com/p/DYyAgXZkWcu/",
+          "timestamp": "2026-05-26T00:14:42+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 26일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. BTS, 아메리칸 뮤직 어워즈 참석\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 51.1
+        },
+        {
+          "media_id": "18357862759236924",
+          "permalink": "https://www.instagram.com/p/DYuYXhrkeyI/",
+          "timestamp": "2026-05-24T14:26:15+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 6 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 이세희, 허경환과 '처제' 될 뻔?\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 84.9
+        },
+        {
+          "media_id": "17859878844650618",
+          "permalink": "https://www.instagram.com/p/DYuR5QYlpkv/",
+          "timestamp": "2026-05-24T13:29:41+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 박서준, 보성 바다에서 벌어진 순간\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 85.9
+        },
+        {
+          "media_id": "18067035926378291",
+          "permalink": "https://www.instagram.com/p/DYt8yvTFsNn/",
+          "timestamp": "2026-05-24T10:25:17+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 영화 '군체', 개봉 4일 만에 100만",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 88.9
+        },
+        {
+          "media_id": "18009812735911013",
+          "permalink": "https://www.instagram.com/p/DYtBZDoETOS/",
+          "timestamp": "2026-05-24T01:46:15+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 나홍진 감독 '호프', 칸영화제 황금종려",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 97.6
+        },
+        {
+          "media_id": "18108701459501613",
+          "permalink": "https://www.instagram.com/p/DYsz4RGjYdK/",
+          "timestamp": "2026-05-23T23:48:09+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 10 (2026년 05월 23일)\n\n오늘 안 보면 손해. 슬라이드 →\n\n1. 나홍진 '호프' 칸영화제 수상 불발...결국",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 99.5
+        },
+        {
+          "media_id": "18101010809032684",
+          "permalink": "https://www.instagram.com/p/DYsIjbxkV3N/",
+          "timestamp": "2026-05-23T17:29:31+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 10 (2026년 05월 23일)\n\n오늘 안 보면 손해. 슬라이드 →\n\n1. 최준희, LA 신혼여행 중 '죽을 거 같애'",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 105.9
+        },
+        {
+          "media_id": "17999063729933123",
+          "permalink": "https://www.instagram.com/p/DYsF4k3kUtQ/",
+          "timestamp": "2026-05-23T17:06:15+0000",
+          "caption_excerpt": "📰 오늘의 핫이슈 TOP 10 (2026년 05월 23일)\n\n👇 슬라이드를 넘겨 자세히 확인하세요\n\n1. 스타벅스 '4·16 사이렌' 이벤트 논",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 106.2
+        },
+        {
+          "media_id": "17988788255798717",
+          "permalink": "https://www.instagram.com/p/DYsEHV9kgfP/",
+          "timestamp": "2026-05-23T16:50:50+0000",
+          "caption_excerpt": "📰 오늘의 핫이슈 TOP 10 (2026년 05월 24일)\n\n👇 슬라이드를 넘겨 자세히 확인하세요\n\n1. 스타벅스 '4·16 사이렌' 이벤트 논",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 106.5
+        }
+      ]
+    },
+    {
+      "snapshot_at": "2026-05-28T15:24:41.960293+09:00",
+      "posts": [
+        {
+          "media_id": "18266137717295732",
+          "permalink": "https://www.instagram.com/reel/DY30ZaiDyw7/",
+          "timestamp": "2026-05-28T06:24:34+0000",
+          "caption_excerpt": "김수현 측, 김세의 구속에 손해배상 300억 청구 예고 · 정국 인스타그램 계정 폐쇄 논란, 무슨 일? · 데이식스 도운, 결혼설 직접 부인 '",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 0.0
+        },
+        {
+          "media_id": "18069375230358280",
+          "permalink": "https://www.instagram.com/reel/DY3fWXqDrKf/",
+          "timestamp": "2026-05-28T03:20:40+0000",
+          "caption_excerpt": "정국, 인스타그램 일시 차단 후 정상 복구 · 씨스타 효린, 응급 상황으로 병원 이송..대만 공연 불참 · 서인영, '강남스타일' 여자 버전 주",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 3.1
+        },
+        {
+          "media_id": "18100301797852080",
+          "permalink": "https://www.instagram.com/p/DY3JGr_DaQU/",
+          "timestamp": "2026-05-28T00:06:02+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 28일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 이지훈, 어린이집 논란에 공식 사과\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 6.3
+        },
+        {
+          "media_id": "18410934739149286",
+          "permalink": "https://www.instagram.com/reel/DY2dhf0ghVG/",
+          "timestamp": "2026-05-27T17:45:28+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 8 · 2026년 05월 27일\n\n▶ 영상으로 한눈에 확인\n\n1. 이준, 유퀴즈에서 공개한 어린 시절 생활 환경\n2. 제",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 12.7
+        },
+        {
+          "media_id": "18057598718505458",
+          "permalink": "https://www.instagram.com/p/DY0mF5-FCZO/",
+          "timestamp": "2026-05-27T00:21:43+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 27일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 김수현 명예훼손 사건, 가세연 대표 구속",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 30.0
+        },
+        {
+          "media_id": "18044305091790265",
+          "permalink": "https://www.instagram.com/p/DYyAgXZkWcu/",
+          "timestamp": "2026-05-26T00:14:42+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 26일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. BTS, 아메리칸 뮤직 어워즈 참석\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 54.2
+        },
+        {
+          "media_id": "18357862759236924",
+          "permalink": "https://www.instagram.com/p/DYuYXhrkeyI/",
+          "timestamp": "2026-05-24T14:26:15+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 6 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 이세희, 허경환과 '처제' 될 뻔?\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 88.0
+        },
+        {
+          "media_id": "17859878844650618",
+          "permalink": "https://www.instagram.com/p/DYuR5QYlpkv/",
+          "timestamp": "2026-05-24T13:29:41+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 박서준, 보성 바다에서 벌어진 순간\n2.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 88.9
+        },
+        {
+          "media_id": "18067035926378291",
+          "permalink": "https://www.instagram.com/p/DYt8yvTFsNn/",
+          "timestamp": "2026-05-24T10:25:17+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 영화 '군체', 개봉 4일 만에 100만",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 92.0
+        },
+        {
+          "media_id": "18009812735911013",
+          "permalink": "https://www.instagram.com/p/DYtBZDoETOS/",
+          "timestamp": "2026-05-24T01:46:15+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 9 · 2026년 05월 24일\n\n→ 슬라이드를 넘겨 하나씩 확인해보세요\n\n1. 나홍진 감독 '호프', 칸영화제 황금종려",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 100.6
+        },
+        {
+          "media_id": "18108701459501613",
+          "permalink": "https://www.instagram.com/p/DYsz4RGjYdK/",
+          "timestamp": "2026-05-23T23:48:09+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 10 (2026년 05월 23일)\n\n오늘 안 보면 손해. 슬라이드 →\n\n1. 나홍진 '호프' 칸영화제 수상 불발...결국",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 102.6
+        },
+        {
+          "media_id": "18101010809032684",
+          "permalink": "https://www.instagram.com/p/DYsIjbxkV3N/",
+          "timestamp": "2026-05-23T17:29:31+0000",
+          "caption_excerpt": "오늘의 K-연예 TOP 10 (2026년 05월 23일)\n\n오늘 안 보면 손해. 슬라이드 →\n\n1. 최준희, LA 신혼여행 중 '죽을 거 같애'",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 108.9
+        },
+        {
+          "media_id": "17999063729933123",
+          "permalink": "https://www.instagram.com/p/DYsF4k3kUtQ/",
+          "timestamp": "2026-05-23T17:06:15+0000",
+          "caption_excerpt": "📰 오늘의 핫이슈 TOP 10 (2026년 05월 23일)\n\n👇 슬라이드를 넘겨 자세히 확인하세요\n\n1. 스타벅스 '4·16 사이렌' 이벤트 논",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 109.3
+        },
+        {
+          "media_id": "17988788255798717",
+          "permalink": "https://www.instagram.com/p/DYsEHV9kgfP/",
+          "timestamp": "2026-05-23T16:50:50+0000",
+          "caption_excerpt": "📰 오늘의 핫이슈 TOP 10 (2026년 05월 24일)\n\n👇 슬라이드를 넘겨 자세히 확인하세요\n\n1. 스타벅스 '4·16 사이렌' 이벤트 논",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 109.6
+        }
+      ]
     }
   ]
 }

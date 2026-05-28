@@ -19,26 +19,22 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_cover_card
-from post_instagram import InstagramPublisher, upload_image, build_caption
+from make_card import make_card, make_sources_card
+from make_video import make_slideshow_video
+from post_instagram import InstagramPublisher, upload_image, upload_video, build_caption
 from state import (
     load_state, save_state, filter_duplicates, record_post, record_run,
     days_until_token_expiry,
 )
-from image_provider import search_and_download as fetch_bg_image
 
 
 # === 채널 설정 (CHANNEL 환경변수로 선택; 기본 daily_enter_kr) ===
-# 새 채널 추가 방법은 CLAUDE.md 의 "두 번째 토픽 채널 추가" 섹션 참고
+# 카드 디자인은 단일 미니멀 스타일 (흰 배경 + 검정 제목) 고정.
 CHANNELS = {
     "daily_enter_kr": {
         "topic": "entertainment",         # fetch_news.py의 TOPIC_URLS 키
-        "label_short": "K-연예",          # 표지/푸터/캡션 라벨 (한글)
-        "label_short_en": "korean entertainment",  # Unsplash 검색용 영문 라벨
-        "themes": [
-            "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
-            "neon_seoul", "stage_gold", "kpop_pastel", "noir_cinema", "dream_purple",
-        ],
+        "label_short": "K-연예",          # 캡션/요약 프롬프트 라벨
+        "cover_label": "연예",            # 표지 한 줄 라벨 — '{cover_label} TOP N' 식으로 표시
         "state_path": "state.json",
         "default_hashtags": ["#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
                              "#카드뉴스", "#kpop", "#kdrama", "#한국연예"],
@@ -46,11 +42,7 @@ CHANNELS = {
     "daily_sports_kr": {
         "topic": "sports",
         "label_short": "K-스포츠",
-        "label_short_en": "stadium sports",
-        "themes": [
-            "stage_gold", "noir_cinema", "neon_seoul", "dream_purple", "stage_gold",
-            "noir_cinema", "neon_seoul", "dream_purple", "stage_gold", "noir_cinema",
-        ],
+        "cover_label": "스포츠",
         "state_path": "state_sports.json",
         "default_hashtags": ["#스포츠", "#sports", "#오늘의스포츠", "#스포츠뉴스",
                              "#카드뉴스", "#야구", "#축구", "#골프", "#KBO", "#K리그"],
@@ -58,11 +50,7 @@ CHANNELS = {
     "daily_economy_kr": {
         "topic": "business",
         "label_short": "K-경제",
-        "label_short_en": "stock market finance",
-        "themes": [
-            "noir_cinema", "stage_gold", "dream_purple", "neon_seoul", "noir_cinema",
-            "stage_gold", "dream_purple", "neon_seoul", "noir_cinema", "stage_gold",
-        ],
+        "cover_label": "경제",
         "state_path": "state_economy.json",
         "default_hashtags": ["#경제", "#economy", "#오늘의경제", "#경제뉴스",
                              "#카드뉴스", "#주식", "#투자", "#증시", "#재테크"],
@@ -70,41 +58,54 @@ CHANNELS = {
 }
 CHANNEL_ID = os.environ.get("CHANNEL", "daily_enter_kr")
 CHANNEL = CHANNELS.get(CHANNEL_ID, CHANNELS["daily_enter_kr"])
-THEMES = CHANNEL["themes"]
 
 # state.py가 채널별 state 파일을 쓰도록 환경변수 export (import 시점 이전에 설정해야 효과 있음)
 os.environ.setdefault("STATE_PATH", CHANNEL["state_path"])
 
 # === 운영 설정 ===
-FETCH_LIMIT = 20       # 안전/중복 필터 후 9건 확보를 위해 여유롭게 수집
-MIN_CARDS = 3          # 게시 가능한 최소 카드 수 (이보다 적으면 게시 스킵)
-MAX_CARDS = 9          # 표지 + 9 = 캐러셀 10장 한도
+FETCH_LIMIT = 20       # 안전/중복 필터 후 충분히 확보를 위해 여유롭게 수집
+MIN_CARDS = 3          # 게시 가능한 최소 본문 카드 수 (이보다 적으면 게시 스킵)
+MAX_CARDS = 8          # Reels 길이 ≈ (본문 N + 출처 + 표지) × 3s. 8+2 = 30s (90s 한도 내)
 UPLOAD_RETRIES = 3     # 호스팅 업로드 재시도 횟수
 UPLOAD_BACKOFF = 2.0   # 지수 백오프 base (sec)
-CRON_JITTER_MAX_SEC = 1800  # CI에서만 적용 (0-30분 랜덤 지연)
+CRON_JITTER_MAX_SEC = 5400  # CI에서만 적용 (0-90분 랜덤 지연 — 봇 패턴 회피 강화)
 
 
 def apply_cron_jitter():
-    """CI에서만 봇 패턴 회피용 0-30분 랜덤 지연."""
+    """CI cron 실행에서만 봇 패턴 회피용 0-90분 랜덤 지연.
+    cron 시각(KST 08:00)부터 90분 윈도우 내 무작위 지연 → IG 봇 탐지 약화.
+    workflow_dispatch(수동 트리거) 와 로컬은 jitter 스킵 — 테스트 시 즉시 실행되게.
+    워크플로우 timeout-minutes는 jitter 최대값 + 처리 시간 여유를 합쳐 책정해야 함."""
     if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        print("⏭️  manual dispatch — jitter 스킵 (테스트 모드)")
         return
     jitter = random.randint(0, CRON_JITTER_MAX_SEC)
     print(f"⏱️  cron jitter: {jitter}초 대기 (봇 패턴 회피)")
     time.sleep(jitter)
 
 
-def upload_with_retry(path: Path) -> str:
-    """업로드 실패 시 지수 백오프 재시도."""
+def _upload_with_retry(path: Path, uploader, kind: str) -> str:
+    """업로드 실패 시 지수 백오프 재시도. uploader 는 upload_image/upload_video."""
     last_exc = None
     for attempt in range(1, UPLOAD_RETRIES + 1):
         try:
-            return upload_image(path)
+            return uploader(path)
         except Exception as e:
             last_exc = e
             wait = UPLOAD_BACKOFF ** attempt
-            print(f"   ⚠️  업로드 실패 ({attempt}/{UPLOAD_RETRIES}): {e} → {wait:.1f}s 후 재시도")
+            print(f"   ⚠️  {kind} 업로드 실패 ({attempt}/{UPLOAD_RETRIES}): {e} → {wait:.1f}s 후 재시도")
             time.sleep(wait)
-    raise RuntimeError(f"{path.name} 업로드 {UPLOAD_RETRIES}회 실패: {last_exc}")
+    raise RuntimeError(f"{path.name} {kind} 업로드 {UPLOAD_RETRIES}회 실패: {last_exc}")
+
+
+def upload_with_retry(path: Path) -> str:
+    return _upload_with_retry(path, upload_image, "image")
+
+
+def video_upload_with_retry(path: Path) -> str:
+    return _upload_with_retry(path, upload_video, "video")
 
 
 def main():
@@ -190,70 +191,74 @@ def main():
         marker = "🔸" if s.decision == "respectful" else "  "
         print(f"  [{i}]{marker} {s.card_title}")
 
-    # === 3. 카드 이미지 생성 ===
+    # === 3. 카드 이미지 생성 (9:16 미니멀: 흰 배경 + 검정 제목) ===
+    # 슬라이드 순서: 본문 N장 (2.5s) → 출처 (2.5s). 표지는 사용자 피드백으로 제거.
     print("\n" + "="*60)
-    print("3️⃣  카드뉴스 이미지 생성")
+    print("3️⃣  카드 이미지 생성 (9:16)")
     print("="*60)
     image_paths = []
-
     total_cards = len(summaries)
-
-    # 표지용 배경 이미지 (채널 라벨 컨셉으로 fetch)
-    cover_bg_query = f"cinematic {CHANNEL['label_short_en']} dramatic lighting" if CHANNEL.get("label_short_en") else None
-    cover_bg = fetch_bg_image(cover_bg_query) if cover_bg_query else None
-    cover_path = output_dir / "00_cover.jpg"
-    make_cover_card(date_str=date_str, output_path=cover_path,
-                    total_cards=total_cards, label_short=CHANNEL["label_short"],
-                    bg_image_path=cover_bg)
-    image_paths.append(cover_path)
-    print(f"  ✓ 표지: {cover_path.name} (TOP {total_cards}){' [bg]' if cover_bg else ''}")
 
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
-        # 뉴스마다 visual_concept으로 배경 이미지 fetch (Unsplash). 실패 시 None 폴백.
-        bg_path = fetch_bg_image(s.visual_concept) if s.visual_concept else None
-        make_card(
-            rank=i,
-            title=s.card_title,
-            body=s.card_body,
-            source=s.source,
-            output_path=path,
-            theme=THEMES[(i - 1) % len(THEMES)],
-            total_cards=total_cards,
-            label_short=CHANNEL["label_short"],
-            bg_image_path=bg_path,
-        )
+        make_card(title=s.card_title, output_path=path)
         image_paths.append(path)
-        bg_indicator = " [bg]" if bg_path else " [proc]"
-        print(f"  ✓ {path.name}{bg_indicator}: {s.card_title}")
+        print(f"  ✓ {path.name}: {s.card_title}")
+
+    sources_path = output_dir / "90_sources.jpg"
+    make_sources_card(
+        sources=[s.source for s in summaries],
+        output_path=sources_path,
+    )
+    image_paths.append(sources_path)
+    print(f"  ✓ {sources_path.name}: 출처 카드")
+
+    # === 3-b. 슬라이드쇼 mp4 빌드 (FFmpeg) ===
+    # 모든 카드 2.5초 균일. BGM: assets/bgm/ 에서 랜덤 선택.
+    print("\n" + "="*60)
+    print("3️⃣b 슬라이드쇼 mp4 생성 (BGM mux)")
+    print("="*60)
+    from make_video import SECONDS_PER_CARD
+    durations = [SECONDS_PER_CARD] * len(image_paths)
+
+    bgm_dir = Path(__file__).parent / "assets" / "bgm"
+    bgm_path = None
+    if bgm_dir.exists():
+        candidates = sorted(bgm_dir.glob("*.mp3"))
+        if candidates:
+            bgm_path = random.choice(candidates)
+            print(f"  🎵 BGM 선택: {bgm_path.name}")
+
+    video_path = output_dir / "reel.mp4"
+    make_slideshow_video(image_paths, video_path, durations=durations, bgm_path=bgm_path)
+    total_sec = sum(durations) - max(0, (len(image_paths) - 1) * 0.3)
+    print(f"  ✓ {video_path.name} ({video_path.stat().st_size / 1024 / 1024:.1f} MB, ≈{total_sec:.1f}s)")
 
     # === 4. 인스타그램 업로드 사전 체크 ===
+    # Reels 는 mp4 만 받음 → Cloudinary 비디오 업로드 필수 (Imgur 비디오 미지원).
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
-    has_hosting = (
+    has_video_hosting = (
         os.environ.get("CLOUDINARY_CLOUD_NAME") and os.environ.get("CLOUDINARY_UPLOAD_PRESET")
-    ) or os.environ.get("IMGUR_CLIENT_ID")
+    )
 
-    if not (ig_user_id and ig_token and has_hosting):
-        print("\n⚠️  인스타그램/호스팅 환경변수 미설정 → 업로드 스킵")
-        print(f"    이미지는 {output_dir}에서 확인 가능합니다.")
+    if not (ig_user_id and ig_token and has_video_hosting):
+        print("\n⚠️  인스타그램/Cloudinary 환경변수 미설정 → 업로드 스킵")
+        print(f"    카드/mp4는 {output_dir}에서 확인 가능합니다.")
         record_run(state, "skipped_no_upload_credentials")
         save_state(state)
         return
 
-    # === 5. 이미지 호스팅 업로드 (재시도 포함) ===
+    # === 5. mp4 호스팅 업로드 (재시도 포함) ===
     print("\n" + "="*60)
-    print("4️⃣  이미지 호스팅 업로드")
+    print("4️⃣  mp4 호스팅 업로드 (Cloudinary 비디오)")
     print("="*60)
-    image_urls = []
-    for path in image_paths:
-        url = upload_with_retry(path)
-        image_urls.append(url)
-        print(f"  ✓ {path.name} → {url}")
+    video_url = video_upload_with_retry(video_path)
+    print(f"  ✓ {video_path.name} → {video_url}")
 
-    # === 6. 인스타그램 캐러셀 게시 ===
+    # === 6. 인스타그램 Reels 게시 ===
     print("\n" + "="*60)
-    print("5️⃣  인스타그램 캐러셀 게시")
+    print("5️⃣  인스타그램 Reels 게시")
     print("="*60)
     publisher = InstagramPublisher(ig_user_id, ig_token)
 
@@ -271,9 +276,10 @@ def main():
 
     caption = build_caption(summaries, date_str, label_short=CHANNEL["label_short"],
                             default_hashtags=CHANNEL["default_hashtags"])
-    media_id = publisher.post_carousel(image_urls, caption)
+    media_id = publisher.post_reel(video_url=video_url, caption=caption,
+                                   share_to_feed=True)
 
-    print(f"\n🎉 완료! 게시물 ID: {media_id}")
+    print(f"\n🎉 완료! Reels Media ID: {media_id}")
 
     # === 7. state 기록 (다음 실행의 중복 방지) ===
     record_post(
@@ -294,10 +300,12 @@ if __name__ == "__main__":
         print(f"\n❌ 오류 발생: {e}")
         import traceback
         traceback.print_exc()
-        # state에 실패 기록 (가능하면)
+        # state에 실패 기록 (가능하면) — 타입명 + 메시지 일부도 남겨 사후 진단 가능하도록
         try:
             st = load_state()
-            record_run(st, f"failed: {type(e).__name__}")
+            msg = str(e).strip().replace("\n", " ")[:240]
+            status = f"failed: {type(e).__name__}: {msg}" if msg else f"failed: {type(e).__name__}"
+            record_run(st, status)
             save_state(st)
         except Exception:
             pass
