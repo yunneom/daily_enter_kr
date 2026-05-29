@@ -2,7 +2,7 @@ name: Daily — daily_enter_kr (K-연예)
 
 on:
   schedule:
-    # 한국시간 오전 8시 (UTC 23:00). main.py가 0-90분 랜덤 jitter 적용.
+    # 한국시간 오전 8시 (UTC 23:00). main.py가 0-30분 랜덤 jitter 적용 → 게시 윈도우 08:00-08:30.
     - cron: '0 23 * * *'
   workflow_dispatch:
 
@@ -16,7 +16,7 @@ env:
 jobs:
   post-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 110  # jitter 최대 90분 + 파이프라인 처리 여유
+    timeout-minutes: 50  # jitter 최대 30분 + 파이프라인 처리 여유 + 트랜스코딩 대기
 
     steps:
       - name: Checkout repository
