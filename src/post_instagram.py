@@ -326,14 +326,17 @@ def build_caption(summaries, date_str: str, label_short: str = "K-연예",
 
     lines.append("")
     lines.append("⌁ 매일 아침 8시 K-연예 핫이슈 큐레이션. 팔로우하고 받아보세요.")
+    lines.append("📩 친구에게 공유 / 🔖 북마크해두면 매일 다시 확인하기 좋아요.")
     lines.append("")
     lines.append("본 게시물은 공개 보도를 자동 큐레이션한 카드뉴스로,")
     lines.append("정확한 내용은 원문을 함께 확인해 주세요.")
     lines.append("")
 
     # === 해시태그 mix (niche → medium → broad) ===
+    # broad 에 IG Reels 자체 discoverability 태그 (#릴스, #reels) 합류 — 탐색 페이지 노출 ↑
     broad_global = ["#kpop", "#korea", "#koreantrend", "#kculture",
-                    "#asianentertainment", "#dailynews", "#newsupdate"]
+                    "#asianentertainment", "#dailynews", "#newsupdate",
+                    "#릴스", "#reels", "#instareels", "#dailyreels"]
     niche = []
     for s in summaries:
         niche.extend(s.hashtags or [])
