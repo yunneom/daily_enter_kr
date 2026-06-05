@@ -19,9 +19,14 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_sources_card
+from make_card import make_card, make_sources_card, make_reels_thumbnail
 from make_video import make_slideshow_video
-from post_instagram import InstagramPublisher, upload_image, upload_video, build_caption
+from post_instagram import (
+    InstagramPublisher, upload_image, upload_video,
+    build_caption_with_variant,
+)
+import post_threads
+from notify import notify_discord
 from state import (
     load_state, save_state, filter_duplicates, record_post, record_run,
     days_until_token_expiry,
@@ -213,6 +218,14 @@ def main():
     image_paths.append(sources_path)
     print(f"  ✓ {sources_path.name}: 출처 카드")
 
+    # Reels 그리드 썸네일 (cover_url 용 — 프로필 그리드 첫인상 강화)
+    thumb_path = output_dir / "00_thumb.jpg"
+    make_reels_thumbnail(
+        top_titles=[s.card_title for s in summaries],
+        output_path=thumb_path,
+    )
+    print(f"  ✓ {thumb_path.name}: Reels 그리드 썸네일")
+
     # === 3-b. 슬라이드쇼 mp4 빌드 (FFmpeg) ===
     # 모든 카드 2.5초 균일. BGM: assets/bgm/ 에서 랜덤 선택.
     print("\n" + "="*60)
@@ -274,17 +287,62 @@ def main():
         sys.exit(1)
     print(f"✓ 토큰 유효: @{health['username']} ({health['account_type']})")
 
-    caption = build_caption(summaries, date_str, label_short=CHANNEL["label_short"],
-                            default_hashtags=CHANNEL["default_hashtags"])
-    media_id = publisher.post_reel(video_url=video_url, caption=caption,
-                                   share_to_feed=True)
+    caption, caption_variant = build_caption_with_variant(
+        summaries, date_str, label_short=CHANNEL["label_short"],
+        default_hashtags=CHANNEL["default_hashtags"])
+    print(f"  📝 캡션 variant: {caption_variant}")
 
+    # 썸네일 업로드 (선택적 — 실패해도 Reels 게시는 진행)
+    cover_url = None
+    try:
+        cover_url = upload_with_retry(thumb_path)
+        print(f"  🖼  커스텀 썸네일: {cover_url}")
+    except Exception as e:
+        print(f"  ⚠️  썸네일 업로드 실패 ({e}) — 기본 첫프레임 사용")
+
+    media_id = publisher.post_reel(video_url=video_url, caption=caption,
+                                   cover_url=cover_url, share_to_feed=True)
     print(f"\n🎉 완료! Reels Media ID: {media_id}")
 
-    # === 7. state 기록 (다음 실행의 중복 방지) ===
+    # === 6-b. Stories 자동 게시 (B2 자동화) ===
+    # Reels 와 동일 mp4 를 Stories 에도 → 도달 1.5-2배 + 팔로워 노출 강화
+    try:
+        story_id = publisher.post_story_video(video_url)
+        print(f"  📖 Stories Media ID: {story_id}")
+    except Exception as e:
+        print(f"  ⚠️  Stories 게시 실패 ({e}) — 계속 진행")
+        story_id = None
+
+    # === 6-c. Threads cross-post (A3 자동화) ===
+    threads_id = None
+    if post_threads.is_configured():
+        try:
+            reel_link = f"https://www.instagram.com/reel/{media_id}/" if media_id else None
+            threads_id = post_threads.post_thread(
+                top_titles=[s.card_title for s in summaries],
+                date_str=date_str,
+                label_short=CHANNEL["label_short"],
+                reel_link=reel_link,
+            )
+        except Exception as e:
+            print(f"  ⚠️  Threads 게시 실패 ({e}) — 계속 진행")
+
+    # === 6-d. Discord 게시 완료 알림 (A5 일부) ===
+    notify_discord(
+        f"✅ **daily_enter_kr Reels 게시 완료**\n"
+        f"• 미디어: `{media_id}`\n"
+        f"• 캡션 variant: `{caption_variant}`\n"
+        f"• Stories: {'✅' if story_id else '❌'} · Threads: {'✅' if threads_id else '⏭️'}\n"
+        f"• 헤드라인 #1: {summaries[0].card_title if summaries else '-'}",
+        username="daily_enter_kr",
+    )
+
+    # === 7. state 기록 (다음 실행의 중복 방지 + A/B variant) ===
     record_post(
         state,
         [(s.original_title, s.card_title) for s in summaries],
+        caption_variant=caption_variant,
+        media_id=media_id,
         status="success",
     )
     save_state(state)
