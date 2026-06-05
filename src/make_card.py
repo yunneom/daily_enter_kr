@@ -237,6 +237,100 @@ def make_cover_card(
     return output_path
 
 
+def make_reels_thumbnail(
+    top_titles: List[str],
+    output_path: Path,
+    accent_color: Tuple[int, int, int] = (255, 230, 0),  # 노란 포인트 (브랜드 accent)
+    font_path: str = None,
+    size: Tuple[int, int] = CARD_SIZE,
+):
+    """Reels 피드 그리드용 커스텀 썸네일 — IG cover_url 로 전달.
+
+    프로필 그리드(1080px 가로)에서 보이는 첫 인상. 첫 카드(헤드라인 1번)와 다른
+    디자인이어야 의미 있음. 강한 컬러 블록 + TOP 1-2 헤드라인 큰 글자.
+
+    Args:
+        top_titles: 상위 1-3개 헤드라인 (1-2개만 노출됨)
+        accent_color: 상단 컬러 바 색 (브랜드 accent)
+    """
+    img = Image.new("RGB", size, BG_COLOR)
+    draw = ImageDraw.Draw(img)
+
+    # 상단 noticeable 컬러 바 (약 size[1]*0.18 높이) — 그리드에서 즉시 인지
+    bar_h = int(size[1] * 0.18)
+    draw.rectangle([(0, 0), (size[0], bar_h)], fill=accent_color)
+
+    bold = _resolve_font(weight="Bold", font_path=font_path)
+    semi = _resolve_font(weight="SemiBold", font_path=font_path)
+    medium = _resolve_font(weight="Medium", font_path=font_path)
+    regular = _resolve_font(weight="Regular", font_path=font_path)
+
+    # 컬러 바 위에 'TODAY'/'오늘' 라벨 (검정 텍스트)
+    f_brand = ImageFont.truetype(bold, 96) if bold else ImageFont.load_default()
+    label = "오늘의 핫이슈"
+    bbox = f_brand.getbbox(label)
+    label_w = bbox[2] - bbox[0]
+    draw.text(((size[0] - label_w) // 2, (bar_h - (bbox[3] - bbox[1])) // 2 - 10),
+              label, font=f_brand, fill=(17, 17, 17))
+
+    # 본문 — 상위 1-2 헤드라인 (큰 글자, 자동 wrap)
+    main_y = bar_h + 100
+    available_h = size[1] - bar_h - 200  # 하단 200px 여백
+    max_w = size[0] - SIDE_MARGIN * 2
+
+    show_n = min(2, len(top_titles))
+    block_titles = top_titles[:show_n]
+
+    # 두 줄 wrap 가능하도록 폰트 사이즈 자동 조정 — 단일 제목당 최대 2줄
+    sized = []
+    for t in block_titles:
+        for s in range(120, 60 - 1, -4):
+            f = ImageFont.truetype(semi, s)
+            lines = _wrap_text(t, f, max_w)
+            if len(lines) <= 2:
+                sized.append((f, lines, int((f.getmetrics()[0] + f.getmetrics()[1]) * 1.15)))
+                break
+        else:
+            f = ImageFont.truetype(semi, 60)
+            sized.append((f, _wrap_text(t, f, max_w)[:2],
+                          int((f.getmetrics()[0] + f.getmetrics()[1]) * 1.15)))
+
+    # 블록 총 높이
+    total = sum(lh * len(lines) for _, lines, lh in sized)
+    gap = 60  # 두 제목 사이 간격
+    if show_n > 1:
+        total += gap * (show_n - 1)
+    y = main_y + (available_h - total) // 2
+
+    for idx, (f, lines, lh) in enumerate(sized):
+        # 번호 표시 (작은 회색 라벨)
+        f_num = ImageFont.truetype(medium, 36) if medium else f
+        num_label = f"#{idx+1}"
+        num_bbox = f_num.getbbox(num_label)
+        num_w = num_bbox[2] - num_bbox[0]
+        draw.text(((size[0] - num_w) // 2, y), num_label, font=f_num, fill=SUBTLE_COLOR)
+        y += int(lh * 0.55)
+        for line in lines:
+            bbox = f.getbbox(line)
+            line_w = bbox[2] - bbox[0]
+            draw.text(((size[0] - line_w) // 2, y), line, font=f, fill=TEXT_COLOR)
+            y += lh
+        if idx < show_n - 1:
+            y += gap
+
+    # 하단 brand line
+    f_brand_sm = ImageFont.truetype(regular, 38) if regular else f_brand
+    brand = "@daily_enter_kr · 매일 아침 8시"
+    bbox = f_brand_sm.getbbox(brand)
+    brand_w = bbox[2] - bbox[0]
+    draw.text(((size[0] - brand_w) // 2, size[1] - 90), brand,
+              font=f_brand_sm, fill=SUBTLE_COLOR)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(output_path, "JPEG", quality=95)
+    return output_path
+
+
 if __name__ == "__main__":
     from datetime import datetime
 
@@ -261,6 +355,11 @@ if __name__ == "__main__":
     make_sources_card([src for _, src in samples], sources_path)
     print(f"✅ 출처: {sources_path.name}")
 
+    # Reels 그리드 썸네일 (Cover_url 용도)
+    thumb_path = output_dir / "00_thumb.jpg"
+    make_reels_thumbnail([t for t, _ in samples], thumb_path)
+    print(f"✅ 그리드 썸네일: {thumb_path.name}")
+
     # make_cover_card 함수는 유지되어 있어 필요 시 직접 호출 가능 (현재 production 미사용)
-    print(f"\n총 {len(samples) + 1}개 이미지 생성")
+    print(f"\n총 {len(samples) + 2}개 이미지 생성")
     print(f"출력 폴더: {output_dir}")

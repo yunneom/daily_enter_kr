@@ -59,6 +59,13 @@ jobs:
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          # 선택 secrets — 없으면 해당 기능 silent skip
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          TTS_PROVIDER: ${{ secrets.TTS_PROVIDER }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: python main.py
 
       - name: Fetch insights snapshot (likes/comments on recent posts)
@@ -69,12 +76,35 @@ jobs:
         run: python fetch_insights.py
         continue-on-error: true  # 인사이트 실패해도 메인 워크플로우는 성공으로 처리
 
-      - name: Commit state.json + insights.json
+      - name: Weekly digest (일요일에만 — ISO 요일 7)
+        if: success()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          dow=$(date -u +%u)
+          if [ "$dow" = "7" ]; then
+            echo "Sunday — generating weekly digest"
+            python weekly_digest.py
+          else
+            echo "Not Sunday (DOW=$dow) — skipping digest"
+          fi
+        continue-on-error: true
+
+      - name: Commit state.json + insights.json + digests
         if: always()
         run: |
           changes=""
           if ! git diff --quiet state.json 2>/dev/null; then changes="$changes state.json"; fi
           if [ -f insights.json ] && ! git diff --quiet insights.json 2>/dev/null; then changes="$changes insights.json"; fi
+          # 새로 생성된 다이제스트 HTML 도 함께
+          if [ -d docs/digests ]; then
+            for f in docs/digests/*.html; do
+              [ -f "$f" ] || continue
+              if ! git ls-files --error-unmatch "$f" >/dev/null 2>&1 || ! git diff --quiet "$f" 2>/dev/null; then
+                changes="$changes $f"
+              fi
+            done
+          fi
           if [ -z "$changes" ]; then
             echo "No state/insights changes — skipping commit"
             exit 0

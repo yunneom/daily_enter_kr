@@ -83,15 +83,27 @@ def filter_duplicates(news_items, state: dict):
     return fresh, dupes
 
 
-def record_post(state: dict, card_titles_with_originals: List[tuple], status: str = "success"):
-    """게시 성공 시 호출. (original_title, card_title) tuple 리스트를 받음."""
+def record_post(state: dict, card_titles_with_originals: List[tuple],
+                status: str = "success", caption_variant: str = None,
+                media_id: str = None):
+    """게시 성공 시 호출. (original_title, card_title) tuple 리스트를 받음.
+
+    Args:
+        caption_variant: A/B 분석용 (예: 'question_hook', 'list_count' 등).
+        media_id: IG Reels media id (선택 — 게시별 시그너처).
+    """
     today = datetime.now(KST).date().isoformat()
     for original, card in card_titles_with_originals:
-        state["posted_history"].append({
+        entry = {
             "date": today,
             "title_hash": title_hash(original),
             "card_title": card,
-        })
+        }
+        if caption_variant:
+            entry["caption_variant"] = caption_variant
+        if media_id:
+            entry["media_id"] = media_id
+        state["posted_history"].append(entry)
     state["last_run_at"] = datetime.now(KST).isoformat()
     state["last_run_status"] = status
 

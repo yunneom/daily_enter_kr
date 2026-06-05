@@ -153,6 +153,36 @@ class InstagramPublisher:
             elapsed += 5
         raise TimeoutError(f"Container {container_id} not ready in {timeout}s")
 
+    def _create_story_container(self, video_url: str) -> str:
+        """Stories 컨테이너 생성 (mp4)."""
+        url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
+        params = {
+            "media_type": "STORIES",
+            "video_url": video_url,
+            "access_token": self.access_token,
+        }
+        resp = self._post_ig(url, params, step="create_story")
+        return resp.json()["id"]
+
+    def post_story_video(self, video_url: str) -> str:
+        """Stories 에 mp4 게시. 캡션 / 해시태그 미지원 (Stories 자체 제약).
+
+        주의: IG Stories 는 24h 후 자동 삭제됨. 도달 증폭 + 팔로워 노출 강화 목적.
+        Returns: 게시된 story media id.
+        """
+        print(f"[Stories 1/3] 컨테이너 생성...")
+        container_id = self._create_story_container(video_url)
+        print(f"  ✓ container_id: {container_id}")
+
+        print("[Stories 2/3] 트랜스코딩 대기...")
+        self._wait_container_ready(container_id, timeout=180)
+        print("  ✓ FINISHED")
+
+        print("[Stories 3/3] 게시...")
+        media_id = self._publish_container(container_id)
+        print(f"  ✅ Stories 게시 완료! Media ID: {media_id}")
+        return media_id
+
     def post_reel(self, video_url: str, caption: str,
                   cover_url: Optional[str] = None,
                   share_to_feed: bool = True) -> str:
@@ -285,6 +315,58 @@ def upload_video(video_path: Path) -> str:
     )
 
 
+CAPTION_VARIANT_NAMES = ["headlines_dotted", "question_hook", "list_count",
+                         "tease_one", "you_wont_believe"]
+
+
+def _variant_index_for(date_str: str) -> int:
+    """date 기반 결정적 회전 — 같은 날에 같은 변형, 5일 주기."""
+    # 단순 날짜 hash 의 mod
+    s = date_str.replace("-", "").replace(":", "")
+    h = sum(ord(c) for c in s)
+    return h % len(CAPTION_VARIANT_NAMES)
+
+
+def caption_hook_variant(summaries, date_str: str, label_short: str, n: int) -> dict:
+    """date 기반으로 5종 hook 변형 중 하나 선택.
+
+    Returns: {"name": str, "hook": str, "body_lead": str}
+    """
+    top_titles = [s.card_title for s in summaries[:3]]
+    idx = _variant_index_for(date_str)
+    name = CAPTION_VARIANT_NAMES[idx]
+
+    if name == "headlines_dotted":
+        hook = " · ".join(top_titles)
+        if len(hook) > 120:
+            hook = " · ".join(top_titles[:2])
+        body_lead = f"오늘 {label_short} 핫이슈 {n}건 — 영상으로 한눈에 보세요 ▶"
+    elif name == "question_hook":
+        first = top_titles[0] if top_titles else ""
+        hook = f"오늘 K연예에서 가장 핫한 건? {first[:60]}"
+        body_lead = f"외 {n-1}건. 전체 영상 보기 ▶"
+    elif name == "list_count":
+        hook = f"📌 오늘 {label_short} TOP {n} | {top_titles[0][:50] if top_titles else ''}..."
+        body_lead = "전체 목록은 본 영상에서 → ▶"
+    elif name == "tease_one":
+        first = top_titles[0] if top_titles else ""
+        hook = f"잠깐, {first[:80]} ?"
+        body_lead = f"오늘 {n}건 중 가장 화제된 이슈 + 나머지 ▶"
+    else:  # you_wont_believe
+        hook = f"오늘 {label_short} 핫이슈, 다 알고 있나요? {n}건 — 1분 안에 확인"
+        body_lead = "영상으로 한눈에 ▶"
+
+    return {"name": name, "hook": hook, "body_lead": body_lead}
+
+
+def build_caption_with_variant(summaries, date_str: str, label_short: str = "K-연예",
+                                default_hashtags=None) -> tuple:
+    """build_caption 의 튜플 버전 — A/B 분석용 variant 이름도 반환."""
+    caption = build_caption(summaries, date_str, label_short, default_hashtags)
+    variant_idx = _variant_index_for(date_str)
+    return caption, CAPTION_VARIANT_NAMES[variant_idx]
+
+
 def build_caption(summaries, date_str: str, label_short: str = "K-연예",
                   default_hashtags=None) -> str:
     """인스타 캡션 생성 — 첫 줄 훅 + 본문 + 해시태그 mix.
@@ -308,15 +390,16 @@ def build_caption(summaries, date_str: str, label_short: str = "K-연예",
         ]
     n = len(summaries)
 
-    # === 첫 줄 훅 — 상위 3개 헤드라인 티저 ===
-    top_titles = [s.card_title for s in summaries[:3]]
-    hook = " · ".join(top_titles)
-    if len(hook) > 120:  # IG 첫 줄 truncate 위치 대비
-        hook = " · ".join(top_titles[:2])
+    # === 첫 줄 훅 (A/B 변형) ===
+    # 5종 hook 템플릿을 매일 회전 (date_str 기반 결정 → 같은 날 호출은 동일).
+    # state.json에 caption_variant 도 같이 저장하면 weekly_digest 가 변형별 성과 비교 가능.
+    variant = caption_hook_variant(summaries, date_str, label_short, n)
+    hook = variant["hook"]
+    body_lead = variant["body_lead"]
     lines = [
         hook,
         "",
-        f"오늘 {label_short} 핫이슈 {n}건 — 영상으로 한눈에 보세요 ▶",
+        body_lead,
         "",
     ]
 

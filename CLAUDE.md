@@ -21,10 +21,14 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 | `src/make_card.py` | PIL 1080x1920 (9:16). 미니멀 — 흰 배경 + 검정 제목 한 줄(자동 축소·트렁케이트) + 출처/아웃트로 카드 |
 | `src/make_video.py` | FFmpeg 슬라이드쇼 빌더 (2-pass: 비디오 xfade → BGM mux). 표지 1.5s + 본문/출처 2.5s, 0.3s xfade. BGM: assets/bgm/ 에서 선택 |
 | `assets/bgm/` | 자체 합성 ambient pad mp3 3종 (warm/calm/light). FFmpeg sine 합성이라 저작권 0% |
-| `src/post_instagram.py` | Instagram Graph v22.0. **Reels 전용** (mp4 업로드 → 트랜스코딩 대기 → publish). IGAA 토큰 + Cloudinary 비디오 호스팅 + health_check |
-| `src/state.py` | 중복 게시 방지 (14일 윈도우) + 실행 이력 + 토큰 만료 추적. `state.json` 읽고 씀 |
+| `src/post_instagram.py` | Instagram Graph v22.0. **Reels + Stories** (mp4 업로드 → 트랜스코딩 대기 → publish). cover_url 지원. IGAA 토큰 + Cloudinary 비디오 호스팅 + health_check |
+| `src/post_threads.py` | Threads cross-post (graph.threads.net). top-5 헤드라인 텍스트 게시. THREADS_USER_ID/ACCESS_TOKEN 미설정 시 silent skip |
+| `src/tts.py` | TTS 프레임워크 (OpenAI / Google). 한글 카드 제목 → mp3. TTS_PROVIDER 미설정 시 off (BGM-only) |
+| `src/notify.py` | Discord webhook helper. 게시 완료 / 다이제스트 생성 등 알림 |
+| `src/state.py` | 중복 게시 방지 (14일 윈도우) + 실행 이력 + 토큰 만료 추적 + A/B variant 기록. `state.json` 읽고 씀 |
 | `exchange_token.py` | IGAA 단기→장기 토큰 교환, refresh 폴백 자동, `.env` + state 자동 업데이트 |
-| `fetch_insights.py` | 최근 게시물 like/comment 스냅샷 → `insights.json` (A/B 분석 기반) |
+| `fetch_insights.py` | 최근 게시물 like/comment + Reels 전용(plays/reach/saved/shares) 스냅샷 → `insights.json` (v2). A/B 분석 기반 |
+| `weekly_digest.py` | 주간(7일) 인사이트 분석 → `docs/digests/YYYY-WNN.html` + Discord 알림. 일요일 cron 자동 실행 |
 | `state.json` | 운영 state — 매 실행마다 워크플로우가 git에 commit 함 |
 | `insights.json` | 게시물 인사이트 시계열 — 매 실행 끝에 워크플로우가 commit |
 | `.github/workflows/daily.yml` | 매일 실행 + state/insights commit-back + Discord 알림(선택) |
