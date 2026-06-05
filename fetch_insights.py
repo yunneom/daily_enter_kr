@@ -10,7 +10,7 @@ insights.json에 누적 (시계열). A/B 분석 / 카피 효과 측정의 기반
 
 [저장 형식]
 {
-  "version": 1,
+  "version": 2,
   "snapshots": [
     {
       "snapshot_at": "2026-05-24T10:50:00+09:00",
@@ -18,16 +18,21 @@ insights.json에 누적 (시계열). A/B 분석 / 카피 효과 측정의 기반
         {
           "media_id": "180...",
           "permalink": "https://www.instagram.com/p/...",
-          "timestamp": "2026-05-24T01:46:00+0000",
-          "caption_excerpt": "오늘의 K-연예...",
-          "like_count": 50,
-          "comments_count": 5,
+          "media_type": "VIDEO" | "CAROUSEL_ALBUM" | "IMAGE",
+          "caption_excerpt": "...",
+          "like_count": 50, "comments_count": 5,
+          // Reels 전용 (media_type=VIDEO 일 때만 — v2 부터 추가)
+          "plays": 124, "reach": 98, "saved": 3, "shares": 7,
+          "total_interactions": 65,
           "age_hours": 2.5
         }
       ]
     }
   ]
 }
+
+[버전 2 (2026-06-05)] Reels 전환 후 plays/reach/saved/shares 등 reels insights 메트릭 추가.
+shares 는 알고리즘 신호 중 상위. saved 도 retention 강한 신호. 시계열로 누적 분석 가능.
 
 스냅샷은 최근 90일치 유지.
 """
@@ -96,6 +101,33 @@ def fetch_recent_media(ig_user_id: str, token: str, limit: int = MEDIA_FETCH_LIM
     return resp.json().get("data", [])
 
 
+# Reels (media_type=VIDEO) 만 대상으로 하는 추가 메트릭.
+# 캐러셀/이미지는 다른 메트릭 셋이라 별도 처리 — 우리는 Reels-only 운영이라 VIDEO 만 다룸.
+REELS_INSIGHT_METRICS = ["plays", "reach", "saved", "shares", "total_interactions"]
+
+
+def fetch_reels_insights(media_id: str, token: str) -> dict:
+    """단일 Reels 의 plays/reach/saved/shares 등 인사이트.
+    실패해도 빈 dict 반환 — 일부 메트릭만 막혀있는 경우도 있어서 게시별 grace.
+    """
+    url = f"{GRAPH_BASE}/{media_id}/insights"
+    params = {"metric": ",".join(REELS_INSIGHT_METRICS), "access_token": token}
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        if not resp.ok:
+            return {}
+        data = resp.json().get("data", [])
+        out = {}
+        for item in data:
+            name = item.get("name")
+            vals = item.get("values", [])
+            if name and vals:
+                out[name] = vals[0].get("value")
+        return out
+    except Exception:
+        return {}
+
+
 def main():
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
@@ -123,7 +155,7 @@ def main():
             except Exception:
                 pass
 
-        snapshot_posts.append({
+        post_data = {
             "media_id": m.get("id"),
             "permalink": m.get("permalink"),
             "timestamp": ts,
@@ -132,9 +164,18 @@ def main():
             "like_count": m.get("like_count"),
             "comments_count": m.get("comments_count"),
             "age_hours": age_hours,
-        })
+        }
+
+        # Reels 만 추가 인사이트 호출. 캐러셀/이미지는 metric 셋이 달라 skip (Reels-only 운영).
+        if m.get("media_type") == "VIDEO":
+            reels_insights = fetch_reels_insights(m["id"], token)
+            post_data.update(reels_insights)  # plays/reach/saved/shares/total_interactions
+
+        snapshot_posts.append(post_data)
 
     data = load_insights()
+    # 버전 마이그레이션: v1 → v2 (Reels insights 추가). 기존 스냅샷은 그대로 둠.
+    data["version"] = 2
     data["snapshots"].append({
         "snapshot_at": now.isoformat(),
         "posts": snapshot_posts,
@@ -145,7 +186,11 @@ def main():
     for p in snapshot_posts[:5]:
         likes = p["like_count"] if p["like_count"] is not None else "-"
         comments = p["comments_count"] if p["comments_count"] is not None else "-"
-        print(f"  {p['media_id'][-6:]}: ❤{likes} 💬{comments}  ({p['age_hours']}h)  {p['caption_excerpt'][:40]}")
+        # Reels 가 있으면 reach/shares 까지 표기 (알고리즘 핵심 신호)
+        extras = ""
+        if "plays" in p:
+            extras = f" ▶{p.get('plays', '-')} 👤{p.get('reach', '-')} 🔖{p.get('saved', '-')} 🔁{p.get('shares', '-')}"
+        print(f"  {p['media_id'][-6:]}: ❤{likes} 💬{comments}{extras}  ({p['age_hours']}h)  {p['caption_excerpt'][:40]}")
     return 0
 
 

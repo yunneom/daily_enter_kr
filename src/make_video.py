@@ -4,7 +4,7 @@
 [설계]
 - FFmpeg 직접 호출. 카드별 가변 노출 시간 지원 (durations 리스트).
 - BGM: bgm_path 지정 시 ffmpeg 가 자동 mux. 음원이 영상보다 짧으면 loop, 길면 -shortest 로 자름.
-- 출력: 1080x1920, h264 high-profile, yuv420p, AAC 128kbps (BGM 있을 때).
+- 출력: 1080x1920, h264 high-profile, yuv420p, AAC 192kbps (BGM 있을 때).
 - 카드 사이 짧은 xfade.
 
 [IG Reels 제약]
@@ -150,7 +150,9 @@ def _build_mux_cmd(video_path: Path, bgm_path: Path, bgm_volume: float,
         f"afade=t=in:d=0.8,afade=t=out:st={fade_out_start:.2f}:d=1.5[aout]",
         "-map", "0:v", "-map", "[aout]",
         "-c:v", "copy",  # 비디오 재인코딩 안 함 (속도 +, 품질 손실 0)
-        "-c:a", "aac", "-b:a", "128k",
+        # AAC 128k → 192k. IG Reels 2026 알고리즘의 'audio fidelity' 신호 강화 목적.
+        # 파일 크기 차이 미미(텍스트 reel 22s 기준 +150KB).
+        "-c:a", "aac", "-b:a", "192k",
         "-movflags", "+faststart",
         "-shortest",
         str(output_path),
