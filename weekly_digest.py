@@ -38,8 +38,52 @@ from notify import notify_discord  # noqa: E402
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).parent
 INSIGHTS_PATH = ROOT / "insights.json"
+STATE_PATH = ROOT / "state.json"
 DIGEST_DIR = ROOT / "docs" / "digests"
 WEEK_DAYS = 7
+
+
+def _load_state_index() -> Dict[str, Dict]:
+    """state.json posted_history → media_id 키 dict (card_style/caption_variant 조회용)."""
+    if not STATE_PATH.exists():
+        return {}
+    try:
+        data = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    idx = {}
+    for entry in data.get("posted_history", []):
+        mid = entry.get("media_id")
+        if mid:
+            idx[mid] = {
+                "card_style": entry.get("card_style"),
+                "caption_variant": entry.get("caption_variant"),
+            }
+    return idx
+
+
+def _aggregate_by(posts: List[Dict], key: str) -> Dict[str, Dict]:
+    """key 값별 (plays/reach/shares/saved/likes) 평균 집계."""
+    buckets = defaultdict(list)
+    for p in posts:
+        k = p.get(key)
+        if k:
+            buckets[k].append(p)
+    out = {}
+    for k, group in buckets.items():
+        def avg(field):
+            vals = [_safe(p.get(field)) for p in group if p.get(field) is not None]
+            return round(mean(vals), 1) if vals else 0
+        out[k] = {
+            "n": len(group),
+            "plays": avg("plays"),
+            "reach": avg("reach"),
+            "shares": avg("shares"),
+            "saved": avg("saved"),
+            "like_count": avg("like_count"),
+            "comments_count": avg("comments_count"),
+        }
+    return out
 
 
 def _load_snapshots() -> List[Dict]:
@@ -124,7 +168,38 @@ def _iso_week(dt: datetime) -> str:
     return f"{iso.year}-W{iso.week:02d}"
 
 
-def _render_html(week_label: str, posts: List[Dict], stats: Dict) -> str:
+def _render_breakdown_table(title: str, agg: Dict) -> str:
+    """A/B 그룹별 평균 비교 표. agg 비어있으면 빈 문자열 반환."""
+    if not agg:
+        return ""
+    rows = []
+    # n 적으면 표본 부족 경고
+    for key, m in sorted(agg.items(), key=lambda kv: -kv[1].get("reach", 0)):
+        warn = " (표본 적음)" if m["n"] < 3 else ""
+        rows.append(f"""
+          <tr>
+            <td><strong>{key}</strong>{warn}</td>
+            <td class="num">{m['n']}</td>
+            <td class="num">{m['plays']}</td>
+            <td class="num">{m['reach']}</td>
+            <td class="num">{m['shares']}</td>
+            <td class="num">{m['saved']}</td>
+            <td class="num">{m['like_count']}</td>
+            <td class="num">{m['comments_count']}</td>
+          </tr>""")
+    return f"""<h2>A/B 비교 — {title}</h2>
+<table>
+<thead><tr><th>그룹</th><th class="num">n</th>
+<th class="num">plays</th><th class="num">reach</th>
+<th class="num">shares</th><th class="num">saved</th>
+<th class="num">likes</th><th class="num">댓글</th></tr></thead>
+<tbody>{''.join(rows)}</tbody>
+</table>
+<p class="sub" style="font-size:12px">평균값 기준. n=1-2 그룹은 표본 부족으로 신뢰 낮음.</p>"""
+
+
+def _render_html(week_label: str, posts: List[Dict], stats: Dict,
+                 by_style: Dict = None, by_variant: Dict = None) -> str:
     now = datetime.now(KST)
 
     def fmt_post_row(p: Dict) -> str:
@@ -239,6 +314,9 @@ def _render_html(week_label: str, posts: List[Dict], stats: Dict) -> str:
 <tbody>{''.join(fmt_post_row(p) for p in worst)}</tbody>
 </table>
 
+{_render_breakdown_table('카드 스타일 (격일 회전)', by_style or {})}
+{_render_breakdown_table('캡션 hook variant (5종 회전)', by_variant or {})}
+
 <h2>해석 가이드</h2>
 <ul>
 <li>📈 plays/reach 가 평균 300+ → P2(썸네일·다이제스트) 진행 권장</li>
@@ -267,12 +345,27 @@ def main() -> int:
         print(f"⚠️  최근 {WEEK_DAYS}일 게시 없음 — 스킵")
         return 0
 
+    # state.json 의 card_style / caption_variant 를 media_id 키로 머지
+    state_idx = _load_state_index()
+    for p in posts:
+        meta = state_idx.get(p.get("media_id"), {})
+        if meta.get("card_style"):
+            p["card_style"] = meta["card_style"]
+        if meta.get("caption_variant"):
+            p["caption_variant"] = meta["caption_variant"]
+
     stats = _summary_stats(posts)
+    by_style = _aggregate_by(posts, "card_style")
+    by_variant = _aggregate_by(posts, "caption_variant")
     now = datetime.now(KST)
     week_label = _iso_week(now)
     DIGEST_DIR.mkdir(parents=True, exist_ok=True)
     out_path = DIGEST_DIR / f"{week_label}.html"
-    out_path.write_text(_render_html(week_label, posts, stats), encoding="utf-8")
+    out_path.write_text(
+        _render_html(week_label, posts, stats,
+                     by_style=by_style, by_variant=by_variant),
+        encoding="utf-8",
+    )
 
     # Discord 알림 — 핵심 지표만 요약
     s = stats

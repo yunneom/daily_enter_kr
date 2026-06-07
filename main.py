@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_sources_card, make_reels_thumbnail
+from make_card import make_card, make_manhwa_card, make_sources_card, make_reels_thumbnail
 from make_video import make_slideshow_video
 from post_instagram import (
     InstagramPublisher, upload_image, upload_video,
@@ -74,6 +74,16 @@ MAX_CARDS = 8          # Reels 길이 ≈ (본문 N + 출처 + 표지) × 3s. 8+
 UPLOAD_RETRIES = 3     # 호스팅 업로드 재시도 횟수
 UPLOAD_BACKOFF = 2.0   # 지수 백오프 base (sec)
 CRON_JITTER_MAX_SEC = 1800  # CI cron 만 적용 (0-30분 랜덤 지연). 90분에서 축소 — 사용자가 게시 시각 예측 가능하도록.
+
+
+def _card_style_for_date(date_str: str) -> str:
+    """date_str 기반 격일 회전 — 'minimal' / 'manhwa'.
+
+    같은 날에 같은 스타일, 2일 주기. 1주 = 3-4회씩 → 주간 다이제스트에서
+    스타일별 reach/shares 비교 가능 (state 에 card_style 기록).
+    """
+    digits = "".join(ch for ch in date_str if ch.isdigit())
+    return "manhwa" if int(digits) % 2 == 0 else "minimal"
 
 
 def apply_cron_jitter():
@@ -198,15 +208,22 @@ def main():
 
     # === 3. 카드 이미지 생성 (9:16 미니멀: 흰 배경 + 검정 제목) ===
     # 슬라이드 순서: 본문 N장 (2.5s) → 출처 (2.5s). 표지는 사용자 피드백으로 제거.
+    # 카드 스타일 — 날짜 기반 격일 회전 (minimal / manhwa) → A/B 분석 가능.
     print("\n" + "="*60)
     print("3️⃣  카드 이미지 생성 (9:16)")
     print("="*60)
     image_paths = []
     total_cards = len(summaries)
 
+    card_style = _card_style_for_date(date_str)
+    print(f"  🎨 카드 스타일: {card_style} (date={date_str}, 격일 회전)")
+
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
-        make_card(title=s.card_title, output_path=path)
+        if card_style == "manhwa":
+            make_manhwa_card(title=s.card_title, output_path=path, seed=i)
+        else:
+            make_card(title=s.card_title, output_path=path)
         image_paths.append(path)
         print(f"  ✓ {path.name}: {s.card_title}")
 
@@ -331,18 +348,19 @@ def main():
     notify_discord(
         f"✅ **daily_enter_kr Reels 게시 완료**\n"
         f"• 미디어: `{media_id}`\n"
-        f"• 캡션 variant: `{caption_variant}`\n"
+        f"• 캡션 variant: `{caption_variant}` · 카드 스타일: `{card_style}`\n"
         f"• Stories: {'✅' if story_id else '❌'} · Threads: {'✅' if threads_id else '⏭️'}\n"
         f"• 헤드라인 #1: {summaries[0].card_title if summaries else '-'}",
         username="daily_enter_kr",
     )
 
-    # === 7. state 기록 (다음 실행의 중복 방지 + A/B variant) ===
+    # === 7. state 기록 (다음 실행의 중복 방지 + A/B variant + card_style) ===
     record_post(
         state,
         [(s.original_title, s.card_title) for s in summaries],
         caption_variant=caption_variant,
         media_id=media_id,
+        card_style=card_style,
         status="success",
     )
     save_state(state)

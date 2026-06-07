@@ -18,7 +18,7 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 | `main.py` | 전체 파이프라인 오케스트레이션 + 중복 체크 + jitter + 토큰 health check |
 | `src/fetch_news.py` | Google News RSS (`entertainment` topic 기본). 20건 수집 |
 | `src/summarize.py` | Claude Haiku 4.5. **안전 분류 (post/respectful/skip) + 제목-only SEO 카피** |
-| `src/make_card.py` | PIL 1080x1920 (9:16). 미니멀 — 흰 배경 + 검정 제목 한 줄(자동 축소·트렁케이트) + 출처/아웃트로 카드 |
+| `src/make_card.py` | PIL 1080x1920 (9:16). **2가지 본문 스타일** — `make_card`(minimal 흰배경) / `make_manhwa_card`(만화: 하프톤+말풍선+의성어). 격일 회전. + 출처/썸네일/표지 카드 |
 | `src/make_video.py` | FFmpeg 슬라이드쇼 빌더 (2-pass: 비디오 xfade → BGM mux). 표지 1.5s + 본문/출처 2.5s, 0.3s xfade. BGM: assets/bgm/ 에서 선택 |
 | `assets/bgm/` | 자체 합성 ambient pad mp3 3종 (warm/calm/light). FFmpeg sine 합성이라 저작권 0% |
 | `src/post_instagram.py` | Instagram Graph v22.0. **Reels + Stories** (mp4 업로드 → 트랜스코딩 대기 → publish). cover_url 지원. IGAA 토큰 + Cloudinary 비디오 호스팅 + health_check |
@@ -105,9 +105,12 @@ python exchange_token.py --refresh
 ## 자주 나오는 작업 패턴
 
 ### 카드 디자인 수정
-- 색상/배경: `src/make_card.py` 상단의 `BG_COLOR` / `TEXT_COLOR` / `SUBTLE_COLOR`
+- **본문 스타일 2종**: `make_card`(minimal 흰배경) / `make_manhwa_card`(만화 — 하프톤 + 액션라인 + 말풍선 + 회전된 빨강 의성어). `main._card_style_for_date` 가 격일 회전.
+- minimal 색상/배경: `BG_COLOR` / `TEXT_COLOR` / `SUBTLE_COLOR`
+- manhwa 색상/의성어: `MANHWA_BG` / `MANHWA_INK` / `MANHWA_ACCENT` / `MANHWA_BUBBLE` / `ONOMATOPOEIA` 리스트
 - 캔버스: `CARD_SIZE = (1080, 1920)` 9:16 Reels 표준
 - 본문 카드 폰트 사이즈 범위: `_fit_title()`의 `size_max`(기본 140) / `size_min`(44). 1줄 우선, 안 들어가면 2줄 wrap (트렁케이트 안 함)
+- manhwa 폰트 범위: `_fit_title` size_max=130 / size_min=52 (말풍선 안 텍스트라 살짝 작게)
 - 표지(아웃트로) 폰트 사이즈: `make_cover_card()` 내부의 `f_big` / `f_mid` / `f_date`
 - 출처 카드 폰트 사이즈: `make_sources_card()` 내부의 `f_label` / `f_item`
 - 좌우 여백: `SIDE_MARGIN`
