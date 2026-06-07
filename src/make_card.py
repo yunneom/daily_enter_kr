@@ -493,10 +493,11 @@ if __name__ == "__main__":
         ("유재석, 신규 예능 진행 합류", "스타뉴스"),
     ]
 
+    # minimal 본문
     for i, (title, _src) in enumerate(samples, 1):
         path = output_dir / f"{i:02d}_card.jpg"
         make_card(title, path)
-        print(f"✅ {i:02d}: {title}")
+        print(f"✅ minimal {i:02d}: {title}")
 
     sources_path = output_dir / "90_sources.jpg"
     make_sources_card([src for _, src in samples], sources_path)
@@ -506,6 +507,14 @@ if __name__ == "__main__":
     thumb_path = output_dir / "00_thumb.jpg"
     make_reels_thumbnail([t for t, _ in samples], thumb_path)
     print(f"✅ 그리드 썸네일: {thumb_path.name}")
+
+    # manhwa 본문 (서브 폴더에 — minimal 과 비교)
+    manhwa_dir = output_dir / "manhwa"
+    manhwa_dir.mkdir(parents=True, exist_ok=True)
+    for i, (title, _src) in enumerate(samples, 1):
+        path = manhwa_dir / f"{i:02d}_manhwa.jpg"
+        make_manhwa_card(title, path, seed=i)
+        print(f"✅ manhwa {i:02d}: {title}")
 
     # make_cover_card 함수는 유지되어 있어 필요 시 직접 호출 가능 (현재 production 미사용)
     print(f"\n총 {len(samples) + 2}개 이미지 생성")
