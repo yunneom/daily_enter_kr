@@ -8,6 +8,8 @@
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 from typing import Tuple, List
+import math
+import random
 
 
 # === 디자인 토큰 (단일 미니멀 스타일) ===
@@ -231,6 +233,151 @@ def make_cover_card(
     h_h = h_bbox[3] - h_bbox[1]
     _draw_centered(draw, (size[1] - h_h) // 2 - 40, headline, f_big, size[0])
     _draw_centered(draw, size[1] // 2 + h_h // 2 + 80, date_str, f_date, size[0], fill=SUBTLE_COLOR)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(output_path, "JPEG", quality=95)
+    return output_path
+
+
+# ===================================================================
+# 만화 스타일 카드 (L1 만화변형) — A/B 비교용. minimal 카드와 격일 회전.
+# 향후 L2 (AI 일러스트 합성) 가 같은 함수에 plug 되도록 분리.
+# ===================================================================
+
+MANHWA_BG = (255, 250, 240)        # 따뜻한 크림 — 만화 종이 느낌
+MANHWA_INK = (17, 17, 17)
+MANHWA_ACCENT = (220, 38, 38)      # 의성어/포인트용 빨강
+MANHWA_BUBBLE = (255, 255, 255)
+ONOMATOPOEIA = ["오?", "와!", "주목", "이슈", "헉", "체크", "오늘의", "방금"]
+
+
+def _halftone_dots(img: Image.Image, area: Tuple[int, int, int, int],
+                   spacing: int = 38, alpha: int = 70,
+                   r_range: Tuple[int, int] = (3, 7),
+                   seed: int = 0) -> Image.Image:
+    """area 안에 반-투명 도트 패턴 오버레이. 만화 음영 표현."""
+    rng = random.Random(seed)
+    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(overlay)
+    x0, y0, x1, y1 = area
+    for y in range(y0, y1, spacing):
+        for x in range(x0, x1, spacing):
+            r = rng.randint(*r_range)
+            cx = x + rng.randint(-spacing // 6, spacing // 6)
+            cy = y + rng.randint(-spacing // 6, spacing // 6)
+            d.ellipse([cx - r, cy - r, cx + r, cy + r],
+                      fill=(*MANHWA_INK, alpha))
+    return Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
+
+
+def _radial_action_lines(draw: ImageDraw.ImageDraw,
+                         cx: int, cy: int,
+                         count: int = 28,
+                         inner: int = 480, outer: int = 1300,
+                         seed: int = 0):
+    """중심에서 방사형 라인. 만화의 '주목' 신 표현."""
+    rng = random.Random(seed)
+    for _ in range(count):
+        angle = rng.uniform(0, 2 * math.pi)
+        r_in = inner + rng.randint(-60, 60)
+        r_out = outer + rng.randint(-100, 100)
+        w = rng.randint(3, 8)
+        x1 = cx + math.cos(angle) * r_in
+        y1 = cy + math.sin(angle) * r_in
+        x2 = cx + math.cos(angle) * r_out
+        y2 = cy + math.sin(angle) * r_out
+        draw.line([(x1, y1), (x2, y2)], fill=MANHWA_INK, width=w)
+
+
+def _speech_bubble(draw: ImageDraw.ImageDraw,
+                   bbox: Tuple[int, int, int, int],
+                   fill=MANHWA_BUBBLE,
+                   outline=MANHWA_INK,
+                   outline_width: int = 8,
+                   radius: int = 60,
+                   tail: bool = True):
+    """둥근 사각형 말풍선 + (옵션) 꼬리."""
+    x0, y0, x1, y1 = bbox
+    draw.rounded_rectangle([x0, y0, x1, y1], radius=radius,
+                           fill=fill, outline=outline, width=outline_width)
+    if tail:
+        cx = (x0 + x1) // 2
+        tail_pts = [
+            (cx - 50, y1 - 4),
+            (cx + 30, y1 - 4),
+            (cx - 20, y1 + 90),
+        ]
+        draw.polygon(tail_pts, fill=fill)
+        draw.line([tail_pts[0], tail_pts[2]], fill=outline, width=outline_width)
+        draw.line([tail_pts[1], tail_pts[2]], fill=outline, width=outline_width)
+        # 풍선 하단의 outline 을 풍선 색으로 덮어 자연스럽게
+        draw.line([(cx - 40, y1 - 2), (cx + 20, y1 - 2)],
+                  fill=fill, width=outline_width + 2)
+
+
+def make_manhwa_card(
+    title: str,
+    output_path: Path,
+    seed: int = 0,
+    font_path: str = None,
+    size: Tuple[int, int] = CARD_SIZE,
+):
+    """만화 스타일 본문 카드 — 액션라인 + 하프톤 + 말풍선 + 의성어.
+
+    seed: 카드 인덱스로 시드 고정 → 같은 카드는 같은 표현. 카드 간 다양성 확보.
+    """
+    img = Image.new("RGB", size, MANHWA_BG)
+    draw = ImageDraw.Draw(img)
+
+    # 1) 액션 라인 (배경)
+    _radial_action_lines(draw, size[0] // 2, size[1] // 2,
+                         count=26, inner=520, outer=1380, seed=seed)
+
+    # 2) 하프톤 — 좌상단·우하단 2개 모서리만 (전면 깔면 산만)
+    img = _halftone_dots(img, (0, 0, 460, 460), seed=seed)
+    img = _halftone_dots(img, (size[0] - 460, size[1] - 460, size[0], size[1]),
+                         seed=seed + 1)
+    draw = ImageDraw.Draw(img)
+
+    # 3) 말풍선 + 제목 (1줄 우선, 2줄 폴백)
+    bold_path = _resolve_font(weight="Bold", font_path=font_path)
+    bubble_inset = 110
+    text_max_w = size[0] - (bubble_inset + 70) * 2
+    font, lines = _fit_title(title, bold_path, max_width=text_max_w,
+                             size_max=130, size_min=52)
+
+    ascent, descent = font.getmetrics() if hasattr(font, "getmetrics") else (60, 12)
+    line_h = int((ascent + descent) * 1.12)
+    text_block_h = line_h * len(lines) - int(line_h * 0.12)
+
+    bubble_pad_y = 90
+    bubble_bbox = (
+        bubble_inset,
+        (size[1] - text_block_h) // 2 - bubble_pad_y,
+        size[0] - bubble_inset,
+        (size[1] + text_block_h) // 2 + bubble_pad_y,
+    )
+    _speech_bubble(draw, bubble_bbox, tail=True)
+
+    y = (size[1] - text_block_h) // 2
+    for line in lines:
+        _draw_centered(draw, y, line, font, size[0], fill=MANHWA_INK)
+        y += line_h
+
+    # 4) 의성어 — 회전된 빨간 글자, 좌상단 모서리
+    ono_text = ONOMATOPOEIA[seed % len(ONOMATOPOEIA)]
+    ono_font = ImageFont.truetype(bold_path, 150) if bold_path else font
+    ono_layer = Image.new("RGBA", size, (0, 0, 0, 0))
+    ono_draw = ImageDraw.Draw(ono_layer)
+    bbox = ono_font.getbbox(ono_text)
+    pad = 90
+    ono_draw.text((pad - bbox[0], pad - bbox[1]),
+                  ono_text, font=ono_font, fill=MANHWA_ACCENT,
+                  stroke_width=8, stroke_fill=MANHWA_INK)
+    rng = random.Random(seed + 100)
+    angle = rng.choice([-12, -8, 8, 12])
+    ono_layer = ono_layer.rotate(angle, resample=Image.BICUBIC, expand=False)
+    img = Image.alpha_composite(img.convert("RGBA"), ono_layer).convert("RGB")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=95)
