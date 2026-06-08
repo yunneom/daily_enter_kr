@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-07T09:27:03.841035+09:00",
+  "last_run_at": "2026-06-08T09:14:07.049667+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -634,6 +634,70 @@
       "card_title": "1세대 게임 BJ 난닝구, 향년 46세로 별세",
       "caption_variant": "you_wont_believe",
       "media_id": "18102927965092931"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "85352f857a80e801",
+      "card_title": "이소라·홍진경, 50대 나이 뛰어넘어 파리 런웨이 무대 함께 선다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "ad42ab07e209a2c7",
+      "card_title": "보이넥스트도어, 첫 정규앨범으로 새로운 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "dde813fedd8ce23b",
+      "card_title": "서인영, 하반기 재혼 결정…6세 연상 사업가와",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "e27adc166a3b2f79",
+      "card_title": "에스파 지젤, ADHD와의 경험 솔직히 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "e030aa15a54d34ea",
+      "card_title": "한채아, '미우새' 출연해 예원과의 일상 톡톡 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "5f05c68ea1eaf7f0",
+      "card_title": "린, 결혼 11년 만에 이수와 이혼 후 10개월 만에 예능 복귀",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "af3e87502ceadffd",
+      "card_title": "이용진·이기택 신규 멤버로 '1박 2일' 새 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-08",
+      "title_hash": "6f2aebf2cb331e5c",
+      "card_title": "김수현, 28억 화장품 모델 소송 7월 재개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18375879193163709",
+      "card_style": "manhwa"
     }
   ]
 }
