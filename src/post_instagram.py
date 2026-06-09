@@ -359,6 +359,24 @@ def caption_hook_variant(summaries, date_str: str, label_short: str, n: int) -> 
     return {"name": name, "hook": hook, "body_lead": body_lead}
 
 
+# 댓글 유도 라인 (C 자동화 — 5종 회전, hook variant 와 독립).
+# IG 알고리즘 2026 에서 comments_count 가 토론 신호 → 게시별로 다양한 question 던지면
+# "어떤 질문이 댓글 잘 받나" A/B 측정 가능 (다음 사이클부터).
+COMMENT_CTA_VARIANTS = [
+    "💬 오늘의 픽은? 댓글로 알려주세요",
+    "💬 가장 궁금한 이슈는 몇 번? 댓글로 ⬇️",
+    "💬 이 중 본 적 있나요? 댓글로 공유 부탁",
+    "💬 가장 응원하는 픽은? 댓글로 알려주세요 ⬇️",
+    "💬 어떤 게 가장 인상적이었나요? 솔직한 감상 부탁",
+]
+
+
+def comment_cta_for(date_str: str) -> str:
+    """date 기반 결정적 회전 — 같은 날 같은 라인, 5일 주기."""
+    digits = "".join(ch for ch in date_str if ch.isdigit())
+    return COMMENT_CTA_VARIANTS[int(digits or "0") % len(COMMENT_CTA_VARIANTS)]
+
+
 def build_caption_with_variant(summaries, date_str: str, label_short: str = "K-연예",
                                 default_hashtags=None) -> tuple:
     """build_caption 의 튜플 버전 — A/B 분석용 variant 이름도 반환."""
@@ -407,6 +425,9 @@ def build_caption(summaries, date_str: str, label_short: str = "K-연예",
     for i, s in enumerate(summaries, 1):
         lines.append(f"{i}. {s.card_title}")
 
+    # === 댓글 유도 (C 자동화 — 매일 다른 질문 회전) ===
+    lines.append("")
+    lines.append(comment_cta_for(date_str))
     lines.append("")
     lines.append("⌁ 매일 아침 8시 K-연예 핫이슈 큐레이션. 팔로우하고 받아보세요.")
     lines.append("📩 친구에게 공유 / 🔖 북마크해두면 매일 다시 확인하기 좋아요.")
