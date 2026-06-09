@@ -82,9 +82,9 @@ TOPICS = {
             [
                 {"photo_queries": ["kimbap roll", "bibimbap simple", "korean rice bowl"],
                  "label": "분식 한 그릇"},
-                {"photo_queries": ["korean side dishes banchan", "tteokbokki spicy",
-                                   "small fries"],
-                 "label": "사이드 1개"},
+                {"photo_queries": ["tteokbokki spicy bowl", "korean street food snack",
+                                   "fried mandu plate"],
+                 "label": "떡볶이 한컵"},
                 {"photo_queries": ["bubble tea cup", "iced americano",
                                    "cafe coffee cup"],
                  "label": "버블티"},
@@ -159,7 +159,7 @@ TOPICS = {
             [
                 {"emoji": "🙃", "label": "취향 차이"},
                 {"emoji": "😬", "label": "기분파"},
-                {"emoji": "🤷", "label": "미정"},
+                {"emoji": "🎒", "label": "취준 중"},
             ],
         ],
     },

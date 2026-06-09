@@ -164,6 +164,38 @@ class InstagramPublisher:
         resp = self._post_ig(url, params, step="create_story")
         return resp.json()["id"]
 
+    def _create_single_image_container(self, image_url: str, caption: str) -> str:
+        """단일 피드 이미지 컨테이너 (캐러셀 아님)."""
+        url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
+        params = {
+            "image_url": image_url,
+            "caption": caption,
+            "access_token": self.access_token,
+        }
+        resp = self._post_ig(url, params, step="create_image")
+        return resp.json()["id"]
+
+    def post_single_image(self, image_url: str, caption: str) -> str:
+        """단일 이미지 피드 게시 (캐러셀 아닌 일반 이미지 포스트).
+
+        Args:
+            image_url: 공개 접근 가능한 이미지 URL (Cloudinary)
+            caption: 캡션 (해시태그 포함)
+        Returns: published media id
+        """
+        print(f"[1/3] 단일 이미지 컨테이너 생성...")
+        cid = self._create_single_image_container(image_url, caption)
+        print(f"  ✓ container_id: {cid}")
+
+        print("[2/3] 컨테이너 준비 대기...")
+        self._wait_container_ready(cid, timeout=120)
+        print("  ✓ FINISHED")
+
+        print("[3/3] 게시...")
+        media_id = self._publish_container(cid)
+        print(f"  ✅ 단일 이미지 게시 완료! Media ID: {media_id}")
+        return media_id
+
     def post_story_video(self, video_url: str) -> str:
         """Stories 에 mp4 게시. 캡션 / 해시태그 미지원 (Stories 자체 제약).
 
