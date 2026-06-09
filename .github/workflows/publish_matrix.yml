@@ -4,10 +4,14 @@ name: Publish matrix to IG
 # workflow_dispatch input 으로 단일 토픽 또는 'all' 선택.
 
 on:
+  # 매일 KST 21:00 (UTC 12:00) — 아침 뉴스 Reels(08:00-08:30) 와 시간대 분리.
+  # TOPIC=auto → publish_matrix.py 가 요일 기준 4 토픽 회전 (월~목 한 사이클).
+  schedule:
+    - cron: '0 12 * * *'
   workflow_dispatch:
     inputs:
       topic:
-        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_10k / idealtype_10k / all)'
+        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_10k / idealtype_10k / auto / all)'
         required: false
         default: 'all'
         type: string
@@ -56,7 +60,8 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          TOPIC: ${{ inputs.topic }}
+          # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
+          TOPIC: ${{ inputs.topic || 'auto' }}
         run: python scripts/publish_matrix.py
 
       - name: Upload generated images (backup)
