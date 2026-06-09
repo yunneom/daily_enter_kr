@@ -14,6 +14,7 @@ env/
 
 # 생성 결과물
 output/
+output_money/
 verify_run.log
 *.log
 
