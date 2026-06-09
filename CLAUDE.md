@@ -15,8 +15,10 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 
 | 파일 | 역할 |
 |---|---|
-| `main.py` | 전체 파이프라인 오케스트레이션 + 중복 체크 + jitter + 토큰 health check |
+| `main.py` | **daily_enter_kr (연예 뉴스)** 전체 파이프라인 오케스트레이션 + 중복 체크 + jitter + 토큰 health check |
+| `main_money.py` | **daily_money_kr (절세/재테크 블로그)** 전체 파이프라인. RSS → 핵심요약 bullets → 카드 + CTA → Reels |
 | `src/fetch_news.py` | Google News RSS (`entertainment` topic 기본). 20건 수집 |
+| `src/fetch_blog.py` | Tistory RSS fetcher. 핵심 요약 블록(`<blockquote>...<b>핵심 요약</b>...<ul>`)에서 bullet 자동 추출 |
 | `src/summarize.py` | Claude Haiku 4.5. **안전 분류 (post/respectful/skip) + 제목-only SEO 카피** |
 | `src/make_card.py` | PIL 1080x1920 (9:16). **2가지 본문 스타일** — `make_card`(minimal 흰배경) / `make_manhwa_card`(만화: 하프톤+말풍선+의성어). 격일 회전. + 출처/썸네일/표지 카드 |
 | `src/make_video.py` | FFmpeg 슬라이드쇼 빌더 (2-pass: 비디오 xfade → BGM mux). 표지 1.5s + 본문/출처 2.5s, 0.3s xfade. BGM: assets/bgm/ 에서 선택 |
@@ -191,7 +193,10 @@ python sync_secrets.py --dry-run        # 무엇이 바뀔지만 미리보기
 
 ## 다중 채널 운영
 
-현재 구성된 채널: `daily_enter_kr` (운영 중), `daily_sports_kr`, `daily_economy_kr` (코드/워크플로우 준비, 계정 미세팅).
+현재 구성된 채널:
+- **`daily_enter_kr`** — K-연예, Google News RSS, 매일 8건 헤드라인. 운영 중.
+- **`daily_money_kr`** — 절세/재테크, Tistory 블로그 RSS (`editor60277.tistory.com` 기본), 매일 1편의 핵심 요약 bullets → Reels. 코드/워크플로우 준비, **IG 계정 미세팅**. `main_money.py` 단독 오케스트레이션. 게시 안 됐던 포스트만 픽업 (state_money.json 의 posted_guids 로 dedup).
+- `daily_sports_kr`, `daily_economy_kr` — 코드/워크플로우만 준비, 계정 미세팅. (현재 미사용)
 
 ### 새 채널 활성화 — Meta 측 (수동, 약 30-60분)
 

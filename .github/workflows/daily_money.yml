@@ -1,0 +1,129 @@
+name: Daily — daily_money_kr (절세/재테크)
+
+# 사전 준비 (CLAUDE.md '새 채널 활성화' 참고):
+#   1. IG 비즈니스 계정 (예: @daily_money_kr) 생성 + FB 페이지 연결
+#   2. Meta dev 앱에서 새 IG 계정을 Instagram 테스터로 등록
+#   3. 단기 토큰 → exchange_token.py 로 장기화
+#   4. secrets 추가:
+#      INSTAGRAM_USER_ID_MONEY, INSTAGRAM_ACCESS_TOKEN_MONEY
+#      MONEY_BLOG_RSS_URL (선택 — 기본 editor60277.tistory.com/rss)
+#      MONEY_BLOG_HOME_URL (선택 — 기본 editor60277.tistory.com/)
+
+on:
+  # 시크릿 세팅 후 schedule 주석 해제
+  # schedule:
+  #   - cron: '30 23 * * *'   # 한국시간 08:30 (enter 와 30분 간격)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  CHANNEL: daily_money_kr
+
+jobs:
+  post-blog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install fonts + ffmpeg + Pretendard
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk ffmpeg unzip
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f /usr/share/fonts/opentype/pretendard/
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # RSS 접근 사전 검증 — 403 받으면 즉시 알림 + 빠른 실패
+      - name: Verify blog RSS reachable
+        env:
+          MONEY_BLOG_RSS_URL: ${{ secrets.MONEY_BLOG_RSS_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          URL="${MONEY_BLOG_RSS_URL:-https://editor60277.tistory.com/rss}"
+          echo "Testing $URL"
+          STATUS=$(curl -sSL -A "Mozilla/5.0 (X11; Linux) AppleWebKit/537.36" \
+                   -o /dev/null -w "%{http_code}" "$URL")
+          echo "HTTP $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "❌ RSS HTTP $STATUS — runner IP 차단 가능성"
+            if [ -n "${DISCORD_WEBHOOK_URL:-}" ]; then
+              curl -fsS -X POST -H "Content-Type: application/json" \
+                -d "{\"content\": \"❌ **daily_money_kr RSS 차단**\nURL: $URL\nHTTP: $STATUS\nrunner IP 가 Tistory 에 차단됨. 대안 검토 필요 (cross-publish 등).\"}" \
+                "$DISCORD_WEBHOOK_URL" || true
+            fi
+            exit 1
+          fi
+
+      - name: Run money posting pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INSTAGRAM_USER_ID_MONEY: ${{ secrets.INSTAGRAM_USER_ID_MONEY }}
+          INSTAGRAM_ACCESS_TOKEN_MONEY: ${{ secrets.INSTAGRAM_ACCESS_TOKEN_MONEY }}
+          # money 채널 별도 시크릿 없으면 enter 의 것 폴백 (계정 공유 시 사용)
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          MONEY_BLOG_RSS_URL: ${{ secrets.MONEY_BLOG_RSS_URL }}
+          MONEY_BLOG_HOME_URL: ${{ secrets.MONEY_BLOG_HOME_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # 선택 (있으면 활성)
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID_MONEY }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN_MONEY }}
+        run: python main_money.py
+
+      - name: Commit state_money.json
+        if: always()
+        run: |
+          if [ -f state_money.json ] && ! git diff --quiet state_money.json 2>/dev/null; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add state_money.json
+            git commit -m "state(money): $(date -u '+%Y-%m-%d %H:%M UTC') run [skip ci]"
+            BRANCH="${GITHUB_REF_NAME}"
+            git pull --rebase --autostash origin "$BRANCH" || true
+            git push origin "HEAD:$BRANCH"
+          else
+            echo "No state_money.json changes"
+          fi
+
+      - name: Upload artifacts (cards + mp4)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-cards-${{ github.run_number }}
+          path: output_money/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Notify on failure (Discord)
+        if: failure() && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -fsS -X POST -H "Content-Type: application/json" \
+            -d "{\"content\": \"🚨 **daily_money_kr 워크플로우 실패**\nrun: $RUN_URL\"}" \
+            "$DISCORD_WEBHOOK_URL" || true
