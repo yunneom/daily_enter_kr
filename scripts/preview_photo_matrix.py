@@ -1,9 +1,11 @@
 """
-사진 매트릭스 1회성 미리보기 — Unsplash 사진으로 'C 주말' 매트릭스 빌드
-→ Cloudinary 업로드 → Discord 알림 (DISCORD_WEBHOOK_URL 있을 때).
+모든 주제 매트릭스 미리보기 — topic_registry 의 각 토픽을 해당 style 로 빌드
+→ Cloudinary 업로드 → Step Summary + Discord 알림.
+
+style="photo"  → Unsplash 사진 매트릭스
+style="drawing" → 이모지 + 3D 카드 드롭섀도우
 
 실행: GitHub Actions workflow_dispatch (preview_matrix.yml)
-필요 시크릿: UNSPLASH_ACCESS_KEY, CLOUDINARY_*, (선택) DISCORD_WEBHOOK_URL
 """
 
 import os
@@ -14,115 +16,84 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
+from topic_registry import TOPICS
 from make_photo_matrix import make_photo_matrix
+from make_premium_matrix import make_premium_matrix
 from post_instagram import upload_image
 from notify import notify_discord
 
 
-# 5만원 = 1만/2만/3만 위→아래 고→저. 합 5만원 조합: (3,1,1) / (2,2,1) / (1,3,1) ...
-# 라벨은 현실 시세 기준. 1만원 tier 는 budget 인상 위해 살짝 박하게.
-TITLE = "5만원으로 주말 보내기"
-HIGHLIGHT = "5만원"
-RULE = "각 섹터별 1개씩 골라 합 5만원 만들기"
-COL_HEADERS = ["식사", "액티비티", "한잔"]
-ROW_PRICES = ["3만원", "2만원", "1만원"]
-
-# 각 셀은 photo_queries 리스트 — 첫 성공한 쿼리 사용 (Unsplash niche 0결과 회피)
-CELLS = [
-    # ─── 3만원 (premium) ───
-    [
-        {
-            "photo_queries": ["korean fine dining", "japanese kaiseki dinner",
-                              "sashimi platter dark", "elegant restaurant plate"],
-            "label": "일식당 정식",
-        },
-        {
-            "photo_queries": ["han river picnic seoul", "outdoor picnic blanket sunset",
-                              "park picnic basket"],
-            "label": "한강 피크닉",
-        },
-        {
-            "photo_queries": ["cocktail bar moody", "wine bar interior",
-                              "speakeasy cocktail"],
-            "label": "칵테일 바",
-        },
-    ],
-    # ─── 2만원 (mid) ───
-    [
-        {
-            "photo_queries": ["korean restaurant table", "bibimbap meal",
-                              "korean bbq table", "comfort food meal"],
-            "label": "한식당 정식",
-        },
-        {
-            "photo_queries": ["movie theater seats", "cinema interior",
-                              "popcorn cinema dark"],
-            "label": "영화관",
-        },
-        {
-            "photo_queries": ["draft beer pub interior", "craft beer glass bar",
-                              "pub friends night"],
-            "label": "동네 호프",
-        },
-    ],
-    # ─── 1만원 (budget) ───
-    [
-        {
-            "photo_queries": ["instant cup noodles bowl", "korean convenience store food",
-                              "ramen noodles"],
-            "label": "컵라면 + 김밥",
-        },
-        {
-            "photo_queries": ["computer cafe pc bang", "internet cafe gaming",
-                              "neon arcade dark"],
-            "label": "PC방 2시간",
-        },
-        {
-            "photo_queries": ["convenience store beer can night",
-                              "korean convenience store night neon",
-                              "beer can street"],
-            "label": "편의점 캔맥",
-        },
-    ],
-]
-
 BRAND = "@daily_enter_kr · 당신의 조합은? 댓글로 ⬇️"
+OUTPUT_DIR = ROOT / "output_enter" / "preview"
 
-OUTPUT = ROOT / "output_enter" / "preview" / "C_weekend_photo.jpg"
 
-
-def main():
-    print(f"📸 사진 매트릭스 빌드: {TITLE}")
-    if not os.environ.get("UNSPLASH_ACCESS_KEY"):
-        print("⚠️  UNSPLASH_ACCESS_KEY 미설정 — 폴백 단색 셀")
-
-    make_photo_matrix(
-        title=TITLE, highlight=HIGHLIGHT, rule_hint=RULE,
-        col_headers=COL_HEADERS, row_prices=ROW_PRICES,
-        cells=CELLS, output_path=OUTPUT, brand=BRAND,
+def build_one(topic_id: str, topic: dict) -> Path:
+    out_path = OUTPUT_DIR / f"{topic_id}.jpg"
+    common_args = dict(
+        title=topic["title"],
+        highlight=topic["highlight"],
+        rule_hint=topic["rule_hint"],
+        col_headers=topic["col_headers"],
+        row_prices=topic["row_prices"],
+        cells=topic["cells"],
+        output_path=out_path,
+        brand=BRAND,
     )
-    print(f"✓ 빌드 완료: {OUTPUT}")
+    if topic["style"] == "photo":
+        make_photo_matrix(**common_args)
+    else:
+        make_premium_matrix(**common_args)
+    return out_path
 
-    try:
-        url = upload_image(OUTPUT)
-        print(f"✓ Cloudinary 업로드: {url}")
-        # 워크플로우 step summary 에도 노출 (Discord 안 와도 사용자가 GitHub 에서 보게)
-        summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-        if summary_path:
-            with open(summary_path, "a") as f:
-                f.write(f"## 🖼 미리보기 URL\n\n[브라우저에서 열기]({url})\n\n주제: {TITLE}\n")
-    except Exception as e:
-        print(f"❌ Cloudinary 업로드 실패: {e}")
-        return 1
 
-    sent = notify_discord(
-        f"🖼 **사진 매트릭스 미리보기 준비됨**\n"
-        f"주제: {TITLE}\n"
-        f"브라우저에서 열기 → {url}",
+def main() -> int:
+    print(f"📸 {len(TOPICS)}개 토픽 매트릭스 빌드")
+    if not os.environ.get("UNSPLASH_ACCESS_KEY"):
+        print("⚠️  UNSPLASH_ACCESS_KEY 미설정 — photo 토픽은 폴백 단색")
+
+    results = []  # (topic_id, title, style, url 또는 None)
+    for topic_id, topic in TOPICS.items():
+        print(f"\n--- {topic_id}: {topic['title']} ({topic['style']}) ---")
+        try:
+            local = build_one(topic_id, topic)
+            print(f"  ✓ 빌드: {local.name}")
+        except Exception as e:
+            print(f"  ❌ 빌드 실패: {e}")
+            results.append((topic_id, topic["title"], topic["style"], None))
+            continue
+
+        try:
+            url = upload_image(local)
+            print(f"  ✓ 업로드: {url}")
+            results.append((topic_id, topic["title"], topic["style"], url))
+        except Exception as e:
+            print(f"  ❌ Cloudinary 업로드 실패: {e}")
+            results.append((topic_id, topic["title"], topic["style"], None))
+
+    # Step Summary — 클릭 가능한 링크 목록
+    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary_path:
+        with open(summary_path, "a") as f:
+            f.write("# 🖼 매트릭스 미리보기\n\n")
+            f.write("| ID | 제목 | 스타일 | URL |\n|---|---|---|---|\n")
+            for tid, title, style, url in results:
+                if url:
+                    f.write(f"| `{tid}` | {title} | {style} | [열기]({url}) |\n")
+                else:
+                    f.write(f"| `{tid}` | {title} | {style} | ❌ 실패 |\n")
+
+    # Discord
+    ok_lines = [f"• `{tid}` ({style}): {url}" for tid, _, style, url in results if url]
+    fail_lines = [f"• `{tid}` ❌" for tid, _, _, url in results if not url]
+    notify_discord(
+        "🖼 **매트릭스 미리보기 준비됨**\n"
+        + ("성공:\n" + "\n".join(ok_lines) + "\n" if ok_lines else "")
+        + ("실패:\n" + "\n".join(fail_lines) if fail_lines else ""),
         username="daily_enter_kr preview",
     )
-    print(f"✓ Discord 알림: {'전송됨' if sent else '⏭️ 스킵 (DISCORD_WEBHOOK_URL 없음)'}")
-    return 0
+
+    # 최소 1개 성공해야 OK
+    return 0 if any(url for _, _, _, url in results) else 1
 
 
 if __name__ == "__main__":
