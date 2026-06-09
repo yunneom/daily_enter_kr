@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-08T09:14:07.049667+09:00",
+  "last_run_at": "2026-06-09T09:29:05.530729+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -698,6 +698,70 @@
       "caption_variant": "headlines_dotted",
       "media_id": "18375879193163709",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "81eb2138cc53fdea",
+      "card_title": "이상미, 연하남과 다정한 일상 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "51627ad335095f5a",
+      "card_title": "AOA 지민, 과거 어려움 공개하며 회복의 과정 전하다",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "7e72fc93d53fafc9",
+      "card_title": "김지석, 결혼 후 꿈 '알아서 잘하는 남편'",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "9bc1610103a1ec7b",
+      "card_title": "연상호 감독, 일본 전설 괴작 '가스인간' 영화화",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "aac1c7151c764f03",
+      "card_title": "김서안, 이순재 선생님의 연기 지도 철학 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "0330556e13718cba",
+      "card_title": "배우 별세, 향년 46세",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "2a32c0e37a462125",
+      "card_title": "명예영국인, 임신 소식 공개 '뱃속에 영국인 자라고 있어요'",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-09",
+      "title_hash": "0bbda59d13b3f451",
+      "card_title": "허남준, SBS '멋진 신세계' 11.0% 시청률 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18095332523594456",
+      "card_style": "minimal"
     }
   ]
 }
