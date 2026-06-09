@@ -139,11 +139,19 @@ def make_photo_matrix(
             cw, ch = x1 - x0, y1 - y0
 
             cell = cells[r][c]
-            query = cell.get("photo_query") or ""
+            # 쿼리는 단일 문자열 또는 리스트 (앞쪽부터 시도, 처음 성공한 것 사용)
+            queries = cell.get("photo_queries") or ([cell.get("photo_query")] if cell.get("photo_query") else [])
             label = cell.get("label", "")
 
             # 사진 또는 단색 폴백
-            photo_path = search_and_download(query, access_key) if query and access_key else None
+            photo_path = None
+            if access_key:
+                for q in queries:
+                    if not q:
+                        continue
+                    photo_path = search_and_download(q, access_key)
+                    if photo_path and Path(photo_path).exists():
+                        break
             cell_layer = Image.new("RGBA", (cw, ch), (240, 240, 240, 255))
             if photo_path and Path(photo_path).exists():
                 try:
