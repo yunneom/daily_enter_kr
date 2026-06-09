@@ -111,7 +111,7 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher) -> di
 
 
 def main() -> int:
-    target = os.environ.get("TOPIC", "all").strip()
+    target = os.environ.get("TOPIC", "all").strip().lower()
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
     if not (ig_user_id and ig_token):
@@ -129,11 +129,20 @@ def main() -> int:
         return 1
     print(f"✓ IG 토큰 OK: @{health.get('username')}")
 
+    topic_ids = list(TOPICS.keys())  # 등록 순서 = 회전 순서
     if target == "all":
         topics_to_post = list(TOPICS.items())
+    elif target in ("auto", ""):
+        # cron 호출 시 사용 — 요일 기준 회전 (월=0 → 첫 번째 토픽, ...)
+        from datetime import datetime, timezone, timedelta
+        kst = timezone(timedelta(hours=9))
+        weekday = datetime.now(kst).weekday()  # 0-6
+        picked = topic_ids[weekday % len(topic_ids)]
+        print(f"🤖 auto 회전 — KST weekday={weekday} → {picked}")
+        topics_to_post = [(picked, TOPICS[picked])]
     else:
         if target not in TOPICS:
-            print(f"❌ 알 수 없는 토픽: {target}. 사용 가능: {list(TOPICS.keys())}")
+            print(f"❌ 알 수 없는 토픽: {target}. 사용 가능: {topic_ids + ['all', 'auto']}")
             return 1
         topics_to_post = [(target, TOPICS[target])]
 
