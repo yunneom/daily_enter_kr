@@ -1,0 +1,69 @@
+name: Publish matrix to IG
+
+# 매트릭스 시리즈를 IG @daily_enter_kr 에 단일 이미지로 게시.
+# workflow_dispatch input 으로 단일 토픽 또는 'all' 선택.
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_10k / idealtype_10k / all)'
+        required: false
+        default: 'all'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install fonts + Pretendard
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk unzip
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f /usr/share/fonts/opentype/pretendard/
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build + upload + publish
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TOPIC: ${{ inputs.topic }}
+        run: python scripts/publish_matrix.py
+
+      - name: Upload generated images (backup)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-images-${{ github.run_number }}
+          path: output_enter/publish/
+          retention-days: 7
+          if-no-files-found: ignore
