@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       topic:
-        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_10k / idealtype_10k / auto / all)'
+        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_real_10k / idealtype_10k / soccer_dream_10k / idol_generation_10k / auto / all)'
         required: false
         default: 'all'
         type: string

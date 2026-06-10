@@ -1,12 +1,13 @@
 """
 주제 레지스트리 — "XX원으로 ~하기" 매트릭스 토픽 정의.
 
-각 토픽은 style (photo / drawing) + 매트릭스 데이터를 가짐. 사진은 lifestyle/사물/장소
-주제에, 그림은 인물/추상/포지션 주제에 (저작권·초상권 안전).
+각 토픽은 style + 매트릭스 데이터를 가짐. 사진은 lifestyle/사물/장소 주제,
+그림은 추상 주제, 엠블럼은 인물/포지션 카드 (FIFA UT 스타일).
 """
 
-# style: "photo" → make_photo_matrix (Unsplash 사진)
+# style: "photo"   → make_photo_matrix (Unsplash 사진)
 #        "drawing" → make_premium_matrix (이모지 + 드롭섀도우 3D 카드)
+#        "emblem"  → make_emblem_matrix (FIFA 카드 골드/실버/브론즈 + 실명)
 TOPICS = {
     # 1) 라이프스타일 — 사진이 어울림
     "weekend_5man": {
@@ -104,32 +105,95 @@ TOPICS = {
         ],
     },
 
-    # 3) 걸그룹 꾸리기 — 그림 (실인물 X, 포지션 기반)
-    "girlgroup_10k": {
-        "style": "drawing",
+    # 3) 걸그룹 꾸리기 v2 — 엠블럼 카드 + 실명 (FIFA UT 스타일)
+    "girlgroup_real_10k": {
+        "style": "emblem",
+        "background_style": "gradient_idol",
         "title": "만원으로 걸그룹 꾸리기",
         "highlight": "만원",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 만들기",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 픽은?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
-            # 5천원 (top tier)
+            # 5천원 — GOLD 등급
             [
-                {"emoji": "🎤", "label": "갓생 라이브"},
-                {"emoji": "💃", "label": "센터 장악"},
-                {"emoji": "✨", "label": "광고 1순위"},
+                {"role_emoji": "🎤", "name": "에스파 카리나", "subtitle": "GOLD"},
+                {"role_emoji": "💃", "name": "ITZY 채령", "subtitle": "GOLD"},
+                {"role_emoji": "✨", "name": "뉴진스 민지", "subtitle": "GOLD"},
             ],
-            # 3천원
+            # 3천원 — SILVER
             [
-                {"emoji": "🎤", "label": "안정 라이브"},
-                {"emoji": "💃", "label": "칼군무 가능"},
-                {"emoji": "✨", "label": "고정 직캠"},
+                {"role_emoji": "🎤", "name": "IVE 유진", "subtitle": "SILVER"},
+                {"role_emoji": "💃", "name": "르세라핌 카즈하", "subtitle": "SILVER"},
+                {"role_emoji": "✨", "name": "에스파 윈터", "subtitle": "SILVER"},
             ],
-            # 2천원 (budget)
+            # 2천원 — BRONZE
             [
-                {"emoji": "🎤", "label": "음정 마이웨이"},
-                {"emoji": "💃", "label": "박자 자유형"},
-                {"emoji": "✨", "label": "분위기 담당"},
+                {"role_emoji": "🎤", "name": "뉴진스 다니엘", "subtitle": "BRONZE"},
+                {"role_emoji": "💃", "name": "ITZY 리아", "subtitle": "BRONZE"},
+                {"role_emoji": "✨", "name": "IVE 레이", "subtitle": "BRONZE"},
+            ],
+        ],
+    },
+
+    # 5) 축구 드림팀 꾸리기 — 엠블럼 카드 + 실명 (FIFA UT 스타일)
+    "soccer_dream_10k": {
+        "style": "emblem",
+        "background_style": "soccer",
+        "title": "만원으로 축구 드림팀 꾸리기",
+        "highlight": "만원",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 베스트일레븐은?",
+        "col_headers": ["공격수", "미드필더", "수비수"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원 — GOLD
+            [
+                {"role_emoji": "⚽", "name": "메시 #10", "subtitle": "ARG"},
+                {"role_emoji": "🎯", "name": "데브라이너 #17", "subtitle": "BEL"},
+                {"role_emoji": "🛡", "name": "반다이크 #4", "subtitle": "NED"},
+            ],
+            # 3천원 — SILVER
+            [
+                {"role_emoji": "⚽", "name": "음바페 #10", "subtitle": "FRA"},
+                {"role_emoji": "🎯", "name": "모드리치 #10", "subtitle": "CRO"},
+                {"role_emoji": "🛡", "name": "김민재 #3", "subtitle": "KOR"},
+            ],
+            # 2천원 — BRONZE
+            [
+                {"role_emoji": "⚽", "name": "손흥민 #7", "subtitle": "KOR"},
+                {"role_emoji": "🎯", "name": "베르나르두 #20", "subtitle": "POR"},
+                {"role_emoji": "🛡", "name": "사울리스키 #5", "subtitle": "ESP"},
+            ],
+        ],
+    },
+
+    # 6) 세대별 아이돌 조합 — 엠블럼 카드 + 실명
+    "idol_generation_10k": {
+        "style": "emblem",
+        "background_style": "gradient_dark",
+        "title": "만원으로 세대 조합 꾸리기",
+        "highlight": "만원",
+        "rule_hint": "각 세대 1팀씩 골라 합 1만원 — 인생 아이돌 조합",
+        "col_headers": ["2세대", "3세대", "4세대"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원 — GOLD (각 세대 최정상)
+            [
+                {"role_emoji": "👑", "name": "빅뱅", "subtitle": "2세대 LEGEND"},
+                {"role_emoji": "👑", "name": "BTS", "subtitle": "3세대 LEGEND"},
+                {"role_emoji": "👑", "name": "뉴진스", "subtitle": "4세대 LEGEND"},
+            ],
+            # 3천원 — SILVER (각 세대 인기)
+            [
+                {"role_emoji": "⭐", "name": "소녀시대", "subtitle": "2세대 STAR"},
+                {"role_emoji": "⭐", "name": "트와이스", "subtitle": "3세대 STAR"},
+                {"role_emoji": "⭐", "name": "IVE", "subtitle": "4세대 STAR"},
+            ],
+            # 2천원 — BRONZE (각 세대 추억)
+            [
+                {"role_emoji": "💎", "name": "원더걸스", "subtitle": "2세대 ICON"},
+                {"role_emoji": "💎", "name": "EXO", "subtitle": "3세대 ICON"},
+                {"role_emoji": "💎", "name": "에스파", "subtitle": "4세대 ICON"},
             ],
         ],
     },

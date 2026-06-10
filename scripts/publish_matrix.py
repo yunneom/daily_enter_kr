@@ -39,10 +39,16 @@ TOPIC_TAGS = {
                      "#주말데이", "#일상"],
     "lunch_15k": ["#점심", "#먹스타", "#분식", "#카페", "#직장인점심",
                   "#밥스타그램", "#점심메뉴"],
-    "girlgroup_10k": ["#케이팝", "#걸그룹", "#덕질", "#포지션", "#메인보컬",
-                       "#메인댄서", "#비주얼"],
+    "girlgroup_real_10k": ["#케이팝", "#걸그룹", "#카리나", "#민지", "#채령",
+                            "#윈터", "#유진", "#카즈하", "#kpop"],
     "idealtype_10k": ["#연애", "#이상형", "#썸", "#mbti", "#연애상담",
                        "#소개팅"],
+    "soccer_dream_10k": ["#축구", "#손흥민", "#메시", "#음바페", "#김민재",
+                          "#피파", "#월드컵", "#베스트일레븐", "#football",
+                          "#soccer"],
+    "idol_generation_10k": ["#케이팝", "#아이돌", "#세대조합", "#빅뱅",
+                              "#bts", "#뉴진스", "#트와이스", "#소시",
+                              "#kpop", "#kpopfan"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -98,8 +104,13 @@ def build_and_upload(topic_id: str, topic: dict) -> tuple:
         col_headers=topic["col_headers"], row_prices=topic["row_prices"],
         cells=topic["cells"], output_path=local_jpg, brand=BRAND,
     )
-    if topic["style"] == "photo":
+    style = topic["style"]
+    if style == "photo":
         make_photo_matrix(**args)
+    elif style == "emblem":
+        from make_emblem_matrix import make_emblem_matrix
+        args["background_style"] = topic.get("background_style", "soccer")
+        make_emblem_matrix(**args)
     else:
         make_premium_matrix(**args)
 
