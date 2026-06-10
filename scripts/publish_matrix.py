@@ -27,7 +27,7 @@ from notify import notify_discord
 import random as _random
 
 
-BRAND = "@daily_enter_kr · 당신의 조합은? 댓글로 ⬇️"
+BRAND = "👥 친구 소환 → 조합 대결! · 📲 스토리 공유 · @daily_enter_kr"
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
 BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
@@ -75,8 +75,10 @@ def build_caption(topic_id: str, topic: dict) -> str:
         "",
         rule,
         "",
-        "💬 당신의 조합은? 댓글로 알려주세요 ⬇️",
-        "📩 친구 태그하고 같이 골라보세요 / 🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
+        "💬 내 조합 댓글로 남기기 ⬇️",
+        "👥 친구 소환해서 누구 조합이 이겼나 대결!",
+        "📲 스토리에 공유하고 친구 조합이랑 비교해보세요",
+        "🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
         "",
         "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요.",
         "",

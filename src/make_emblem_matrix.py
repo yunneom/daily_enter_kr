@@ -312,12 +312,29 @@ def make_emblem_matrix(
                 font_paths=font_paths,
             )
 
-    # ─── 6) 브랜드 ───
+    # ─── 6) 공유 유도 CTA + 브랜드 (하단 푸터) ───
+    # 강조 라인 — 노란 형광 박스로 "친구와 비교" 유도
+    cta_text = "내 조합 vs 친구 조합, 누가 이길까?"
+    f_cta = ImageFont.truetype(bold_path, 40)
+    cta_w = draw.textlength(cta_text, font=f_cta)
+    cta_x = (CANVAS[0] - cta_w) / 2
+    cta_y = CANVAS[1] - 300
+    draw.rounded_rectangle([int(cta_x - 22), int(cta_y - 6),
+                            int(cta_x + cta_w + 22), int(cta_y + 54)],
+                           radius=12, fill=HIGHLIGHT_YELLOW)
+    draw.text((cta_x, cta_y), cta_text, font=f_cta, fill=INK)
+
+    # 브랜드 — 폭 넘치면 자동 축소
     if brand:
-        draw = ImageDraw.Draw(img)
-        bw = draw.textlength(brand, font=f_brand)
-        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 220),
-                  brand, font=f_brand, fill=brand_color)
+        bsize = 30
+        while bsize > 20:
+            f_b = ImageFont.truetype(medium_path, bsize)
+            if draw.textlength(brand, font=f_b) <= CANVAS[0] - 80:
+                break
+            bsize -= 2
+        bw = draw.textlength(brand, font=f_b)
+        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 210),
+                  brand, font=f_b, fill=brand_color)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.convert("RGB").save(output_path, "JPEG", quality=92)
