@@ -105,95 +105,95 @@ TOPICS = {
         ],
     },
 
-    # 3) 걸그룹 꾸리기 v2 — 엠블럼 카드 + 실명 (FIFA UT 스타일)
+    # 3) 걸그룹 올스타 — 엠블럼 카드 + 실명 (흰 배경 premium)
     "girlgroup_real_10k": {
         "style": "emblem",
-        "background_style": "gradient_idol",
-        "title": "만원으로 걸그룹 꾸리기",
-        "highlight": "만원",
+        "background_style": "white",
+        "title": "만원으로 걸그룹 올스타 만들기",
+        "highlight": "걸그룹",
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 픽은?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
-            # 5천원 — GOLD 등급
+            # 5천원
             [
-                {"role_emoji": "🎤", "name": "에스파 카리나", "subtitle": "GOLD"},
-                {"role_emoji": "💃", "name": "ITZY 채령", "subtitle": "GOLD"},
-                {"role_emoji": "✨", "name": "뉴진스 민지", "subtitle": "GOLD"},
+                {"role_emoji": "🎤", "name": "에스파 카리나"},
+                {"role_emoji": "💃", "name": "ITZY 채령"},
+                {"role_emoji": "✨", "name": "뉴진스 민지"},
             ],
-            # 3천원 — SILVER
+            # 3천원
             [
-                {"role_emoji": "🎤", "name": "IVE 유진", "subtitle": "SILVER"},
-                {"role_emoji": "💃", "name": "르세라핌 카즈하", "subtitle": "SILVER"},
-                {"role_emoji": "✨", "name": "에스파 윈터", "subtitle": "SILVER"},
+                {"role_emoji": "🎤", "name": "IVE 유진"},
+                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
+                {"role_emoji": "✨", "name": "에스파 윈터"},
             ],
-            # 2천원 — BRONZE
+            # 2천원
             [
-                {"role_emoji": "🎤", "name": "뉴진스 다니엘", "subtitle": "BRONZE"},
-                {"role_emoji": "💃", "name": "ITZY 리아", "subtitle": "BRONZE"},
-                {"role_emoji": "✨", "name": "IVE 레이", "subtitle": "BRONZE"},
+                {"role_emoji": "🎤", "name": "뉴진스 다니엘"},
+                {"role_emoji": "💃", "name": "ITZY 리아"},
+                {"role_emoji": "✨", "name": "IVE 레이"},
             ],
         ],
     },
 
-    # 5) 축구 드림팀 꾸리기 — 엠블럼 카드 + 실명 (FIFA UT 스타일)
+    # 5) 축구 드림팀 — 유니폼+등번호 (축구장 배경)
     "soccer_dream_10k": {
         "style": "emblem",
         "background_style": "soccer",
-        "title": "만원으로 축구 드림팀 꾸리기",
-        "highlight": "만원",
+        "title": "만원으로 축구 드림팀 만들기",
+        "highlight": "드림팀",
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 베스트일레븐은?",
         "col_headers": ["공격수", "미드필더", "수비수"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
-            # 5천원 — GOLD
+            # 5천원 (jersey color 는 팀 비특정 — 색만)
             [
-                {"role_emoji": "⚽", "name": "메시 #10", "subtitle": "ARG"},
-                {"role_emoji": "🎯", "name": "데브라이너 #17", "subtitle": "BEL"},
-                {"role_emoji": "🛡", "name": "반다이크 #4", "subtitle": "NED"},
+                {"jersey": {"color": (135, 206, 250), "number": 10}, "name": "메시", "subtitle": "ARG"},
+                {"jersey": {"color": (30, 100, 200), "number": 17}, "name": "데브라이너", "subtitle": "BEL"},
+                {"jersey": {"color": (230, 130, 30), "number": 4}, "name": "반다이크", "subtitle": "NED"},
             ],
-            # 3천원 — SILVER
+            # 3천원
             [
-                {"role_emoji": "⚽", "name": "음바페 #10", "subtitle": "FRA"},
-                {"role_emoji": "🎯", "name": "모드리치 #10", "subtitle": "CRO"},
-                {"role_emoji": "🛡", "name": "김민재 #3", "subtitle": "KOR"},
+                {"jersey": {"color": (40, 60, 140), "number": 10}, "name": "음바페", "subtitle": "FRA"},
+                {"jersey": {"color": (200, 30, 50), "number": 10}, "name": "모드리치", "subtitle": "CRO"},
+                {"jersey": {"color": (220, 40, 40), "number": 3}, "name": "김민재", "subtitle": "KOR"},
             ],
-            # 2천원 — BRONZE
+            # 2천원
             [
-                {"role_emoji": "⚽", "name": "손흥민 #7", "subtitle": "KOR"},
-                {"role_emoji": "🎯", "name": "베르나르두 #20", "subtitle": "POR"},
-                {"role_emoji": "🛡", "name": "사울리스키 #5", "subtitle": "ESP"},
+                {"jersey": {"color": (220, 40, 40), "number": 7}, "name": "손흥민", "subtitle": "KOR"},
+                {"jersey": {"color": (140, 30, 30), "number": 20}, "name": "베르나르두", "subtitle": "POR"},
+                {"jersey": {"color": (230, 200, 40), "number": 5}, "name": "부스케츠", "subtitle": "ESP"},
             ],
         ],
     },
 
-    # 6) 세대별 아이돌 조합 — 엠블럼 카드 + 실명
-    "idol_generation_10k": {
+    # 6) 아이돌 올스타 — 그룹별 멤버 1명 (흰 배경)
+    "idol_allstar_10k": {
         "style": "emblem",
-        "background_style": "gradient_dark",
-        "title": "만원으로 세대 조합 꾸리기",
-        "highlight": "만원",
-        "rule_hint": "각 세대 1팀씩 골라 합 1만원 — 인생 아이돌 조합",
-        "col_headers": ["2세대", "3세대", "4세대"],
+        "background_style": "white",
+        "title": "만원으로 아이돌 올스타 만들기",
+        "highlight": "올스타",
+        "rule_hint": "각 그룹 1명씩 골라 합 1만원 — 당신의 올스타는?",
+        "col_headers": ["뉴진스", "에스파", "IVE"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
-            # 5천원 — GOLD (각 세대 최정상)
+            # 5천원
             [
-                {"role_emoji": "👑", "name": "빅뱅", "subtitle": "2세대 LEGEND"},
-                {"role_emoji": "👑", "name": "BTS", "subtitle": "3세대 LEGEND"},
-                {"role_emoji": "👑", "name": "뉴진스", "subtitle": "4세대 LEGEND"},
+                {"role_emoji": "🐰", "name": "민지"},
+                {"role_emoji": "🦋", "name": "카리나"},
+                {"role_emoji": "👑", "name": "장원영"},
             ],
-            # 3천원 — SILVER (각 세대 인기)
+            # 3천원
             [
-                {"role_emoji": "⭐", "name": "소녀시대", "subtitle": "2세대 STAR"},
-                {"role_emoji": "⭐", "name": "트와이스", "subtitle": "3세대 STAR"},
-                {"role_emoji": "⭐", "name": "IVE", "subtitle": "4세대 STAR"},
+                {"role_emoji": "🐰", "name": "하니"},
+                {"role_emoji": "🦋", "name": "윈터"},
+                {"role_emoji": "👑", "name": "안유진"},
             ],
-            # 2천원 — BRONZE (각 세대 추억)
+            # 2천원
             [
-                {"role_emoji": "💎", "name": "원더걸스", "subtitle": "2세대 ICON"},
-                {"role_emoji": "💎", "name": "EXO", "subtitle": "3세대 ICON"},
-                {"role_emoji": "💎", "name": "에스파", "subtitle": "4세대 ICON"},
+                {"role_emoji": "🐰", "name": "해린"},
+                {"role_emoji": "🦋", "name": "닝닝"},
+                {"role_emoji": "👑", "name": "리즈"},
             ],
         ],
     },

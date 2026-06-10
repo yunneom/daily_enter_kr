@@ -20,17 +20,18 @@ from make_premium_matrix import HIGHLIGHT_YELLOW, INK, MUTED
 CANVAS = (1080, 1920)
 WHITE = (255, 255, 255)
 
-# 티어별 (위→아래: 골드/실버/브론즈) — fill_top, fill_bot, border, glow
+# 티어별 (위→아래: 고가/중가/저가) 카드 색. 금액이 라벨 — 골드/실버/브론즈 어휘 제거.
+# fill 은 은은한 컬러 (배경과 분리되되 화려하지 않게), text 는 대비.
 TIER_STYLES = [
-    {"fill_top": (255, 215, 0),   "fill_bot": (184, 134, 11),
-     "border": (139, 100, 0),     "glow": (255, 215, 0, 80),
-     "text_color": (40, 24, 0),   "tier_label": "GOLD"},
-    {"fill_top": (232, 232, 232), "fill_bot": (168, 168, 168),
-     "border": (110, 110, 110),   "glow": (200, 200, 200, 60),
-     "text_color": (30, 30, 30),  "tier_label": "SILVER"},
-    {"fill_top": (232, 168, 120), "fill_bot": (139, 69, 19),
-     "border": (101, 50, 14),     "glow": (200, 110, 50, 60),
-     "text_color": (40, 18, 0),   "tier_label": "BRONZE"},
+    {"fill_top": (255, 248, 225), "fill_bot": (255, 224, 138),
+     "border": (214, 158, 30),    "glow": (255, 210, 80, 70),
+     "text_color": (60, 40, 0)},
+    {"fill_top": (240, 244, 250), "fill_bot": (206, 220, 236),
+     "border": (120, 145, 180),   "glow": (150, 180, 220, 55),
+     "text_color": (30, 40, 60)},
+    {"fill_top": (245, 235, 228), "fill_bot": (224, 198, 170),
+     "border": (170, 130, 95),    "glow": (190, 150, 110, 55),
+     "text_color": (50, 35, 20)},
 ]
 
 
@@ -70,14 +71,22 @@ def _background(style: str) -> Image.Image:
         # 어두운 네이비 → 보라
         return _vertical_gradient(CANVAS, (25, 30, 60), (90, 50, 130))
     else:
+        # 흰 배경 (premium 룩 — 축구 외 토픽 기본)
         return Image.new("RGB", CANVAS, WHITE)
 
 
+def _is_dark_bg(style: str) -> bool:
+    """배경이 어두운지 — 제목/룰/브랜드 텍스트 색 결정용."""
+    return style in ("soccer", "gradient_idol", "gradient_dark")
+
+
 def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
-                      tier_style: dict, role_emoji: str, name: str,
-                      subtitle: str = "",
+                      tier_style: dict, cell: dict,
                       font_paths: dict = None):
-    """단일 엠블럼 카드를 img 위에 그림 (in-place)."""
+    """단일 엠블럼 카드를 img 위에 그림 (in-place).
+
+    cell: {name, price, subtitle?, jersey?: {color, number}, role_emoji?}
+    """
     x0, y0, x1, y1 = rect
     cw, ch = x1 - x0, y1 - y0
 
@@ -89,7 +98,7 @@ def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
     mdraw = ImageDraw.Draw(mask)
     mdraw.rounded_rectangle([0, 0, cw, ch], radius=24, fill=255)
 
-    # 3) 외부 글로우 (티어 컬러 블러)
+    # 3) 외부 글로우
     glow_layer = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
     gdraw = ImageDraw.Draw(glow_layer)
     gdraw.rounded_rectangle([x0 - 4, y0 + 6, x1 + 4, y1 + 12], radius=28,
@@ -100,64 +109,102 @@ def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
     # 4) 카드 합성
     img.paste(grad.convert("RGBA"), (x0, y0), mask)
 
-    # 5) 보더 (라운드 사각형)
+    # 5) 보더
     draw = ImageDraw.Draw(img)
     draw.rounded_rectangle([x0, y0, x1, y1], radius=24,
                            outline=tier_style["border"], width=4)
 
-    # 6) 역할 이모지 (중앙 상단)
     bold = font_paths.get("Bold") if font_paths else _resolve_font("Bold")
-    semi = font_paths.get("SemiBold") if font_paths else _resolve_font("SemiBold")
     medium = font_paths.get("Medium") if font_paths else _resolve_font("Medium")
+    name_color = tier_style["text_color"]
+    cx = x0 + cw / 2
 
-    # 이모지 크기 — 셀 높이의 ~40%
-    emoji_size = int(ch * 0.40)
-    em_img = _get_emoji_image(role_emoji, emoji_size) if role_emoji else None
-    if em_img:
-        em_x = int(x0 + (cw - emoji_size) / 2)
-        em_y = int(y0 + ch * 0.18)
-        img.alpha_composite(em_img, (em_x, em_y))
+    # 6) 비주얼 — jersey (유니폼+등번호) 또는 역할 이모지
+    visual_top = y0 + ch * 0.16
+    jersey = cell.get("jersey")
+    if jersey:
+        # 유니폼 실루엣 + 등번호. 색만으로 팀 연상 (특정 X)
+        _draw_jersey(img, draw, cx, visual_top, int(ch * 0.40),
+                     jersey_color=jersey.get("color", (200, 30, 30)),
+                     number=str(jersey.get("number", "")),
+                     bold_path=bold)
+    else:
+        emoji_size = int(ch * 0.40)
+        em_img = _get_emoji_image(cell.get("role_emoji", ""), emoji_size) if cell.get("role_emoji") else None
+        if em_img:
+            img.alpha_composite(em_img, (int(cx - emoji_size / 2), int(visual_top)))
 
     # 7) 실명 (Bold, 2줄 wrap 가능)
-    name_font = ImageFont.truetype(bold, 42)
-    name_color = tier_style["text_color"]
-    max_name_w = cw - 30
-    name_lines = _wrap_label(name, name_font, max_name_w)
-    if len(name_lines) > 2:
-        name_lines = name_lines[:2]
+    name = cell.get("name", "")
+    name_font = ImageFont.truetype(bold, 40)
+    max_name_w = cw - 26
+    name_lines = _wrap_label(name, name_font, max_name_w)[:2]
     name_block_h = name_font.size * len(name_lines) + 4 * (len(name_lines) - 1)
-    name_y = y1 - 80 - name_block_h
-    cx = x0 + cw / 2
+    name_y = y1 - 78 - name_block_h
     for line in name_lines:
         bbox = name_font.getbbox(line)
         lw = bbox[2] - bbox[0]
         draw.text((cx - lw / 2, name_y), line, font=name_font, fill=name_color)
         name_y += name_font.size + 4
 
-    # 8) 서브타이틀 (역할/등번호) — 카드 하단
+    # 8) 서브타이틀 (소속/팀 등) — 카드 하단
+    subtitle = cell.get("subtitle", "")
     if subtitle:
         sub_font = ImageFont.truetype(medium, 26)
         bbox = sub_font.getbbox(subtitle)
         sw = bbox[2] - bbox[0]
-        # 살짝 어둡게 (티어 컬러 대비)
-        sub_color = (name_color[0], name_color[1], name_color[2], 180)
-        draw.text((cx - sw / 2, y1 - 50), subtitle, font=sub_font, fill=sub_color)
+        draw.text((cx - sw / 2, y1 - 48), subtitle, font=sub_font, fill=name_color)
 
-    # 9) 티어 라벨 (좌상단 작은 칩)
-    tier_label = tier_style["tier_label"]
-    tier_font = ImageFont.truetype(bold, 18)
-    tb = tier_font.getbbox(tier_label)
-    tw = tb[2] - tb[0]
-    th = tb[3] - tb[1]
-    pad_x, pad_y = 10, 4
-    chip_x0 = x0 + 14
-    chip_y0 = y0 + 14
-    chip_x1 = chip_x0 + tw + pad_x * 2
-    chip_y1 = chip_y0 + th + pad_y * 2 + 4
-    draw.rounded_rectangle([chip_x0, chip_y0, chip_x1, chip_y1],
-                           radius=8, fill=(255, 255, 255, 200))
-    draw.text((chip_x0 + pad_x, chip_y0 + pad_y),
-              tier_label, font=tier_font, fill=tier_style["border"])
+    # 9) 금액 칩 (좌상단) — 골드/실버/브론즈 대신 실제 금액
+    price_label = cell.get("price", "")
+    if price_label:
+        pf = ImageFont.truetype(bold, 22)
+        pb = pf.getbbox(price_label)
+        pw = pb[2] - pb[0]
+        ph = pb[3] - pb[1]
+        pad_x, pad_y = 11, 5
+        chip_x0 = x0 + 14
+        chip_y0 = y0 + 14
+        chip_x1 = chip_x0 + pw + pad_x * 2
+        chip_y1 = chip_y0 + ph + pad_y * 2 + 4
+        draw.rounded_rectangle([chip_x0, chip_y0, chip_x1, chip_y1],
+                               radius=10, fill=tier_style["border"])
+        draw.text((chip_x0 + pad_x, chip_y0 + pad_y),
+                  price_label, font=pf, fill=(255, 255, 255))
+
+
+def _draw_jersey(img, draw, cx, top_y, size, jersey_color, number, bold_path):
+    """간단한 축구 유니폼 실루엣 + 등번호. 색만으로 표현해 특정 팀 비특정."""
+    w = int(size * 0.95)
+    h = int(size * 1.0)
+    left = int(cx - w / 2)
+    top = int(top_y)
+    # 몸통 (사다리꼴 느낌 — 둥근 사각형으로 단순화)
+    body_top = top + int(h * 0.22)
+    draw.rounded_rectangle([left + int(w*0.12), body_top, left + int(w*0.88), top + h],
+                           radius=int(w*0.10), fill=jersey_color)
+    # 어깨/소매 (좌우 작은 사각형)
+    sleeve_w = int(w * 0.20)
+    draw.polygon([(left, body_top + int(h*0.06)),
+                  (left + int(w*0.22), top + int(h*0.16)),
+                  (left + int(w*0.22), body_top + int(h*0.30)),
+                  (left, body_top + int(h*0.34))], fill=jersey_color)
+    draw.polygon([(left + w, body_top + int(h*0.06)),
+                  (left + w - int(w*0.22), top + int(h*0.16)),
+                  (left + w - int(w*0.22), body_top + int(h*0.30)),
+                  (left + w, body_top + int(h*0.34))], fill=jersey_color)
+    # 목 (V넥 — 배경색 삼각형)
+    neck_w = int(w * 0.18)
+    draw.polygon([(int(cx - neck_w/2), body_top),
+                  (int(cx + neck_w/2), body_top),
+                  (int(cx), body_top + int(h*0.16))], fill=(255, 255, 255))
+    # 등번호 (흰색, 가운데)
+    num_font = ImageFont.truetype(bold_path, int(h * 0.42))
+    nb = num_font.getbbox(number)
+    nw = nb[2] - nb[0]
+    nh = nb[3] - nb[1]
+    draw.text((cx - nw/2, body_top + int(h*0.28) - nh/2), number,
+              font=num_font, fill=(255, 255, 255))
 
 
 def make_emblem_matrix(
@@ -198,6 +245,13 @@ def make_emblem_matrix(
 
     draw = ImageDraw.Draw(img)
 
+    # 배경 명암에 따른 텍스트 색
+    dark_bg = _is_dark_bg(background_style)
+    title_color = WHITE if dark_bg else INK
+    hint_color = (230, 230, 230) if dark_bg else MUTED
+    header_color = WHITE if dark_bg else INK
+    brand_color = (220, 220, 220) if dark_bg else MUTED
+
     # ─── 1) 제목 (강조 단어 형광) ───
     title_y = 220
     title_w = draw.textlength(title, font=f_title)
@@ -212,13 +266,14 @@ def make_emblem_matrix(
         hl_y1 = int(title_y + 100)
         draw.rounded_rectangle([hl_x0, hl_y0, hl_x1, hl_y1], radius=8,
                                fill=HIGHLIGHT_YELLOW)
-    draw.text((title_x, title_y), title, font=f_title, fill=WHITE)
+        # 형광 위 글자는 항상 검정 (가독성)
+    draw.text((title_x, title_y), title, font=f_title, fill=title_color)
 
     # ─── 2) 룰 힌트 ───
     hint_y = title_y + 130
     hint_w = draw.textlength(rule_hint, font=f_hint)
     draw.text(((CANVAS[0] - hint_w) / 2, hint_y), rule_hint,
-              font=f_hint, fill=(230, 230, 230))
+              font=f_hint, fill=hint_color)
 
     # ─── 3) 격자 영역 ───
     grid_top = hint_y + 90
@@ -237,7 +292,7 @@ def make_emblem_matrix(
         w = bbox[2] - bbox[0]
         h = bbox[3] - bbox[1]
         draw.text((cx - w/2, grid_top + (header_h - h) / 2 - 4),
-                  hdr, font=f_col, fill=WHITE)
+                  hdr, font=f_col, fill=header_color)
 
     # ─── 5) 셀 카드 ───
     card_pad = 12
@@ -249,12 +304,11 @@ def make_emblem_matrix(
             x1 = int(grid_left + (c + 1) * cell_w - card_pad)
             y1 = int(grid_top + header_h + (r + 1) * cell_h - card_pad)
 
-            cell = cells[r][c]
+            cell = dict(cells[r][c])
+            # 금액 칩 — 행별 가격을 cell 에 주입 (개별 셀이 price 지정 안 하면 row_prices 사용)
+            cell.setdefault("price", row_prices[r])
             _draw_emblem_card(
-                img, (x0, y0, x1, y1), tier,
-                role_emoji=cell.get("role_emoji", ""),
-                name=cell.get("name", ""),
-                subtitle=cell.get("subtitle", row_prices[r]),
+                img, (x0, y0, x1, y1), tier, cell,
                 font_paths=font_paths,
             )
 
@@ -263,7 +317,7 @@ def make_emblem_matrix(
         draw = ImageDraw.Draw(img)
         bw = draw.textlength(brand, font=f_brand)
         draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 220),
-                  brand, font=f_brand, fill=(220, 220, 220))
+                  brand, font=f_brand, fill=brand_color)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.convert("RGB").save(output_path, "JPEG", quality=92)
