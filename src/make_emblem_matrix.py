@@ -80,6 +80,61 @@ def _is_dark_bg(style: str) -> bool:
     return style in ("soccer", "gradient_idol", "gradient_dark")
 
 
+# 한국 만원권 모티프 색 (청록/민트 계열)
+BILL_FILL = (118, 188, 175)      # 만원권 청록
+BILL_FILL2 = (96, 168, 156)
+BILL_BORDER = (60, 120, 110)
+BILL_TEXT = (35, 80, 72)
+
+
+def _draw_money_bill(img: Image.Image, draw: ImageDraw.ImageDraw,
+                     cx: int, cy: int, w: int, h: int,
+                     amount_text: str, font_paths: dict, angle: int = -8):
+    """만원 지폐 일러스트 (단순화) — 청록 사각형 + 모서리 금액 + 중앙 원형 초상 자리.
+
+    별도 레이어에 그려서 회전 후 합성 (지폐 살짝 기울임 → 생동감).
+    """
+    pad = 60
+    layer = Image.new("RGBA", (w + pad * 2, h + pad * 2), (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    ox, oy = pad, pad
+
+    # 지폐 본체 (라운드 사각형 + 그라데이션 느낌 2색 보더)
+    ld.rounded_rectangle([ox, oy, ox + w, oy + h], radius=18,
+                         fill=BILL_FILL, outline=BILL_BORDER, width=4)
+    # 내부 테두리 라인 (지폐 느낌)
+    ld.rounded_rectangle([ox + 10, oy + 10, ox + w - 10, oy + h - 10],
+                         radius=12, outline=BILL_FILL2, width=3)
+
+    bold = font_paths.get("Bold")
+    # 중앙 원형 (초상 자리 — 빈 원, 특정 인물 X)
+    circle_r = int(h * 0.30)
+    ccx = ox + int(w * 0.34)
+    ccy = oy + h // 2
+    ld.ellipse([ccx - circle_r, ccy - circle_r, ccx + circle_r, ccy + circle_r],
+               outline=BILL_BORDER, width=3, fill=BILL_FILL2)
+    # 원 안에 ₩ 마크
+    won_font = ImageFont.truetype(bold, int(circle_r * 1.1))
+    wb = won_font.getbbox("₩")
+    ww = wb[2] - wb[0]; wh = wb[3] - wb[1]
+    ld.text((ccx - ww/2, ccy - wh/2 - wb[1]), "₩", font=won_font, fill=BILL_TEXT)
+
+    # 우측 금액 텍스트 (큰 글씨)
+    amt_font = ImageFont.truetype(bold, int(h * 0.42))
+    ab = amt_font.getbbox(amount_text)
+    aw = ab[2] - ab[0]; ah = ab[3] - ab[1]
+    ld.text((ox + int(w * 0.58), oy + h//2 - ah/2 - ab[1]),
+            amount_text, font=amt_font, fill=BILL_TEXT)
+    # 좌상단 / 우하단 작은 금액 (지폐 코너 숫자 느낌)
+    sm_font = ImageFont.truetype(bold, int(h * 0.16))
+    ld.text((ox + 22, oy + 16), amount_text, font=sm_font, fill=BILL_TEXT)
+
+    # 회전 후 합성
+    layer = layer.rotate(angle, resample=Image.BICUBIC, expand=True)
+    lw, lh = layer.size
+    img.alpha_composite(layer, (int(cx - lw / 2), int(cy - lh / 2)))
+
+
 def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
                       tier_style: dict, cell: dict,
                       font_paths: dict = None):
@@ -216,7 +271,8 @@ def make_emblem_matrix(
     cells: List[List[dict]],
     output_path: Path,
     brand: str = "",
-    background_style: str = "soccer",   # "soccer" / "gradient_idol" / "gradient_dark"
+    background_style: str = "soccer",   # "soccer" / "gradient_idol" / "gradient_dark" / "white"
+    budget_label: str = "만원",         # 상단 지폐 일러스트에 표시할 금액
 ):
     """FIFA-카드 매트릭스. 각 셀은 {role_emoji, name, subtitle?} 딕트.
 
@@ -252,25 +308,24 @@ def make_emblem_matrix(
     header_color = WHITE if dark_bg else INK
     brand_color = (220, 220, 220) if dark_bg else MUTED
 
-    # ─── 1) 제목 (강조 단어 형광) ───
-    title_y = 220
+    # ─── 1) 만원 지폐 일러스트 (제목 위) ───
+    # "만원" 텍스트 형광 대신 실제 지폐 그림으로 시각화. 금액은 budget_label 로 전달.
+    bill_amount = budget_label or "만원"
+    bill_w, bill_h = 300, 150
+    bill_cx = CANVAS[0] // 2
+    bill_cy = 180
+    _draw_money_bill(img, draw, bill_cx, bill_cy, bill_w, bill_h,
+                     amount_text=bill_amount, font_paths=font_paths, angle=-8)
+    draw = ImageDraw.Draw(img)
+
+    # ─── 1b) 제목 (형광 없이, 지폐 아래) ───
+    title_y = 290
     title_w = draw.textlength(title, font=f_title)
     title_x = (CANVAS[0] - title_w) / 2
-    if highlight and highlight in title:
-        before = title.split(highlight, 1)[0]
-        bw = draw.textlength(before, font=f_title)
-        hw = draw.textlength(highlight, font=f_title)
-        hl_x0 = int(title_x + bw - 6)
-        hl_y0 = int(title_y + 16)
-        hl_x1 = int(title_x + bw + hw + 6)
-        hl_y1 = int(title_y + 100)
-        draw.rounded_rectangle([hl_x0, hl_y0, hl_x1, hl_y1], radius=8,
-                               fill=HIGHLIGHT_YELLOW)
-        # 형광 위 글자는 항상 검정 (가독성)
     draw.text((title_x, title_y), title, font=f_title, fill=title_color)
 
     # ─── 2) 룰 힌트 ───
-    hint_y = title_y + 130
+    hint_y = title_y + 120
     hint_w = draw.textlength(rule_hint, font=f_hint)
     draw.text(((CANVAS[0] - hint_w) / 2, hint_y), rule_hint,
               font=f_hint, fill=hint_color)
