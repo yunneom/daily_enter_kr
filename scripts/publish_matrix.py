@@ -27,7 +27,7 @@ from notify import notify_discord
 import random as _random
 
 
-BRAND = "@daily_enter_kr · 당신의 조합은? 댓글로 ⬇️"
+BRAND = "👥 친구 소환 → 조합 대결! · 📲 스토리 공유 · @daily_enter_kr"
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
 BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
@@ -39,10 +39,16 @@ TOPIC_TAGS = {
                      "#주말데이", "#일상"],
     "lunch_15k": ["#점심", "#먹스타", "#분식", "#카페", "#직장인점심",
                   "#밥스타그램", "#점심메뉴"],
-    "girlgroup_10k": ["#케이팝", "#걸그룹", "#덕질", "#포지션", "#메인보컬",
-                       "#메인댄서", "#비주얼"],
+    "girlgroup_real_10k": ["#케이팝", "#걸그룹", "#카리나", "#민지", "#채령",
+                            "#윈터", "#유진", "#카즈하", "#kpop"],
     "idealtype_10k": ["#연애", "#이상형", "#썸", "#mbti", "#연애상담",
                        "#소개팅"],
+    "soccer_dream_10k": ["#축구", "#손흥민", "#메시", "#음바페", "#김민재",
+                          "#피파", "#월드컵", "#베스트일레븐", "#football",
+                          "#soccer"],
+    "idol_allstar_10k": ["#케이팝", "#아이돌", "#올스타", "#뉴진스",
+                          "#에스파", "#아이브", "#민지", "#카리나",
+                          "#장원영", "#kpop", "#kpopfan"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -69,8 +75,10 @@ def build_caption(topic_id: str, topic: dict) -> str:
         "",
         rule,
         "",
-        "💬 당신의 조합은? 댓글로 알려주세요 ⬇️",
-        "📩 친구 태그하고 같이 골라보세요 / 🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
+        "💬 내 조합 댓글로 남기기 ⬇️",
+        "👥 친구 소환해서 누구 조합이 이겼나 대결!",
+        "📲 스토리에 공유하고 친구 조합이랑 비교해보세요",
+        "🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
         "",
         "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요.",
         "",
@@ -98,8 +106,13 @@ def build_and_upload(topic_id: str, topic: dict) -> tuple:
         col_headers=topic["col_headers"], row_prices=topic["row_prices"],
         cells=topic["cells"], output_path=local_jpg, brand=BRAND,
     )
-    if topic["style"] == "photo":
+    style = topic["style"]
+    if style == "photo":
         make_photo_matrix(**args)
+    elif style == "emblem":
+        from make_emblem_matrix import make_emblem_matrix
+        args["background_style"] = topic.get("background_style", "soccer")
+        make_emblem_matrix(**args)
     else:
         make_premium_matrix(**args)
 

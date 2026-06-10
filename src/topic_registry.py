@@ -1,12 +1,13 @@
 """
 주제 레지스트리 — "XX원으로 ~하기" 매트릭스 토픽 정의.
 
-각 토픽은 style (photo / drawing) + 매트릭스 데이터를 가짐. 사진은 lifestyle/사물/장소
-주제에, 그림은 인물/추상/포지션 주제에 (저작권·초상권 안전).
+각 토픽은 style + 매트릭스 데이터를 가짐. 사진은 lifestyle/사물/장소 주제,
+그림은 추상 주제, 엠블럼은 인물/포지션 카드 (FIFA UT 스타일).
 """
 
-# style: "photo" → make_photo_matrix (Unsplash 사진)
+# style: "photo"   → make_photo_matrix (Unsplash 사진)
 #        "drawing" → make_premium_matrix (이모지 + 드롭섀도우 3D 카드)
+#        "emblem"  → make_emblem_matrix (FIFA 카드 골드/실버/브론즈 + 실명)
 TOPICS = {
     # 1) 라이프스타일 — 사진이 어울림
     "weekend_5man": {
@@ -104,32 +105,95 @@ TOPICS = {
         ],
     },
 
-    # 3) 걸그룹 꾸리기 — 그림 (실인물 X, 포지션 기반)
-    "girlgroup_10k": {
-        "style": "drawing",
-        "title": "만원으로 걸그룹 꾸리기",
-        "highlight": "만원",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 만들기",
+    # 3) 걸그룹 올스타 — 엠블럼 카드 + 실명 (흰 배경 premium)
+    "girlgroup_real_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 걸그룹 올스타 만들기",
+        "highlight": "걸그룹",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 픽은?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
-            # 5천원 (top tier)
+            # 5천원
             [
-                {"emoji": "🎤", "label": "갓생 라이브"},
-                {"emoji": "💃", "label": "센터 장악"},
-                {"emoji": "✨", "label": "광고 1순위"},
+                {"role_emoji": "🎤", "name": "에스파 카리나"},
+                {"role_emoji": "💃", "name": "ITZY 채령"},
+                {"role_emoji": "✨", "name": "뉴진스 민지"},
             ],
             # 3천원
             [
-                {"emoji": "🎤", "label": "안정 라이브"},
-                {"emoji": "💃", "label": "칼군무 가능"},
-                {"emoji": "✨", "label": "고정 직캠"},
+                {"role_emoji": "🎤", "name": "IVE 유진"},
+                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
+                {"role_emoji": "✨", "name": "에스파 윈터"},
             ],
-            # 2천원 (budget)
+            # 2천원
             [
-                {"emoji": "🎤", "label": "음정 마이웨이"},
-                {"emoji": "💃", "label": "박자 자유형"},
-                {"emoji": "✨", "label": "분위기 담당"},
+                {"role_emoji": "🎤", "name": "뉴진스 다니엘"},
+                {"role_emoji": "💃", "name": "ITZY 리아"},
+                {"role_emoji": "✨", "name": "IVE 레이"},
+            ],
+        ],
+    },
+
+    # 5) 축구 드림팀 — 유니폼+등번호 (축구장 배경)
+    "soccer_dream_10k": {
+        "style": "emblem",
+        "background_style": "soccer",
+        "title": "만원으로 축구 드림팀 만들기",
+        "highlight": "드림팀",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 베스트일레븐은?",
+        "col_headers": ["공격수", "미드필더", "수비수"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원 (jersey color 는 팀 비특정 — 색만)
+            [
+                {"jersey": {"color": (135, 206, 250), "number": 10}, "name": "메시", "subtitle": "ARG"},
+                {"jersey": {"color": (30, 100, 200), "number": 17}, "name": "데브라이너", "subtitle": "BEL"},
+                {"jersey": {"color": (230, 130, 30), "number": 4}, "name": "반다이크", "subtitle": "NED"},
+            ],
+            # 3천원
+            [
+                {"jersey": {"color": (40, 60, 140), "number": 10}, "name": "음바페", "subtitle": "FRA"},
+                {"jersey": {"color": (200, 30, 50), "number": 10}, "name": "모드리치", "subtitle": "CRO"},
+                {"jersey": {"color": (220, 40, 40), "number": 3}, "name": "김민재", "subtitle": "KOR"},
+            ],
+            # 2천원
+            [
+                {"jersey": {"color": (220, 40, 40), "number": 7}, "name": "손흥민", "subtitle": "KOR"},
+                {"jersey": {"color": (140, 30, 30), "number": 20}, "name": "베르나르두", "subtitle": "POR"},
+                {"jersey": {"color": (230, 200, 40), "number": 5}, "name": "부스케츠", "subtitle": "ESP"},
+            ],
+        ],
+    },
+
+    # 6) 아이돌 올스타 — 그룹별 멤버 1명 (흰 배경)
+    "idol_allstar_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 아이돌 올스타 만들기",
+        "highlight": "올스타",
+        "rule_hint": "각 그룹 1명씩 골라 합 1만원 — 당신의 올스타는?",
+        "col_headers": ["뉴진스", "에스파", "IVE"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🐰", "name": "민지"},
+                {"role_emoji": "🦋", "name": "카리나"},
+                {"role_emoji": "👑", "name": "장원영"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🐰", "name": "하니"},
+                {"role_emoji": "🦋", "name": "윈터"},
+                {"role_emoji": "👑", "name": "안유진"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🐰", "name": "해린"},
+                {"role_emoji": "🦋", "name": "닝닝"},
+                {"role_emoji": "👑", "name": "리즈"},
             ],
         ],
     },
