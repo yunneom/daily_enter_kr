@@ -21,13 +21,17 @@ sys.path.insert(0, str(ROOT / "src"))
 from topic_registry import TOPICS
 from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
-from post_instagram import InstagramPublisher, upload_image
+from make_video import make_slideshow_video
+from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
+import random as _random
 
 
 BRAND = "@daily_enter_kr · 당신의 조합은? 댓글로 ⬇️"
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
+BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
+REEL_SECONDS = 6.0     # 단일 정적 이미지 표시 시간 (Reels 최소 3s)
 
 # 주제별 niche 해시태그
 TOPIC_TAGS = {
@@ -75,39 +79,67 @@ def build_caption(topic_id: str, topic: dict) -> str:
     return "\n".join(lines)
 
 
-def build_and_upload(topic_id: str, topic: dict) -> str:
-    """매트릭스 빌드 → Cloudinary 업로드 → URL 반환."""
+def _pick_bgm():
+    if not BGM_DIR.exists():
+        return None
+    candidates = sorted(BGM_DIR.glob("*.mp3"))
+    return _random.choice(candidates) if candidates else None
+
+
+def build_and_upload(topic_id: str, topic: dict) -> tuple:
+    """매트릭스 빌드 → mp4(Reels) + jpg(cover) Cloudinary 업로드 → (video_url, cover_url)."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    local = OUTPUT_DIR / f"{topic_id}.jpg"
+    local_jpg = OUTPUT_DIR / f"{topic_id}.jpg"
+    local_mp4 = OUTPUT_DIR / f"{topic_id}.mp4"
+
     args = dict(
         title=topic["title"], highlight=topic["highlight"],
         rule_hint=topic["rule_hint"],
         col_headers=topic["col_headers"], row_prices=topic["row_prices"],
-        cells=topic["cells"], output_path=local, brand=BRAND,
+        cells=topic["cells"], output_path=local_jpg, brand=BRAND,
     )
     if topic["style"] == "photo":
         make_photo_matrix(**args)
     else:
         make_premium_matrix(**args)
-    return upload_image(local)
+
+    # 단일 정적 이미지 × REEL_SECONDS + 랜덤 BGM → mp4 (Reels 호환 1080×1920)
+    bgm = _pick_bgm()
+    make_slideshow_video(
+        image_paths=[local_jpg],
+        output_path=local_mp4,
+        durations=[REEL_SECONDS],
+        bgm_path=bgm,
+    )
+
+    # 업로드 — mp4 (Reels) + jpg (cover_url 으로 그리드 썸네일)
+    video_url = upload_video(local_mp4)
+    cover_url = upload_image(local_jpg)
+    return video_url, cover_url
 
 
 def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher) -> dict:
     print(f"\n=== {topic_id}: {topic['title']} ({topic['style']}) ===")
     try:
-        url = build_and_upload(topic_id, topic)
-        print(f"  ✓ Cloudinary: {url}")
+        video_url, cover_url = build_and_upload(topic_id, topic)
+        print(f"  ✓ video: {video_url}")
+        print(f"  ✓ cover: {cover_url}")
     except Exception as e:
         print(f"  ❌ 빌드/업로드 실패: {e}")
         return {"topic_id": topic_id, "ok": False, "error": str(e)}
 
     caption = build_caption(topic_id, topic)
     try:
-        media_id = publisher.post_single_image(url, caption)
-        return {"topic_id": topic_id, "ok": True, "media_id": media_id, "url": url}
+        media_id = publisher.post_reel(
+            video_url=video_url, caption=caption,
+            cover_url=cover_url, share_to_feed=True,
+        )
+        return {"topic_id": topic_id, "ok": True, "media_id": media_id,
+                "video_url": video_url, "cover_url": cover_url}
     except Exception as e:
         print(f"  ❌ IG 게시 실패: {e}")
-        return {"topic_id": topic_id, "ok": False, "error": str(e), "url": url}
+        return {"topic_id": topic_id, "ok": False, "error": str(e),
+                "video_url": video_url, "cover_url": cover_url}
 
 
 def main() -> int:

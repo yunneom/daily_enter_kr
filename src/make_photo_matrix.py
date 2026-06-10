@@ -88,7 +88,8 @@ def make_photo_matrix(
     draw = ImageDraw.Draw(img)
 
     # ─── 1) 제목 + 하이라이트 ───
-    title_y = 120
+    # title_y 220 — Reels 상단 UI safe area 안쪽
+    title_y = 220
     title_w = draw.textlength(title, font=f_title)
     title_x = (CANVAS[0] - title_w) / 2
     if highlight and highlight in title:
@@ -109,7 +110,8 @@ def make_photo_matrix(
 
     # ─── 3) 격자 영역 ───
     grid_top = hint_y + 90
-    grid_bottom = CANVAS[1] - 220
+    # Reels 하단 safe area 회피
+    grid_bottom = CANVAS[1] - 360
     grid_left = 70
     grid_right = CANVAS[0] - 70
     header_h = 80
@@ -219,7 +221,7 @@ def make_photo_matrix(
     # 브랜드
     if brand:
         bw = draw.textlength(brand, font=f_brand)
-        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 80), brand, font=f_brand, fill=MUTED)
+        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 220), brand, font=f_brand, fill=MUTED)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.convert("RGB").save(output_path, "JPEG", quality=92)
