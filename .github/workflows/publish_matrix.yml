@@ -1,7 +1,7 @@
 name: Publish matrix to IG
 
-# 매트릭스 시리즈를 IG @daily_enter_kr 에 단일 이미지로 게시.
-# workflow_dispatch input 으로 단일 토픽 또는 'all' 선택.
+# 매트릭스 시리즈를 IG @daily_enter_kr 에 Reels 로 게시.
+# workflow_dispatch input 으로 단일 토픽 또는 'all' 선택. cron 으로 매일 KST 21:00 자동 회전.
 
 on:
   # 매일 KST 21:00 (UTC 12:00) — 아침 뉴스 Reels(08:00-08:30) 와 시간대 분리.
@@ -34,10 +34,11 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install fonts + Pretendard
+      - name: Install fonts + Pretendard + ffmpeg
         run: |
           sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk unzip
+          # ffmpeg = 매트릭스 jpg → Reels mp4 변환에 필수
+          sudo apt-get install -y fonts-noto-cjk unzip ffmpeg
           mkdir -p /tmp/pretendard
           curl -fsSL -o /tmp/pretendard.zip \
             https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
