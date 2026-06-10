@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-09T09:29:05.530729+09:00",
+  "last_run_at": "2026-06-10T09:30:08.406141+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -762,6 +762,70 @@
       "caption_variant": "question_hook",
       "media_id": "18095332523594456",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "bffd2b94cc33dac6",
+      "card_title": "수영·정경호 14년 연인관계 결별, 효연 과거 발언 재조명",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "b87b48c7256e6e6d",
+      "card_title": "서인영, 6살 연상 사업가와 재혼 — '응원해주길' 소감 전해",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "4bd528b46e41a73b",
+      "card_title": "넷플릭스 드라마 '참교육', 교권 붕괴 현실 조명하며 화제",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "f2cb1b1cfef2ced8",
+      "card_title": "김수현, 1년 만에 활동 재개 — 광고 촬영으로 복귀",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "08331e061e863bd4",
+      "card_title": "이승환, 윤서인 발언 관련 5000만원 손해배상소송 제기",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "0e2e2134701e4341",
+      "card_title": "배우들의 OST 보컬 무대, 영화 팬들 '고막 점령'",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "1b78a36e6ef0a649",
+      "card_title": "갸루, 유튜브 차트 석권···중소돌의 역주행 신화 계속된다",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-10",
+      "title_hash": "3dd0321771d4df94",
+      "card_title": "배용준·박수진, 박신혜·최태준과 싱가포르 동반 여행",
+      "caption_variant": "tease_one",
+      "media_id": "18072835145694693",
+      "card_style": "manhwa"
     }
   ]
 }
