@@ -72,8 +72,9 @@ def make_premium_matrix(
     f_brand = ImageFont.truetype(medium_path, 30)
 
     # ─── 1) 제목 (강조 단어 노란 형광) ───
+    # title_y 220 — Reels 상단 UI(프로필/사운드 아이콘) safe area 안쪽
     draw = ImageDraw.Draw(img)
-    title_y = 120
+    title_y = 220
     title_w = draw.textlength(title, font=f_title)
     title_x = (CANVAS[0] - title_w) / 2
     # 강조 형광
@@ -96,7 +97,8 @@ def make_premium_matrix(
 
     # ─── 3) 격자 영역 ───
     grid_top = hint_y + 90
-    grid_bottom = CANVAS[1] - 220
+    # grid_bottom 위로 끌어올림 — Reels 하단 캡션/액션 영역 회피
+    grid_bottom = CANVAS[1] - 360
     grid_left = 70
     grid_right = CANVAS[0] - 70
     header_h = 80
@@ -184,7 +186,7 @@ def make_premium_matrix(
     if brand:
         draw = ImageDraw.Draw(img)
         bw = draw.textlength(brand, font=f_brand)
-        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 80), brand, font=f_brand, fill=MUTED)
+        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 220), brand, font=f_brand, fill=MUTED)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     img.convert("RGB").save(output_path, "JPEG", quality=95)
