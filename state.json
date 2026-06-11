@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-10T09:30:08.406141+09:00",
+  "last_run_at": "2026-06-11T09:23:57.118895+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -826,6 +826,70 @@
       "caption_variant": "tease_one",
       "media_id": "18072835145694693",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "f769f70ce1b9bfd1",
+      "card_title": "오정세, '와일드 씽'으로 음원차트 1위 석권…'만년 2위' 극복",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "64ac9b1a7fa5b1e2",
+      "card_title": "이혜영, 폐암 투병기 공개하며 회복 여정 나눔",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "6d33f47b3f8926fd",
+      "card_title": "전원주, 아들 친구들의 놀림을 성공의 발판으로 — 숙대 출신 배우의 악착같은 도전기",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "2d3a33cb7ece929a",
+      "card_title": "양정아, 결혼 2년만 이혼 선언..개인의 성장 과정 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "516de51cc59d9059",
+      "card_title": "허남준, 뿔테 안경으로 완성한 생일 인증샷",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "3aaa7561fc47ccce",
+      "card_title": "'나는 솔로' 32기, 직업·나이·자녀 유무 공개하며 자기소개 예고",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "a08e98120c49bcd5",
+      "card_title": "'참교육', 넷플릭스 비영어 쇼 1위 진입 — 교권 이슈 조명",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-11",
+      "title_hash": "8c1957c0b98684eb",
+      "card_title": "배용준, 28년 공백 끝내고 박수진과 재결합",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17869070598543365",
+      "card_style": "minimal"
     }
   ]
 }
