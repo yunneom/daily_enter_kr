@@ -43,7 +43,14 @@ SHORTS_SHADE = (32, 40, 64)
 FPS = 30
 DEG_PER_FRAME = 90
 WOBBLE_DEG = 5
-SS = 2  # supersample factor — 2x 렌더 후 다운스케일 (AA)
+SS = 2
+
+# 운동복 (sport_woman) 추가 컬러
+SPORTSWEAR_TOP = (220, 80, 130)
+SPORTSWEAR_SHADE = (170, 50, 95)
+SPORTSWEAR_BOT = (60, 70, 100)
+HAIR_LIGHT_BASE = (75, 50, 38)
+HAIR_LIGHT_HIGH = (115, 85, 65)
 
 
 def _draw_option_box(draw, text, font, cx, cy):
@@ -59,216 +66,260 @@ def _draw_option_box(draw, text, font, cx, cy):
               text, font=font, fill=OPTION_TEXT)
 
 
-def _render_muscle_character(size: int, arm_angle_deg: float,
-                              font_paths: dict) -> Image.Image:
-    """근육맨 캐릭터를 size x size 정사각 RGBA 로 렌더 — 슈퍼샘플링.
+def _render_character(size: int, arm_angle_deg: float,
+                      style: str = "muscle_man") -> Image.Image:
+    """캐릭터를 size×size RGBA 로 렌더 — 슈퍼샘플링.
 
-    어깨 피벗은 정사각의 중심점.
+    style: 'muscle_man' (근육맨 반바지) / 'sport_woman' (스포츠 운동복)
+    피벗: (W//2, W//2) — 회전 팔의 어깨 = 캐릭터 이미지 정중앙.
     """
     W = size * SS
     layer = Image.new("RGBA", (W, W), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
     cx = W // 2
-    shoulder_y = W // 2  # 피벗 = 캐릭터 정사각의 중심
+    pivot_y = W // 2  # 회전 팔의 피벗 (가슴 중앙)
 
-    # ── 머리 ──────────────────────────────────────
-    head_w = int(W * 0.18)
-    head_h = int(W * 0.20)
-    head_cy = shoulder_y - int(head_h * 1.10)
-    # 베이스 두상 (살짝 세로로 긴 타원)
-    head_box = [cx - head_w, head_cy - head_h, cx + head_w, head_cy + head_h]
-    d.ellipse(head_box, fill=SKIN_BASE)
-    # 턱 그림자 (아래 절반 음영)
-    shade_box = [cx - head_w + 4, head_cy + 2,
-                 cx + head_w - 4, head_cy + head_h]
-    d.chord(shade_box, start=10, end=170, fill=SKIN_SHADE)
-    d.ellipse(head_box, outline=INK, width=int(SS * 3))
+    is_woman = style == "sport_woman"
+    hair_base = HAIR_LIGHT_BASE if is_woman else HAIR_BASE
+    hair_high = HAIR_LIGHT_HIGH if is_woman else HAIR_HIGH
 
-    # 머리카락 — 슬릭 백 스타일 (정수리에 살짝 봉긋)
-    hair_top = [
-        (cx - head_w + 6, head_cy - 6),
-        (cx - head_w + 22, head_cy - head_h + 4),
-        (cx - head_w // 3, head_cy - head_h - 14),
-        (cx + head_w // 3, head_cy - head_h - 14),
-        (cx + head_w - 22, head_cy - head_h + 4),
-        (cx + head_w - 6, head_cy - 6),
-        (cx + head_w - 10, head_cy - head_h // 2),
-        (cx - head_w + 10, head_cy - head_h // 2),
-    ]
-    d.polygon(hair_top, fill=HAIR_BASE)
-    # 머리카락 하이라이트 (한 줄)
-    d.line([(cx - head_w + 30, head_cy - head_h + 6),
-            (cx + head_w // 3, head_cy - head_h - 6)],
-           fill=HAIR_HIGH, width=int(SS * 4))
+    # ── 머리 ──
+    head_w = int(W * 0.13)
+    head_h = int(W * 0.15)
+    head_cy = pivot_y - head_h - int(W * 0.02)
+    d.ellipse([cx - head_w, head_cy - head_h,
+               cx + head_w, head_cy + head_h], fill=SKIN_BASE)
+    d.chord([cx - head_w + 4, head_cy + 2,
+             cx + head_w - 4, head_cy + head_h],
+            start=10, end=170, fill=SKIN_SHADE)
+    d.ellipse([cx - head_w, head_cy - head_h,
+               cx + head_w, head_cy + head_h],
+              outline=INK, width=int(SS * 3))
 
-    # 눈 (자신감 있는 슬릿)
-    eye_y = head_cy - 6
+    if is_woman:
+        # 긴 머리 — 옆으로 흘러내림 + 정수리 봉긋
+        d.polygon([
+            (cx - head_w + 4, head_cy - 4),
+            (cx - head_w - 10, head_cy - head_h + 6),
+            (cx - head_w // 2, head_cy - head_h - 14),
+            (cx + head_w // 2, head_cy - head_h - 14),
+            (cx + head_w + 10, head_cy - head_h + 6),
+            (cx + head_w - 4, head_cy - 4),
+        ], fill=hair_base)
+        # 어깨 위로 내려오는 머리카락 (좌우)
+        d.polygon([
+            (cx - head_w - 4, head_cy + 2),
+            (cx - head_w + 6, head_cy + head_h + int(W * 0.08)),
+            (cx - head_w - 14, head_cy + head_h + int(W * 0.10)),
+            (cx - head_w - 18, head_cy + head_h - 6),
+        ], fill=hair_base)
+        d.polygon([
+            (cx + head_w + 4, head_cy + 2),
+            (cx + head_w - 6, head_cy + head_h + int(W * 0.08)),
+            (cx + head_w + 14, head_cy + head_h + int(W * 0.10)),
+            (cx + head_w + 18, head_cy + head_h - 6),
+        ], fill=hair_base)
+    else:
+        # 슬릭 백
+        d.polygon([
+            (cx - head_w + 6, head_cy - 6),
+            (cx - head_w + 22, head_cy - head_h + 4),
+            (cx - head_w // 3, head_cy - head_h - 14),
+            (cx + head_w // 3, head_cy - head_h - 14),
+            (cx + head_w - 22, head_cy - head_h + 4),
+            (cx + head_w - 6, head_cy - 6),
+            (cx + head_w - 10, head_cy - head_h // 2),
+            (cx - head_w + 10, head_cy - head_h // 2),
+        ], fill=hair_base)
+    # 머리카락 하이라이트
+    d.line([(cx - int(head_w * 0.5), head_cy - head_h + 4),
+            (cx + int(head_w * 0.3), head_cy - head_h - 4)],
+           fill=hair_high, width=int(SS * 3))
+
+    # 눈
+    eye_y = head_cy - 4
     eye_dx = int(head_w * 0.42)
     eye_w = int(head_w * 0.16)
-    eye_h = int(head_h * 0.07)
+    eye_h = int(head_h * 0.08)
     for sign in (-1, 1):
         ex = cx + sign * eye_dx
-        d.ellipse([ex - eye_w, eye_y - eye_h, ex + eye_w, eye_y + eye_h],
-                  fill=INK)
-        # 눈썹 (살짝 위쪽 사선)
+        d.ellipse([ex - eye_w, eye_y - eye_h,
+                   ex + eye_w, eye_y + eye_h], fill=INK)
         bx0 = ex - eye_w - 2
-        by0 = eye_y - eye_h - 18
+        by0 = eye_y - eye_h - 14
         bx1 = ex + eye_w + 2
-        by1 = eye_y - eye_h - 8
+        by1 = eye_y - eye_h - 6
         d.line([(bx0, by0 if sign < 0 else by1),
                 (bx1, by1 if sign < 0 else by0)],
-               fill=INK, width=int(SS * 5))
+               fill=INK, width=int(SS * 4))
 
-    # 미소 (살짝 비대칭 smirk)
-    mouth_cx = cx + 8
-    mouth_cy = head_cy + int(head_h * 0.42)
-    d.arc([mouth_cx - 34, mouth_cy - 14, mouth_cx + 34, mouth_cy + 30],
-          start=10, end=160, fill=INK, width=int(SS * 4))
+    # 미소
+    mouth_cx = cx + 6
+    mouth_cy = head_cy + int(head_h * 0.40)
+    d.arc([mouth_cx - 28, mouth_cy - 10, mouth_cx + 28, mouth_cy + 24],
+          start=10, end=160, fill=INK, width=int(SS * 3))
 
-    # ── 목 ──────────────────────────────────────
-    neck_w = int(head_w * 0.45)
-    neck_h = int(head_h * 0.30)
-    d.rectangle([cx - neck_w, head_cy + head_h - 8,
-                 cx + neck_w, head_cy + head_h + neck_h],
+    # ── 목 ── (머리 바닥에서 약간만 — 몸통이 위로 올라가서 길게 그릴 필요 X)
+    neck_w = int(head_w * 0.4)
+    neck_y0 = head_cy + head_h - 8
+    neck_y1 = neck_y0 + int(W * 0.04)
+    d.rectangle([cx - neck_w, neck_y0, cx + neck_w, neck_y1],
                 fill=SKIN_SHADE)
 
-    # ── 몸통 (V자 실루엣) ─────────────────────────
-    shoulder_w = int(W * 0.38)
-    waist_w = int(W * 0.20)
-    torso_h = int(W * 0.30)
+    # ── 몸통 (V자, 피벗을 어깨선 기준) ──
+    shoulder_w = int(W * (0.24 if is_woman else 0.27))
+    waist_w = int(W * (0.13 if is_woman else 0.16))
+    torso_h = int(W * 0.24)
+    body_top = pivot_y - int(W * 0.03)
+    body_bot = body_top + torso_h
     torso_pts = [
-        (cx - shoulder_w, shoulder_y),
-        (cx + shoulder_w, shoulder_y),
-        (cx + waist_w, shoulder_y + torso_h),
-        (cx - waist_w, shoulder_y + torso_h),
+        (cx - shoulder_w, body_top),
+        (cx + shoulder_w, body_top),
+        (cx + waist_w, body_bot),
+        (cx - waist_w, body_bot),
     ]
     d.polygon(torso_pts, fill=SKIN_BASE)
-    # 가슴 음영 — 두 흉근의 경계 (역 V)
-    pec_top = shoulder_y + int(torso_h * 0.10)
-    pec_mid_y = shoulder_y + int(torso_h * 0.40)
-    pec_w = int(shoulder_w * 0.85)
-    # 좌측 흉근 하이라이트
-    d.polygon([(cx - pec_w, pec_top),
-               (cx - 8, pec_top + 10),
-               (cx - 8, pec_mid_y),
-               (cx - int(pec_w * 0.6), pec_mid_y)],
-              fill=SKIN_HIGH)
-    # 우측 흉근 하이라이트
-    d.polygon([(cx + 8, pec_top + 10),
-               (cx + pec_w, pec_top),
-               (cx + int(pec_w * 0.6), pec_mid_y),
-               (cx + 8, pec_mid_y)],
-              fill=SKIN_HIGH)
-    # 흉근 경계선
-    d.line([(cx, pec_top + 14), (cx, pec_mid_y - 4)],
-           fill=SKIN_SHADE, width=int(SS * 5))
-    # 복근 음영 (살짝)
-    abs_top = pec_mid_y + 10
-    abs_bot = shoulder_y + int(torso_h * 0.85)
-    d.line([(cx, abs_top), (cx, abs_bot)],
-           fill=SKIN_SHADE, width=int(SS * 3))
-    for y_frac in (0.30, 0.55, 0.78):
-        ay = abs_top + int((abs_bot - abs_top) * y_frac)
-        d.arc([cx - 50, ay - 18, cx + 50, ay + 8],
-              start=200, end=340, fill=SKIN_SHADE, width=int(SS * 3))
+
+    if is_woman:
+        # 스포츠 브라 — 가슴 라인 따라 띠 모양
+        bra_top = body_top - int(W * 0.005)
+        bra_bot = body_top + int(W * 0.075)
+        bra_pts = [
+            (cx - shoulder_w + 8, bra_top + 4),
+            (cx + shoulder_w - 8, bra_top + 4),
+            (cx + shoulder_w - 14, bra_bot),
+            (cx - shoulder_w + 14, bra_bot),
+        ]
+        d.polygon(bra_pts, fill=SPORTSWEAR_TOP)
+        # 브라 하단 곡선 (가슴 라인)
+        d.arc([cx - shoulder_w + 14, bra_bot - 18,
+               cx, bra_bot + 12],
+              start=10, end=170, fill=SPORTSWEAR_SHADE, width=int(SS * 4))
+        d.arc([cx, bra_bot - 18,
+               cx + shoulder_w - 14, bra_bot + 12],
+              start=10, end=170, fill=SPORTSWEAR_SHADE, width=int(SS * 4))
+        # 어깨끈
+        d.line([(cx - int(shoulder_w * 0.55), body_top + 2),
+                (cx - int(shoulder_w * 0.55), head_cy + head_h - 10)],
+               fill=SPORTSWEAR_TOP, width=int(SS * 6))
+        d.line([(cx + int(shoulder_w * 0.55), body_top + 2),
+                (cx + int(shoulder_w * 0.55), head_cy + head_h - 10)],
+               fill=SPORTSWEAR_TOP, width=int(SS * 6))
+        # 복근 라인 (살짝)
+        abs_top = bra_bot + 14
+        d.line([(cx, abs_top), (cx, body_bot - 10)],
+               fill=SKIN_SHADE, width=int(SS * 3))
+        for y_frac in (0.30, 0.65):
+            ay = abs_top + int((body_bot - abs_top) * y_frac)
+            d.arc([cx - 36, ay - 14, cx + 36, ay + 6],
+                  start=200, end=340, fill=SKIN_SHADE, width=int(SS * 2))
+    else:
+        # 흉근 하이라이트
+        pec_top = body_top + int(torso_h * 0.10)
+        pec_mid = body_top + int(torso_h * 0.42)
+        pec_w = int(shoulder_w * 0.85)
+        d.polygon([(cx - pec_w, pec_top), (cx - 6, pec_top + 8),
+                   (cx - 6, pec_mid), (cx - int(pec_w * 0.6), pec_mid)],
+                  fill=SKIN_HIGH)
+        d.polygon([(cx + 6, pec_top + 8), (cx + pec_w, pec_top),
+                   (cx + int(pec_w * 0.6), pec_mid), (cx + 6, pec_mid)],
+                  fill=SKIN_HIGH)
+        d.line([(cx, pec_top + 12), (cx, pec_mid - 4)],
+               fill=SKIN_SHADE, width=int(SS * 4))
+        # 복근
+        abs_top = pec_mid + 8
+        d.line([(cx, abs_top), (cx, body_bot - 8)],
+               fill=SKIN_SHADE, width=int(SS * 3))
+        for y_frac in (0.30, 0.58, 0.80):
+            ay = abs_top + int((body_bot - abs_top) * y_frac)
+            d.arc([cx - 44, ay - 14, cx + 44, ay + 6],
+                  start=200, end=340, fill=SKIN_SHADE, width=int(SS * 3))
+
     # 몸통 외곽선
     d.polygon(torso_pts, outline=INK, width=int(SS * 3))
 
-    # ── 반대쪽 팔 (허리에 자신감 있게) ────────────
-    arm_w = int(W * 0.05)
-    sh_lx = cx - shoulder_w + arm_w
-    sh_ly = shoulder_y + int(arm_w * 0.3)
-    elbow_lx = sh_lx - int(arm_w * 2.0)
-    elbow_ly = sh_ly + int(torso_h * 0.45)
-    hand_lx = cx - waist_w - int(arm_w * 0.4)
-    hand_ly = sh_ly + int(torso_h * 0.70)
-    # 어깨→팔꿈치 (위팔, 바이셉 살짝 부풀게)
-    d.line([(sh_lx, sh_ly), (elbow_lx, elbow_ly)],
-           fill=SKIN_BASE, width=int(arm_w * 1.8))
-    # 바이셉 하이라이트 (위팔 안쪽)
-    mid_x = (sh_lx + elbow_lx) // 2 + 6
-    mid_y = (sh_ly + elbow_ly) // 2
-    d.ellipse([mid_x - 28, mid_y - 36, mid_x + 28, mid_y + 28],
-              fill=SKIN_HIGH)
-    # 팔꿈치→손
-    d.line([(elbow_lx, elbow_ly), (hand_lx, hand_ly)],
-           fill=SKIN_BASE, width=int(arm_w * 1.5))
-    # 주먹
-    d.ellipse([hand_lx - arm_w, hand_ly - arm_w,
-               hand_lx + arm_w, hand_ly + arm_w], fill=SKIN_BASE)
+    # ── 반대쪽 팔 (왼쪽 어깨에서 허리로 자연스럽게) ──
+    arm_thick = int(W * (0.038 if is_woman else 0.045))
+    off_sh_x = cx - shoulder_w + arm_thick
+    off_sh_y = body_top + int(W * 0.005)
+    off_el_x = off_sh_x - int(W * 0.07)
+    off_el_y = off_sh_y + int(torso_h * 0.45)
+    off_hand_x = cx - waist_w - int(W * 0.005)
+    off_hand_y = off_sh_y + int(torso_h * 0.75)
+    d.line([(off_sh_x, off_sh_y), (off_el_x, off_el_y)],
+           fill=SKIN_BASE, width=int(arm_thick * 1.8))
+    d.line([(off_el_x, off_el_y), (off_hand_x, off_hand_y)],
+           fill=SKIN_BASE, width=int(arm_thick * 1.55))
+    d.ellipse([off_hand_x - arm_thick, off_hand_y - arm_thick,
+               off_hand_x + arm_thick, off_hand_y + arm_thick],
+              fill=SKIN_BASE)
 
-    # ── 반바지 ──────────────────────────────────
-    shorts_top = shoulder_y + torso_h
-    shorts_h = int(W * 0.10)
-    sx0 = cx - waist_w - 6
-    sx1 = cx + waist_w + 6
+    # ── 하의 (반바지 / 운동복 쇼츠) ──
+    shorts_top = body_bot
+    shorts_h = int(W * (0.085 if is_woman else 0.10))
+    sx0 = cx - waist_w - 4
+    sx1 = cx + waist_w + 4
+    shorts_color = SPORTSWEAR_BOT if is_woman else SHORTS_BASE
+    shorts_shade = (40, 50, 75) if is_woman else SHORTS_SHADE
     d.rounded_rectangle([sx0, shorts_top, sx1, shorts_top + shorts_h],
-                        radius=int(W * 0.015), fill=SHORTS_BASE)
-    # 가운데 솔기
+                        radius=int(W * 0.014), fill=shorts_color)
     d.line([(cx, shorts_top + 4), (cx, shorts_top + shorts_h - 4)],
-           fill=SHORTS_SHADE, width=int(SS * 3))
+           fill=shorts_shade, width=int(SS * 3))
     d.rounded_rectangle([sx0, shorts_top, sx1, shorts_top + shorts_h],
-                        radius=int(W * 0.015), outline=INK,
+                        radius=int(W * 0.014), outline=INK,
                         width=int(SS * 3))
 
-    # ── 다리 ────────────────────────────────────
-    leg_w = int(W * 0.055)
-    leg_h = int(W * 0.16)
+    # ── 다리 ──
+    leg_w = int(W * 0.05)
+    leg_h = int(W * 0.13)
     legs_top = shorts_top + shorts_h
-    for lx in (cx - waist_w // 2 - 4, cx + waist_w // 2 + 4):
-        # 허벅지
+    for lx in (cx - waist_w // 2 - 3, cx + waist_w // 2 + 3):
         d.line([(lx, legs_top), (lx, legs_top + leg_h)],
                fill=SKIN_BASE, width=int(leg_w * 2.0))
-        # 발 (윤곽 있는 신발 느낌)
         d.ellipse([lx - leg_w, legs_top + leg_h - 8,
-                   lx + leg_w + 12, legs_top + leg_h + 22],
-                  fill=INK)
+                   lx + leg_w + 10, legs_top + leg_h + 20], fill=INK)
 
-    # ── 회전 팔 (스피너) ────────────────────────
+    # ── 회전 팔 (스피너) — 피벗 = 캔버스 정중앙 (cx, pivot_y) ──
     rad = math.radians(arm_angle_deg - 90)
     arm_len = int(W * 0.32)
-    pivot_x = cx + int(shoulder_w * 0.85)
-    pivot_y = shoulder_y + int(arm_w * 0.3)
-    tip_x = pivot_x + math.cos(rad) * arm_len
+    tip_x = cx + math.cos(rad) * arm_len
     tip_y = pivot_y + math.sin(rad) * arm_len
-    # 어깨→손 (한 줄, 끝점 둥글게)
-    d.line([(pivot_x, pivot_y), (tip_x, tip_y)],
+    arm_w = int(W * (0.038 if is_woman else 0.045))
+    # 팔 본체
+    d.line([(cx, pivot_y), (tip_x, tip_y)],
            fill=SKIN_BASE, width=int(arm_w * 2.2))
-    # 어깨 둥글게 마무리 (라인 캡)
-    d.ellipse([pivot_x - int(arm_w * 1.1), pivot_y - int(arm_w * 1.1),
-               pivot_x + int(arm_w * 1.1), pivot_y + int(arm_w * 1.1)],
+    # 어깨 둥글게 마무리
+    d.ellipse([cx - int(arm_w * 1.1), pivot_y - int(arm_w * 1.1),
+               cx + int(arm_w * 1.1), pivot_y + int(arm_w * 1.1)],
               fill=SKIN_BASE)
-    # 바이셉 하이라이트 (회전 팔 안쪽)
+    # 바이셉 하이라이트
     midf = 0.45
-    bx = pivot_x + math.cos(rad) * arm_len * midf
+    bx = cx + math.cos(rad) * arm_len * midf
     by = pivot_y + math.sin(rad) * arm_len * midf
     perp = rad + math.pi / 2
     hx = bx + math.cos(perp) * arm_w * 0.6
     hy = by + math.sin(perp) * arm_w * 0.6
-    d.ellipse([hx - arm_w * 1.0, hy - arm_w * 1.0,
-               hx + arm_w * 1.0, hy + arm_w * 1.0],
+    d.ellipse([hx - arm_w, hy - arm_w, hx + arm_w, hy + arm_w],
               fill=SKIN_HIGH)
     # 주먹
     hand_r = int(arm_w * 1.25)
     d.ellipse([tip_x - hand_r, tip_y - hand_r,
                tip_x + hand_r, tip_y + hand_r], fill=SKIN_BASE)
-    # 검지 (가리키는 손가락)
+    # 검지
     f_len = int(arm_w * 1.6)
     fx = tip_x + math.cos(rad) * f_len
     fy = tip_y + math.sin(rad) * f_len
     d.line([(tip_x, tip_y), (fx, fy)],
            fill=SKIN_BASE, width=int(arm_w * 0.85))
-    # 손가락 끝 둥글게
     d.ellipse([fx - int(arm_w * 0.42), fy - int(arm_w * 0.42),
                fx + int(arm_w * 0.42), fy + int(arm_w * 0.42)],
               fill=SKIN_BASE)
 
-    # 다운스케일 (AA)
     return layer.resize((size, size), Image.LANCZOS)
 
 
 def _frame(title: str, hint: str, options: List[str], arm_angle: float,
-           font_paths: dict) -> Image.Image:
+           font_paths: dict, character_style: str) -> Image.Image:
     img = Image.new("RGB", CANVAS, BG)
     draw = ImageDraw.Draw(img)
 
@@ -276,13 +327,12 @@ def _frame(title: str, hint: str, options: List[str], arm_angle: float,
     f_hint = ImageFont.truetype(font_paths["Medium"], 38)
     f_opt = ImageFont.truetype(font_paths["Bold"], 40)
 
-    # 제목 + 힌트 (safe area)
     tw = draw.textlength(title, font=f_title)
     draw.text(((CANVAS[0] - tw) / 2, 220), title, font=f_title, fill=INK)
     hw = draw.textlength(hint, font=f_hint)
     draw.text(((CANVAS[0] - hw) / 2, 340), hint, font=f_hint, fill=MUTED)
 
-    # 옵션 링
+    # 옵션 링 — 중심 = 캐릭터 이미지 중앙 = 팔 피벗
     ring_cx, ring_cy = CANVAS[0] // 2, 1100
     r = 400
     for i, opt in enumerate(options):
@@ -292,13 +342,11 @@ def _frame(title: str, hint: str, options: List[str], arm_angle: float,
                          ring_cx + math.cos(rad) * r,
                          ring_cy + math.sin(rad) * r)
 
-    # 캐릭터 — 어깨 피벗을 옵션 링 중심에 정렬
     char_size = 700
-    character = _render_muscle_character(char_size, arm_angle, font_paths)
-    cx0 = ring_cx - char_size // 2
-    cy0 = ring_cy - char_size // 2
-    img.paste(character, (cx0, cy0), character)
-
+    character = _render_character(char_size, arm_angle, style=character_style)
+    # 캐릭터 이미지 중앙 = 피벗 = ring_cx, ring_cy
+    img.paste(character, (ring_cx - char_size // 2,
+                          ring_cy - char_size // 2), character)
     return img
 
 
@@ -308,8 +356,12 @@ def make_pause_challenge_video(
     title: str = "먹을지 vs 운동 갈지",
     hint: str = "⏸ 일시정지로 메뉴 골라봐!",
     duration_seconds: float = 8.0,
+    character_style: str = "muscle_man",
 ):
-    """일시정지 챌린지 — 팔이 무한 회전, 짝수 위치 옵션만 노출."""
+    """일시정지 챌린지 — 팔이 무한 회전, 짝수 위치 옵션만 노출.
+
+    character_style: 'muscle_man' / 'sport_woman'
+    """
     assert len(options) == 8, "8개 옵션 전용"
     total_frames = int(FPS * duration_seconds)
 
@@ -327,7 +379,8 @@ def make_pause_challenge_video(
     for i in range(total_frames):
         base = (i * DEG_PER_FRAME) % 360
         wobble = WOBBLE_DEG * math.sin(i * 0.7)
-        img = _frame(title, hint, options, base + wobble, font_paths)
+        img = _frame(title, hint, options, base + wobble,
+                     font_paths, character_style)
         img.save(frames_dir / f"frame_{i:04d}.jpg", "JPEG", quality=88)
 
     cmd = [
