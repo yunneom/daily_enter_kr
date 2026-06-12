@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-11T09:23:57.118895+09:00",
+  "last_run_at": "2026-06-12T09:18:21.667824+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -890,6 +890,70 @@
       "caption_variant": "you_wont_believe",
       "media_id": "17869070598543365",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "000af8107d0a9dab",
+      "card_title": "K팝 걸그룹 콜라보 뮤직비디오, 천만 뷰 육박",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "a43a3a0a526d818c",
+      "card_title": "배성재·김다영 신혼 부부, '전현무계획3' 동반출연",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "ded1ae96c48522f6",
+      "card_title": "아이들 미연·우기, 각각의 매력으로 시선 집중",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "fbc9618f781c6d1b",
+      "card_title": "김무열·김남길, '참교육' 감독이 전한 현장 스토리",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "016733bb16da8ba0",
+      "card_title": "'군체', 하루 만에 1위 탈환…500만 관객 돌파 임박",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "462c39c5a4a157f4",
+      "card_title": "문채원, 6월 웨딩화보 공개 — 우아한 신부 무드",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "311548fbbbfc299f",
+      "card_title": "고레에다 히로카즈, 스필버그와 협업한 신작 '디스클로저 데이' 개봉",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-12",
+      "title_hash": "ca028dcab2c77aad",
+      "card_title": "이재, 월드컵 주제가 참여…개막식 무대 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18597005923034666",
+      "card_style": "manhwa"
     }
   ]
 }
