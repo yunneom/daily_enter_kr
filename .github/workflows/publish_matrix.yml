@@ -1,17 +1,18 @@
 name: Publish matrix to IG
 
-# 매트릭스 시리즈를 IG @daily_enter_kr 에 Reels 로 게시.
-# workflow_dispatch input 으로 단일 토픽 또는 'all' 선택. cron 으로 매일 KST 21:00 자동 회전.
+# 매트릭스 + 스피너 시리즈를 IG @daily_enter_kr 에 Reels 로 게시.
+# 하루 4회 자동 게시 — 처음 3슬롯은 매트릭스 (시간대 회전), 마지막 슬롯은 스피너 전용.
 
 on:
-  # 매일 KST 21:00 (UTC 12:00) — 아침 뉴스 Reels(08:00-08:30) 와 시간대 분리.
-  # TOPIC=auto → publish_matrix.py 가 요일 기준 4 토픽 회전 (월~목 한 사이클).
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 0 * * *'   # UTC 00:00 = KST 09:00 — 매트릭스
+    - cron: '0 4 * * *'   # UTC 04:00 = KST 13:00 — 매트릭스
+    - cron: '0 9 * * *'   # UTC 09:00 = KST 18:00 — 매트릭스
+    - cron: '0 12 * * *'  # UTC 12:00 = KST 21:00 — 스피너 (전용)
   workflow_dispatch:
     inputs:
       topic:
-        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_real_10k / idealtype_10k / soccer_dream_10k / idol_allstar_10k / spinner_food_man / spinner_lazy_woman / auto / all)'
+        description: '토픽 ID (weekend_5man / lunch_15k / girlgroup_real_10k / idealtype_10k / soccer_dream_10k / idol_allstar_10k / spinner_food_man / spinner_lazy_woman / auto / auto_matrix / auto_spinner / all)'
         required: false
         default: 'all'
         type: string
@@ -62,7 +63,9 @@ jobs:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
-          TOPIC: ${{ inputs.topic || 'auto' }}
+          # 수동 dispatch 우선. cron 호출 시 21:00 KST(UTC 12:00) 슬롯은 스피너 전용,
+          # 나머지 cron 슬롯은 매트릭스 회전.
+          TOPIC: ${{ inputs.topic || (github.event.schedule == '0 12 * * *' && 'auto_spinner' || 'auto_matrix') }}
         run: python scripts/publish_matrix.py
 
       - name: Upload generated images (backup)
