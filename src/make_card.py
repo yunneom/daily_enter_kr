@@ -364,14 +364,14 @@ def make_manhwa_card(
         _draw_centered(draw, y, line, font, size[0], fill=MANHWA_INK)
         y += line_h
 
-    # 4) 의성어 — 회전된 빨간 글자, 좌상단 모서리
+    # 4) 의성어 — 회전된 빨간 글자, 좌상단 (Reels 상단 UI safe area 안쪽)
     ono_text = ONOMATOPOEIA[seed % len(ONOMATOPOEIA)]
     ono_font = ImageFont.truetype(bold_path, 150) if bold_path else font
     ono_layer = Image.new("RGBA", size, (0, 0, 0, 0))
     ono_draw = ImageDraw.Draw(ono_layer)
     bbox = ono_font.getbbox(ono_text)
-    pad = 90
-    ono_draw.text((pad - bbox[0], pad - bbox[1]),
+    pad = 240  # IG Reels 상단 UI(프로필/사운드 아이콘 ~220px) 아래로
+    ono_draw.text((90 - bbox[0], pad - bbox[1]),
                   ono_text, font=ono_font, fill=MANHWA_ACCENT,
                   stroke_width=8, stroke_fill=MANHWA_INK)
     rng = random.Random(seed + 100)
