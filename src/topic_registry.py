@@ -225,6 +225,9 @@ TOPICS = {
                 {"emoji": "😬", "label": "기분파"},
                 {"emoji": "🎒", "label": "취준 중"},
             ],
+        ],
+    },
+
     # 7) 일시정지 챌린지 — 근육맨 (먹을지 vs 운동)
     "spinner_food_man": {
         "style": "spinner",

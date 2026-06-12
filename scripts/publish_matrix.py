@@ -196,19 +196,38 @@ def main() -> int:
     print(f"✓ IG 토큰 OK: @{health.get('username')}")
 
     topic_ids = list(TOPICS.keys())  # 등록 순서 = 회전 순서
+    spinner_ids = [t for t in topic_ids if TOPICS[t]["style"] == "spinner"]
+    matrix_ids = [t for t in topic_ids if TOPICS[t]["style"] != "spinner"]
+
     if target == "all":
         topics_to_post = list(TOPICS.items())
-    elif target in ("auto", ""):
-        # cron 호출 시 사용 — 요일 기준 회전 (월=0 → 첫 번째 토픽, ...)
+    elif target in ("auto", "auto_matrix", "auto_spinner", ""):
+        # cron 호출 — 시간대별 다른 토픽 풀에서 회전
         from datetime import datetime, timezone, timedelta
         kst = timezone(timedelta(hours=9))
-        weekday = datetime.now(kst).weekday()  # 0-6
-        picked = topic_ids[weekday % len(topic_ids)]
-        print(f"🤖 auto 회전 — KST weekday={weekday} → {picked}")
+        now_kst = datetime.now(kst)
+        if target == "auto_spinner":
+            pool = spinner_ids
+            # 하루 1슬롯이라 day-of-year 만으로 충분 (2 토픽 격일)
+            seed = now_kst.timetuple().tm_yday
+        elif target == "auto_matrix":
+            pool = matrix_ids
+            # 시드 = yday*7 + hour. 7은 6(매트릭스 풀 크기)과 코프라임이라
+            # 매일 같은 슬롯에서 다른 토픽 + 같은 날 슬롯마다 다른 토픽 보장.
+            seed = now_kst.timetuple().tm_yday * 7 + now_kst.hour
+        else:  # 하위 호환 (기존 'auto')
+            pool = topic_ids
+            seed = now_kst.weekday()
+        if not pool:
+            print(f"❌ {target} 풀이 비어있음")
+            return 1
+        picked = pool[seed % len(pool)]
+        print(f"🤖 {target} 회전 — KST {now_kst.strftime('%a %H시')} → {picked}")
         topics_to_post = [(picked, TOPICS[picked])]
     else:
         if target not in TOPICS:
-            print(f"❌ 알 수 없는 토픽: {target}. 사용 가능: {topic_ids + ['all', 'auto']}")
+            print(f"❌ 알 수 없는 토픽: {target}. "
+                  f"사용 가능: {topic_ids + ['all', 'auto', 'auto_matrix', 'auto_spinner']}")
             return 1
         topics_to_post = [(target, TOPICS[target])]
 
