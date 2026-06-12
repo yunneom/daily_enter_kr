@@ -225,6 +225,24 @@ TOPICS = {
                 {"emoji": "😬", "label": "기분파"},
                 {"emoji": "🎒", "label": "취준 중"},
             ],
-        ],
+    # 7) 일시정지 챌린지 — 근육맨 (먹을지 vs 운동)
+    "spinner_food_man": {
+        "style": "spinner",
+        "character_style": "muscle_man",
+        "title": "먹을지 vs 운동 갈지",
+        "hint": "⏸ 일시정지로 메뉴 골라봐!",
+        # 짝수 인덱스 = 잡힘 (운동가기), 홀수 인덱스 = 절대 못 잡음 (음식)
+        "options": ["운동가기", "엽떡먹기", "운동가기", "치킨먹기",
+                    "운동가기", "소주먹기", "운동가기", "닭발먹기"],
+    },
+
+    # 8) 일시정지 챌린지 — 운동복 (눕기 vs 운동)
+    "spinner_lazy_woman": {
+        "style": "spinner",
+        "character_style": "sport_woman",
+        "title": "누울지 vs 운동 갈지",
+        "hint": "⏸ 일시정지로 운명 골라봐!",
+        "options": ["운동가기", "유튜브보기", "운동가기", "낮잠자기",
+                    "운동가기", "넷플릭스", "운동가기", "쇼츠보기"],
     },
 }
