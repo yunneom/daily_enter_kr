@@ -196,6 +196,22 @@ class InstagramPublisher:
         print(f"  ✅ 단일 이미지 게시 완료! Media ID: {media_id}")
         return media_id
 
+    def post_comment(self, media_id: str, text: str) -> str:
+        """게시물에 댓글 추가 (게시 직후 호출하면 첫 댓글로 노출).
+
+        필요 권한: instagram_manage_comments (Business API 기본 포함).
+        IG rate limit ~25-30 comments/h per account — 일 24회 안쪽이면 안전.
+
+        Args:
+            media_id: 게시된 미디어 ID
+            text: 댓글 본문 (이모지 OK, 2200자 한도)
+        Returns: comment id
+        """
+        url = f"{GRAPH_API_BASE}/{media_id}/comments"
+        params = {"message": text[:2190], "access_token": self.access_token}
+        resp = self._post_ig(url, params, step="comment")
+        return resp.json()["id"]
+
     def post_story_video(self, video_url: str) -> str:
         """Stories 에 mp4 게시. 캡션 / 해시태그 미지원 (Stories 자체 제약).
 
