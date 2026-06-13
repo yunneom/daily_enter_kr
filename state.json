@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-12T09:18:21.667824+09:00",
+  "last_run_at": "2026-06-13T09:17:37.117145+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -954,6 +954,70 @@
       "caption_variant": "headlines_dotted",
       "media_id": "18597005923034666",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "6def5be39c8d7973",
+      "card_title": "배성재♥김다영, 14살 나이 차 '미끼' 러브스토리 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "6ed4740261b83177",
+      "card_title": "임지연, tvN '멋진 신세계'서 시간 역행 스토리 펼친다",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "5eb73f6ac8dcc61a",
+      "card_title": "조정석, 예능에서 궁합 테스트 결과 '모자관계' 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "27347d9f6c048a7a",
+      "card_title": "케데헌 이재, 개막식 무대서 한국어 가사 울려퍼뜨리다",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "4ae4df09fbb9a276",
+      "card_title": "한혜진, 홍천 별장 무단침입으로 불안감 호소",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "66070389695f6025",
+      "card_title": "고강용, 1억 2천 대출로 전셋집 이사 '월 105만원 상환 중'",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "d5bd8e7758c49e04",
+      "card_title": "슬리피, 자녀를 위해 문신 제거 — '어린이집 가기 부끄러워'",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-13",
+      "title_hash": "a0e61cce8429f5fd",
+      "card_title": "드라마 '참교육', 34년 교직 경험으로 본 학교 폭력의 현실",
+      "caption_variant": "question_hook",
+      "media_id": "18401716996156883",
+      "card_style": "minimal"
     }
   ]
 }
