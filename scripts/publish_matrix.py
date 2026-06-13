@@ -54,6 +54,14 @@ TOPIC_TAGS = {
     "spinner_lazy_woman": ["#밸런스게임", "#일시정지챌린지", "#운동", "#홈트",
                             "#넷플릭스", "#유튜브", "#쇼츠", "#침대요정",
                             "#운동복"],
+    "girlgroup_4gen_10k": ["#케이팝", "#4세대걸그룹", "#NMIXX", "#엔믹스",
+                            "#뉴진스", "#에스파", "#아이브", "#르세라핌",
+                            "#있지", "#릴리", "#설윤", "#채령", "#카즈하",
+                            "#kpop"],
+    "boygroup_4gen_10k": ["#케이팝", "#4세대보이그룹", "#스트레이키즈",
+                           "#스키즈", "#엔하이픈", "#투바투", "#TXT",
+                           "#RIIZE", "#라이즈", "#ATEEZ", "#에이티즈",
+                           "#필릭스", "#정원", "#성훈", "#kpop"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -168,12 +176,34 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher) -> di
             video_url=video_url, caption=caption,
             cover_url=cover_url, share_to_feed=True,
         )
-        return {"topic_id": topic_id, "ok": True, "media_id": media_id,
-                "video_url": video_url, "cover_url": cover_url}
     except Exception as e:
         print(f"  ❌ IG 게시 실패: {e}")
         return {"topic_id": topic_id, "ok": False, "error": str(e),
                 "video_url": video_url, "cover_url": cover_url}
+
+    # 자동 첫 댓글 — 첫 노출 댓글로 엔게이지먼트 시동.
+    # 게시 직후 너무 빠른 댓글은 봇 패턴 우려 → 30초 대기.
+    comment_text = topic.get("auto_comment") or _default_comment(topic.get("style"))
+    if comment_text:
+        time.sleep(30)
+        try:
+            comment_id = publisher.post_comment(media_id, comment_text)
+            print(f"  💬 자동 댓글: {comment_id}")
+        except Exception as e:
+            print(f"  ⚠️  자동 댓글 실패 (비치명): {e}")
+
+    return {"topic_id": topic_id, "ok": True, "media_id": media_id,
+            "video_url": video_url, "cover_url": cover_url}
+
+
+def _default_comment(style: str) -> str:
+    """auto_comment 미지정 토픽의 폴백."""
+    return {
+        "spinner": "⏸ 결과 댓글로 알려주세요!",
+        "emblem":  "🤔 본인 픽 댓글로 ⬇️",
+        "photo":   "🤔 당신의 조합은? 댓글로 ⬇️",
+        "drawing": "💭 당신의 답은? 댓글로 ⬇️",
+    }.get(style or "", "🤔 댓글로 알려주세요 ⬇️")
 
 
 def main() -> int:

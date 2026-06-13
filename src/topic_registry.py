@@ -247,5 +247,70 @@ TOPICS = {
         "hint": "⏸ 일시정지로 운명 골라봐!",
         "options": ["운동가기", "유튜브보기", "운동가기", "낮잠자기",
                     "운동가기", "넷플릭스", "운동가기", "쇼츠보기"],
+        "auto_comment": "⏸ 일시정지로 잡혔나요? 결과 댓글로 알려주세요!",
+    },
+
+    # 9) 4세대 걸그룹 올스타 — 다양한 그룹 + NMIXX 포함
+    "girlgroup_4gen_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 걸그룹 만들기",
+        "highlight": "4세대",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 4세대 올스타!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "NMIXX 릴리"},
+                {"role_emoji": "💃", "name": "ITZY 채령"},
+                {"role_emoji": "✨", "name": "NMIXX 설윤"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "에스파 닝닝"},
+                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
+                {"role_emoji": "✨", "name": "에스파 윈터"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "IVE 리즈"},
+                {"role_emoji": "💃", "name": "뉴진스 해린"},
+                {"role_emoji": "✨", "name": "IVE 장원영"},
+            ],
+        ],
+        "auto_comment": "🤔 내 픽 댓글로 알려주세요! NMIXX·뉴진스·에스파·IVE·ITZY·르세라핌 다 모였어요 ⬇️",
+    },
+
+    # 10) 4세대 보이그룹 올스타
+    "boygroup_4gen_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 보이그룹 만들기",
+        "highlight": "4세대",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 4세대 보이그룹 올스타!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "엔하이픈 정원"},
+                {"role_emoji": "💃", "name": "스키즈 필릭스"},
+                {"role_emoji": "✨", "name": "엔하이픈 성훈"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "TXT 태현"},
+                {"role_emoji": "💃", "name": "RIIZE 앤톤"},
+                {"role_emoji": "✨", "name": "RIIZE 박원빈"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "스키즈 승민"},
+                {"role_emoji": "💃", "name": "TXT 휴닝카이"},
+                {"role_emoji": "✨", "name": "ATEEZ 윤호"},
+            ],
+        ],
+        "auto_comment": "🔥 본인 픽 댓글로 ⬇️ 스키즈·엔하이픈·TXT·RIIZE·ATEEZ 다 모였어요!",
     },
 }
