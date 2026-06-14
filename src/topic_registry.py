@@ -313,4 +313,117 @@ TOPICS = {
         ],
         "auto_comment": "🔥 본인 픽 댓글로 ⬇️ 스키즈·엔하이픈·TXT·RIIZE·ATEEZ 다 모였어요!",
     },
+
+    # 11) 30만원 해외여행 — 실사 (도시별 사진)
+    "travel_30man": {
+        "style": "photo",
+        "title": "30만원으로 해외여행 가기",
+        "highlight": "30만원",
+        "rule_hint": "각 도시 1코스 골라 합 30만원 — 당신의 여행 계획은?",
+        "col_headers": ["일본", "동남아", "유럽"],
+        "row_prices": ["15만원", "10만원", "5만원"],
+        "cells": [
+            # 15만원 (premium)
+            [
+                {"photo_queries": ["tokyo skyline night neon", "japan luxury ryokan onsen",
+                                   "japanese fine dining sushi"],
+                 "label": "도쿄 5성급 3박"},
+                {"photo_queries": ["bali pool villa luxury", "phuket beach resort",
+                                   "danang beachfront sunset"],
+                 "label": "발리 풀빌라 4박"},
+                {"photo_queries": ["paris eiffel tower night", "rome colosseum",
+                                   "santorini greece sunset"],
+                 "label": "파리 부티크 호텔 2박"},
+            ],
+            # 10만원 (mid)
+            [
+                {"photo_queries": ["osaka castle dotonbori", "kyoto bamboo forest",
+                                   "japanese street food"],
+                 "label": "오사카 게스트하우스 4박"},
+                {"photo_queries": ["bangkok night market", "vietnam danang beach",
+                                   "thailand temple"],
+                 "label": "방콕 4성급 5박"},
+                {"photo_queries": ["barcelona park guell", "amsterdam canal night",
+                                   "prague old town square"],
+                 "label": "바르셀로나 호스텔 4박"},
+            ],
+            # 5만원 (budget)
+            [
+                {"photo_queries": ["fukuoka tonkotsu ramen", "tokyo convenience store night",
+                                   "japan budget hostel"],
+                 "label": "후쿠오카 당일치기"},
+                {"photo_queries": ["vietnam street food hanoi", "philippines local market",
+                                   "thailand budget hostel"],
+                 "label": "다낭 호스텔 2박"},
+                {"photo_queries": ["budapest danube night", "prague old town",
+                                   "european hostel dorm"],
+                 "label": "프라하 도미토리 3박"},
+            ],
+        ],
+        "auto_comment": "✈️ 내 30만원 여행 코스 댓글로 ⬇️ 어디 가실?",
+    },
+
+    # 12) 트로트가수 라이브 라인업
+    "trot_concert_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 트로트 라이브 가기",
+        "highlight": "트로트",
+        "rule_hint": "각 카테고리 1명씩 골라 합 1만원 — 당신의 트로트 라인업?",
+        "col_headers": ["남자트로트", "여자트로트", "신성트로트"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "임영웅"},
+                {"role_emoji": "🎤", "name": "송가인"},
+                {"role_emoji": "🎤", "name": "정동원"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "영탁"},
+                {"role_emoji": "🎤", "name": "장윤정"},
+                {"role_emoji": "🎤", "name": "이찬원"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "김호중"},
+                {"role_emoji": "🎤", "name": "김연자"},
+                {"role_emoji": "🎤", "name": "양지은"},
+            ],
+        ],
+        "auto_comment": "🎤 내 트로트 라인업 댓글로 ⬇️ 임영웅·송가인·영탁 다 모였어요!",
+    },
+
+    # 13) 발라드가수 콘서트 라인업
+    "ballad_concert_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 발라드 콘서트 가기",
+        "highlight": "발라드",
+        "rule_hint": "각 카테고리 1명씩 골라 합 1만원 — 당신의 감성 라인업?",
+        "col_headers": ["남자발라더", "여자발라더", "신성발라더"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎵", "name": "성시경"},
+                {"role_emoji": "🎵", "name": "박정현"},
+                {"role_emoji": "🎵", "name": "폴킴"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎵", "name": "김범수"},
+                {"role_emoji": "🎵", "name": "백지영"},
+                {"role_emoji": "🎵", "name": "케이시"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎵", "name": "박효신"},
+                {"role_emoji": "🎵", "name": "정인"},
+                {"role_emoji": "🎵", "name": "정승환"},
+            ],
+        ],
+        "auto_comment": "🎵 내 감성 라인업 댓글로 ⬇️ 성시경·박정현·박효신 다 있어요!",
+    },
 }
