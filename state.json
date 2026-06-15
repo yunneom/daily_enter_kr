@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-14T09:17:14.356209+09:00",
+  "last_run_at": "2026-06-15T09:29:41.003318+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1082,6 +1082,70 @@
       "caption_variant": "list_count",
       "media_id": "18094879346246338",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "d9acbef96d2ff3c1",
+      "card_title": "강예원, 고인 된 부채 정리하며 눈물···'할 수 있는 만큼' 실천",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "03723550b93bbaac",
+      "card_title": "샤이니 키, 6개월 만에 SNS 복귀 '무대 위 모든 순간이 행복했다'",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "bff836a8a83ebf36",
+      "card_title": "라이즈, 신곡 '투' 발매 — 자신감 담은 새로운 시작",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "01053f00127c6039",
+      "card_title": "남규리, 노숙인 위해 2년째 봉사 활동 중",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "cebcdf50d6c8e94c",
+      "card_title": "티파니 영X김예원, SBS '아니근데진짜!' 출연 예능감 폭발",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "7d33b7389e0da5fa",
+      "card_title": "영화 '군체' 500만 관객 돌파…전지현의 '좀비 포즈' 화제",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "4f94e44013278919",
+      "card_title": "이희준♥이혜정, 평창동 대저택 공개…럭셔리 인테리어 화제",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-15",
+      "title_hash": "16a8192010942fd0",
+      "card_title": "임현식, 건강 검진 중심으로 일상 관리하고 있어",
+      "caption_variant": "tease_one",
+      "media_id": "18119095894775069",
+      "card_style": "minimal"
     }
   ]
 }
