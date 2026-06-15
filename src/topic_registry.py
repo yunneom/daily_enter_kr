@@ -461,7 +461,7 @@ TOPICS = {
         "auto_comment": "👶 내 자식 픽 댓글로 ⬇️ 외모·성격·공부 중 뭐가 1순위?",
     },
 
-    # 15) 5세대 걸그룹 1티어편 — ILLIT + BABYMONSTER 메이저 라인
+    # 15) 5세대 걸그룹 1티어편 — BABYMONSTER + ILLIT + KISS OF LIFE 3대 메이저
     "girlgroup_5gen_tier1_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -473,27 +473,27 @@ TOPICS = {
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "윤아", "subtitle": "ILLIT"},
+                {"role_emoji": "🎤", "name": "벨", "subtitle": "KISS OF LIFE"},
                 {"role_emoji": "💃", "name": "루카", "subtitle": "BABYMONSTER"},
                 {"role_emoji": "✨", "name": "원희", "subtitle": "ILLIT"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "아현", "subtitle": "BABYMONSTER"},
-                {"role_emoji": "💃", "name": "민주", "subtitle": "ILLIT"},
+                {"role_emoji": "🎤", "name": "윤아", "subtitle": "ILLIT"},
+                {"role_emoji": "💃", "name": "나띠", "subtitle": "KISS OF LIFE"},
                 {"role_emoji": "✨", "name": "차퀴타", "subtitle": "BABYMONSTER"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "모카", "subtitle": "ILLIT"},
-                {"role_emoji": "💃", "name": "라미", "subtitle": "BABYMONSTER"},
-                {"role_emoji": "✨", "name": "파리타", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "🎤", "name": "아현", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "💃", "name": "줄리", "subtitle": "KISS OF LIFE"},
+                {"role_emoji": "✨", "name": "민주", "subtitle": "ILLIT"},
             ],
         ],
-        "auto_comment": "🌟 5세대 진짜 1티어 9명! 더 강한 픽 있으면 댓글로 ⬇️ 너희가 생각하는 1티어는?",
+        "auto_comment": "🌟 5세대 진짜 1티어 — BABYMONSTER·ILLIT·KISS OF LIFE 9명! 더 강한 픽 있으면 댓글로 ⬇️",
     },
 
-    # 16) 5세대 걸그룹 2티어편 — IZNA + MEOVV + Young Posse + KIIIKIII 다크호스 라인
+    # 16) 5세대 걸그룹 2티어편 — IZNA + Hearts2Hearts + MEOVV + Young Posse + KIIIKIII
     "girlgroup_5gen_tier2_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -505,24 +505,24 @@ TOPICS = {
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "사랑", "subtitle": "IZNA"},
-                {"role_emoji": "✨", "name": "정원", "subtitle": "IZNA"},
+                {"role_emoji": "🎤", "name": "사랑", "subtitle": "IZNA"},
+                {"role_emoji": "💃", "name": "카르멘", "subtitle": "Hearts2Hearts"},
+                {"role_emoji": "✨", "name": "주은", "subtitle": "Hearts2Hearts"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "도은", "subtitle": "Young Posse"},
+                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
                 {"role_emoji": "💃", "name": "안나", "subtitle": "MEOVV"},
-                {"role_emoji": "✨", "name": "카시아", "subtitle": "KIIIKIII"},
+                {"role_emoji": "✨", "name": "정원", "subtitle": "IZNA"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "류", "subtitle": "IZNA"},
+                {"role_emoji": "🎤", "name": "도은", "subtitle": "Young Posse"},
                 {"role_emoji": "💃", "name": "가원", "subtitle": "MEOVV"},
-                {"role_emoji": "✨", "name": "수이", "subtitle": "KIIIKIII"},
+                {"role_emoji": "✨", "name": "카시아", "subtitle": "KIIIKIII"},
             ],
         ],
-        "auto_comment": "🌠 5세대 다크호스 — IZNA·MEOVV·Young Posse·KIIIKIII! 1티어로 올라올 멤버는? 댓글로 ⬇️",
+        "auto_comment": "🌠 5세대 다크호스 — Hearts2Hearts·IZNA·MEOVV·Young Posse·KIIIKIII! 1티어로 올라올 멤버는? 댓글로 ⬇️",
     },
 
     # 17) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 4대 라인
