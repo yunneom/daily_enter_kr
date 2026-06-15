@@ -7,7 +7,45 @@
 
 # style: "photo"   → make_photo_matrix (Unsplash 사진)
 #        "drawing" → make_premium_matrix (이모지 + 드롭섀도우 3D 카드)
-#        "emblem"  → make_emblem_matrix (FIFA 카드 골드/실버/브론즈 + 실명)
+#        "emblem"  → make_emblem_matrix (FIFA 카드 골드/실명)
+#
+# [티어 풀 회전 — 한 토픽에서 여러 콘텐츠]
+# 토픽에 `col_pools` (컬럼별 멤버 풀 3개)를 주면, 게시 seed 에 따라 매번
+# 다른 멤버 라인업이 생성됨. 예: A티어 메인보컬 풀에 [안유진, 리즈, 카리나, ...]
+# → 이번 게시엔 안유진, 다음 게시엔 리즈. 같은 주제로 1개 이상의 콘텐츠 양산.
+# 각 컬럼 풀은 S→하위 순서로 나열하고, 행(가격 티어)은 풀에서 연속 인덱스를
+# 뽑아 항상 서로 다른 3명이 노출됨.
+
+def cells_from_col_pools(col_pools, n_rows: int, seed: int = 0):
+    """컬럼별 풀에서 행(가격티어)마다 서로 다른 멤버를 회전 선택.
+
+    cells[r][c] = col_pools[c][(seed + c + r) % len(pool)]
+    - +r : 같은 컬럼 안에서 3행이 연속 인덱스 → 항상 distinct (풀 길이 ≥ n_rows)
+    - +c : 컬럼마다 시작 위상차 → 컬럼 간 멤버 겹침 최소화
+    - seed 가 게시마다 바뀌므로 라인업 전체가 회전.
+    """
+    cells = []
+    for r in range(n_rows):
+        row = []
+        for c, pool in enumerate(col_pools):
+            member = pool[(seed + c + r) % len(pool)]
+            row.append(dict(member))
+        cells.append(row)
+    return cells
+
+
+def resolve_topic_cells(topic: dict, seed: int = 0):
+    """토픽의 셀을 확정. col_pools 있으면 회전 생성, 없으면 고정 cells 그대로."""
+    if topic.get("col_pools"):
+        n_rows = len(topic["row_prices"])
+        return cells_from_col_pools(topic["col_pools"], n_rows, seed=seed)
+    return [[dict(cell) for cell in row] for row in topic["cells"]]
+
+
+# 공통 출처 한 줄 (아이돌/티어 토픽에 공신력 부여 — 논란 완화)
+BR_SOURCE_NOTE = "※ 한국기업평판연구소 브랜드평판지수 기준 · 매월 갱신"
+
+
 TOPICS = {
     # 1) 라이프스타일 — 사진이 어울림
     "weekend_5man": {
@@ -253,6 +291,24 @@ TOPICS = {
         "auto_comment": "⏸ 일시정지로 잡혔나요? 결과 댓글로 알려주세요!",
     },
 
+    # 8b) 일시정지 챌린지 — 아이돌 픽 (아이돌 무대의상, 절대 못 고름 + 손끝 착시)
+    #     pointer_offset 22.5 → 팔이 8명 '사이'로만 떨어져 아무도 못 잡음.
+    #     bend_deg 22 → 손끝이 옆 아이돌에 닿는 듯한 착시 ("거의 장원영인데!").
+    #     옵션 순서 = 시계방향 12시→ : 장원영(12), 윈터(1:30), 카리나(3), 민지(4:30),
+    #                 카즈하(6), 안유진(7:30), 닝닝(9), 하니(10:30)
+    "spinner_idol_pick": {
+        "style": "spinner",
+        "character_style": "idol_woman",
+        "title": "내 최애 뽑기 챌린지",
+        "hint": "⏸ 일시정지로 최애 골라봐! (될까?)",
+        "options": ["장원영", "윈터", "카리나", "민지",
+                    "카즈하", "안유진", "닝닝", "하니"],
+        "pointer_offset_deg": 22.5,
+        "bend_deg": 22.0,
+        "option_fill": [196, 64, 124],
+        "auto_comment": "😤 최애 잡으셨나요? 자꾸 빗나가죠 ㅋㅋ 누구 노렸는지 댓글로 ⬇️",
+    },
+
     # 9) 4세대 걸그룹 올스타 — 다양한 그룹 + NMIXX 포함
     "girlgroup_4gen_10k": {
         "style": "emblem",
@@ -462,6 +518,8 @@ TOPICS = {
     },
 
     # 15) 5세대 걸그룹 1티어편 — BABYMONSTER + ILLIT + KISS OF LIFE 3대 메이저
+    # 15) 5세대 걸그룹 1티어편 — col_pools 회전 (게시마다 다른 9명)
+    #     1티어 그룹: BABYMONSTER·ILLIT·KIIIKIII·KISS OF LIFE·Hearts2Hearts·MEOVV
     "girlgroup_5gen_tier1_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -470,30 +528,40 @@ TOPICS = {
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 진짜 1티어?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
-        "cells": [
-            # 5천원
-            [
-                {"role_emoji": "🎤", "name": "벨", "subtitle": "KISS OF LIFE"},
-                {"role_emoji": "💃", "name": "루카", "subtitle": "BABYMONSTER"},
-                {"role_emoji": "✨", "name": "원희", "subtitle": "ILLIT"},
-            ],
-            # 3천원
+        "col_pools": [
+            # 메인보컬 풀 (게시마다 회전)
             [
                 {"role_emoji": "🎤", "name": "윤아", "subtitle": "ILLIT"},
-                {"role_emoji": "💃", "name": "나띠", "subtitle": "KISS OF LIFE"},
-                {"role_emoji": "✨", "name": "차퀴타", "subtitle": "BABYMONSTER"},
-            ],
-            # 2천원
-            [
                 {"role_emoji": "🎤", "name": "아현", "subtitle": "BABYMONSTER"},
-                {"role_emoji": "💃", "name": "줄리", "subtitle": "KISS OF LIFE"},
-                {"role_emoji": "✨", "name": "민주", "subtitle": "ILLIT"},
+                {"role_emoji": "🎤", "name": "지유", "subtitle": "KIIIKIII"},
+                {"role_emoji": "🎤", "name": "벨", "subtitle": "KISS OF LIFE"},
+                {"role_emoji": "🎤", "name": "카르멘", "subtitle": "Hearts2Hearts"},
+                {"role_emoji": "🎤", "name": "수인", "subtitle": "MEOVV"},
+            ],
+            # 메인댄서 풀
+            [
+                {"role_emoji": "💃", "name": "루카", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "💃", "name": "모카", "subtitle": "ILLIT"},
+                {"role_emoji": "💃", "name": "이솔", "subtitle": "KIIIKIII"},
+                {"role_emoji": "💃", "name": "나띠", "subtitle": "KISS OF LIFE"},
+                {"role_emoji": "💃", "name": "가원", "subtitle": "MEOVV"},
+                {"role_emoji": "💃", "name": "유하", "subtitle": "Hearts2Hearts"},
+            ],
+            # 비주얼 풀
+            [
+                {"role_emoji": "✨", "name": "원희", "subtitle": "ILLIT"},
+                {"role_emoji": "✨", "name": "차퀴타", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "✨", "name": "키야", "subtitle": "KIIIKIII"},
+                {"role_emoji": "✨", "name": "줄리", "subtitle": "KISS OF LIFE"},
+                {"role_emoji": "✨", "name": "스텔라", "subtitle": "Hearts2Hearts"},
+                {"role_emoji": "✨", "name": "안나", "subtitle": "MEOVV"},
             ],
         ],
-        "auto_comment": "🌟 5세대 진짜 1티어 — BABYMONSTER·ILLIT·KISS OF LIFE 9명! 더 강한 픽 있으면 댓글로 ⬇️",
+        "source_note": BR_SOURCE_NOTE,
+        "auto_comment": "🌟 5세대 진짜 1티어 — BABYMONSTER·ILLIT·KIIIKIII·미야오·하투하·키스오브라이프! 더 강한 픽 있으면 댓글로 ⬇️",
     },
 
-    # 16) 5세대 걸그룹 2티어편 — IZNA + Hearts2Hearts + MEOVV + Young Posse + KIIIKIII
+    # 16) 5세대 걸그룹 2티어편 — IZNA + Young Posse 다크호스 (col_pools 회전)
     "girlgroup_5gen_tier2_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -502,30 +570,31 @@ TOPICS = {
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 다크호스!",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
-        "cells": [
-            # 5천원
+        "col_pools": [
             [
                 {"role_emoji": "🎤", "name": "사랑", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "카르멘", "subtitle": "Hearts2Hearts"},
-                {"role_emoji": "✨", "name": "주은", "subtitle": "Hearts2Hearts"},
-            ],
-            # 3천원
-            [
-                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "안나", "subtitle": "MEOVV"},
-                {"role_emoji": "✨", "name": "정원", "subtitle": "IZNA"},
-            ],
-            # 2천원
-            [
                 {"role_emoji": "🎤", "name": "도은", "subtitle": "Young Posse"},
-                {"role_emoji": "💃", "name": "가원", "subtitle": "MEOVV"},
-                {"role_emoji": "✨", "name": "카시아", "subtitle": "KIIIKIII"},
+                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
+                {"role_emoji": "🎤", "name": "예은", "subtitle": "Young Posse"},
+            ],
+            [
+                {"role_emoji": "💃", "name": "정원", "subtitle": "IZNA"},
+                {"role_emoji": "💃", "name": "선혜", "subtitle": "Young Posse"},
+                {"role_emoji": "💃", "name": "지우", "subtitle": "IZNA"},
+                {"role_emoji": "💃", "name": "재희", "subtitle": "Young Posse"},
+            ],
+            [
+                {"role_emoji": "✨", "name": "사야", "subtitle": "IZNA"},
+                {"role_emoji": "✨", "name": "지아나", "subtitle": "Young Posse"},
+                {"role_emoji": "✨", "name": "코코로", "subtitle": "IZNA"},
+                {"role_emoji": "✨", "name": "윤지", "subtitle": "IZNA"},
             ],
         ],
-        "auto_comment": "🌠 5세대 다크호스 — Hearts2Hearts·IZNA·MEOVV·Young Posse·KIIIKIII! 1티어로 올라올 멤버는? 댓글로 ⬇️",
+        "source_note": BR_SOURCE_NOTE,
+        "auto_comment": "🌠 5세대 다크호스 — IZNA·Young Posse! 1티어로 올라올 멤버는? 댓글로 ⬇️",
     },
 
-    # 17) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 4대 라인
+    # 17) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 (col_pools 회전)
     "girlgroup_4gen_tier1_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -534,30 +603,40 @@ TOPICS = {
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 4세대 진짜 1티어?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
-        "cells": [
-            # 5천원
+        "col_pools": [
+            # 메인보컬 S/A 풀
             [
                 {"role_emoji": "🎤", "name": "카리나", "subtitle": "에스파"},
-                {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
-                {"role_emoji": "✨", "name": "장원영", "subtitle": "IVE"},
-            ],
-            # 3천원
-            [
                 {"role_emoji": "🎤", "name": "민지", "subtitle": "뉴진스"},
-                {"role_emoji": "💃", "name": "하니", "subtitle": "뉴진스"},
-                {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
-            ],
-            # 2천원
-            [
+                {"role_emoji": "🎤", "name": "닝닝", "subtitle": "에스파"},
                 {"role_emoji": "🎤", "name": "다니엘", "subtitle": "뉴진스"},
-                {"role_emoji": "💃", "name": "레이", "subtitle": "IVE"},
-                {"role_emoji": "✨", "name": "사쿠라", "subtitle": "르세라핌"},
+                {"role_emoji": "🎤", "name": "김채원", "subtitle": "르세라핌"},
+                {"role_emoji": "🎤", "name": "안유진", "subtitle": "IVE"},
+            ],
+            # 메인댄서 S/A 풀
+            [
+                {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
+                {"role_emoji": "💃", "name": "하니", "subtitle": "뉴진스"},
+                {"role_emoji": "💃", "name": "사쿠라", "subtitle": "르세라핌"},
+                {"role_emoji": "💃", "name": "지젤", "subtitle": "에스파"},
+                {"role_emoji": "💃", "name": "해린", "subtitle": "뉴진스"},
+                {"role_emoji": "💃", "name": "혜인", "subtitle": "뉴진스"},
+            ],
+            # 비주얼 S/A 풀
+            [
+                {"role_emoji": "✨", "name": "장원영", "subtitle": "IVE"},
+                {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
+                {"role_emoji": "✨", "name": "리즈", "subtitle": "IVE"},
+                {"role_emoji": "✨", "name": "허윤진", "subtitle": "르세라핌"},
+                {"role_emoji": "✨", "name": "이서", "subtitle": "IVE"},
+                {"role_emoji": "✨", "name": "레이", "subtitle": "IVE"},
             ],
         ],
-        "auto_comment": "🥇 4세대 진짜 1티어 9명 — 더 강한 픽 있으면 댓글로 ⬇️ 너희가 생각하는 1티어는?",
+        "source_note": BR_SOURCE_NOTE,
+        "auto_comment": "🥇 4세대 진짜 1티어 — 더 강한 픽 있으면 댓글로 ⬇️ 너희가 생각하는 1티어는?",
     },
 
-    # 18) 4세대 걸그룹 2티어편 — ITZY/NMIXX/(여자)아이들 라인
+    # 18) 4세대 걸그룹 2티어편 — ITZY/NMIXX/(여자)아이들 (col_pools 회전)
     "girlgroup_4gen_tier2_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -566,30 +645,34 @@ TOPICS = {
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 1티어급 누구?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
-        "cells": [
-            # 5천원
+        "col_pools": [
             [
                 {"role_emoji": "🎤", "name": "릴리", "subtitle": "NMIXX"},
-                {"role_emoji": "💃", "name": "소연", "subtitle": "(여자)아이들"},
-                {"role_emoji": "✨", "name": "설윤", "subtitle": "NMIXX"},
-            ],
-            # 3천원
-            [
+                {"role_emoji": "🎤", "name": "미연", "subtitle": "(여자)아이들"},
                 {"role_emoji": "🎤", "name": "류진", "subtitle": "ITZY"},
-                {"role_emoji": "💃", "name": "채령", "subtitle": "ITZY"},
-                {"role_emoji": "✨", "name": "미연", "subtitle": "(여자)아이들"},
-            ],
-            # 2천원
-            [
                 {"role_emoji": "🎤", "name": "해원", "subtitle": "NMIXX"},
+                {"role_emoji": "🎤", "name": "민니", "subtitle": "(여자)아이들"},
+            ],
+            [
+                {"role_emoji": "💃", "name": "채령", "subtitle": "ITZY"},
+                {"role_emoji": "💃", "name": "소연", "subtitle": "(여자)아이들"},
                 {"role_emoji": "💃", "name": "베이", "subtitle": "NMIXX"},
+                {"role_emoji": "💃", "name": "리아", "subtitle": "ITZY"},
+                {"role_emoji": "💃", "name": "우기", "subtitle": "(여자)아이들"},
+            ],
+            [
+                {"role_emoji": "✨", "name": "설윤", "subtitle": "NMIXX"},
                 {"role_emoji": "✨", "name": "슈화", "subtitle": "(여자)아이들"},
+                {"role_emoji": "✨", "name": "지우", "subtitle": "NMIXX"},
+                {"role_emoji": "✨", "name": "예지", "subtitle": "ITZY"},
+                {"role_emoji": "✨", "name": "규진", "subtitle": "NMIXX"},
             ],
         ],
+        "source_note": BR_SOURCE_NOTE,
         "auto_comment": "🥈 2티어도 만만찮다 — 누가 1티어급? 더 좋은 픽 있으면 댓글로 ⬇️",
     },
 
-    # 19) 4세대 걸그룹 3티어편 — STAYC/Kep1er/Billlie 후발 라인
+    # 19) 4세대 걸그룹 3티어편 — STAYC/Kep1er/Billlie/fromis_9 (col_pools 회전)
     "girlgroup_4gen_tier3_10k": {
         "style": "emblem",
         "background_style": "white",
@@ -598,26 +681,135 @@ TOPICS = {
         "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 다음 시즌 1티어는?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
-        "cells": [
-            # 5천원
+        "col_pools": [
             [
                 {"role_emoji": "🎤", "name": "시은", "subtitle": "STAYC"},
-                {"role_emoji": "💃", "name": "다영", "subtitle": "Kep1er"},
-                {"role_emoji": "✨", "name": "수민", "subtitle": "STAYC"},
+                {"role_emoji": "🎤", "name": "다영", "subtitle": "Kep1er"},
+                {"role_emoji": "🎤", "name": "백지헌", "subtitle": "fromis_9"},
+                {"role_emoji": "🎤", "name": "수현", "subtitle": "Billlie"},
             ],
-            # 3천원
             [
-                {"role_emoji": "🎤", "name": "바히에", "subtitle": "Kep1er"},
                 {"role_emoji": "💃", "name": "재이", "subtitle": "STAYC"},
-                {"role_emoji": "✨", "name": "아이사", "subtitle": "STAYC"},
-            ],
-            # 2천원
-            [
-                {"role_emoji": "🎤", "name": "윤", "subtitle": "STAYC"},
+                {"role_emoji": "💃", "name": "샤오팅", "subtitle": "Kep1er"},
                 {"role_emoji": "💃", "name": "츠키", "subtitle": "Billlie"},
-                {"role_emoji": "✨", "name": "수현", "subtitle": "Billlie"},
+                {"role_emoji": "💃", "name": "시연", "subtitle": "fromis_9"},
+            ],
+            [
+                {"role_emoji": "✨", "name": "수민", "subtitle": "STAYC"},
+                {"role_emoji": "✨", "name": "아이사", "subtitle": "STAYC"},
+                {"role_emoji": "✨", "name": "바히에", "subtitle": "Kep1er"},
+                {"role_emoji": "✨", "name": "이새롬", "subtitle": "fromis_9"},
             ],
         ],
+        "source_note": BR_SOURCE_NOTE,
         "auto_comment": "🥉 3티어 다크호스 — 1티어로 올라올 멤버 댓글로 ⬇️ 더 좋은 픽 있으면 알려주세요!",
+    },
+
+    # ════════════════════════════════════════════════════════════
+    #  남자 아이돌 티어편 (그룹/개인 BR 기준 · col_pools 회전)
+    #  4세대 1티어: Stray Kids·ENHYPEN·TXT·RIIZE·ATEEZ·ZEROBASEONE
+    #  4세대 2티어: THE BOYZ·NCT·TREASURE·P1Harmony 등
+    #  5세대 1티어: CORTIS·TWS·BOYNEXTDOOR·KickFlip
+    # ════════════════════════════════════════════════════════════
+    "boygroup_4gen_tier1_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 보이그룹 1티어편",
+        "highlight": "1티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 4세대 보이그룹 1티어?",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "col_pools": [
+            [
+                {"role_emoji": "🎤", "name": "필릭스", "subtitle": "스트레이키즈"},
+                {"role_emoji": "🎤", "name": "정원", "subtitle": "엔하이픈"},
+                {"role_emoji": "🎤", "name": "태현", "subtitle": "TXT"},
+                {"role_emoji": "🎤", "name": "승한", "subtitle": "RIIZE"},
+                {"role_emoji": "🎤", "name": "종호", "subtitle": "ATEEZ"},
+                {"role_emoji": "🎤", "name": "성한빈", "subtitle": "제로베이스원"},
+            ],
+            [
+                {"role_emoji": "💃", "name": "현진", "subtitle": "스트레이키즈"},
+                {"role_emoji": "💃", "name": "니키", "subtitle": "엔하이픈"},
+                {"role_emoji": "💃", "name": "휴닝카이", "subtitle": "TXT"},
+                {"role_emoji": "💃", "name": "앤톤", "subtitle": "RIIZE"},
+                {"role_emoji": "💃", "name": "산", "subtitle": "ATEEZ"},
+                {"role_emoji": "💃", "name": "리키", "subtitle": "제로베이스원"},
+            ],
+            [
+                {"role_emoji": "✨", "name": "성훈", "subtitle": "엔하이픈"},
+                {"role_emoji": "✨", "name": "한", "subtitle": "스트레이키즈"},
+                {"role_emoji": "✨", "name": "연준", "subtitle": "TXT"},
+                {"role_emoji": "✨", "name": "원빈", "subtitle": "RIIZE"},
+                {"role_emoji": "✨", "name": "윤호", "subtitle": "ATEEZ"},
+                {"role_emoji": "✨", "name": "장하오", "subtitle": "제로베이스원"},
+            ],
+        ],
+        "source_note": BR_SOURCE_NOTE,
+        "auto_comment": "🥇 4세대 보이그룹 1티어 — 스키즈·엔하이픈·TXT·RIIZE·ATEEZ·ZB1! 더 강한 픽 댓글로 ⬇️",
+    },
+
+    "boygroup_4gen_tier2_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 보이그룹 2티어편",
+        "highlight": "2티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 1티어급 누구?",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "col_pools": [
+            [
+                {"role_emoji": "🎤", "name": "주연", "subtitle": "더보이즈"},
+                {"role_emoji": "🎤", "name": "도영", "subtitle": "NCT"},
+                {"role_emoji": "🎤", "name": "지훈", "subtitle": "트레저"},
+                {"role_emoji": "🎤", "name": "기호", "subtitle": "P1Harmony"},
+            ],
+            [
+                {"role_emoji": "💃", "name": "재현", "subtitle": "NCT"},
+                {"role_emoji": "💃", "name": "현재", "subtitle": "트레저"},
+                {"role_emoji": "💃", "name": "큐", "subtitle": "더보이즈"},
+                {"role_emoji": "💃", "name": "인탁", "subtitle": "P1Harmony"},
+            ],
+            [
+                {"role_emoji": "✨", "name": "선우", "subtitle": "더보이즈"},
+                {"role_emoji": "✨", "name": "정우", "subtitle": "NCT"},
+                {"role_emoji": "✨", "name": "마시호", "subtitle": "트레저"},
+                {"role_emoji": "✨", "name": "테오", "subtitle": "P1Harmony"},
+            ],
+        ],
+        "source_note": BR_SOURCE_NOTE,
+        "auto_comment": "🥈 4세대 보이그룹 2티어 — 1티어급 픽 댓글로 ⬇️ 더 좋은 조합 있으면 알려주세요!",
+    },
+
+    "boygroup_5gen_tier1_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 5세대 보이그룹 1티어편",
+        "highlight": "1티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 보이그룹 1티어?",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "col_pools": [
+            [
+                {"role_emoji": "🎤", "name": "마틴", "subtitle": "CORTIS"},
+                {"role_emoji": "🎤", "name": "신유", "subtitle": "TWS"},
+                {"role_emoji": "🎤", "name": "성호", "subtitle": "보이넥스트도어"},
+                {"role_emoji": "🎤", "name": "민재", "subtitle": "KickFlip"},
+            ],
+            [
+                {"role_emoji": "💃", "name": "제임스", "subtitle": "CORTIS"},
+                {"role_emoji": "💃", "name": "도훈", "subtitle": "TWS"},
+                {"role_emoji": "💃", "name": "태산", "subtitle": "보이넥스트도어"},
+                {"role_emoji": "💃", "name": "휘찬", "subtitle": "KickFlip"},
+            ],
+            [
+                {"role_emoji": "✨", "name": "주훈", "subtitle": "CORTIS"},
+                {"role_emoji": "✨", "name": "영재", "subtitle": "TWS"},
+                {"role_emoji": "✨", "name": "리우", "subtitle": "보이넥스트도어"},
+                {"role_emoji": "✨", "name": "동현", "subtitle": "KickFlip"},
+            ],
+        ],
+        "source_note": BR_SOURCE_NOTE,
+        "auto_comment": "🌟 5세대 보이그룹 1티어 — CORTIS·TWS·보이넥스트도어·KickFlip! 더 강한 픽 댓글로 ⬇️",
     },
 }

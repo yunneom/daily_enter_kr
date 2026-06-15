@@ -52,8 +52,25 @@ def _vertical_gradient(size: Tuple[int, int],
     return img
 
 
+# 밝은 파스텔 배경 (위→아래 은은한 그라데이션). 흰 글씨가 아니라
+# 검정(INK) 텍스트 유지하면서도 "매번 다른 글" 느낌을 주는 라이트 톤.
+# 같은 토픽이라도 게시마다 배경을 회전해 사용자가 새 콘텐츠로 인지하게 함.
+SOFT_BACKGROUNDS = {
+    "soft_mint":     ((232, 248, 244), (205, 235, 228)),
+    "soft_peach":    ((255, 244, 236), (250, 224, 210)),
+    "soft_lavender": ((244, 240, 252), (224, 216, 245)),
+    "soft_sky":      ((236, 245, 255), (210, 228, 250)),
+    "soft_rose":     ((255, 240, 244), (250, 218, 228)),
+    "soft_butter":   ((255, 250, 232), (250, 238, 200)),
+    "soft_gray":     ((247, 248, 250), (228, 231, 236)),
+}
+# 게시마다 회전할 라이트 배경 순서 (white 포함 — 가장 깔끔한 기본도 섞임)
+SOFT_BG_ROTATION = ["white", "soft_mint", "soft_peach", "soft_lavender",
+                    "soft_sky", "soft_rose", "soft_butter", "soft_gray"]
+
+
 def _background(style: str) -> Image.Image:
-    """전체 배경 — 축구장 / 아이돌 그라데이션."""
+    """전체 배경 — 축구장 / 아이돌 그라데이션 / 라이트 파스텔."""
     if style == "soccer":
         # 어두운 잔디 그린 → 밝은 잔디
         bg = _vertical_gradient(CANVAS, (45, 80, 22), (74, 139, 42))
@@ -70,13 +87,17 @@ def _background(style: str) -> Image.Image:
     elif style == "gradient_dark":
         # 어두운 네이비 → 보라
         return _vertical_gradient(CANVAS, (25, 30, 60), (90, 50, 130))
+    elif style in SOFT_BACKGROUNDS:
+        top, bot = SOFT_BACKGROUNDS[style]
+        return _vertical_gradient(CANVAS, top, bot)
     else:
         # 흰 배경 (premium 룩 — 축구 외 토픽 기본)
         return Image.new("RGB", CANVAS, WHITE)
 
 
 def _is_dark_bg(style: str) -> bool:
-    """배경이 어두운지 — 제목/룰/브랜드 텍스트 색 결정용."""
+    """배경이 어두운지 — 제목/룰/브랜드 텍스트 색 결정용.
+    라이트 파스텔(soft_*)은 모두 밝으므로 dark 아님 (검정 텍스트 유지)."""
     return style in ("soccer", "gradient_idol", "gradient_dark")
 
 
@@ -274,8 +295,9 @@ def make_emblem_matrix(
     cells: List[List[dict]],
     output_path: Path,
     brand: str = "",
-    background_style: str = "soccer",   # "soccer" / "gradient_idol" / "gradient_dark" / "white"
+    background_style: str = "soccer",   # "soccer" / "gradient_idol" / "gradient_dark" / "white" / "soft_*"
     budget_label: str = "만원",         # 상단 지폐 일러스트에 표시할 금액
+    source_note: str = "",              # 하단 공신력 한 줄 (예: 브랜드 평판 출처)
 ):
     """FIFA-카드 매트릭스. 각 셀은 {role_emoji, name, subtitle?} 딕트.
 
@@ -381,6 +403,15 @@ def make_emblem_matrix(
                             int(cta_x + cta_w + 22), int(cta_y + 54)],
                            radius=12, fill=HIGHLIGHT_YELLOW)
     draw.text((cta_x, cta_y), cta_text, font=f_cta, fill=INK)
+
+    # ─── 공신력 출처 한 줄 (CTA 박스 바로 아래) ───
+    # 브랜드 평판 지수 출처를 명시 → 티어 분류 논란 완화 + 공신력 부여.
+    if source_note:
+        f_src = ImageFont.truetype(regular_path, 26)
+        src_color = (150, 150, 158) if not dark_bg else (210, 210, 210)
+        sw = draw.textlength(source_note, font=f_src)
+        draw.text(((CANVAS[0] - sw) / 2, cta_y + 78),
+                  source_note, font=f_src, fill=src_color)
 
     # 브랜드 — 폭 넘치면 자동 축소
     if brand:

@@ -52,8 +52,15 @@ SPORTSWEAR_BOT = (60, 70, 100)
 HAIR_LIGHT_BASE = (75, 50, 38)
 HAIR_LIGHT_HIGH = (115, 85, 65)
 
+# 아이돌 무대의상 (idol_woman) 컬러 — 핑크 무대 드레스
+IDOL_DRESS = (236, 96, 150)
+IDOL_DRESS_HIGH = (250, 140, 185)
+IDOL_DRESS_SHADE = (190, 60, 110)
+IDOL_SKIRT = (224, 80, 138)
+IDOL_TRIM = (255, 224, 236)
 
-def _draw_option_box(draw, text, font, cx, cy):
+
+def _draw_option_box(draw, text, font, cx, cy, fill=OPTION_FILL):
     bbox = font.getbbox(text)
     tw = bbox[2] - bbox[0]
     th = bbox[3] - bbox[1]
@@ -61,16 +68,20 @@ def _draw_option_box(draw, text, font, cx, cy):
     draw.rounded_rectangle(
         [int(cx - tw/2 - pad_x), int(cy - th/2 - pad_y),
          int(cx + tw/2 + pad_x), int(cy + th/2 + pad_y + 6)],
-        radius=12, fill=OPTION_FILL)
+        radius=12, fill=fill)
     draw.text((cx - tw/2 - bbox[0], cy - th/2 - bbox[1]),
               text, font=font, fill=OPTION_TEXT)
 
 
 def _render_character(size: int, arm_angle_deg: float,
-                      style: str = "muscle_man") -> Image.Image:
+                      style: str = "muscle_man",
+                      bend_deg: float = 0.0) -> Image.Image:
     """캐릭터를 size×size RGBA 로 렌더 — 슈퍼샘플링.
 
     style: 'muscle_man' (근육맨 반바지) / 'sport_woman' (스포츠 운동복)
+           / 'idol_woman' (무대의상 아이돌 — 팔이 마이크 든 듯한 포인터)
+    bend_deg: 팔꿈치에서 팔뚝을 꺾는 각도. 0이면 일직선(기존). 양수면
+              회전 방향으로 살짝 꺾어 손끝이 '안 닿는 항목에도 닿는 듯한' 착시.
     피벗: (W//2, W//2) — 회전 팔의 어깨 = 캐릭터 이미지 정중앙.
     """
     W = size * SS
@@ -79,7 +90,8 @@ def _render_character(size: int, arm_angle_deg: float,
     cx = W // 2
     pivot_y = W // 2  # 회전 팔의 피벗 (가슴 중앙)
 
-    is_woman = style == "sport_woman"
+    is_woman = style in ("sport_woman", "idol_woman")
+    is_idol = style == "idol_woman"
     hair_base = HAIR_LIGHT_BASE if is_woman else HAIR_BASE
     hair_high = HAIR_LIGHT_HIGH if is_woman else HAIR_HIGH
 
@@ -180,7 +192,27 @@ def _render_character(size: int, arm_angle_deg: float,
     ]
     d.polygon(torso_pts, fill=SKIN_BASE)
 
-    if is_woman:
+    if is_idol:
+        # 무대 드레스 상의 — 어깨에서 허리까지 핑크 보디스 + 트림
+        d.polygon(torso_pts, fill=IDOL_DRESS)
+        # 가슴 하이라이트
+        d.polygon([(cx - int(shoulder_w*0.7), body_top + int(torso_h*0.10)),
+                   (cx + int(shoulder_w*0.7), body_top + int(torso_h*0.10)),
+                   (cx + int(waist_w*0.8), body_top + int(torso_h*0.55)),
+                   (cx - int(waist_w*0.8), body_top + int(torso_h*0.55))],
+                  fill=IDOL_DRESS_HIGH)
+        # 홀터넥 끈 (목→어깨)
+        for sign in (-1, 1):
+            d.line([(cx + sign * int(shoulder_w*0.42), body_top + 4),
+                    (cx, head_cy + head_h - 6)],
+                   fill=IDOL_DRESS, width=int(SS * 5))
+        # 허리 트림 라인
+        d.line([(cx - waist_w, body_bot - 6), (cx + waist_w, body_bot - 6)],
+               fill=IDOL_TRIM, width=int(SS * 4))
+        # 중앙 음영
+        d.line([(cx, body_top + int(torso_h*0.30)), (cx, body_bot - 8)],
+               fill=IDOL_DRESS_SHADE, width=int(SS * 3))
+    elif is_woman:
         # 스포츠 브라 — 가슴 라인 따라 띠 모양
         bra_top = body_top - int(W * 0.005)
         bra_bot = body_top + int(W * 0.075)
@@ -254,20 +286,44 @@ def _render_character(size: int, arm_angle_deg: float,
                off_hand_x + arm_thick, off_hand_y + arm_thick],
               fill=SKIN_BASE)
 
-    # ── 하의 (반바지 / 운동복 쇼츠) ──
+    # ── 하의 (아이돌 스커트 / 반바지 / 운동복 쇼츠) ──
     shorts_top = body_bot
-    shorts_h = int(W * (0.085 if is_woman else 0.10))
-    sx0 = cx - waist_w - 4
-    sx1 = cx + waist_w + 4
-    shorts_color = SPORTSWEAR_BOT if is_woman else SHORTS_BASE
-    shorts_shade = (40, 50, 75) if is_woman else SHORTS_SHADE
-    d.rounded_rectangle([sx0, shorts_top, sx1, shorts_top + shorts_h],
-                        radius=int(W * 0.014), fill=shorts_color)
-    d.line([(cx, shorts_top + 4), (cx, shorts_top + shorts_h - 4)],
-           fill=shorts_shade, width=int(SS * 3))
-    d.rounded_rectangle([sx0, shorts_top, sx1, shorts_top + shorts_h],
-                        radius=int(W * 0.014), outline=INK,
-                        width=int(SS * 3))
+    if is_idol:
+        # 플레어 스커트 — 허리에서 바깥으로 퍼지는 사다리꼴 + 밑단 트림
+        skirt_h = int(W * 0.11)
+        flare = int(W * 0.12)
+        skirt_pts = [
+            (cx - waist_w - 2, shorts_top),
+            (cx + waist_w + 2, shorts_top),
+            (cx + waist_w + flare, shorts_top + skirt_h),
+            (cx - waist_w - flare, shorts_top + skirt_h),
+        ]
+        d.polygon(skirt_pts, fill=IDOL_SKIRT)
+        # 주름 음영
+        for fx in (-0.5, 0.0, 0.5):
+            px = cx + int(fx * (waist_w + flare))
+            d.line([(cx + int(fx * waist_w), shorts_top + 4),
+                    (px, shorts_top + skirt_h - 2)],
+                   fill=IDOL_DRESS_SHADE, width=int(SS * 2))
+        # 밑단 트림
+        d.line([(cx - waist_w - flare, shorts_top + skirt_h - 3),
+                (cx + waist_w + flare, shorts_top + skirt_h - 3)],
+               fill=IDOL_TRIM, width=int(SS * 4))
+        d.polygon(skirt_pts, outline=INK, width=int(SS * 3))
+        shorts_h = skirt_h
+    else:
+        shorts_h = int(W * (0.085 if is_woman else 0.10))
+        sx0 = cx - waist_w - 4
+        sx1 = cx + waist_w + 4
+        shorts_color = SPORTSWEAR_BOT if is_woman else SHORTS_BASE
+        shorts_shade = (40, 50, 75) if is_woman else SHORTS_SHADE
+        d.rounded_rectangle([sx0, shorts_top, sx1, shorts_top + shorts_h],
+                            radius=int(W * 0.014), fill=shorts_color)
+        d.line([(cx, shorts_top + 4), (cx, shorts_top + shorts_h - 4)],
+               fill=shorts_shade, width=int(SS * 3))
+        d.rounded_rectangle([sx0, shorts_top, sx1, shorts_top + shorts_h],
+                            radius=int(W * 0.014), outline=INK,
+                            width=int(SS * 3))
 
     # ── 다리 ──
     leg_w = int(W * 0.05)
@@ -280,22 +336,36 @@ def _render_character(size: int, arm_angle_deg: float,
                    lx + leg_w + 10, legs_top + leg_h + 20], fill=INK)
 
     # ── 회전 팔 (스피너) — 피벗 = 캔버스 정중앙 (cx, pivot_y) ──
+    # bend_deg 만큼 팔꿈치에서 팔뚝을 꺾음 → 손끝이 '안 닿는 항목에도 닿는 듯한' 착시.
     rad = math.radians(arm_angle_deg - 90)
     arm_len = int(W * 0.32)
-    tip_x = cx + math.cos(rad) * arm_len
-    tip_y = pivot_y + math.sin(rad) * arm_len
     arm_w = int(W * (0.038 if is_woman else 0.045))
-    # 팔 본체
-    d.line([(cx, pivot_y), (tip_x, tip_y)],
+    # 팔꿈치 (윗팔 55% 지점) — 윗팔은 base 각도
+    elbow_f = 0.55
+    elbow_x = cx + math.cos(rad) * arm_len * elbow_f
+    elbow_y = pivot_y + math.sin(rad) * arm_len * elbow_f
+    # 팔뚝 — bend_deg 만큼 회전 방향으로 꺾임
+    rad2 = rad + math.radians(bend_deg)
+    fore_len = arm_len * (1 - elbow_f)
+    tip_x = elbow_x + math.cos(rad2) * fore_len
+    tip_y = elbow_y + math.sin(rad2) * fore_len
+    # 윗팔 (어깨→팔꿈치)
+    d.line([(cx, pivot_y), (elbow_x, elbow_y)],
            fill=SKIN_BASE, width=int(arm_w * 2.2))
+    # 팔뚝 (팔꿈치→손)
+    d.line([(elbow_x, elbow_y), (tip_x, tip_y)],
+           fill=SKIN_BASE, width=int(arm_w * 1.9))
     # 어깨 둥글게 마무리
     d.ellipse([cx - int(arm_w * 1.1), pivot_y - int(arm_w * 1.1),
                cx + int(arm_w * 1.1), pivot_y + int(arm_w * 1.1)],
               fill=SKIN_BASE)
+    # 팔꿈치 관절 둥글게
+    d.ellipse([elbow_x - arm_w, elbow_y - arm_w,
+               elbow_x + arm_w, elbow_y + arm_w], fill=SKIN_BASE)
     # 바이셉 하이라이트
     midf = 0.45
-    bx = cx + math.cos(rad) * arm_len * midf
-    by = pivot_y + math.sin(rad) * arm_len * midf
+    bx = cx + math.cos(rad) * arm_len * elbow_f * midf * 2
+    by = pivot_y + math.sin(rad) * arm_len * elbow_f * midf * 2
     perp = rad + math.pi / 2
     hx = bx + math.cos(perp) * arm_w * 0.6
     hy = by + math.sin(perp) * arm_w * 0.6
@@ -305,10 +375,10 @@ def _render_character(size: int, arm_angle_deg: float,
     hand_r = int(arm_w * 1.25)
     d.ellipse([tip_x - hand_r, tip_y - hand_r,
                tip_x + hand_r, tip_y + hand_r], fill=SKIN_BASE)
-    # 검지
+    # 검지 (팔뚝 방향으로 — 가리키는 손끝)
     f_len = int(arm_w * 1.6)
-    fx = tip_x + math.cos(rad) * f_len
-    fy = tip_y + math.sin(rad) * f_len
+    fx = tip_x + math.cos(rad2) * f_len
+    fy = tip_y + math.sin(rad2) * f_len
     d.line([(tip_x, tip_y), (fx, fy)],
            fill=SKIN_BASE, width=int(arm_w * 0.85))
     d.ellipse([fx - int(arm_w * 0.42), fy - int(arm_w * 0.42),
@@ -319,7 +389,8 @@ def _render_character(size: int, arm_angle_deg: float,
 
 
 def _frame(title: str, hint: str, options: List[str], arm_angle: float,
-           font_paths: dict, character_style: str) -> Image.Image:
+           font_paths: dict, character_style: str,
+           bend_deg: float = 0.0, option_fill=OPTION_FILL) -> Image.Image:
     img = Image.new("RGB", CANVAS, BG)
     draw = ImageDraw.Draw(img)
 
@@ -340,10 +411,12 @@ def _frame(title: str, hint: str, options: List[str], arm_angle: float,
         rad = math.radians(angle)
         _draw_option_box(draw, opt, f_opt,
                          ring_cx + math.cos(rad) * r,
-                         ring_cy + math.sin(rad) * r)
+                         ring_cy + math.sin(rad) * r,
+                         fill=option_fill)
 
     char_size = 700
-    character = _render_character(char_size, arm_angle, style=character_style)
+    character = _render_character(char_size, arm_angle, style=character_style,
+                                  bend_deg=bend_deg)
     # 캐릭터 이미지 중앙 = 피벗 = ring_cx, ring_cy
     img.paste(character, (ring_cx - char_size // 2,
                           ring_cy - char_size // 2), character)
@@ -357,10 +430,22 @@ def make_pause_challenge_video(
     hint: str = "⏸ 일시정지로 메뉴 골라봐!",
     duration_seconds: float = 8.0,
     character_style: str = "muscle_man",
+    pointer_offset_deg: float = 0.0,
+    bend_deg: float = 0.0,
+    option_fill=OPTION_FILL,
 ):
-    """일시정지 챌린지 — 팔이 무한 회전, 짝수 위치 옵션만 노출.
+    """일시정지 챌린지 — 팔이 무한 회전.
 
-    character_style: 'muscle_man' / 'sport_woman'
+    [메커니즘 변형]
+    - 음식 스피너(muscle_man/sport_woman): pointer_offset=0 → 팔이 짝수 위치(운동)에만
+      정렬, 홀수(음식)는 어떤 프레임에도 안 잡힘.
+    - 아이돌 스피너(idol_woman): pointer_offset=22.5 → 팔 정렬 각이 8개 아이돌
+      '사이'(22.5°+90k)로만 떨어져 어떤 아이돌도 못 잡음. bend_deg 로 손끝이 옆
+      아이돌에 닿는 듯한 착시 → "거의 장원영인데!" 좌절감 → 재시도/댓글 ↑.
+
+    character_style: 'muscle_man' / 'sport_woman' / 'idol_woman'
+    pointer_offset_deg: 팔 정렬 각 오프셋 (아이돌 22.5)
+    bend_deg: 팔뚝 꺾임 (착시용; 아이돌 ~22)
     """
     assert len(options) == 8, "8개 옵션 전용"
     total_frames = int(FPS * duration_seconds)
@@ -377,10 +462,11 @@ def make_pause_challenge_video(
     }
 
     for i in range(total_frames):
-        base = (i * DEG_PER_FRAME) % 360
+        base = (i * DEG_PER_FRAME) % 360 + pointer_offset_deg
         wobble = WOBBLE_DEG * math.sin(i * 0.7)
         img = _frame(title, hint, options, base + wobble,
-                     font_paths, character_style)
+                     font_paths, character_style,
+                     bend_deg=bend_deg, option_fill=option_fill)
         img.save(frames_dir / f"frame_{i:04d}.jpg", "JPEG", quality=88)
 
     cmd = [
