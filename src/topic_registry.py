@@ -175,38 +175,6 @@ TOPICS = {
         "auto_comment": "🤔 당신의 올스타 픽은? 더 좋은 조합 있으면 댓글로 ⬇️",
     },
 
-    # 5) 축구 드림팀 — 유니폼+등번호 (축구장 배경)
-    "soccer_dream_10k": {
-        "style": "emblem",
-        "background_style": "soccer",
-        "title": "만원으로 축구 드림팀 만들기",
-        "highlight": "드림팀",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 베스트일레븐은?",
-        "col_headers": ["공격수", "미드필더", "수비수"],
-        "row_prices": ["5천원", "3천원", "2천원"],
-        "cells": [
-            # 5천원 (jersey color 는 팀 비특정 — 색만)
-            [
-                {"jersey": {"color": (135, 206, 250), "number": 10}, "name": "메시", "subtitle": "ARG"},
-                {"jersey": {"color": (30, 100, 200), "number": 17}, "name": "데브라이너", "subtitle": "BEL"},
-                {"jersey": {"color": (230, 130, 30), "number": 4}, "name": "반다이크", "subtitle": "NED"},
-            ],
-            # 3천원
-            [
-                {"jersey": {"color": (40, 60, 140), "number": 10}, "name": "음바페", "subtitle": "FRA"},
-                {"jersey": {"color": (200, 30, 50), "number": 10}, "name": "모드리치", "subtitle": "CRO"},
-                {"jersey": {"color": (220, 40, 40), "number": 3}, "name": "김민재", "subtitle": "KOR"},
-            ],
-            # 2천원
-            [
-                {"jersey": {"color": (220, 40, 40), "number": 7}, "name": "손흥민", "subtitle": "KOR"},
-                {"jersey": {"color": (140, 30, 30), "number": 20}, "name": "베르나르두", "subtitle": "POR"},
-                {"jersey": {"color": (230, 200, 40), "number": 5}, "name": "부스케츠", "subtitle": "ESP"},
-            ],
-        ],
-        "auto_comment": "⚽ 본인 베스트일레븐 댓글로 ⬇️ 더 강한 조합 있으면 알려주세요!",
-    },
-
     # 6) 아이돌 올스타 — 그룹별 멤버 1명 (흰 배경)
     "idol_allstar_10k": {
         "style": "emblem",
@@ -291,22 +259,19 @@ TOPICS = {
         "auto_comment": "⏸ 일시정지로 잡혔나요? 결과 댓글로 알려주세요!",
     },
 
-    # 8b) 일시정지 챌린지 — 아이돌 픽 (아이돌 무대의상, 절대 못 고름 + 손끝 착시)
-    #     pointer_offset 22.5 → 팔이 8명 '사이'로만 떨어져 아무도 못 잡음.
-    #     bend_deg 22 → 손끝이 옆 아이돌에 닿는 듯한 착시 ("거의 장원영인데!").
-    #     옵션 순서 = 시계방향 12시→ : 장원영(12), 윈터(1:30), 카리나(3), 민지(4:30),
-    #                 카즈하(6), 안유진(7:30), 닝닝(9), 하니(10:30)
+    # 8b) 일시정지 챌린지 — 아이돌 픽 (공정 스피너: 8명 모두 잡힘)
+    #     팀별 1명씩 시계방향 배치. 정지 프레임마다 팔 끝이 한 명에게 떨어짐 →
+    #     "나는 누구 걸렸어!" 자랑 댓글 자연 유도. 팬덤 분쟁 회피 위해 못 잡는
+    #     구조는 제거 (요청대로 다 고를 수 있게).
     "spinner_idol_pick": {
         "style": "spinner",
         "character_style": "idol_woman",
-        "title": "내 최애 뽑기 챌린지",
-        "hint": "⏸ 일시정지로 최애 골라봐! (될까?)",
+        "title": "오늘의 최애 픽 챌린지",
+        "hint": "⏸ 일시정지! 내 최애 누구 걸렸나?",
         "options": ["장원영", "윈터", "카리나", "민지",
                     "카즈하", "안유진", "닝닝", "하니"],
-        "pointer_offset_deg": 22.5,
-        "bend_deg": 22.0,
         "option_fill": [196, 64, 124],
-        "auto_comment": "😤 최애 잡으셨나요? 자꾸 빗나가죠 ㅋㅋ 누구 노렸는지 댓글로 ⬇️",
+        "auto_comment": "🎀 일시정지로 누가 걸렸나요? 본인 픽 댓글로 ⬇️",
     },
 
     # 9) 4세대 걸그룹 올스타 — 다양한 그룹 + NMIXX 포함
