@@ -175,6 +175,8 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             pointer_offset_deg=topic.get("pointer_offset_deg", 0.0),
             bend_deg=topic.get("bend_deg", 0.0),
         )
+        if topic.get("deg_per_frame"):
+            kwargs["deg_per_frame"] = topic["deg_per_frame"]
         if topic.get("option_fill"):
             kwargs["option_fill"] = tuple(topic["option_fill"])
         make_pause_challenge_video(**kwargs)

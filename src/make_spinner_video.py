@@ -432,20 +432,21 @@ def make_pause_challenge_video(
     character_style: str = "muscle_man",
     pointer_offset_deg: float = 0.0,
     bend_deg: float = 0.0,
+    deg_per_frame: int = DEG_PER_FRAME,
     option_fill=OPTION_FILL,
 ):
     """일시정지 챌린지 — 팔이 무한 회전.
 
     [메커니즘 변형]
-    - 음식 스피너(muscle_man/sport_woman): pointer_offset=0 → 팔이 짝수 위치(운동)에만
-      정렬, 홀수(음식)는 어떤 프레임에도 안 잡힘.
-    - 아이돌 스피너(idol_woman): pointer_offset=22.5 → 팔 정렬 각이 8개 아이돌
-      '사이'(22.5°+90k)로만 떨어져 어떤 아이돌도 못 잡음. bend_deg 로 손끝이 옆
-      아이돌에 닿는 듯한 착시 → "거의 장원영인데!" 좌절감 → 재시도/댓글 ↑.
+    - 음식 스피너(deg_per_frame=90): 한 프레임에 90° → 짝수 위치(운동)에만 정렬,
+      홀수(음식)는 어떤 프레임에도 안 잡힘 (의도된 트릭).
+    - 공정 스피너(deg_per_frame=45): 한 프레임에 45° → 8개 옵션 모두 차례로 정렬.
+      아이돌 스피너는 모든 아이돌이 잡혀야 팬덤 분쟁 X → 45 사용.
 
     character_style: 'muscle_man' / 'sport_woman' / 'idol_woman'
-    pointer_offset_deg: 팔 정렬 각 오프셋 (아이돌 22.5)
-    bend_deg: 팔뚝 꺾임 (착시용; 아이돌 ~22)
+    pointer_offset_deg: 팔 정렬 각 오프셋
+    bend_deg: 팔뚝 꺾임 (시각 효과)
+    deg_per_frame: 프레임당 회전각. 90 = 4-pos 정렬(트릭), 45 = 8-pos 정렬(공정)
     """
     assert len(options) == 8, "8개 옵션 전용"
     total_frames = int(FPS * duration_seconds)
@@ -462,7 +463,7 @@ def make_pause_challenge_video(
     }
 
     for i in range(total_frames):
-        base = (i * DEG_PER_FRAME) % 360 + pointer_offset_deg
+        base = (i * deg_per_frame) % 360 + pointer_offset_deg
         wobble = WOBBLE_DEG * math.sin(i * 0.7)
         img = _frame(title, hint, options, base + wobble,
                      font_paths, character_style,
