@@ -426,4 +426,163 @@ TOPICS = {
         ],
         "auto_comment": "🎵 내 감성 라인업 댓글로 ⬇️ 성시경·박정현·박효신 다 있어요!",
     },
+
+    # 14) 100만원으로 자식 만들기 — 그림 (이상형 시리즈 후속, 부모 공감 톤)
+    "child_pick_100man": {
+        "style": "drawing",
+        "title": "100만원으로 자식 만들기",
+        "highlight": "자식",
+        "rule_hint": "각 항목 1개씩 골라 합 100만원 — 당신의 픽은?",
+        "col_headers": ["외모", "성격", "공부머리"],
+        "row_prices": ["50만원", "30만원", "20만원"],
+        "cells": [
+            # 50만원
+            [
+                {"emoji": "✨", "label": "조각상 외모"},
+                {"emoji": "💖", "label": "효자효녀 다정"},
+                {"emoji": "🧠", "label": "전교 1등 천재"},
+            ],
+            # 30만원
+            [
+                {"emoji": "😊", "label": "호감 외모"},
+                {"emoji": "😎", "label": "마이웨이 쿨"},
+                {"emoji": "📚", "label": "성실한 모범생"},
+            ],
+            # 20만원
+            [
+                {"emoji": "🙂", "label": "포인트 매력"},
+                {"emoji": "🤪", "label": "엉뚱 발랄 매력"},
+                {"emoji": "🏃", "label": "체육 만점"},
+            ],
+        ],
+        "auto_comment": "👶 내 자식 픽 댓글로 ⬇️ 외모·성격·공부 중 뭐가 1순위?",
+    },
+
+    # 15) 5세대 걸그룹 올스타 (ILLIT/BABYMONSTER/IZNA/MEOVV/KIIIKIII)
+    "girlgroup_5gen_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 5세대 걸그룹 만들기",
+        "highlight": "5세대",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 올스타!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "ILLIT 윤아"},
+                {"role_emoji": "💃", "name": "BABYMONSTER 루카"},
+                {"role_emoji": "✨", "name": "ILLIT 원희"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "BABYMONSTER 아현"},
+                {"role_emoji": "💃", "name": "IZNA 사랑"},
+                {"role_emoji": "✨", "name": "BABYMONSTER 차퀴타"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "IZNA 마유나"},
+                {"role_emoji": "💃", "name": "MEOVV 안나"},
+                {"role_emoji": "✨", "name": "KIIIKIII 카시아"},
+            ],
+        ],
+        "auto_comment": "🌟 5세대 픽 댓글로 ⬇️ ILLIT·BABYMONSTER·IZNA·MEOVV·KIIIKIII 다 모였어요!",
+    },
+
+    # 16) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 핵심 라인
+    "girlgroup_4gen_tier1_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 걸그룹 1티어편",
+        "highlight": "1티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 1티어 라인은?",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "에스파 카리나"},
+                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
+                {"role_emoji": "✨", "name": "IVE 장원영"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "뉴진스 민지"},
+                {"role_emoji": "💃", "name": "뉴진스 하니"},
+                {"role_emoji": "✨", "name": "에스파 윈터"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "뉴진스 다니엘"},
+                {"role_emoji": "💃", "name": "IVE 가을"},
+                {"role_emoji": "✨", "name": "르세라핌 사쿠라"},
+            ],
+        ],
+        "auto_comment": "🥇 1티어 픽 댓글로 ⬇️ 뉴진스·에스파·IVE·르세라핌 핵심 라인!",
+    },
+
+    # 17) 4세대 걸그룹 2티어편 — ITZY/NMIXX/(G)I-DLE 라인
+    "girlgroup_4gen_tier2_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 걸그룹 2티어편",
+        "highlight": "2티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 2티어 라인은?",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "NMIXX 릴리"},
+                {"role_emoji": "💃", "name": "(여자)아이들 소연"},
+                {"role_emoji": "✨", "name": "NMIXX 설윤"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "ITZY 류진"},
+                {"role_emoji": "💃", "name": "ITZY 채령"},
+                {"role_emoji": "✨", "name": "(여자)아이들 미연"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "NMIXX 해원"},
+                {"role_emoji": "💃", "name": "NMIXX 베이"},
+                {"role_emoji": "✨", "name": "(여자)아이들 슈화"},
+            ],
+        ],
+        "auto_comment": "🥈 2티어 픽 댓글로 ⬇️ NMIXX·ITZY·(여자)아이들 라인!",
+    },
+
+    # 18) 4세대 걸그룹 3티어편 — STAYC/Kep1er/Billlie 후발 라인
+    "girlgroup_4gen_tier3_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 4세대 걸그룹 3티어편",
+        "highlight": "3티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 3티어 다크호스!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "STAYC 시은"},
+                {"role_emoji": "💃", "name": "Kep1er 다영"},
+                {"role_emoji": "✨", "name": "STAYC 수민"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "Kep1er 바히에"},
+                {"role_emoji": "💃", "name": "STAYC 재이"},
+                {"role_emoji": "✨", "name": "STAYC 아이사"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "STAYC 윤"},
+                {"role_emoji": "💃", "name": "Billlie 츠키"},
+                {"role_emoji": "✨", "name": "Billlie 수현"},
+            ],
+        ],
+        "auto_comment": "🥉 3티어 다크호스 픽 댓글로 ⬇️ STAYC·Kep1er·Billlie 라인!",
+    },
 }
