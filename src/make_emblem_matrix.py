@@ -153,21 +153,21 @@ def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
     mdraw = ImageDraw.Draw(mask)
     mdraw.rounded_rectangle([0, 0, cw, ch], radius=24, fill=255)
 
-    # 3) 외부 글로우
+    # 3) 외부 글로우 — 약하게 (깔끔한 룩)
     glow_layer = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
     gdraw = ImageDraw.Draw(glow_layer)
-    gdraw.rounded_rectangle([x0 - 4, y0 + 6, x1 + 4, y1 + 12], radius=28,
+    gdraw.rounded_rectangle([x0 - 3, y0 + 5, x1 + 3, y1 + 9], radius=28,
                             fill=tier_style["glow"])
-    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(radius=18))
+    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(radius=12))
     img.alpha_composite(glow_layer)
 
     # 4) 카드 합성
     img.paste(grad.convert("RGBA"), (x0, y0), mask)
 
-    # 5) 보더
+    # 5) 보더 — 얇게 (깔끔한 룩)
     draw = ImageDraw.Draw(img)
     draw.rounded_rectangle([x0, y0, x1, y1], radius=24,
-                           outline=tier_style["border"], width=4)
+                           outline=tier_style["border"], width=3)
 
     bold = font_paths.get("Bold") if font_paths else _resolve_font("Bold")
     medium = font_paths.get("Medium") if font_paths else _resolve_font("Medium")
@@ -189,26 +189,29 @@ def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
         if em_img:
             img.alpha_composite(em_img, (int(cx - emoji_size / 2), int(visual_top)))
 
-    # 7) 실명 (Bold, 2줄 wrap 가능)
+    # 7) 실명 (Bold, 2줄 wrap 가능) — subtitle 있으면 자리 더 위로
     name = cell.get("name", "")
-    name_font = ImageFont.truetype(bold, 40)
+    name_font = ImageFont.truetype(bold, 44)
     max_name_w = cw - 26
     name_lines = _wrap_label(name, name_font, max_name_w)[:2]
     name_block_h = name_font.size * len(name_lines) + 4 * (len(name_lines) - 1)
-    name_y = y1 - 78 - name_block_h
+    subtitle = cell.get("subtitle", "")
+    name_bottom_margin = 96 if subtitle else 60
+    name_y = y1 - name_bottom_margin - name_block_h
     for line in name_lines:
         bbox = name_font.getbbox(line)
         lw = bbox[2] - bbox[0]
         draw.text((cx - lw / 2, name_y), line, font=name_font, fill=name_color)
         name_y += name_font.size + 4
 
-    # 8) 서브타이틀 (소속/팀 등) — 카드 하단
-    subtitle = cell.get("subtitle", "")
+    # 8) 서브타이틀 (그룹/소속/팀) — 멤버명 아래, 약간 흐리게 시각 위계 명확화
     if subtitle:
-        sub_font = ImageFont.truetype(medium, 26)
+        sub_font = ImageFont.truetype(medium, 28)
+        # name_color 에 흰색 30% 섞어 위계 약화
+        sub_color = tuple(int(c * 0.55 + 255 * 0.45) for c in name_color[:3])
         bbox = sub_font.getbbox(subtitle)
         sw = bbox[2] - bbox[0]
-        draw.text((cx - sw / 2, y1 - 48), subtitle, font=sub_font, fill=name_color)
+        draw.text((cx - sw / 2, y1 - 50), subtitle, font=sub_font, fill=sub_color)
 
     # 9) 금액 칩 (좌상단) — 골드/실버/브론즈 대신 실제 금액
     price_label = cell.get("price", "")

@@ -117,23 +117,24 @@ TOPICS = {
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "에스파 카리나"},
-                {"role_emoji": "💃", "name": "ITZY 채령"},
-                {"role_emoji": "✨", "name": "뉴진스 민지"},
+                {"role_emoji": "🎤", "name": "카리나", "subtitle": "에스파"},
+                {"role_emoji": "💃", "name": "채령", "subtitle": "ITZY"},
+                {"role_emoji": "✨", "name": "민지", "subtitle": "뉴진스"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "IVE 유진"},
-                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
-                {"role_emoji": "✨", "name": "에스파 윈터"},
+                {"role_emoji": "🎤", "name": "유진", "subtitle": "IVE"},
+                {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
+                {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "뉴진스 다니엘"},
-                {"role_emoji": "💃", "name": "ITZY 리아"},
-                {"role_emoji": "✨", "name": "IVE 레이"},
+                {"role_emoji": "🎤", "name": "다니엘", "subtitle": "뉴진스"},
+                {"role_emoji": "💃", "name": "리아", "subtitle": "ITZY"},
+                {"role_emoji": "✨", "name": "레이", "subtitle": "IVE"},
             ],
         ],
+        "auto_comment": "🤔 당신의 올스타 픽은? 더 좋은 조합 있으면 댓글로 ⬇️",
     },
 
     # 5) 축구 드림팀 — 유니폼+등번호 (축구장 배경)
@@ -165,6 +166,7 @@ TOPICS = {
                 {"jersey": {"color": (230, 200, 40), "number": 5}, "name": "부스케츠", "subtitle": "ESP"},
             ],
         ],
+        "auto_comment": "⚽ 본인 베스트일레븐 댓글로 ⬇️ 더 강한 조합 있으면 알려주세요!",
     },
 
     # 6) 아이돌 올스타 — 그룹별 멤버 1명 (흰 배경)
@@ -196,6 +198,7 @@ TOPICS = {
                 {"role_emoji": "👑", "name": "리즈"},
             ],
         ],
+        "auto_comment": "🤔 그룹별 픽 댓글로 ⬇️ 더 좋은 멤버 조합 있으면 알려주세요!",
     },
 
     # 4) 이상형 만들기 — 그림 (추상 속성)
@@ -262,24 +265,24 @@ TOPICS = {
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "NMIXX 릴리"},
-                {"role_emoji": "💃", "name": "ITZY 채령"},
-                {"role_emoji": "✨", "name": "NMIXX 설윤"},
+                {"role_emoji": "🎤", "name": "릴리", "subtitle": "NMIXX"},
+                {"role_emoji": "💃", "name": "채령", "subtitle": "ITZY"},
+                {"role_emoji": "✨", "name": "설윤", "subtitle": "NMIXX"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "에스파 닝닝"},
-                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
-                {"role_emoji": "✨", "name": "에스파 윈터"},
+                {"role_emoji": "🎤", "name": "닝닝", "subtitle": "에스파"},
+                {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
+                {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "IVE 리즈"},
-                {"role_emoji": "💃", "name": "뉴진스 해린"},
-                {"role_emoji": "✨", "name": "IVE 장원영"},
+                {"role_emoji": "🎤", "name": "리즈", "subtitle": "IVE"},
+                {"role_emoji": "💃", "name": "해린", "subtitle": "뉴진스"},
+                {"role_emoji": "✨", "name": "장원영", "subtitle": "IVE"},
             ],
         ],
-        "auto_comment": "🤔 내 픽 댓글로 알려주세요! NMIXX·뉴진스·에스파·IVE·ITZY·르세라핌 다 모였어요 ⬇️",
+        "auto_comment": "🤔 4세대 올스타 픽 댓글로 ⬇️ 더 좋은 조합 있으면 알려주세요!",
     },
 
     # 10) 4세대 보이그룹 올스타
@@ -294,24 +297,24 @@ TOPICS = {
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "엔하이픈 정원"},
-                {"role_emoji": "💃", "name": "스키즈 필릭스"},
-                {"role_emoji": "✨", "name": "엔하이픈 성훈"},
+                {"role_emoji": "🎤", "name": "정원", "subtitle": "엔하이픈"},
+                {"role_emoji": "💃", "name": "필릭스", "subtitle": "스키즈"},
+                {"role_emoji": "✨", "name": "성훈", "subtitle": "엔하이픈"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "TXT 태현"},
-                {"role_emoji": "💃", "name": "RIIZE 앤톤"},
-                {"role_emoji": "✨", "name": "RIIZE 박원빈"},
+                {"role_emoji": "🎤", "name": "태현", "subtitle": "TXT"},
+                {"role_emoji": "💃", "name": "앤톤", "subtitle": "RIIZE"},
+                {"role_emoji": "✨", "name": "박원빈", "subtitle": "RIIZE"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "스키즈 승민"},
-                {"role_emoji": "💃", "name": "TXT 휴닝카이"},
-                {"role_emoji": "✨", "name": "ATEEZ 윤호"},
+                {"role_emoji": "🎤", "name": "승민", "subtitle": "스키즈"},
+                {"role_emoji": "💃", "name": "휴닝카이", "subtitle": "TXT"},
+                {"role_emoji": "✨", "name": "윤호", "subtitle": "ATEEZ"},
             ],
         ],
-        "auto_comment": "🔥 본인 픽 댓글로 ⬇️ 스키즈·엔하이픈·TXT·RIIZE·ATEEZ 다 모였어요!",
+        "auto_comment": "🔥 4세대 보이그룹 본인 픽 댓글로 ⬇️ 더 좋은 조합 있으면 알려주세요!",
     },
 
     # 11) 30만원 해외여행 — 실사 (도시별 사진)
@@ -458,131 +461,163 @@ TOPICS = {
         "auto_comment": "👶 내 자식 픽 댓글로 ⬇️ 외모·성격·공부 중 뭐가 1순위?",
     },
 
-    # 15) 5세대 걸그룹 올스타 (ILLIT/BABYMONSTER/IZNA/MEOVV/KIIIKIII)
-    "girlgroup_5gen_10k": {
+    # 15) 5세대 걸그룹 1티어편 — ILLIT + BABYMONSTER 메이저 라인
+    "girlgroup_5gen_tier1_10k": {
         "style": "emblem",
         "background_style": "white",
-        "title": "만원으로 5세대 걸그룹 만들기",
-        "highlight": "5세대",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 올스타!",
+        "title": "만원으로 5세대 걸그룹 1티어편",
+        "highlight": "1티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 진짜 1티어?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "ILLIT 윤아"},
-                {"role_emoji": "💃", "name": "BABYMONSTER 루카"},
-                {"role_emoji": "✨", "name": "ILLIT 원희"},
+                {"role_emoji": "🎤", "name": "윤아", "subtitle": "ILLIT"},
+                {"role_emoji": "💃", "name": "루카", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "✨", "name": "원희", "subtitle": "ILLIT"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "BABYMONSTER 아현"},
-                {"role_emoji": "💃", "name": "IZNA 사랑"},
-                {"role_emoji": "✨", "name": "BABYMONSTER 차퀴타"},
+                {"role_emoji": "🎤", "name": "아현", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "💃", "name": "민주", "subtitle": "ILLIT"},
+                {"role_emoji": "✨", "name": "차퀴타", "subtitle": "BABYMONSTER"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "IZNA 마유나"},
-                {"role_emoji": "💃", "name": "MEOVV 안나"},
-                {"role_emoji": "✨", "name": "KIIIKIII 카시아"},
+                {"role_emoji": "🎤", "name": "모카", "subtitle": "ILLIT"},
+                {"role_emoji": "💃", "name": "라미", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "✨", "name": "파리타", "subtitle": "BABYMONSTER"},
             ],
         ],
-        "auto_comment": "🌟 5세대 픽 댓글로 ⬇️ ILLIT·BABYMONSTER·IZNA·MEOVV·KIIIKIII 다 모였어요!",
+        "auto_comment": "🌟 5세대 진짜 1티어 9명! 더 강한 픽 있으면 댓글로 ⬇️ 너희가 생각하는 1티어는?",
     },
 
-    # 16) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 핵심 라인
+    # 16) 5세대 걸그룹 2티어편 — IZNA + MEOVV + Young Posse + KIIIKIII 다크호스 라인
+    "girlgroup_5gen_tier2_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 5세대 걸그룹 2티어편",
+        "highlight": "2티어편",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 다크호스!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
+                {"role_emoji": "💃", "name": "사랑", "subtitle": "IZNA"},
+                {"role_emoji": "✨", "name": "정원", "subtitle": "IZNA"},
+            ],
+            # 3천원
+            [
+                {"role_emoji": "🎤", "name": "도은", "subtitle": "Young Posse"},
+                {"role_emoji": "💃", "name": "안나", "subtitle": "MEOVV"},
+                {"role_emoji": "✨", "name": "카시아", "subtitle": "KIIIKIII"},
+            ],
+            # 2천원
+            [
+                {"role_emoji": "🎤", "name": "류", "subtitle": "IZNA"},
+                {"role_emoji": "💃", "name": "가원", "subtitle": "MEOVV"},
+                {"role_emoji": "✨", "name": "수이", "subtitle": "KIIIKIII"},
+            ],
+        ],
+        "auto_comment": "🌠 5세대 다크호스 — IZNA·MEOVV·Young Posse·KIIIKIII! 1티어로 올라올 멤버는? 댓글로 ⬇️",
+    },
+
+    # 17) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 4대 라인
     "girlgroup_4gen_tier1_10k": {
         "style": "emblem",
         "background_style": "white",
         "title": "만원으로 4세대 걸그룹 1티어편",
         "highlight": "1티어편",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 1티어 라인은?",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 4세대 진짜 1티어?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "에스파 카리나"},
-                {"role_emoji": "💃", "name": "르세라핌 카즈하"},
-                {"role_emoji": "✨", "name": "IVE 장원영"},
+                {"role_emoji": "🎤", "name": "카리나", "subtitle": "에스파"},
+                {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
+                {"role_emoji": "✨", "name": "장원영", "subtitle": "IVE"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "뉴진스 민지"},
-                {"role_emoji": "💃", "name": "뉴진스 하니"},
-                {"role_emoji": "✨", "name": "에스파 윈터"},
+                {"role_emoji": "🎤", "name": "민지", "subtitle": "뉴진스"},
+                {"role_emoji": "💃", "name": "하니", "subtitle": "뉴진스"},
+                {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "뉴진스 다니엘"},
-                {"role_emoji": "💃", "name": "IVE 가을"},
-                {"role_emoji": "✨", "name": "르세라핌 사쿠라"},
+                {"role_emoji": "🎤", "name": "다니엘", "subtitle": "뉴진스"},
+                {"role_emoji": "💃", "name": "레이", "subtitle": "IVE"},
+                {"role_emoji": "✨", "name": "사쿠라", "subtitle": "르세라핌"},
             ],
         ],
-        "auto_comment": "🥇 1티어 픽 댓글로 ⬇️ 뉴진스·에스파·IVE·르세라핌 핵심 라인!",
+        "auto_comment": "🥇 4세대 진짜 1티어 9명 — 더 강한 픽 있으면 댓글로 ⬇️ 너희가 생각하는 1티어는?",
     },
 
-    # 17) 4세대 걸그룹 2티어편 — ITZY/NMIXX/(G)I-DLE 라인
+    # 18) 4세대 걸그룹 2티어편 — ITZY/NMIXX/(여자)아이들 라인
     "girlgroup_4gen_tier2_10k": {
         "style": "emblem",
         "background_style": "white",
         "title": "만원으로 4세대 걸그룹 2티어편",
         "highlight": "2티어편",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 2티어 라인은?",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 1티어급 누구?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "NMIXX 릴리"},
-                {"role_emoji": "💃", "name": "(여자)아이들 소연"},
-                {"role_emoji": "✨", "name": "NMIXX 설윤"},
+                {"role_emoji": "🎤", "name": "릴리", "subtitle": "NMIXX"},
+                {"role_emoji": "💃", "name": "소연", "subtitle": "(여자)아이들"},
+                {"role_emoji": "✨", "name": "설윤", "subtitle": "NMIXX"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "ITZY 류진"},
-                {"role_emoji": "💃", "name": "ITZY 채령"},
-                {"role_emoji": "✨", "name": "(여자)아이들 미연"},
+                {"role_emoji": "🎤", "name": "류진", "subtitle": "ITZY"},
+                {"role_emoji": "💃", "name": "채령", "subtitle": "ITZY"},
+                {"role_emoji": "✨", "name": "미연", "subtitle": "(여자)아이들"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "NMIXX 해원"},
-                {"role_emoji": "💃", "name": "NMIXX 베이"},
-                {"role_emoji": "✨", "name": "(여자)아이들 슈화"},
+                {"role_emoji": "🎤", "name": "해원", "subtitle": "NMIXX"},
+                {"role_emoji": "💃", "name": "베이", "subtitle": "NMIXX"},
+                {"role_emoji": "✨", "name": "슈화", "subtitle": "(여자)아이들"},
             ],
         ],
-        "auto_comment": "🥈 2티어 픽 댓글로 ⬇️ NMIXX·ITZY·(여자)아이들 라인!",
+        "auto_comment": "🥈 2티어도 만만찮다 — 누가 1티어급? 더 좋은 픽 있으면 댓글로 ⬇️",
     },
 
-    # 18) 4세대 걸그룹 3티어편 — STAYC/Kep1er/Billlie 후발 라인
+    # 19) 4세대 걸그룹 3티어편 — STAYC/Kep1er/Billlie 후발 라인
     "girlgroup_4gen_tier3_10k": {
         "style": "emblem",
         "background_style": "white",
         "title": "만원으로 4세대 걸그룹 3티어편",
         "highlight": "3티어편",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 3티어 다크호스!",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 다음 시즌 1티어는?",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "row_prices": ["5천원", "3천원", "2천원"],
         "cells": [
             # 5천원
             [
-                {"role_emoji": "🎤", "name": "STAYC 시은"},
-                {"role_emoji": "💃", "name": "Kep1er 다영"},
-                {"role_emoji": "✨", "name": "STAYC 수민"},
+                {"role_emoji": "🎤", "name": "시은", "subtitle": "STAYC"},
+                {"role_emoji": "💃", "name": "다영", "subtitle": "Kep1er"},
+                {"role_emoji": "✨", "name": "수민", "subtitle": "STAYC"},
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "Kep1er 바히에"},
-                {"role_emoji": "💃", "name": "STAYC 재이"},
-                {"role_emoji": "✨", "name": "STAYC 아이사"},
+                {"role_emoji": "🎤", "name": "바히에", "subtitle": "Kep1er"},
+                {"role_emoji": "💃", "name": "재이", "subtitle": "STAYC"},
+                {"role_emoji": "✨", "name": "아이사", "subtitle": "STAYC"},
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "STAYC 윤"},
-                {"role_emoji": "💃", "name": "Billlie 츠키"},
-                {"role_emoji": "✨", "name": "Billlie 수현"},
+                {"role_emoji": "🎤", "name": "윤", "subtitle": "STAYC"},
+                {"role_emoji": "💃", "name": "츠키", "subtitle": "Billlie"},
+                {"role_emoji": "✨", "name": "수현", "subtitle": "Billlie"},
             ],
         ],
-        "auto_comment": "🥉 3티어 다크호스 픽 댓글로 ⬇️ STAYC·Kep1er·Billlie 라인!",
+        "auto_comment": "🥉 3티어 다크호스 — 1티어로 올라올 멤버 댓글로 ⬇️ 더 좋은 픽 있으면 알려주세요!",
     },
 }
