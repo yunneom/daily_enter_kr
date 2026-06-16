@@ -23,6 +23,7 @@ from make_emblem_matrix import SOFT_BG_ROTATION
 from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
 from make_powerpick_matrix import make_powerpick_matrix
+from make_soccer_squad_matrix import make_soccer_squad_matrix
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
@@ -211,6 +212,26 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         make_pause_challenge_video(**kwargs)
         video_url = upload_video(local_mp4)
         return video_url, None
+
+    # ─── soccer_squad: 5컬럼 × 3로우 + 절차적 캐릭터 헤드 + 미니 포메이션 ───
+    if style == "soccer_squad":
+        make_soccer_squad_matrix(
+            title=topic["title"], highlight=topic["highlight"],
+            rule_hint=topic["rule_hint"],
+            col_headers=topic["col_headers"], row_headers=topic["row_headers"],
+            cells=topic["cells"], output_path=local_jpg, brand=BRAND,
+            precondition_lines=topic.get("precondition_lines"),
+            source_note=topic.get("source_note", ""),
+            cta_text=topic.get("cta_text", "💬 당신의 영입 조합은? 댓글로 ⬇️"),
+        )
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
 
     # ─── powerpick: 9-셀 단일 픽 grid (가격/매트릭스 X) ───
     if style == "powerpick":

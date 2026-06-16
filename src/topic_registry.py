@@ -930,48 +930,49 @@ TOPICS = {
     #  예: 축구 영입 / 직장 / 초능력 buget 매트릭스
     # ════════════════════════════════════════════════════════════
 
-    # 1조원으로 국대 영입 — 정공법 부활 (precondition 으로 논란 회피)
+    # 1조원으로 국대 영입 — 5컬럼 × 3로우 (참고 이미지 구도 재현)
+    # style="soccer_squad" 전용 렌더러 (make_soccer_squad_matrix) 사용
     "soccer_nationalteam_1jo": {
-        "style": "emblem",
-        "background_style": "soccer",
-        "budget_label": "1조원",
+        "style": "soccer_squad",
         "title": "1조원으로 국대 영입하기",
-        "highlight": "국대",
-        "rule_hint": "각 포지션 1명씩 영입 — 당신의 픽은?",
-        "precondition": "현재 팀: 대한민국 4-2-1-3\n영입 자리 — ST·CDM·GK 각 1명 (합 1조)",
-        "col_headers": ["스트라이커", "미드필더", "골키퍼"],
-        "row_prices": ["5000억", "3000억", "2000억"],
-        "col_pools": [
-            # ST 풀
+        "highlight": "1조원",
+        "rule_hint": "당신의 영입 픽은?",
+        "precondition_lines": [
+            "현재 팀: 대한민국 (4-2-1-3)",
+            "구성: 스트라이커·미드필더·골키퍼",
+            "→ 각 1명씩 영입 (총 1조원)",
+        ],
+        "col_headers": ["1000억", "2000억", "3000억", "4000억", "5000억"],
+        "row_headers": ["스트라이커", "미드필더", "골키퍼"],
+        # cells[row][col] — 가격 낮음 → 높음 순. 마지막(5000억)은 레전드
+        "cells": [
+            # ST
             [
-                {"role_emoji": "⚽", "name": "손흥민", "subtitle": "Tottenham"},
-                {"role_emoji": "⚽", "name": "이강인", "subtitle": "PSG"},
-                {"role_emoji": "⚽", "name": "조규성", "subtitle": "Mainz"},
-                {"role_emoji": "⚽", "name": "황희찬", "subtitle": "Wolves"},
-                {"role_emoji": "⚽", "name": "오현규", "subtitle": "Genk"},
-                {"role_emoji": "👑", "name": "차범근", "subtitle": "레전드"},
+                {"name": "오현규"},
+                {"name": "조규성"},
+                {"name": "황희찬"},
+                {"name": "손흥민"},
+                {"name": "차범근", "is_legend": True},
             ],
-            # MF/CDM 풀
+            # CDM/MF
             [
-                {"role_emoji": "🎯", "name": "황인범", "subtitle": "Olympiacos"},
-                {"role_emoji": "🎯", "name": "백승호", "subtitle": "전북"},
-                {"role_emoji": "🎯", "name": "박용우", "subtitle": "Al-Ain"},
-                {"role_emoji": "🎯", "name": "정우영", "subtitle": "전북"},
-                {"role_emoji": "👑", "name": "박지성", "subtitle": "레전드"},
-                {"role_emoji": "👑", "name": "기성용", "subtitle": "베테랑"},
+                {"name": "백승호"},
+                {"name": "박용우"},
+                {"name": "황인범"},
+                {"name": "기성용", "is_legend": True},
+                {"name": "박지성", "is_legend": True},
             ],
-            # GK 풀
+            # GK
             [
-                {"role_emoji": "🧤", "name": "조현우", "subtitle": "Ulsan"},
-                {"role_emoji": "🧤", "name": "김승규", "subtitle": "알샤밥"},
-                {"role_emoji": "🧤", "name": "송범근", "subtitle": "전북"},
-                {"role_emoji": "🧤", "name": "김동준", "subtitle": "전북"},
-                {"role_emoji": "👑", "name": "이운재", "subtitle": "레전드"},
-                {"role_emoji": "👑", "name": "김병지", "subtitle": "레전드"},
+                {"name": "김동준"},
+                {"name": "송범근"},
+                {"name": "조현우"},
+                {"name": "김승규"},
+                {"name": "이운재", "is_legend": True},
             ],
         ],
         "source_note": "※ 가상 영입 시나리오 — 실제 이적료 X",
-        "auto_comment": "⚽ 당신의 영입 조합은? 댓글로 알려주세요! 예) 손흥민·황인범·조현우 ⬇️",
+        "auto_comment": "⚽ 당신의 영입 조합은? 댓글로 ⬇️ 예) 손흥민·박지성·조현우",
     },
 
     # 1만원으로 다닐 직장 구하기 — 직장 매트릭스 (precondition 명시)
