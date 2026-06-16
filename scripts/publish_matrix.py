@@ -363,7 +363,7 @@ def main() -> int:
     # 멤버/배경 회전 시드 — KST yday*7+hour. col_pools 라인업 + 배경이 매번 달라짐.
     from datetime import datetime, timezone, timedelta
     _kst_now = datetime.now(timezone(timedelta(hours=9)))
-    run_seed = _kst_now.timetuple().tm_yday * 7 + _kst_now.hour
+    run_seed = _kst_now.timetuple().tm_yday * 11 + _kst_now.hour
 
     if target == "all":
         topics_to_post = list(TOPICS.items())
@@ -378,9 +378,9 @@ def main() -> int:
             seed = now_kst.timetuple().tm_yday
         elif target == "auto_matrix":
             pool = matrix_ids
-            # 시드 = yday*7 + hour. 7은 6(매트릭스 풀 크기)과 코프라임이라
-            # 매일 같은 슬롯에서 다른 토픽 + 같은 날 슬롯마다 다른 토픽 보장.
-            seed = now_kst.timetuple().tm_yday * 7 + now_kst.hour
+            # 시드 = yday*11 + hour. 11은 22/33 외 모든 풀 크기와 코프라임 →
+            # 풀이 6~30 사이 어떤 값이든 모든 토픽이 cron 슬롯에 노출됨.
+            seed = now_kst.timetuple().tm_yday * 11 + now_kst.hour
         else:  # 하위 호환 (기존 'auto')
             pool = topic_ids
             seed = now_kst.weekday()
