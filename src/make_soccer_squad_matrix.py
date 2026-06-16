@@ -417,10 +417,10 @@ if __name__ == "__main__":
          {"name": "김승규"}, {"name": "이운재", "is_legend": True}],
     ]
     make_soccer_squad_matrix(
-        title="1조원으로 국대 영입하기",
-        highlight="1조원",
+        title="1000억으로 국대 영입하기",
+        highlight="1000억",
         rule_hint="당신의 영입 픽은?",
-        col_headers=["1000억", "2000억", "3000억", "4000억", "5000억"],
+        col_headers=["100억", "200억", "300억", "400억", "500억"],
         row_headers=["스트라이커", "미드필더", "골키퍼"],
         cells=cells,
         output_path=out,
