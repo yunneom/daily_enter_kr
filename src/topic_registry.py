@@ -42,6 +42,13 @@ def resolve_topic_cells(topic: dict, seed: int = 0):
     return [[dict(cell) for cell in row] for row in topic["cells"]]
 
 
+def resolve_pick_pool(topic: dict, seed: int = 0, n: int = 9):
+    """pick_pool 에서 seed 기준 연속 n 개 픽 — 게시마다 회전. pool 12개면 4개 매번 교체."""
+    pool = topic.get("pick_pool", [])
+    L = len(pool)
+    return [dict(pool[(seed + i) % L]) for i in range(n)]
+
+
 # 공통 출처 한 줄 (아이돌/티어 토픽에 공신력 부여 — 논란 완화)
 BR_SOURCE_NOTE = "※ 한국기업평판연구소 브랜드평판지수 기준 · 매월 갱신"
 
@@ -778,5 +785,31 @@ TOPICS = {
         ],
         "source_note": BR_SOURCE_NOTE,
         "auto_comment": "🌟 5세대 보이그룹 1티어 — CORTIS·TWS·보이넥스트도어·KickFlip! 더 강한 픽 댓글로 ⬇️",
+    },
+
+    # ════════════════════════════════════════════════════════════
+    #  초능력 픽 — 단일 픽 9-셀 grid (가격/합산 없음, 손그림 cute)
+    #  pick_pools 길이 = 9 의 배수 → 게시마다 다른 9개 회전
+    # ════════════════════════════════════════════════════════════
+    "powerpick_office": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(직장인편)",
+        # 12개 풀에서 9개 회전 (seed offset). 한 토픽 = 여러 콘텐츠.
+        "pick_pool": [
+            {"emoji": "💼", "label": "연봉 매년\n2배 인상"},
+            {"emoji": "🎁", "label": "매년 보너스\n5천만원"},
+            {"emoji": "📈", "label": "모든 평가\nS등급 자동"},
+            {"emoji": "📊", "label": "PPT/엑셀\n자동 완성"},
+            {"emoji": "🚪", "label": "평생 칼퇴\n보장권"},
+            {"emoji": "🏖️", "label": "원하는 날\n연차 무조건 승인"},
+            {"emoji": "⏰", "label": "일할 때만\n시간 정지"},
+            {"emoji": "✈️", "label": "출퇴근\n순간이동"},
+            {"emoji": "😴", "label": "잠 안 자도\n풀컨디션"},
+            {"emoji": "🧠", "label": "한 번 보면\n100% 암기"},
+            {"emoji": "🌐", "label": "모든 언어\n즉시 마스터"},
+            {"emoji": "📅", "label": "월요일\n영구 삭제"},
+        ],
+        "auto_comment": "💬 단 하나만! 본인 픽 댓글로 ⬇️ 친구는 뭐 고를까?",
     },
 }

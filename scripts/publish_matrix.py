@@ -18,10 +18,11 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-from topic_registry import TOPICS, resolve_topic_cells
+from topic_registry import TOPICS, resolve_topic_cells, resolve_pick_pool
 from make_emblem_matrix import SOFT_BG_ROTATION
 from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
+from make_powerpick_matrix import make_powerpick_matrix
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
@@ -104,6 +105,9 @@ TOPIC_TAGS = {
     "spinner_idol_pick": ["#밸런스게임", "#일시정지챌린지", "#최애", "#아이돌",
                            "#케이팝", "#장원영", "#카리나", "#윈터", "#민지",
                            "#최애뽑기", "#kpop"],
+    "powerpick_office": ["#초능력", "#직장인", "#직장인공감", "#회사원",
+                          "#밸런스게임", "#카드뉴스", "#월요일", "#퇴근",
+                          "#회식", "#일상공감", "#밈", "#릴스", "#reels"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -182,6 +186,23 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         make_pause_challenge_video(**kwargs)
         video_url = upload_video(local_mp4)
         return video_url, None
+
+    # ─── powerpick: 9-셀 단일 픽 grid (가격/매트릭스 X) ───
+    if style == "powerpick":
+        picks = resolve_pick_pool(topic, seed=seed, n=9)
+        make_powerpick_matrix(
+            title=topic["title"], rule_hint=topic["rule_hint"],
+            picks=picks, output_path=local_jpg, brand=BRAND,
+            source_note=topic.get("source_note", ""),
+        )
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
 
     # col_pools 있으면 seed 로 멤버 라인업 회전, 없으면 고정 cells.
     cells = resolve_topic_cells(topic, seed=seed)
