@@ -18,7 +18,8 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-from topic_registry import TOPICS
+from topic_registry import TOPICS, resolve_topic_cells
+from make_emblem_matrix import SOFT_BG_ROTATION
 from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
 from make_video import make_slideshow_video
@@ -43,9 +44,6 @@ TOPIC_TAGS = {
                             "#윈터", "#유진", "#카즈하", "#kpop"],
     "idealtype_10k": ["#연애", "#이상형", "#썸", "#mbti", "#연애상담",
                        "#소개팅"],
-    "soccer_dream_10k": ["#축구", "#손흥민", "#메시", "#음바페", "#김민재",
-                          "#피파", "#월드컵", "#베스트일레븐", "#football",
-                          "#soccer"],
     "idol_allstar_10k": ["#케이팝", "#아이돌", "#올스타", "#뉴진스",
                           "#에스파", "#아이브", "#민지", "#카리나",
                           "#장원영", "#kpop", "#kpopfan"],
@@ -71,6 +69,41 @@ TOPIC_TAGS = {
     "ballad_concert_10k": ["#발라드", "#성시경", "#박정현", "#김범수",
                             "#박효신", "#백지영", "#폴킴", "#케이시",
                             "#정인", "#정승환", "#감성발라드", "#한국발라드"],
+    "child_pick_100man": ["#밸런스게임", "#육아", "#자녀", "#부모공감",
+                           "#엄마스타그램", "#육아맘", "#육아일상",
+                           "#mbti", "#일상공감"],
+    "girlgroup_5gen_tier1_10k": ["#케이팝", "#5세대걸그룹", "#베이비몬스터",
+                                   "#BABYMONSTER", "#일릿", "#ILLIT", "#키스오브라이프",
+                                   "#KISSOFLIFE", "#루카", "#원희", "#벨", "#아현",
+                                   "#나띠", "#kpop", "#kpopfan"],
+    "girlgroup_5gen_tier2_10k": ["#케이팝", "#5세대걸그룹", "#아이즈나", "#IZNA",
+                                   "#하투하", "#Hearts2Hearts", "#미야오", "#MEOVV",
+                                   "#영파씨", "#YoungPosse", "#KIIIKIII", "#사랑",
+                                   "#카르멘", "#주은", "#kpop"],
+    "girlgroup_4gen_tier1_10k": ["#케이팝", "#4세대걸그룹", "#뉴진스", "#에스파",
+                                   "#아이브", "#르세라핌", "#카리나", "#장원영",
+                                   "#민지", "#하니", "#카즈하", "#윈터", "#레이",
+                                   "#kpop"],
+    "girlgroup_4gen_tier2_10k": ["#케이팝", "#4세대걸그룹", "#NMIXX", "#엔믹스",
+                                   "#ITZY", "#있지", "#여자아이들", "#GIDLE",
+                                   "#릴리", "#설윤", "#채령", "#소연", "#kpop"],
+    "girlgroup_4gen_tier3_10k": ["#케이팝", "#4세대걸그룹", "#STAYC", "#스테이씨",
+                                   "#Kep1er", "#케플러", "#Billlie", "#빌리",
+                                   "#fromis_9", "#프로미스나인", "#시은", "#수민",
+                                   "#kpop"],
+    "boygroup_4gen_tier1_10k": ["#케이팝", "#4세대보이그룹", "#스트레이키즈", "#스키즈",
+                                  "#엔하이픈", "#투바투", "#TXT", "#RIIZE", "#라이즈",
+                                  "#ATEEZ", "#에이티즈", "#제로베이스원", "#ZB1",
+                                  "#필릭스", "#정원", "#kpop"],
+    "boygroup_4gen_tier2_10k": ["#케이팝", "#4세대보이그룹", "#더보이즈", "#THEBOYZ",
+                                  "#NCT", "#엔시티", "#트레저", "#TREASURE",
+                                  "#P1Harmony", "#피원하모니", "#kpop"],
+    "boygroup_5gen_tier1_10k": ["#케이팝", "#5세대보이그룹", "#CORTIS", "#코르티스",
+                                  "#TWS", "#투어스", "#보이넥스트도어", "#BOYNEXTDOOR",
+                                  "#KickFlip", "#킥플립", "#kpop", "#kpopfan"],
+    "spinner_idol_pick": ["#밸런스게임", "#일시정지챌린지", "#최애", "#아이돌",
+                           "#케이팝", "#장원영", "#카리나", "#윈터", "#민지",
+                           "#최애뽑기", "#kpop"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -117,9 +150,11 @@ def _pick_bgm():
     return _random.choice(candidates) if candidates else None
 
 
-def build_and_upload(topic_id: str, topic: dict) -> tuple:
+def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
     """주제 빌드 → mp4(Reels) + jpg(cover) Cloudinary 업로드 → (video_url, cover_url).
 
+    seed: 게시 회전 시드. col_pools 멤버 라인업 + 배경 회전에 사용 →
+          같은 토픽이라도 게시마다 다른 멤버/배경 (새 콘텐츠로 인지).
     style="spinner" 는 mp4 를 바로 생성 (정적 jpg → mp4 변환 단계 없음).
     cover_url 은 None — IG 가 첫 프레임 자동 추출.
     """
@@ -131,28 +166,44 @@ def build_and_upload(topic_id: str, topic: dict) -> tuple:
     # ─── spinner: 정적 이미지 없이 바로 mp4 생성 ───
     if style == "spinner":
         from make_spinner_video import make_pause_challenge_video
-        make_pause_challenge_video(
+        kwargs = dict(
             options=topic["options"],
             output_path=local_mp4,
             title=topic["title"],
             hint=topic.get("hint", "⏸ 일시정지로 골라봐!"),
             character_style=topic.get("character_style", "muscle_man"),
+            pointer_offset_deg=topic.get("pointer_offset_deg", 0.0),
+            bend_deg=topic.get("bend_deg", 0.0),
         )
+        if topic.get("deg_per_frame"):
+            kwargs["deg_per_frame"] = topic["deg_per_frame"]
+        if topic.get("option_fill"):
+            kwargs["option_fill"] = tuple(topic["option_fill"])
+        make_pause_challenge_video(**kwargs)
         video_url = upload_video(local_mp4)
         return video_url, None
+
+    # col_pools 있으면 seed 로 멤버 라인업 회전, 없으면 고정 cells.
+    cells = resolve_topic_cells(topic, seed=seed)
 
     # ─── 매트릭스 계열: 정적 jpg → mp4 (단일 프레임 × REEL_SECONDS + BGM) ───
     args = dict(
         title=topic["title"], highlight=topic["highlight"],
         rule_hint=topic["rule_hint"],
         col_headers=topic["col_headers"], row_prices=topic["row_prices"],
-        cells=topic["cells"], output_path=local_jpg, brand=BRAND,
+        cells=cells, output_path=local_jpg, brand=BRAND,
     )
     if style == "photo":
         make_photo_matrix(**args)
     elif style == "emblem":
         from make_emblem_matrix import make_emblem_matrix
-        args["background_style"] = topic.get("background_style", "soccer")
+        base_bg = topic.get("background_style", "soccer")
+        # 흰 배경(아이돌 기본) 토픽은 게시마다 라이트 배경 회전 — "새 글" 인지.
+        # soccer 등 컨셉 배경은 그대로 유지.
+        if base_bg == "white":
+            base_bg = SOFT_BG_ROTATION[seed % len(SOFT_BG_ROTATION)]
+        args["background_style"] = base_bg
+        args["source_note"] = topic.get("source_note", "")
         make_emblem_matrix(**args)
     else:
         make_premium_matrix(**args)
@@ -169,10 +220,11 @@ def build_and_upload(topic_id: str, topic: dict) -> tuple:
     return video_url, cover_url
 
 
-def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher) -> dict:
-    print(f"\n=== {topic_id}: {topic['title']} ({topic['style']}) ===")
+def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
+                seed: int = 0) -> dict:
+    print(f"\n=== {topic_id}: {topic['title']} ({topic['style']}) [seed={seed}] ===")
     try:
-        video_url, cover_url = build_and_upload(topic_id, topic)
+        video_url, cover_url = build_and_upload(topic_id, topic, seed=seed)
         print(f"  ✓ video: {video_url}")
         print(f"  ✓ cover: {cover_url}")
     except Exception as e:
@@ -238,6 +290,11 @@ def main() -> int:
     spinner_ids = [t for t in topic_ids if TOPICS[t]["style"] == "spinner"]
     matrix_ids = [t for t in topic_ids if TOPICS[t]["style"] != "spinner"]
 
+    # 멤버/배경 회전 시드 — KST yday*7+hour. col_pools 라인업 + 배경이 매번 달라짐.
+    from datetime import datetime, timezone, timedelta
+    _kst_now = datetime.now(timezone(timedelta(hours=9)))
+    run_seed = _kst_now.timetuple().tm_yday * 7 + _kst_now.hour
+
     if target == "all":
         topics_to_post = list(TOPICS.items())
     elif target in ("auto", "auto_matrix", "auto_spinner", ""):
@@ -277,7 +334,8 @@ def main() -> int:
         if i > 0:
             print(f"\n⏱  {INTER_POST_SLEEP}s 대기 (봇 패턴 회피)...")
             time.sleep(INTER_POST_SLEEP)
-        results.append(publish_one(tid, topic, publisher))
+        # 'all' 모드는 토픽마다 시드를 약간 어긋나게 (i 더함) → 라인업 다양화
+        results.append(publish_one(tid, topic, publisher, seed=run_seed + i))
 
     # 요약
     print("\n" + "=" * 50)
