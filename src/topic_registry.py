@@ -924,4 +924,116 @@ TOPICS = {
         ],
         "auto_comment": "💬 아이돌이라면 뭐 고를래요? 본인 픽 댓글로 ⬇️ 최애한테도 물어봐!",
     },
+
+    # ════════════════════════════════════════════════════════════
+    #  precondition 패턴 토픽 — "조건" 박스 명시로 논란 회피.
+    #  예: 축구 영입 / 직장 / 초능력 buget 매트릭스
+    # ════════════════════════════════════════════════════════════
+
+    # 1000억으로 국대 영입 — 5컬럼 × 3로우 (참고 이미지 구도 재현)
+    # style="soccer_squad" 전용 렌더러 (make_soccer_squad_matrix) 사용
+    "soccer_nationalteam_1000eok": {
+        "style": "soccer_squad",
+        "title": "1000억으로 국대 영입하기",
+        "highlight": "1000억",
+        "rule_hint": "당신의 영입 픽은?",
+        "precondition_lines": [
+            "현재 팀: 대한민국 (4-2-1-3)",
+            "구성: 스트라이커·미드필더·골키퍼",
+            "→ 각 1명씩 영입 (총 1000억)",
+        ],
+        "col_headers": ["100억", "200억", "300억", "400억", "500억"],
+        "row_headers": ["스트라이커", "미드필더", "골키퍼"],
+        # cells[row][col] — 가격 낮음 → 높음 순. 마지막(5000억)은 레전드
+        "cells": [
+            # ST
+            [
+                {"name": "오현규"},
+                {"name": "조규성"},
+                {"name": "황희찬"},
+                {"name": "손흥민"},
+                {"name": "차범근", "is_legend": True},
+            ],
+            # CDM/MF
+            [
+                {"name": "백승호"},
+                {"name": "박용우"},
+                {"name": "황인범"},
+                {"name": "기성용", "is_legend": True},
+                {"name": "박지성", "is_legend": True},
+            ],
+            # GK
+            [
+                {"name": "김동준"},
+                {"name": "송범근"},
+                {"name": "조현우"},
+                {"name": "김승규"},
+                {"name": "이운재", "is_legend": True},
+            ],
+        ],
+        "source_note": "※ 가상 영입 시나리오 — 실제 이적료 X",
+        "auto_comment": "⚽ 당신의 영입 조합은? 댓글로 ⬇️ 예) 손흥민·박지성·조현우",
+    },
+
+    # 1만원으로 다닐 직장 구하기 — 직장 매트릭스 (precondition 명시)
+    "job_pick_10k": {
+        "style": "drawing",
+        "title": "만원으로 다닐 직장 구하기",
+        "highlight": "직장",
+        "rule_hint": "각 항목 1개씩 골라 합 1만원 — 당신의 직장은?",
+        "col_headers": ["교통", "시간", "페이"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원 (premium)
+            [
+                {"emoji": "🏠", "label": "재택근무"},
+                {"emoji": "✨", "label": "주 4일제"},
+                {"emoji": "💸", "label": "세후 월 700"},
+            ],
+            # 3천원 (mid)
+            [
+                {"emoji": "🚇", "label": "지옥철 30분"},
+                {"emoji": "🚪", "label": "매일 칼퇴"},
+                {"emoji": "💰", "label": "세전 월 300"},
+            ],
+            # 2천원 (budget)
+            [
+                {"emoji": "🚌", "label": "편도 2시간"},
+                {"emoji": "🌙", "label": "매일 야근"},
+                {"emoji": "😅", "label": "세전 월 180"},
+            ],
+        ],
+        "auto_comment": "💼 당신의 직장 조합은? 댓글로 ⬇️ 친구는 어느 회사?",
+    },
+
+    # 1만원으로 원하는 초능력 갖기 — 초능력 budget 매트릭스 (image 2 참고)
+    "power_budget_10k": {
+        "style": "drawing",
+        "title": "만원으로 원하는 초능력 갖기",
+        "highlight": "초능력",
+        "rule_hint": "각 카테고리 1개씩 골라 합 1만원 — 당신의 초능력은?",
+        "col_headers": ["이동", "예지", "신체"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"emoji": "✨", "label": "순간이동"},
+                {"emoji": "🎰", "label": "로또번호 알기"},
+                {"emoji": "💪", "label": "괴력의 힘"},
+            ],
+            # 3천원
+            [
+                {"emoji": "☁️", "label": "구름 타기"},
+                {"emoji": "📝", "label": "시험답 알기"},
+                {"emoji": "🛡️", "label": "강철 피부"},
+            ],
+            # 2천원
+            [
+                {"emoji": "🏃", "label": "빠른 달리기"},
+                {"emoji": "🌧️", "label": "날씨 맞히기"},
+                {"emoji": "😴", "label": "절대 안 지침"},
+            ],
+        ],
+        "auto_comment": "💫 당신의 1만원짜리 초능력 조합은? 댓글로 ⬇️",
+    },
 }

@@ -23,6 +23,7 @@ from make_emblem_matrix import SOFT_BG_ROTATION
 from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
 from make_powerpick_matrix import make_powerpick_matrix
+from make_soccer_squad_matrix import make_soccer_squad_matrix
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
@@ -123,6 +124,16 @@ TOPIC_TAGS = {
     "powerpick_idol": ["#초능력", "#아이돌", "#아이돌일상", "#케이팝",
                         "#kpop", "#아이돌공감", "#무대", "#컴백",
                         "#밸런스게임", "#카드뉴스", "#릴스", "#reels"],
+    "soccer_nationalteam_1000eok": ["#축구", "#국가대표", "#손흥민", "#이강인",
+                                  "#김민재", "#황희찬", "#조규성", "#박지성",
+                                  "#차범근", "#월드컵", "#축구국대",
+                                  "#밸런스게임", "#football", "#soccer"],
+    "job_pick_10k": ["#직장", "#취준", "#취준생", "#직장인", "#재택근무",
+                      "#연봉", "#회사", "#출근", "#월급", "#야근",
+                      "#밸런스게임", "#카드뉴스", "#일상공감"],
+    "power_budget_10k": ["#초능력", "#밸런스게임", "#로또", "#순간이동",
+                          "#기상예측", "#슈퍼파워", "#카드뉴스",
+                          "#일상공감", "#밈", "#릴스"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -202,6 +213,26 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         video_url = upload_video(local_mp4)
         return video_url, None
 
+    # ─── soccer_squad: 5컬럼 × 3로우 + 절차적 캐릭터 헤드 + 미니 포메이션 ───
+    if style == "soccer_squad":
+        make_soccer_squad_matrix(
+            title=topic["title"], highlight=topic["highlight"],
+            rule_hint=topic["rule_hint"],
+            col_headers=topic["col_headers"], row_headers=topic["row_headers"],
+            cells=topic["cells"], output_path=local_jpg, brand=BRAND,
+            precondition_lines=topic.get("precondition_lines"),
+            source_note=topic.get("source_note", ""),
+            cta_text=topic.get("cta_text", "💬 당신의 영입 조합은? 댓글로 ⬇️"),
+        )
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
+
     # ─── powerpick: 9-셀 단일 픽 grid (가격/매트릭스 X) ───
     if style == "powerpick":
         picks = resolve_pick_pool(topic, seed=seed, n=9)
@@ -240,6 +271,9 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             base_bg = SOFT_BG_ROTATION[seed % len(SOFT_BG_ROTATION)]
         args["background_style"] = base_bg
         args["source_note"] = topic.get("source_note", "")
+        args["precondition"] = topic.get("precondition", "")
+        if topic.get("budget_label"):
+            args["budget_label"] = topic["budget_label"]
         make_emblem_matrix(**args)
     else:
         make_premium_matrix(**args)
@@ -329,7 +363,7 @@ def main() -> int:
     # 멤버/배경 회전 시드 — KST yday*7+hour. col_pools 라인업 + 배경이 매번 달라짐.
     from datetime import datetime, timezone, timedelta
     _kst_now = datetime.now(timezone(timedelta(hours=9)))
-    run_seed = _kst_now.timetuple().tm_yday * 7 + _kst_now.hour
+    run_seed = _kst_now.timetuple().tm_yday * 11 + _kst_now.hour
 
     if target == "all":
         topics_to_post = list(TOPICS.items())
@@ -344,9 +378,9 @@ def main() -> int:
             seed = now_kst.timetuple().tm_yday
         elif target == "auto_matrix":
             pool = matrix_ids
-            # 시드 = yday*7 + hour. 7은 6(매트릭스 풀 크기)과 코프라임이라
-            # 매일 같은 슬롯에서 다른 토픽 + 같은 날 슬롯마다 다른 토픽 보장.
-            seed = now_kst.timetuple().tm_yday * 7 + now_kst.hour
+            # 시드 = yday*11 + hour. 11은 22/33 외 모든 풀 크기와 코프라임 →
+            # 풀이 6~30 사이 어떤 값이든 모든 토픽이 cron 슬롯에 노출됨.
+            seed = now_kst.timetuple().tm_yday * 11 + now_kst.hour
         else:  # 하위 호환 (기존 'auto')
             pool = topic_ids
             seed = now_kst.weekday()

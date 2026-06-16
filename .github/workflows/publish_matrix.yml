@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       topic:
-        description: '토픽 ID (powerpick_office / powerpick_student / powerpick_teacher / powerpick_neet / powerpick_landlord / powerpick_idol / girlgroup_4gen_tier1_10k / girlgroup_4gen_tier2_10k / girlgroup_4gen_tier3_10k / girlgroup_5gen_tier1_10k / girlgroup_5gen_tier2_10k / boygroup_4gen_tier1_10k / boygroup_4gen_tier2_10k / boygroup_5gen_tier1_10k / child_pick_100man / trot_concert_10k / ballad_concert_10k / travel_30man / weekend_5man / lunch_15k / idol_allstar_10k / girlgroup_real_10k / girlgroup_4gen_10k / boygroup_4gen_10k / idealtype_10k / spinner_food_man / spinner_lazy_woman / spinner_idol_pick / auto / auto_matrix / auto_spinner / all)'
+        description: '토픽 ID (soccer_nationalteam_1000eok / job_pick_10k / power_budget_10k / powerpick_office / powerpick_student / powerpick_teacher / powerpick_neet / powerpick_landlord / powerpick_idol / girlgroup_4gen_tier1_10k / girlgroup_4gen_tier2_10k / girlgroup_4gen_tier3_10k / girlgroup_5gen_tier1_10k / girlgroup_5gen_tier2_10k / boygroup_4gen_tier1_10k / boygroup_4gen_tier2_10k / boygroup_5gen_tier1_10k / child_pick_100man / trot_concert_10k / ballad_concert_10k / travel_30man / weekend_5man / lunch_15k / idol_allstar_10k / girlgroup_real_10k / girlgroup_4gen_10k / boygroup_4gen_10k / idealtype_10k / spinner_food_man / spinner_lazy_woman / spinner_idol_pick / auto / auto_matrix / auto_spinner / all)'
         required: false
         default: 'all'
         type: string
