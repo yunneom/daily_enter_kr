@@ -298,6 +298,7 @@ def make_emblem_matrix(
     background_style: str = "soccer",   # "soccer" / "gradient_idol" / "gradient_dark" / "white" / "soft_*"
     budget_label: str = "만원",         # 상단 지폐 일러스트에 표시할 금액
     source_note: str = "",              # 하단 공신력 한 줄 (예: 브랜드 평판 출처)
+    precondition: str = "",             # 제목 아래 회색 박스 — "조건: 현재 팀 4-2-1-3" 등
 ):
     """FIFA-카드 매트릭스. 각 셀은 {role_emoji, name, subtitle?} 딕트.
 
@@ -355,8 +356,43 @@ def make_emblem_matrix(
     draw.text(((CANVAS[0] - hint_w) / 2, hint_y), rule_hint,
               font=f_hint, fill=hint_color)
 
+    # ─── 2b) 조건 박스 (precondition) — 논란 회피용 setup 명시 ───
+    # 예: "현재 팀: 대한민국 4-2-1-3 (영입 자리: ST·CDM·GK 1명씩)"
+    # 회색 라운드 박스 + 좌측 "조건" 아이콘 — 카드 해석 기준점.
+    cond_extra_h = 0
+    if precondition:
+        f_cond = ImageFont.truetype(medium_path, 30)
+        f_cond_label = ImageFont.truetype(bold_path, 28)
+        # 줄바꿈 자동 (\n 또는 폭 기반)
+        if "\n" in precondition:
+            cond_lines = precondition.split("\n")
+        else:
+            cond_lines = [precondition]
+        line_h = 38
+        cond_box_h = 28 + line_h * len(cond_lines) + 12
+        cond_y0 = hint_y + 70
+        cond_y1 = cond_y0 + cond_box_h
+        box_color = (245, 245, 248) if not dark_bg else (50, 50, 60)
+        border_color = (210, 210, 218) if not dark_bg else (90, 90, 100)
+        cond_text_color = (60, 60, 70) if not dark_bg else (220, 220, 230)
+        draw.rounded_rectangle([60, cond_y0, CANVAS[0] - 60, cond_y1],
+                               radius=14, fill=box_color, outline=border_color, width=2)
+        # 좌측 "조건" 라벨
+        label_text = "조건"
+        lb = f_cond_label.getbbox(label_text)
+        lbw = lb[2] - lb[0]
+        draw.rounded_rectangle([78, cond_y0 + 14, 78 + lbw + 22, cond_y0 + 56],
+                               radius=10, fill=(80, 90, 140))
+        draw.text((78 + 11, cond_y0 + 18), label_text, font=f_cond_label, fill=(255, 255, 255))
+        # 본문
+        cy = cond_y0 + 20
+        for line in cond_lines:
+            draw.text((78 + lbw + 44, cy), line, font=f_cond, fill=cond_text_color)
+            cy += line_h
+        cond_extra_h = cond_box_h + 30
+
     # ─── 3) 격자 영역 ───
-    grid_top = hint_y + 90
+    grid_top = hint_y + 90 + cond_extra_h
     grid_bottom = CANVAS[1] - 360
     grid_left = 70
     grid_right = CANVAS[0] - 70

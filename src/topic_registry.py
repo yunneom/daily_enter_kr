@@ -924,4 +924,115 @@ TOPICS = {
         ],
         "auto_comment": "💬 아이돌이라면 뭐 고를래요? 본인 픽 댓글로 ⬇️ 최애한테도 물어봐!",
     },
+
+    # ════════════════════════════════════════════════════════════
+    #  precondition 패턴 토픽 — "조건" 박스 명시로 논란 회피.
+    #  예: 축구 영입 / 직장 / 초능력 buget 매트릭스
+    # ════════════════════════════════════════════════════════════
+
+    # 1조원으로 국대 영입 — 정공법 부활 (precondition 으로 논란 회피)
+    "soccer_nationalteam_1jo": {
+        "style": "emblem",
+        "background_style": "soccer",
+        "budget_label": "1조원",
+        "title": "1조원으로 국대 영입하기",
+        "highlight": "국대",
+        "rule_hint": "각 포지션 1명씩 영입 — 당신의 픽은?",
+        "precondition": "현재 팀: 대한민국 4-2-1-3\n영입 자리 — ST·CDM·GK 각 1명 (합 1조)",
+        "col_headers": ["스트라이커", "미드필더", "골키퍼"],
+        "row_prices": ["5000억", "3000억", "2000억"],
+        "col_pools": [
+            # ST 풀
+            [
+                {"role_emoji": "⚽", "name": "손흥민", "subtitle": "Tottenham"},
+                {"role_emoji": "⚽", "name": "이강인", "subtitle": "PSG"},
+                {"role_emoji": "⚽", "name": "조규성", "subtitle": "Mainz"},
+                {"role_emoji": "⚽", "name": "황희찬", "subtitle": "Wolves"},
+                {"role_emoji": "⚽", "name": "오현규", "subtitle": "Genk"},
+                {"role_emoji": "👑", "name": "차범근", "subtitle": "레전드"},
+            ],
+            # MF/CDM 풀
+            [
+                {"role_emoji": "🎯", "name": "황인범", "subtitle": "Olympiacos"},
+                {"role_emoji": "🎯", "name": "백승호", "subtitle": "전북"},
+                {"role_emoji": "🎯", "name": "박용우", "subtitle": "Al-Ain"},
+                {"role_emoji": "🎯", "name": "정우영", "subtitle": "전북"},
+                {"role_emoji": "👑", "name": "박지성", "subtitle": "레전드"},
+                {"role_emoji": "👑", "name": "기성용", "subtitle": "베테랑"},
+            ],
+            # GK 풀
+            [
+                {"role_emoji": "🧤", "name": "조현우", "subtitle": "Ulsan"},
+                {"role_emoji": "🧤", "name": "김승규", "subtitle": "알샤밥"},
+                {"role_emoji": "🧤", "name": "송범근", "subtitle": "전북"},
+                {"role_emoji": "🧤", "name": "김동준", "subtitle": "전북"},
+                {"role_emoji": "👑", "name": "이운재", "subtitle": "레전드"},
+                {"role_emoji": "👑", "name": "김병지", "subtitle": "레전드"},
+            ],
+        ],
+        "source_note": "※ 가상 영입 시나리오 — 실제 이적료 X",
+        "auto_comment": "⚽ 당신의 영입 조합은? 댓글로 알려주세요! 예) 손흥민·황인범·조현우 ⬇️",
+    },
+
+    # 1만원으로 다닐 직장 구하기 — 직장 매트릭스 (precondition 명시)
+    "job_pick_10k": {
+        "style": "drawing",
+        "title": "만원으로 다닐 직장 구하기",
+        "highlight": "직장",
+        "rule_hint": "각 항목 1개씩 골라 합 1만원 — 당신의 직장은?",
+        "col_headers": ["교통", "시간", "페이"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원 (premium)
+            [
+                {"emoji": "🏠", "label": "재택근무"},
+                {"emoji": "✨", "label": "주 4일제"},
+                {"emoji": "💸", "label": "세후 월 700"},
+            ],
+            # 3천원 (mid)
+            [
+                {"emoji": "🚇", "label": "지옥철 30분"},
+                {"emoji": "🚪", "label": "매일 칼퇴"},
+                {"emoji": "💰", "label": "세전 월 300"},
+            ],
+            # 2천원 (budget)
+            [
+                {"emoji": "🚌", "label": "편도 2시간"},
+                {"emoji": "🌙", "label": "매일 야근"},
+                {"emoji": "😅", "label": "세전 월 180"},
+            ],
+        ],
+        "auto_comment": "💼 당신의 직장 조합은? 댓글로 ⬇️ 친구는 어느 회사?",
+    },
+
+    # 1만원으로 원하는 초능력 갖기 — 초능력 budget 매트릭스 (image 2 참고)
+    "power_budget_10k": {
+        "style": "drawing",
+        "title": "만원으로 원하는 초능력 갖기",
+        "highlight": "초능력",
+        "rule_hint": "각 카테고리 1개씩 골라 합 1만원 — 당신의 초능력은?",
+        "col_headers": ["이동", "예지", "신체"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"emoji": "✨", "label": "순간이동"},
+                {"emoji": "🎰", "label": "로또번호 알기"},
+                {"emoji": "💪", "label": "괴력의 힘"},
+            ],
+            # 3천원
+            [
+                {"emoji": "☁️", "label": "구름 타기"},
+                {"emoji": "📝", "label": "시험답 알기"},
+                {"emoji": "🛡️", "label": "강철 피부"},
+            ],
+            # 2천원
+            [
+                {"emoji": "🏃", "label": "빠른 달리기"},
+                {"emoji": "🌧️", "label": "날씨 맞히기"},
+                {"emoji": "😴", "label": "절대 안 지침"},
+            ],
+        ],
+        "auto_comment": "💫 당신의 1만원짜리 초능력 조합은? 댓글로 ⬇️",
+    },
 }

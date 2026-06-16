@@ -123,6 +123,16 @@ TOPIC_TAGS = {
     "powerpick_idol": ["#초능력", "#아이돌", "#아이돌일상", "#케이팝",
                         "#kpop", "#아이돌공감", "#무대", "#컴백",
                         "#밸런스게임", "#카드뉴스", "#릴스", "#reels"],
+    "soccer_nationalteam_1jo": ["#축구", "#국가대표", "#손흥민", "#이강인",
+                                  "#김민재", "#황희찬", "#조규성", "#박지성",
+                                  "#차범근", "#월드컵", "#축구국대",
+                                  "#밸런스게임", "#football", "#soccer"],
+    "job_pick_10k": ["#직장", "#취준", "#취준생", "#직장인", "#재택근무",
+                      "#연봉", "#회사", "#출근", "#월급", "#야근",
+                      "#밸런스게임", "#카드뉴스", "#일상공감"],
+    "power_budget_10k": ["#초능력", "#밸런스게임", "#로또", "#순간이동",
+                          "#기상예측", "#슈퍼파워", "#카드뉴스",
+                          "#일상공감", "#밈", "#릴스"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -240,6 +250,9 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             base_bg = SOFT_BG_ROTATION[seed % len(SOFT_BG_ROTATION)]
         args["background_style"] = base_bg
         args["source_note"] = topic.get("source_note", "")
+        args["precondition"] = topic.get("precondition", "")
+        if topic.get("budget_label"):
+            args["budget_label"] = topic["budget_label"]
         make_emblem_matrix(**args)
     else:
         make_premium_matrix(**args)
