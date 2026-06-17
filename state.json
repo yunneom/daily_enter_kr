@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-16T09:43:15.105848+09:00",
+  "last_run_at": "2026-06-17T09:12:29.614684+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1210,6 +1210,70 @@
       "caption_variant": "you_wont_believe",
       "media_id": "17879004381669097",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "b029bd68d0d964e3",
+      "card_title": "방탄소년단 'SWIM', 미국 빌보드 핫 100 12주 연속 차트인",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "ffc1ec6517c56a45",
+      "card_title": "최여진♥김재욱, 결혼 1년 만에 행복한 소식 전해",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "e768e6d068d2fd31",
+      "card_title": "적재, SNS 활동 일시 중단 선언 '정신적 안정 위해'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "4bbb886ad1885e4e",
+      "card_title": "엄정화, 수영복 자태로 건강미 과시",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "d0c55a8a7fcb879f",
+      "card_title": "영화 '충충충', 10대의 감정 충돌을 그리다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "e92a1dd5378298f6",
+      "card_title": "남궁민, '결혼의 완성' 7월 4일 공개 — 신작 드라마 공식 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "cba2e8e06e8d04d5",
+      "card_title": "신민아, 영화 '눈동자' 촬영 후 김우빈과의 결혼생활 안정감 언급",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-17",
+      "title_hash": "66b82972e61b5742",
+      "card_title": "임영웅, 생일 맞아 나눔 실천…팬들도 함께 기부",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18106801759979138",
+      "card_style": "minimal"
     }
   ]
 }
