@@ -101,6 +101,7 @@ TOPICS = {
                  "label": "편의점 캔맥"},
             ],
         ],
+        "auto_comment": "🍻 내 주말 5만원 조합은? 댓글로 ⬇️ 친구는 뭐 골랐나 대결!",
     },
 
     # 2) 점심 메뉴 — 사진 (음식)
@@ -148,6 +149,7 @@ TOPICS = {
                  "label": "생수 / 캔커피"},
             ],
         ],
+        "auto_comment": "🍱 내 1만 5천원 점심 조합은? 댓글로 ⬇️ 가성비 1등 가려보자!",
     },
 
     # 3) 걸그룹 올스타 — 엠블럼 카드 + 실명 (흰 배경 premium)
@@ -242,6 +244,7 @@ TOPICS = {
                 {"emoji": "🎒", "label": "취준 중"},
             ],
         ],
+        "auto_comment": "💘 내 1만원 이상형 조합은? 댓글로 ⬇️ 외모·성격·능력 어디 몰빵?",
     },
 
     # 7) 일시정지 챌린지 — 근육맨 (먹을지 vs 운동)
@@ -253,6 +256,7 @@ TOPICS = {
         # 짝수 인덱스 = 잡힘 (운동가기), 홀수 인덱스 = 절대 못 잡음 (음식)
         "options": ["운동가기", "엽떡먹기", "운동가기", "치킨먹기",
                     "운동가기", "소주먹기", "운동가기", "닭발먹기"],
+        "auto_comment": "😤 일시정지 성공했나요? 결국 운동행... 뭐 먹고 싶었는지 댓글로 ⬇️",
     },
 
     # 8) 일시정지 챌린지 — 운동복 (눕기 vs 운동)
@@ -533,39 +537,6 @@ TOPICS = {
         ],
         "source_note": BR_SOURCE_NOTE,
         "auto_comment": "🌟 5세대 진짜 1티어 — BABYMONSTER·ILLIT·KIIIKIII·미야오·하투하·키스오브라이프! 더 강한 픽 있으면 댓글로 ⬇️",
-    },
-
-    # 16) 5세대 걸그룹 2티어편 — IZNA + Young Posse 다크호스 (col_pools 회전)
-    "girlgroup_5gen_tier2_10k": {
-        "style": "emblem",
-        "background_style": "white",
-        "title": "만원으로 5세대 걸그룹 2티어편",
-        "highlight": "2티어편",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 다크호스!",
-        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
-        "row_prices": ["5천원", "3천원", "2천원"],
-        "col_pools": [
-            [
-                {"role_emoji": "🎤", "name": "사랑", "subtitle": "IZNA"},
-                {"role_emoji": "🎤", "name": "도은", "subtitle": "Young Posse"},
-                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
-                {"role_emoji": "🎤", "name": "예은", "subtitle": "Young Posse"},
-            ],
-            [
-                {"role_emoji": "💃", "name": "정원", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "선혜", "subtitle": "Young Posse"},
-                {"role_emoji": "💃", "name": "지우", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "재희", "subtitle": "Young Posse"},
-            ],
-            [
-                {"role_emoji": "✨", "name": "사야", "subtitle": "IZNA"},
-                {"role_emoji": "✨", "name": "지아나", "subtitle": "Young Posse"},
-                {"role_emoji": "✨", "name": "코코로", "subtitle": "IZNA"},
-                {"role_emoji": "✨", "name": "윤지", "subtitle": "IZNA"},
-            ],
-        ],
-        "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🌠 5세대 다크호스 — IZNA·Young Posse! 1티어로 올라올 멤버는? 댓글로 ⬇️",
     },
 
     # 17) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 (col_pools 회전)
@@ -1035,5 +1006,16 @@ TOPICS = {
             ],
         ],
         "auto_comment": "💫 당신의 1만원짜리 초능력 조합은? 댓글로 ⬇️",
+    },
+
+    # ════════════════════════════════════════════════════════════
+    #  틀린 곰 찾기 — spot-the-difference 퍼즐 (모구 대체 곰돌이)
+    #  seed 로 정답 위치 + 차이 종류 회전 → 매 게시 다른 퍼즐
+    # ════════════════════════════════════════════════════════════
+    "spot_diff_bear": {
+        "style": "spot_difference",
+        "title": "다른 곰은 하나!",
+        "subtitle": "어디 있을까?",
+        "auto_comment": "🐻 찾았으면 몇 번째인지 댓글로 ⬇️ 1초컷이면 인정!",
     },
 }

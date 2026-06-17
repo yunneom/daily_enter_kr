@@ -84,10 +84,6 @@ TOPIC_TAGS = {
                                    "#BABYMONSTER", "#일릿", "#ILLIT", "#키스오브라이프",
                                    "#KISSOFLIFE", "#루카", "#원희", "#벨", "#아현",
                                    "#나띠", "#kpop", "#kpopfan"],
-    "girlgroup_5gen_tier2_10k": ["#케이팝", "#5세대걸그룹", "#아이즈나", "#IZNA",
-                                   "#하투하", "#Hearts2Hearts", "#미야오", "#MEOVV",
-                                   "#영파씨", "#YoungPosse", "#KIIIKIII", "#사랑",
-                                   "#카르멘", "#주은", "#kpop"],
     "girlgroup_4gen_tier1_10k": ["#케이팝", "#4세대걸그룹", "#뉴진스", "#에스파",
                                    "#아이브", "#르세라핌", "#카리나", "#장원영",
                                    "#민지", "#하니", "#카즈하", "#윈터", "#레이",
@@ -140,6 +136,9 @@ TOPIC_TAGS = {
     "power_budget_10k": ["#초능력", "#밸런스게임", "#로또", "#순간이동",
                           "#기상예측", "#슈퍼파워", "#카드뉴스",
                           "#일상공감", "#밈", "#릴스"],
+    "spot_diff_bear": ["#틀린그림찾기", "#곰돌이", "#숨은그림찾기", "#두뇌게임",
+                        "#집중력테스트", "#관찰력", "#곰", "#귀여운",
+                        "#밈", "#카드뉴스", "#릴스", "#reels"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -225,6 +224,24 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         make_pause_challenge_video(**kwargs)
         video_url = upload_video(local_mp4)
         return video_url, None
+
+    # ─── spot_difference: 틀린 곰 찾기 퍼즐 (seed 로 정답/차이 회전) ───
+    if style == "spot_difference":
+        from make_spot_difference import make_spot_difference
+        _, ans, _typ = make_spot_difference(
+            output_path=local_jpg, seed=seed,
+            title=topic["title"], subtitle=topic.get("subtitle", "어디 있을까?"),
+            brand=BRAND,
+        )
+        print(f"  🐻 정답: {ans}번째 ({_typ})")
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
 
     # ─── soccer_squad: 5컬럼 × 3로우 + 절차적 캐릭터 헤드 + 미니 포메이션 ───
     if style == "soccer_squad":
