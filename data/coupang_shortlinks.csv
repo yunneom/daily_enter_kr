@@ -7,21 +7,21 @@ category,shortlink,note
 #   3) 단축링크(link.coupang.com/a/XXXXX) 를 shortlink 컬럼에 붙여넣기
 #   4) git commit + push → 다음 cron 게시부터 자동 반영
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-K-POP 굿즈,,검색 힌트: 케이팝 응원봉 앨범 포카 슬리브
-야식·치킨,,검색 힌트: 치킨 엽떡 닭발 안주
-홈트·요가,,검색 힌트: 요가매트 홈트 덤벨
-캠핑·피크닉,,검색 힌트: 피크닉 매트 캠핑 의자
-도시락·간편식,,검색 힌트: 도시락통 직장인 도시락
-여행·캐리어,,검색 힌트: 여행 캐리어 28인치
-트로트 굿즈,,검색 힌트: 임영웅 굿즈 트로트 응원도구
-콘서트 굿즈,,검색 힌트: 콘서트 야광봉 응원봉 배터리
-데이트룩,,검색 힌트: 데이트룩 원피스 향수
-육아용품,,검색 힌트: 유아 장난감 책 옷
-축구·국대유니폼,,검색 힌트: 축구 유니폼 대한민국 손흥민
-직장인 가전,,검색 힌트: 사무용 모니터암 키보드 마우스 무선
-두뇌 굿즈,,검색 힌트: 두뇌 트레이닝 퍼즐 보드게임
-학용품·문구,,검색 힌트: 수험생 문구 다이어리 펜
-선생님 선물,,검색 힌트: 스승의날 선물 텀블러 꽃다발
-홈트·라운지웨어,,검색 힌트: 라운지웨어 잠옷 파자마
-재테크 도서,,검색 힌트: 재테크 책 부동산 주식 베스트셀러
-곰돌이 굿즈,,검색 힌트: 곰돌이 인형 캐릭터 굿즈
+K-POP 굿즈,https://link.coupang.com/a/eGKMNCCA6m,검색 힌트: 케이팝 응원봉 앨범 포카 슬리브
+야식·치킨,https://link.coupang.com/a/eGKQf4W9zE,검색 힌트: 치킨 엽떡 닭발 안주
+홈트·요가,https://link.coupang.com/a/eGKUivMJGu,검색 힌트: 요가매트 홈트 덤벨
+캠핑·피크닉,https://link.coupang.com/a/eGKVVgheCG,검색 힌트: 피크닉 매트 캠핑 의자
+도시락·간편식,https://link.coupang.com/a/eGKXG6VzUq,검색 힌트: 도시락통 직장인 도시락
+여행·캐리어,https://link.coupang.com/a/eGK0HhNIjY,검색 힌트: 여행 캐리어 28인치
+트로트 굿즈,https://link.coupang.com/a/eGK2xVAs1I,검색 힌트: 임영웅 굿즈 트로트 응원도구
+콘서트 굿즈,https://link.coupang.com/a/eGK318azpA,검색 힌트: 콘서트 야광봉 응원봉 배터리
+데이트룩,https://link.coupang.com/a/eGK46UJjMG,검색 힌트: 데이트룩 원피스 향수
+육아용품,https://link.coupang.com/a/eGK77aVpOS,검색 힌트: 유아 장난감 책 옷
+축구·국대유니폼,https://link.coupang.com/a/eGLaQ0HsrI,검색 힌트: 축구 유니폼 대한민국 손흥민
+직장인 가전,https://link.coupang.com/a/eGLcqupmPA,검색 힌트: 사무용 모니터암 키보드 마우스 무선
+두뇌 굿즈,https://link.coupang.com/a/eGLdKwzeBo,검색 힌트: 두뇌 트레이닝 퍼즐 보드게임
+학용품·문구,https://link.coupang.com/a/eGLf1589Qq,검색 힌트: 수험생 문구 다이어리 펜
+선생님 선물,https://link.coupang.com/a/eGLhHdD9BA,검색 힌트: 스승의날 선물 텀블러 꽃다발
+홈트·라운지웨어,https://link.coupang.com/a/eGLiXVJ6dM,검색 힌트: 라운지웨어 잠옷 파자마
+재테크 도서,https://link.coupang.com/a/eGLkYbj4RU,검색 힌트: 재테크 책 부동산 주식 베스트셀러
+곰돌이 굿즈,https://link.coupang.com/a/eGLmUk7KKW,검색 힌트: 곰돌이 인형 캐릭터 굿즈
