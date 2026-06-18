@@ -64,8 +64,8 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # 쿠팡 파트너스 AF ID — bio 랜딩(docs/index.html) 어필리에이트 링크에 자동 첨부
-          COUPANG_AF_ID: ${{ secrets.COUPANG_AF_ID }}
+          # 쿠팡 파트너스 — 수익은 data/coupang_shortlinks.csv 의 단축링크가 결정.
+          # AF_ID 단독은 검색 URL fallback 에 사용했었지만 실제 수익 인정 X → 제거.
           # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
           # 수동 dispatch 우선. cron 호출 시 21:00 KST(UTC 12:00) 슬롯은 스피너 전용,
           # 나머지 cron 슬롯은 매트릭스 회전.
