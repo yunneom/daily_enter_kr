@@ -27,6 +27,10 @@ from make_soccer_squad_matrix import make_soccer_squad_matrix
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
+from coupang_affiliate import (
+    caption_bio_cta, comment_affiliate_line, COUPANG_DISCLOSURE,
+    get_topic_affiliate_url,
+)
 import random as _random
 
 
@@ -156,6 +160,10 @@ def build_caption(topic_id: str, topic: dict) -> str:
         if len(uniq) >= 30:
             break
 
+    # 쿠팡 파트너스 CTA — 단축링크 설정된 카테고리만 (가짜 링크 X)
+    bio_cta = caption_bio_cta(topic_id)
+    has_affiliate = bool(get_topic_affiliate_url(topic_id))
+
     lines = [
         title,
         "",
@@ -165,11 +173,14 @@ def build_caption(topic_id: str, topic: dict) -> str:
         "👥 친구 소환해서 누구 조합이 이겼나 대결!",
         "📲 스토리에 공유하고 친구 조합이랑 비교해보세요",
         "🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
-        "",
-        "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요.",
-        "",
-        " ".join(uniq),
     ]
+    if bio_cta:
+        lines += ["", bio_cta]
+    lines += ["", "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요."]
+    # 디스클로저는 어필리에이트 링크 노출 시에만 (공정위 표시 의무 해당)
+    if has_affiliate:
+        lines.append(f"({COUPANG_DISCLOSURE})")
+    lines += ["", " ".join(uniq)]
     return "\n".join(lines)
 
 
@@ -312,14 +323,19 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         return {"topic_id": topic_id, "ok": False, "error": str(e),
                 "video_url": video_url, "cover_url": cover_url}
 
-    # 자동 첫 댓글 — 첫 노출 댓글로 엔게이지먼트 시동.
+    # 자동 첫 댓글 — 첫 노출 댓글로 엔게이지먼트 시동 + 쿠팡 단축링크 시드.
+    # IG 코멘트 URL 은 자동 클릭 X 지만 텍스트로 노출 → 복사·터치 가능. 24h 라스트클릭
+    # 쿠키 발동을 위한 추가 채널 (bio 클릭 외).
     # 게시 직후 너무 빠른 댓글은 봇 패턴 우려 → 30초 대기.
     comment_text = topic.get("auto_comment") or _default_comment(topic.get("style"))
+    aff_line = comment_affiliate_line(topic_id)
+    if comment_text and aff_line:
+        comment_text = f"{comment_text}\n\n{aff_line}\n({COUPANG_DISCLOSURE})"
     if comment_text:
         time.sleep(30)
         try:
             comment_id = publisher.post_comment(media_id, comment_text)
-            print(f"  💬 자동 댓글: {comment_id}")
+            print(f"  💬 자동 댓글: {comment_id}" + (" + 쿠팡링크" if aff_line else ""))
         except Exception as e:
             print(f"  ⚠️  자동 댓글 실패 (비치명): {e}")
 
@@ -416,6 +432,14 @@ def main() -> int:
         print(f"  • {r['topic_id']}: {r['media_id']}")
     for r in fail:
         print(f"  ❌ {r['topic_id']}: {r.get('error', '?')}")
+
+    # 쿠팡 파트너스 랜딩 페이지 재생성 (게시 1건이라도 성공한 경우)
+    if ok:
+        try:
+            import generate_landing
+            generate_landing.main()
+        except Exception as e:
+            print(f"  ⚠️  랜딩 페이지 생성 실패 (비치명): {e}")
 
     # Discord 알림
     lines = [f"📣 **매트릭스 시리즈 게시 결과** ({len(ok)}/{len(results)} 성공)"]
