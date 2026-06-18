@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-17T09:12:29.614684+09:00",
+  "last_run_at": "2026-06-18T09:32:28.026747+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1274,6 +1274,70 @@
       "caption_variant": "headlines_dotted",
       "media_id": "18106801759979138",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "4f97e9661b1f11b3",
+      "card_title": "이즈나, 미니 3집 글로벌 프로모션 시작 — 미국 한정반부터 중국 옥외광고까지",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "a051f2e01dc328a5",
+      "card_title": "한상진, 아내와의 재정 관리법 공개…'20만원 기준'",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "e0024e17e1a78e72",
+      "card_title": "故 이서이 배우, 모교 한국외대에 장학금 2억원 기부",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "c0827b344e805ade",
+      "card_title": "송가인, 가족돌봄아동 지원 2천만원 기부",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "653430e54d30abd5",
+      "card_title": "전현무, '전현무계획3' 임우일 근황에 \"소소하네\"라 평가",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "a9f91750f8035994",
+      "card_title": "BTS 부산 공연 이틀간 11만 명 방문, 관광 파급 효과 주목",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "96884a7ad6145eb8",
+      "card_title": "장원영, 공항 신분확인 논란 후 절차안내 강화",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-18",
+      "title_hash": "f9389b3cf16456ba",
+      "card_title": "파크뮤직페스티벌, 올림픽공원 시위로 무대 변경 운영",
+      "caption_variant": "question_hook",
+      "media_id": "18104625179092935",
+      "card_style": "manhwa"
     }
   ]
 }
