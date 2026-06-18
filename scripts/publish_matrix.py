@@ -27,6 +27,7 @@ from make_soccer_squad_matrix import make_soccer_squad_matrix
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
+from coupang_affiliate import caption_bio_cta, COUPANG_DISCLOSURE
 import random as _random
 
 
@@ -166,7 +167,11 @@ def build_caption(topic_id: str, topic: dict) -> str:
         "📲 스토리에 공유하고 친구 조합이랑 비교해보세요",
         "🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
         "",
+        # 쿠팡 파트너스 — bio 링크 유도 (캡션 외부 링크는 클릭 X)
+        caption_bio_cta(topic_id),
+        "",
         "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요.",
+        f"({COUPANG_DISCLOSURE})",
         "",
         " ".join(uniq),
     ]
@@ -416,6 +421,14 @@ def main() -> int:
         print(f"  • {r['topic_id']}: {r['media_id']}")
     for r in fail:
         print(f"  ❌ {r['topic_id']}: {r.get('error', '?')}")
+
+    # 쿠팡 파트너스 랜딩 페이지 재생성 (게시 1건이라도 성공한 경우)
+    if ok:
+        try:
+            import generate_landing
+            generate_landing.main()
+        except Exception as e:
+            print(f"  ⚠️  랜딩 페이지 생성 실패 (비치명): {e}")
 
     # Discord 알림
     lines = [f"📣 **매트릭스 시리즈 게시 결과** ({len(ok)}/{len(results)} 성공)"]

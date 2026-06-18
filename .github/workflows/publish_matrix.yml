@@ -18,7 +18,7 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write   # docs/index.html 자동 커밋 (쿠팡 랜딩 페이지)
 
 jobs:
   publish:
@@ -28,6 +28,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -62,11 +64,28 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # 쿠팡 파트너스 AF ID — bio 랜딩(docs/index.html) 어필리에이트 링크에 자동 첨부
+          COUPANG_AF_ID: ${{ secrets.COUPANG_AF_ID }}
           # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
           # 수동 dispatch 우선. cron 호출 시 21:00 KST(UTC 12:00) 슬롯은 스피너 전용,
           # 나머지 cron 슬롯은 매트릭스 회전.
           TOPIC: ${{ inputs.topic || (github.event.schedule == '0 12 * * *' && 'auto_spinner' || 'auto_matrix') }}
         run: python scripts/publish_matrix.py
+
+      - name: Commit landing page (docs/index.html) if changed
+        if: success()
+        run: |
+          if git diff --quiet docs/ 2>/dev/null; then
+            echo "랜딩 페이지 변경 없음 — 커밋 스킵"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git commit -m "랜딩 페이지 갱신 — $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          BRANCH="${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "$BRANCH" || true
+          git push origin "HEAD:$BRANCH"
 
       - name: Upload generated images (backup)
         if: always()
