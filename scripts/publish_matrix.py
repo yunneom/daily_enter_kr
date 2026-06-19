@@ -31,6 +31,8 @@ from coupang_affiliate import (
     caption_bio_cta, comment_affiliate_line, COUPANG_DISCLOSURE,
     get_topic_affiliate_url,
 )
+import post_youtube
+import post_threads
 import random as _random
 
 
@@ -339,8 +341,36 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         except Exception as e:
             print(f"  ⚠️  자동 댓글 실패 (비치명): {e}")
 
+    # ─── 멀티플랫폼 신디케이션 (수익원 확장) ───
+    # 같은 mp4 를 YouTube Shorts 로 + 헤드라인을 Threads 로. 미설정 시 silent skip.
+    yt_id = None
+    threads_id = None
+    local_mp4 = OUTPUT_DIR / f"{topic_id}.mp4"
+    if post_youtube.is_configured() and local_mp4.exists():
+        try:
+            hint = topic.get("rule_hint") or topic.get("hint", "")
+            tags = TOPIC_TAGS.get(topic_id, []) + COMMON_TAGS
+            yt_title, yt_desc = post_youtube.build_youtube_meta(
+                title=topic["title"], hint=hint, hashtags=tags,
+                disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
+            )
+            yt_id = post_youtube.upload_short(
+                local_mp4, yt_title, yt_desc, tags=tags)
+        except Exception as e:
+            print(f"  ⚠️  YouTube 업로드 실패 (비치명): {e}")
+
+    if post_threads.is_configured():
+        try:
+            reel_link = f"https://www.instagram.com/reel/{media_id}/" if media_id else None
+            threads_id = post_threads.post_thread(
+                top_titles=[topic["title"], topic.get("rule_hint", "")],
+                date_str="", label_short="밸런스게임", reel_link=reel_link)
+        except Exception as e:
+            print(f"  ⚠️  Threads 게시 실패 (비치명): {e}")
+
     return {"topic_id": topic_id, "ok": True, "media_id": media_id,
-            "video_url": video_url, "cover_url": cover_url}
+            "video_url": video_url, "cover_url": cover_url,
+            "youtube_id": yt_id, "threads_id": threads_id}
 
 
 def _default_comment(style: str) -> str:
@@ -428,18 +458,32 @@ def main() -> int:
     ok = [r for r in results if r.get("ok")]
     fail = [r for r in results if not r.get("ok")]
     print(f"✅ 성공: {len(ok)} / 전체 {len(results)}")
+    yt_ok = sum(1 for r in ok if r.get("youtube_id"))
+    th_ok = sum(1 for r in ok if r.get("threads_id"))
+    print(f"   ↳ YouTube Shorts: {yt_ok} · Threads: {th_ok} 동시 게시")
     for r in ok:
-        print(f"  • {r['topic_id']}: {r['media_id']}")
+        extra = []
+        if r.get("youtube_id"):
+            extra.append(f"YT:{r['youtube_id']}")
+        if r.get("threads_id"):
+            extra.append("TH✓")
+        suffix = (" [" + " ".join(extra) + "]") if extra else ""
+        print(f"  • {r['topic_id']}: {r['media_id']}{suffix}")
     for r in fail:
         print(f"  ❌ {r['topic_id']}: {r.get('error', '?')}")
 
-    # 쿠팡 파트너스 랜딩 페이지 재생성 (게시 1건이라도 성공한 경우)
+    # 쿠팡 파트너스 랜딩 + 협찬 미디어 키트 재생성 (게시 1건이라도 성공한 경우)
     if ok:
         try:
             import generate_landing
             generate_landing.main()
         except Exception as e:
             print(f"  ⚠️  랜딩 페이지 생성 실패 (비치명): {e}")
+        try:
+            import generate_mediakit
+            generate_mediakit.main()
+        except Exception as e:
+            print(f"  ⚠️  미디어 키트 생성 실패 (비치명): {e}")
 
     # Discord 알림
     lines = [f"📣 **매트릭스 시리즈 게시 결과** ({len(ok)}/{len(results)} 성공)"]

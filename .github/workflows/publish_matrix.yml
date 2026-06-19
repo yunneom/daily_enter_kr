@@ -66,6 +66,12 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           # 쿠팡 파트너스 — 수익은 data/coupang_shortlinks.csv 의 단축링크가 결정.
           # AF_ID 단독은 검색 URL fallback 에 사용했었지만 실제 수익 인정 X → 제거.
+          # 멀티플랫폼 신디케이션 — 미설정 시 자동 skip (IG 게시는 정상 진행)
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
           # 수동 dispatch 우선. cron 호출 시 21:00 KST(UTC 12:00) 슬롯은 스피너 전용,
           # 나머지 cron 슬롯은 매트릭스 회전.
