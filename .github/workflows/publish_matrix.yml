@@ -56,6 +56,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Debug — YouTube/Threads 시크릿 길이 확인 (값 노출 X)
+        env:
+          YT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YT_REFRESH: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          TH_ID: ${{ secrets.THREADS_USER_ID }}
+          TH_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: |
+          echo "YOUTUBE_CLIENT_ID 길이:     ${#YT_ID}"
+          echo "YOUTUBE_CLIENT_SECRET 길이: ${#YT_SECRET}"
+          echo "YOUTUBE_REFRESH_TOKEN 길이: ${#YT_REFRESH}"
+          echo "THREADS_USER_ID 길이:       ${#TH_ID}"
+          echo "THREADS_ACCESS_TOKEN 길이:  ${#TH_TOKEN}"
+          echo "(0 이면 미설정/오타, 정상값은 ID~70 / Secret~35 / Refresh~100+ 자)"
+
       - name: Build + upload + publish
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
