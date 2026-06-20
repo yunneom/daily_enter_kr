@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-19T09:38:51.195931+09:00",
+  "last_run_at": "2026-06-20T09:13:42.088216+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1402,6 +1402,70 @@
       "caption_variant": "list_count",
       "media_id": "17919712293384128",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "bbf4498f2e96a0b9",
+      "card_title": "임지연·허남준·장승조, SBS '멋진 신세계' K-로코 명장면 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "05620d1d90d1b646",
+      "card_title": "故이서이, 벌써 1주기 맞이 — 팬들의 추모 이어져",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "7e8af88a8859da09",
+      "card_title": "신민아, 김우빈과 10년 열애 중 결혼관 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "faa0386fccf6b2bd",
+      "card_title": "이용진, '1박 2일'에서 인생 최대 위기 맞닥뜨려",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "e79b89eed7ae2396",
+      "card_title": "트와이스 사나, 의상 피팅 차이에 대해 직접 해명",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "d64aff46baa7b5ca",
+      "card_title": "임우일, 궁상 레전드 사연 공개 '형편한 시절의 생생한 추억'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "b0c8a6183604d94b",
+      "card_title": "배우 박중훈, 아들과 함께 월드컵 멕시코전 직관 성공",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "02a47dc2a0c5ab7a",
+      "card_title": "마마무 화사, 엔비디아 CEO 젠슨 황의 '샤라웃'에 반응",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
     }
   ]
 }
