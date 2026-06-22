@@ -69,7 +69,7 @@ def gather_final_results(bracket: dict) -> tuple:
 
 
 def build_announce_caption(round_key: str, winners: list, bracket: dict) -> str:
-    """결과 발표 캡션 — 진출자 + 다음 라운드 안내."""
+    """결과 발표 캡션 — 진출자 + 다음 라운드 안내 (강조)."""
     next_hint = NEXT_PUBLISH_HINT.get(round_key, "")
     label = {
         "R32": "🏆 32강 결과 — 16강 진출 16명!",
@@ -82,16 +82,37 @@ def build_announce_caption(round_key: str, winners: list, bracket: dict) -> str:
         lines.append(f"  {i}. {w['member']} ({w['group']})")
     lines += [
         "",
-        f"⏰ 다음 라운드: {next_hint}",
+        "━━━━━━━━━━━━━━━━━━",
+        f"⏰ 다음 라운드",
+        f"   {next_hint}",
+        "━━━━━━━━━━━━━━━━━━",
         "",
-        "🔔 팔로우 + 알림 ON → 다음 매치 자동 안내",
-        "💬 누가 우승할지 댓글로 ⬇️",
-        "👯 친구 소환 → 예측 대결!",
+        "🔔 팔로우 + 알림 ON → 자동 알림",
+        "💬 누가 우승할지 댓글로 예측 ⬇️",
+        "👯 친구 소환 → 예측 대결",
         "",
         "📊 출처: 한국기업평판연구소 2026.6.21",
         "",
         "#걸그룹월드컵 #월드컵토너먼트 #케이팝 #kpop "
         "#아이돌투표 #밸런스게임 #카드뉴스 #릴스 #reels",
+    ]
+    return "\n".join(lines)
+
+
+def build_announce_comment(round_key: str, winners: list) -> str:
+    """결과 발표 자동 댓글 — 진출자 일부 + 다음 라운드 명시."""
+    next_hint = NEXT_PUBLISH_HINT.get(round_key, "")
+    # 진출자 첫 5명만 댓글에 표시 (가독성)
+    preview = winners[:5] if len(winners) > 5 else winners
+    lines = [f"🏆 {round_key} 결과 — 진출자:"]
+    for w in preview:
+        lines.append(f"  · {w['member']} ({w['group']})")
+    if len(winners) > 5:
+        lines.append(f"  · 외 {len(winners) - 5}명")
+    lines += [
+        "",
+        f"⏰ 다음 라운드: {next_hint}",
+        "🔔 팔로우 + 알림 ON 으로 놓치지 마세요!",
     ]
     return "\n".join(lines)
 
@@ -165,10 +186,11 @@ def main():
         next_hint = NEXT_PUBLISH_HINT.get(round_key, "")
         make_round_announce_card(
             round_label=round_lbl, title=title,
-            sub=f"다음 라운드: {next_hint}",
-            members=winners, output_path=jpg, cols=cols)
+            sub=f"여러분의 픽이 다음 라운드로!",
+            members=winners, output_path=jpg, cols=cols,
+            next_schedule=next_hint)  # ← 하단 강조 박스에 표시
         caption = build_announce_caption(round_key, winners, bracket)
-        comment = f"⏰ 다음 라운드: {next_hint}\n🔔 팔로우 + 알림 ON 으로 놓치지 마세요!"
+        comment = build_announce_comment(round_key, winners)
 
     # 정적 jpg → sparkle motion mp4 (월드컵 매치와 같은 톤)
     bgm = ROOT / "assets" / "bgm" / "daily_enter_theme_c.mp3"
