@@ -73,28 +73,78 @@ def _refresh_access_token() -> Optional[str]:
 def build_youtube_meta(title: str, hint: str, hashtags: List[str],
                        bio_url: str = "https://yunneom.github.io/daily_enter_kr/",
                        disclosure: str = "") -> tuple:
-    """YouTube Shorts 제목 + 설명 빌드.
+    """YouTube Shorts 제목 + 설명 빌드 — 2026 알고리즘 최적화.
 
-    제목: 토픽 제목 + #Shorts (Shorts 인식 필수)
-    설명: 힌트 + 해시태그 + bio + 디스클로저
+    [2026 YouTube Shorts 베스트 프랙티스]
+    - 제목에 #Shorts 필수 (Shorts feed 분류 신호)
+    - 제목 키워드 (질문/숫자) 가 클릭률 ↑
+    - 설명 첫 3줄이 가장 중요 (검색·관련영상 인덱싱)
+    - 해시태그는 3개로 집중 — 분산보다 강한 신호. 18개는 오히려 약함
+    - 설명 끝에 #Shorts (영상 분류 보조)
     """
+    # 제목: "OO #Shorts" → 좀 더 강한 hook 톤 (질문/도발)
+    # 너무 강하면 어색하니 기본은 그대로 + #Shorts
     yt_title = f"{title} #Shorts"[:100]
-    # 해시태그 정규화 (YouTube 는 설명 첫 3개를 제목 위에 표시)
-    tag_line = " ".join(h for h in hashtags[:15])
+
+    # 해시태그: 상위 3개만 prominent, 나머지는 끝에서 검색 매칭용
+    primary_3 = [h for h in hashtags if h.startswith("#")][:3]
+    extra = [h for h in hashtags if h.startswith("#")][3:12]
+    primary_line = " ".join(primary_3) if primary_3 else "#밸런스게임 #카드뉴스"
+    extra_line = " ".join(extra)
+
     desc_lines = [
+        # 첫 줄 = 가장 강한 신호. 제목 + 핵심 해시태그 3개 (YouTube 가 가장 우선 인덱싱)
         title,
+        primary_line,
         "",
         hint,
         "",
-        "👉 매일 새로운 밸런스 시리즈 · 구독 + 좋아요!",
+        "👉 매일 새로운 밸런스 시리즈! 구독 + 좋아요로 응원해주세요",
         f"📲 추천템·전체 시리즈: {bio_url}",
         "",
-        tag_line,
-        "#Shorts #밸런스게임 #쇼츠",
     ]
+    if extra_line:
+        desc_lines += [extra_line, ""]
+    # 끝 라인 = 분류 보조 (#Shorts 필수 + 한글 #쇼츠)
+    desc_lines.append("#Shorts #쇼츠 #밸런스게임 #shorts")
     if disclosure:
         desc_lines += ["", f"({disclosure})"]
     return yt_title, "\n".join(desc_lines)
+
+
+# 카테고리 ID 매핑 — 토픽 성격에 맞게 분류해서 추천 풀을 분산
+# Entertainment(24)는 BTS/연예인 압도적 경쟁 → 우리 같은 게임/체크리스트는 22/26이 유리
+# 24 = Entertainment   (스피너 픽 등 가벼운 엔터테인먼트)
+# 22 = People & Blogs  (직장인편/이상형 등 일상 공감)
+# 20 = Gaming          (밸런스게임 — 게이밍 풀 진입)
+# 26 = Howto & Style   (체크리스트형 매트릭스)
+# 17 = Sports          (축구 국대)
+_CATEGORY_MAP = {
+    # 스타일별 기본
+    "spinner": "20",         # Gaming (밸런스게임 풀)
+    "powerpick": "22",       # People & Blogs (일상 공감)
+    "spot_difference": "20", # Gaming (찾기 챌린지)
+    "soccer_squad": "17",    # Sports
+    "drawing": "22",         # People & Blogs
+    "emblem": "24",           # Entertainment (아이돌)
+    "photo": "26",            # Howto & Style (라이프 추천)
+}
+# 토픽 ID 별 override (스타일 기본보다 우선)
+_CATEGORY_OVERRIDE = {
+    "soccer_nationalteam_1000eok": "17",  # Sports
+    "spot_diff_bear": "20",                # Gaming
+    "child_pick_100man": "22",
+    "idealtype_10k": "22",
+    "job_pick_10k": "22",
+    "travel_30man": "19",                  # Travel & Events
+}
+
+
+def youtube_category_for(topic_id: str, style: str = "") -> str:
+    """토픽 → YouTube 카테고리 ID."""
+    if topic_id in _CATEGORY_OVERRIDE:
+        return _CATEGORY_OVERRIDE[topic_id]
+    return _CATEGORY_MAP.get(style or "", "24")
 
 
 def upload_short(video_path: Path, title: str, description: str,
@@ -139,7 +189,9 @@ def upload_short(video_path: Path, title: str, description: str,
             "metadata": ("metadata", json.dumps(meta), "application/json; charset=UTF-8"),
             "video": ("video", video_bytes, "video/*"),
         }
-        print(f"[YouTube 1/1] Shorts 업로드 ({len(video_bytes)//1024}KB)...")
+        kb = len(video_bytes) // 1024
+        print(f"[YouTube 1/1] Shorts 업로드 ({kb}KB · cat={category_id} · {privacy})...")
+        print(f"  title: {title[:60]}{'...' if len(title)>60 else ''}")
         resp = requests.post(
             UPLOAD_URL,
             headers={"Authorization": f"Bearer {token}"},
@@ -147,11 +199,14 @@ def upload_short(video_path: Path, title: str, description: str,
             timeout=180,
         )
         if not resp.ok:
-            print(f"  ❌ YouTube 업로드 실패 HTTP {resp.status_code}: {resp.text[:300]}")
+            print(f"  ❌ YouTube 업로드 실패 HTTP {resp.status_code}: {resp.text[:400]}")
             return None
         vid = resp.json().get("id")
         if vid:
             print(f"  ✅ YouTube Shorts 게시! https://youtube.com/shorts/{vid}")
+            # 영상 길이 검증 — 60s 넘으면 Shorts 분류 안 됨
+            if kb < 50:
+                print(f"  ⚠️  영상 용량 {kb}KB 너무 작음 — 정적 이미지 의심. Shorts retention 저조 가능")
         return vid
     except Exception as e:
         print(f"  ❌ YouTube 업로드 예외: {e}")

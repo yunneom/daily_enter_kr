@@ -101,6 +101,7 @@ TOPICS = {
                  "label": "편의점 캔맥"},
             ],
         ],
+        "auto_comment": "🍻 내 주말 5만원 조합은? 댓글로 ⬇️ 친구는 뭐 골랐나 대결!",
     },
 
     # 2) 점심 메뉴 — 사진 (음식)
@@ -148,6 +149,7 @@ TOPICS = {
                  "label": "생수 / 캔커피"},
             ],
         ],
+        "auto_comment": "🍱 내 1만 5천원 점심 조합은? 댓글로 ⬇️ 가성비 1등 가려보자!",
     },
 
     # 3) 걸그룹 올스타 — 엠블럼 카드 + 실명 (흰 배경 premium)
@@ -179,7 +181,7 @@ TOPICS = {
                 {"role_emoji": "✨", "name": "레이", "subtitle": "IVE"},
             ],
         ],
-        "auto_comment": "🤔 당신의 올스타 픽은? 더 좋은 조합 있으면 댓글로 ⬇️",
+        "auto_comment": "🤔 당신의 올스타 픽은? '카리나'·'채령'·'민지' 중 1순위는?\n🔖 저장 → 친구한테 시키기",
     },
 
     # 6) 아이돌 올스타 — 그룹별 멤버 1명 (흰 배경)
@@ -211,7 +213,7 @@ TOPICS = {
                 {"role_emoji": "👑", "name": "리즈"},
             ],
         ],
-        "auto_comment": "🤔 그룹별 픽 댓글로 ⬇️ 더 좋은 멤버 조합 있으면 알려주세요!",
+        "auto_comment": "🤔 그룹별 1명씩 픽 댓글로 ⬇️ '뉴진스민지·에스파카리나·IVE장원영' 베이스!\n🔖 저장 → 친구한테 시키기",
     },
 
     # 4) 이상형 만들기 — 그림 (추상 속성)
@@ -242,6 +244,7 @@ TOPICS = {
                 {"emoji": "🎒", "label": "취준 중"},
             ],
         ],
+        "auto_comment": "💘 내 1만원 이상형 조합은? 댓글로 ⬇️ 외모·성격·능력 어디 몰빵?",
     },
 
     # 7) 일시정지 챌린지 — 근육맨 (먹을지 vs 운동)
@@ -253,6 +256,7 @@ TOPICS = {
         # 짝수 인덱스 = 잡힘 (운동가기), 홀수 인덱스 = 절대 못 잡음 (음식)
         "options": ["운동가기", "엽떡먹기", "운동가기", "치킨먹기",
                     "운동가기", "소주먹기", "운동가기", "닭발먹기"],
+        "auto_comment": "😤 일시정지 성공했나요? 결국 운동행... 뭐 먹고 싶었는지 댓글로 ⬇️",
     },
 
     # 8) 일시정지 챌린지 — 운동복 (눕기 vs 운동)
@@ -532,40 +536,7 @@ TOPICS = {
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🌟 5세대 진짜 1티어 — BABYMONSTER·ILLIT·KIIIKIII·미야오·하투하·키스오브라이프! 더 강한 픽 있으면 댓글로 ⬇️",
-    },
-
-    # 16) 5세대 걸그룹 2티어편 — IZNA + Young Posse 다크호스 (col_pools 회전)
-    "girlgroup_5gen_tier2_10k": {
-        "style": "emblem",
-        "background_style": "white",
-        "title": "만원으로 5세대 걸그룹 2티어편",
-        "highlight": "2티어편",
-        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 5세대 다크호스!",
-        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
-        "row_prices": ["5천원", "3천원", "2천원"],
-        "col_pools": [
-            [
-                {"role_emoji": "🎤", "name": "사랑", "subtitle": "IZNA"},
-                {"role_emoji": "🎤", "name": "도은", "subtitle": "Young Posse"},
-                {"role_emoji": "🎤", "name": "마유나", "subtitle": "IZNA"},
-                {"role_emoji": "🎤", "name": "예은", "subtitle": "Young Posse"},
-            ],
-            [
-                {"role_emoji": "💃", "name": "정원", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "선혜", "subtitle": "Young Posse"},
-                {"role_emoji": "💃", "name": "지우", "subtitle": "IZNA"},
-                {"role_emoji": "💃", "name": "재희", "subtitle": "Young Posse"},
-            ],
-            [
-                {"role_emoji": "✨", "name": "사야", "subtitle": "IZNA"},
-                {"role_emoji": "✨", "name": "지아나", "subtitle": "Young Posse"},
-                {"role_emoji": "✨", "name": "코코로", "subtitle": "IZNA"},
-                {"role_emoji": "✨", "name": "윤지", "subtitle": "IZNA"},
-            ],
-        ],
-        "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🌠 5세대 다크호스 — IZNA·Young Posse! 1티어로 올라올 멤버는? 댓글로 ⬇️",
+        "auto_comment": "🌟 5세대 1티어 픽 댓글로 ⬇️ 'BABYMONSTER'·'ILLIT'·'KIIIKIII' 중 누가 진짜 1등?\n🔖 저장 → 1년 뒤 답 맞추기",
     },
 
     # 17) 4세대 걸그룹 1티어편 — 뉴진스/에스파/IVE/르세라핌 (col_pools 회전)
@@ -607,7 +578,7 @@ TOPICS = {
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🥇 4세대 진짜 1티어 — 더 강한 픽 있으면 댓글로 ⬇️ 너희가 생각하는 1티어는?",
+        "auto_comment": "🥇 본인 1티어 픽 댓글로 ⬇️ '카리나'·'장원영'·'민지' 중 1순위는?\n🔖 저장 → 친구한테 시키기 → 누가 안목 1등?",
     },
 
     # 18) 4세대 걸그룹 2티어편 — ITZY/NMIXX/(여자)아이들 (col_pools 회전)
@@ -643,7 +614,7 @@ TOPICS = {
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🥈 2티어도 만만찮다 — 누가 1티어급? 더 좋은 픽 있으면 댓글로 ⬇️",
+        "auto_comment": "🥈 본인 픽 댓글로 ⬇️ 2티어 중 '1티어급' 한 명만 꼽으면?\n🔖 저장 → 친구 픽이랑 비교",
     },
 
     # 19) 4세대 걸그룹 3티어편 — STAYC/Kep1er/Billlie/fromis_9 (col_pools 회전)
@@ -676,7 +647,7 @@ TOPICS = {
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🥉 3티어 다크호스 — 1티어로 올라올 멤버 댓글로 ⬇️ 더 좋은 픽 있으면 알려주세요!",
+        "auto_comment": "🥉 다음 시즌 1티어로 올라올 1명만 꼽으면? 댓글로 ⬇️\n🔖 저장 → 1년 뒤 맞춰보기",
     },
 
     # ════════════════════════════════════════════════════════════
@@ -720,7 +691,7 @@ TOPICS = {
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
-        "auto_comment": "🥇 4세대 보이그룹 1티어 — 스키즈·엔하이픈·TXT·RIIZE·ATEEZ·ZB1! 더 강한 픽 댓글로 ⬇️",
+        "auto_comment": "🥇 본인 1티어 보이 픽 댓글로 ⬇️ '필릭스'·'정원'·'태현' 중 1순위는?\n🔖 저장 → 친구한테 시키기",
     },
 
     "boygroup_4gen_tier2_10k": {
@@ -812,7 +783,7 @@ TOPICS = {
             {"emoji": "🌐", "label": "모든 언어\n즉시 마스터"},
             {"emoji": "📅", "label": "월요일\n영구 삭제"},
         ],
-        "auto_comment": "💬 단 하나만! 본인 픽 댓글로 ⬇️ 친구는 뭐 고를까?",
+        "auto_comment": "💬 직장인이라면 무조건 픽! 댓글로 ⬇️ '연봉 2배'·'평생 칼퇴'·'무한 연차' 중 1순위는?\n🔖 저장 → 친구한테 시키기",
     },
 
     # 학생편 — 학교는 다니되 학교생활 라이프 ↑↑↑
@@ -1081,6 +1052,17 @@ TOPICS = {
                 {"emoji": "😴", "label": "절대 안 지침"},
             ],
         ],
-        "auto_comment": "💫 당신의 1만원짜리 초능력 조합은? 댓글로 ⬇️",
+        "auto_comment": "💫 본인 픽 댓글로 ⬇️ '로또번호 알기'·'순간이동'·'시험답 알기' 중 1순위는?\n🔖 저장 → 친구한테 시키기",
+    },
+
+    # ════════════════════════════════════════════════════════════
+    #  틀린 곰 찾기 — spot-the-difference 퍼즐 (모구 대체 곰돌이)
+    #  seed 로 정답 위치 + 차이 종류 회전 → 매 게시 다른 퍼즐
+    # ════════════════════════════════════════════════════════════
+    "spot_diff_bear": {
+        "style": "spot_difference",
+        "title": "다른 곰은 하나!",
+        "subtitle": "어디 있을까?",
+        "auto_comment": "🐻 찾았으면 몇 번째 줄·몇 번째 댓글로 ⬇️ 10초 안에 찾으면 진짜 매의 눈!\n🔖 저장 → 친구한테 시켜보기",
     },
 }

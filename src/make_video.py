@@ -32,6 +32,88 @@ def _ensure_ffmpeg():
         )
 
 
+def make_motion_video(
+    image_path: Path,
+    output_path: Path,
+    duration: float = 18.0,
+    bgm_path: Optional[Path] = None,
+    motion: str = "kenburns_in",
+) -> Path:
+    """단일 정적 이미지에 Ken Burns(줌·팬) 모션 적용 → 동적 mp4.
+
+    [왜] YouTube Shorts 알고리즘은 60s 미만 65% retention 임계. 정적 6s mp4 는
+    시청자가 1초만에 스킵 → retention ~17% → 알고리즘 즉시 킬 → 0 view.
+    Ken Burns 효과로 영상에 모션 줘서 retention + watch-time 신호 부스트.
+
+    [모션 종류]
+    - kenburns_in: 1.0x → 1.18x 천천히 줌인 (가장 자연스러움, 매트릭스 카드 보기 좋음)
+    - kenburns_out: 1.18x → 1.0x 줌아웃 (호기심 자극 — 전체 → 디테일 → 풀)
+    - pan_down: 위→아래 천천히 (긴 매트릭스 카드에 적합)
+
+    [길이]
+    18초 = YouTube Shorts sweet spot. 너무 짧으면(6초) "보자마자 끝" 신호 X.
+    15-25초 구간이 retention·재생회수 양쪽에서 베스트.
+    """
+    _ensure_ffmpeg()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    total_frames = int(duration * FPS)
+    if motion == "kenburns_in":
+        # 줌 1.0 → 1.18 선형. d=총프레임 으로 한 번에 부드럽게.
+        zoom_expr = f"min(zoom+0.0015,1.18)"
+        # 중앙 약간 위쪽으로 (제목 영역 안 잘리게)
+        x_expr = "iw/2-(iw/zoom/2)"
+        y_expr = "ih/2.6-(ih/zoom/2.6)"
+    elif motion == "kenburns_out":
+        zoom_expr = f"max(zoom-0.0015,1.0)"
+        x_expr = "iw/2-(iw/zoom/2)"
+        y_expr = "ih/2.6-(ih/zoom/2.6)"
+    else:  # pan_down
+        zoom_expr = "1.18"
+        x_expr = "iw/2-(iw/zoom/2)"
+        # y 가 0 → ih*0.4 로 천천히 이동
+        y_expr = f"(ih/zoom-ih/zoom*0.6)*on/{total_frames}"
+
+    # 입력 해상도가 zoompan 후 출력 크기보다 작으면 scale 먼저
+    vf = (
+        f"scale=8000:-1,"  # 줌 화질 보존 위해 미리 확대 (메모리는 ffmpeg 가 알아서)
+        f"zoompan=z='{zoom_expr}':"
+        f"x='{x_expr}':y='{y_expr}':"
+        f"d={total_frames}:s={TARGET_W}x{TARGET_H}:fps={FPS},"
+        f"format=yuv420p"
+    )
+
+    cmd = [
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-loop", "1", "-framerate", str(FPS), "-i", str(image_path),
+    ]
+    if bgm_path and bgm_path.exists():
+        cmd += ["-i", str(bgm_path)]
+    cmd += [
+        "-vf", vf,
+        "-t", str(duration),
+        "-r", str(FPS),
+        "-c:v", "libx264", "-profile:v", "high", "-preset", "medium",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+    ]
+    if bgm_path and bgm_path.exists():
+        cmd += [
+            "-filter:a", f"volume={BGM_VOLUME},afade=t=in:st=0:d=0.4,"
+                         f"afade=t=out:st={duration-0.5}:d=0.5",
+            "-c:a", "aac", "-b:a", "192k",
+            "-shortest",
+        ]
+    else:
+        cmd += ["-an"]
+    cmd += [str(output_path)]
+
+    proc = subprocess.run(cmd, capture_output=True, text=True)
+    if proc.returncode != 0:
+        raise RuntimeError(f"ffmpeg motion video 실패: {proc.stderr[-1500:]}")
+    print(f"🎬 motion {motion} {duration}s → {output_path.name}")
+    return output_path
+
+
 def make_slideshow_video(
     image_paths: List[Path],
     output_path: Path,

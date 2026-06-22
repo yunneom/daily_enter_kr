@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-19T09:38:51.195931+09:00",
+  "last_run_at": "2026-06-22T09:21:24.776807+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1402,6 +1402,198 @@
       "caption_variant": "list_count",
       "media_id": "17919712293384128",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "bbf4498f2e96a0b9",
+      "card_title": "임지연·허남준·장승조, SBS '멋진 신세계' K-로코 명장면 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "05620d1d90d1b646",
+      "card_title": "故이서이, 벌써 1주기 맞이 — 팬들의 추모 이어져",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "7e8af88a8859da09",
+      "card_title": "신민아, 김우빈과 10년 열애 중 결혼관 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "faa0386fccf6b2bd",
+      "card_title": "이용진, '1박 2일'에서 인생 최대 위기 맞닥뜨려",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "e79b89eed7ae2396",
+      "card_title": "트와이스 사나, 의상 피팅 차이에 대해 직접 해명",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "d64aff46baa7b5ca",
+      "card_title": "임우일, 궁상 레전드 사연 공개 '형편한 시절의 생생한 추억'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "b0c8a6183604d94b",
+      "card_title": "배우 박중훈, 아들과 함께 월드컵 멕시코전 직관 성공",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-20",
+      "title_hash": "02a47dc2a0c5ab7a",
+      "card_title": "마마무 화사, 엔비디아 CEO 젠슨 황의 '샤라웃'에 반응",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18156120448476136",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "632be6356329c825",
+      "card_title": "박은영, 의사 남편과 하와이 신혼여행 즐기며 액티비티 만끽",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "1e1100665972792f",
+      "card_title": "채서안 '악플도 나에겐 긍정의 에너지' 배우의 특별한 마음가짐",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "ae9714a3b58acfd3",
+      "card_title": "윤병희 '멋진 신세계' 인터뷰, 차세계 역 허남준과의 호흡 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "2cf8c8e86385127c",
+      "card_title": "구구단 소이, 변호사와 8월 결혼 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "9f38bf1c61aab9dc",
+      "card_title": "권은비, 서울가수대상 본상 수상",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "903b9b6dee1b4383",
+      "card_title": "신혼 티파니, 변요한과의 결혼생활 공개 '세상 맞설 힘이 생겨'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "11c0aadea864f3a9",
+      "card_title": "70년대 인기가수 옥희 별세, 향년 73세",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-21",
+      "title_hash": "76b8933c7595e665",
+      "card_title": "하이브 마케팅팀 직원, 아일릿 매니저로 전참시 출연",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18119254111693297",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "5d39f7a966b695ce",
+      "card_title": "허남준 '멋진 신세계' 촬영 후기 공개 — 임지연·연진과 호흡",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "05bc662d176e7cb1",
+      "card_title": "안영미, 둘째 출산 앞두고 라디오 마지막 출근 인증",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "e310130e01a00020",
+      "card_title": "허영만 화백 쾌유를 기원하며, '백반기행' 7년 종영",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "d9c772ee43f9b030",
+      "card_title": "토이 스토리5, 주말 71만 관객 돌파…박스오피스 1위",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "4a0b4f22f5f7d8a6",
+      "card_title": "고아성, 홍상수 감독과의 협업 뒷이야기 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "a6569f8047cbe907",
+      "card_title": "엔하이픈 희승, 솔로 프로젝트 에반으로 새 출발",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "2aa609b6330c56b9",
+      "card_title": "스트레이 키즈, 24일 신곡 'RUN IT' 발매·월드투어 확정",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "2f5ff96a8d5760ed",
+      "card_title": "TXT 연준, 미니 2집 'NO LABELS' 트랙리스트 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
     }
   ]
 }

@@ -24,7 +24,7 @@ from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
 from make_powerpick_matrix import make_powerpick_matrix
 from make_soccer_squad_matrix import make_soccer_squad_matrix
-from make_video import make_slideshow_video
+from make_video import make_slideshow_video, make_motion_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
 from coupang_affiliate import (
@@ -41,7 +41,10 @@ BRAND = "👥 친구 소환 → 조합 대결! · 📲 스토리 공유 · @dail
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
 BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
-REEL_SECONDS = 6.0     # 단일 정적 이미지 표시 시간 (Reels 최소 3s)
+REEL_SECONDS = 18.0    # 단일 카드 영상 길이.
+                       # 6s 정적 → YouTube Shorts retention 즉사 → 0 view 였음.
+                       # 18s + Ken Burns 모션이 YT/IG 양쪽 sweet spot
+                       # (60s 미만 65% retention 임계 통과 + IG 도 충분 길이).
 
 # 주제별 niche 해시태그
 TOPIC_TAGS = {
@@ -85,10 +88,6 @@ TOPIC_TAGS = {
                                    "#BABYMONSTER", "#일릿", "#ILLIT", "#키스오브라이프",
                                    "#KISSOFLIFE", "#루카", "#원희", "#벨", "#아현",
                                    "#나띠", "#kpop", "#kpopfan"],
-    "girlgroup_5gen_tier2_10k": ["#케이팝", "#5세대걸그룹", "#아이즈나", "#IZNA",
-                                   "#하투하", "#Hearts2Hearts", "#미야오", "#MEOVV",
-                                   "#영파씨", "#YoungPosse", "#KIIIKIII", "#사랑",
-                                   "#카르멘", "#주은", "#kpop"],
     "girlgroup_4gen_tier1_10k": ["#케이팝", "#4세대걸그룹", "#뉴진스", "#에스파",
                                    "#아이브", "#르세라핌", "#카리나", "#장원영",
                                    "#민지", "#하니", "#카즈하", "#윈터", "#레이",
@@ -141,14 +140,9 @@ TOPIC_TAGS = {
     "power_budget_10k": ["#초능력", "#밸런스게임", "#로또", "#순간이동",
                           "#기상예측", "#슈퍼파워", "#카드뉴스",
                           "#일상공감", "#밈", "#릴스"],
-    "kpop_concept_love_hate": ["#케이팝", "#kpop", "#컨셉", "#걸크러쉬",
-                                "#청순컨셉", "#큐트댄스", "#이지리스닝",
-                                "#밸런스게임", "#호불호", "#카드뉴스",
-                                "#아이돌컨셉", "#릴스"],
-    "brand_rep_girlgroup": ["#브랜드평판", "#걸그룹", "#케이팝", "#kpop",
-                             "#장원영", "#제니", "#카리나", "#로제",
-                             "#리센느", "#원이", "#미나미", "#아이브",
-                             "#블랙핑크", "#TOP30", "#한국기업평판연구소"],
+    "spot_diff_bear": ["#틀린그림찾기", "#곰돌이", "#숨은그림찾기", "#두뇌게임",
+                        "#집중력테스트", "#관찰력", "#곰", "#귀여운",
+                        "#밈", "#카드뉴스", "#릴스", "#reels"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -244,6 +238,25 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         video_url = upload_video(local_mp4)
         return video_url, None
 
+    # ─── spot_difference: 틀린 곰 찾기 퍼즐 (seed 로 정답/차이 회전) ───
+    if style == "spot_difference":
+        from make_spot_difference import make_spot_difference
+        _, ans, _typ = make_spot_difference(
+            output_path=local_jpg, seed=seed,
+            title=topic["title"], subtitle=topic.get("subtitle", "어디 있을까?"),
+            brand=BRAND,
+        )
+        print(f"  🐻 정답: {ans}번째 ({_typ})")
+        bgm = _pick_bgm()
+        make_motion_video(
+            image_path=local_jpg, output_path=local_mp4,
+            duration=REEL_SECONDS, bgm_path=bgm,
+            motion='kenburns_in',
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
+
     # ─── soccer_squad: 5컬럼 × 3로우 + 절차적 캐릭터 헤드 + 미니 포메이션 ───
     if style == "soccer_squad":
         make_soccer_squad_matrix(
@@ -256,9 +269,10 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             cta_text=topic.get("cta_text", "💬 당신의 영입 조합은? 댓글로 ⬇️"),
         )
         bgm = _pick_bgm()
-        make_slideshow_video(
-            image_paths=[local_jpg], output_path=local_mp4,
-            durations=[REEL_SECONDS], bgm_path=bgm,
+        make_motion_video(
+            image_path=local_jpg, output_path=local_mp4,
+            duration=REEL_SECONDS, bgm_path=bgm,
+            motion='kenburns_in',
         )
         video_url = upload_video(local_mp4)
         cover_url = upload_image(local_jpg)
@@ -289,9 +303,10 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             source_note=topic.get("source_note", ""),
         )
         bgm = _pick_bgm()
-        make_slideshow_video(
-            image_paths=[local_jpg], output_path=local_mp4,
-            durations=[REEL_SECONDS], bgm_path=bgm,
+        make_motion_video(
+            image_path=local_jpg, output_path=local_mp4,
+            duration=REEL_SECONDS, bgm_path=bgm,
+            motion='kenburns_in',
         )
         video_url = upload_video(local_mp4)
         cover_url = upload_image(local_jpg)
@@ -326,12 +341,11 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         make_premium_matrix(**args)
 
     bgm = _pick_bgm()
-    make_slideshow_video(
-        image_paths=[local_jpg],
-        output_path=local_mp4,
-        durations=[REEL_SECONDS],
-        bgm_path=bgm,
-    )
+    make_motion_video(
+            image_path=local_jpg, output_path=local_mp4,
+            duration=REEL_SECONDS, bgm_path=bgm,
+            motion='kenburns_in',
+        )
     video_url = upload_video(local_mp4)
     cover_url = upload_image(local_jpg)
     return video_url, cover_url
@@ -349,6 +363,29 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         return {"topic_id": topic_id, "ok": False, "error": str(e)}
 
     caption = build_caption(topic_id, topic)
+    local_mp4 = OUTPUT_DIR / f"{topic_id}.mp4"
+
+    # ─── YouTube Shorts 먼저 업로드 (cold-start 개선) ───
+    # [왜] YouTube 가 IG 보다 먼저 인덱싱하게 해서 "원본 vs 재가공" 판정에서
+    # 우리 채널이 원본 측으로 분류되게. IG 먼저 → YT 시간차 30-90s 면 YT가
+    # reused/inauthentic 으로 의심 → 도달 0. 순서 뒤집어서 해결.
+    yt_id = None
+    if post_youtube.is_configured() and local_mp4.exists():
+        try:
+            hint = topic.get("rule_hint") or topic.get("hint", "")
+            tags = TOPIC_TAGS.get(topic_id, []) + COMMON_TAGS
+            yt_title, yt_desc = post_youtube.build_youtube_meta(
+                title=topic["title"], hint=hint, hashtags=tags,
+                disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
+            )
+            category_id = post_youtube.youtube_category_for(topic_id, topic.get("style"))
+            yt_id = post_youtube.upload_short(
+                local_mp4, yt_title, yt_desc, tags=tags,
+                category_id=category_id)
+        except Exception as e:
+            print(f"  ⚠️  YouTube 업로드 실패 (비치명): {e}")
+
+    # ─── IG Reels 게시 (YouTube 인덱싱 시작 후) ───
     try:
         media_id = publisher.post_reel(
             video_url=video_url, caption=caption,
@@ -357,11 +394,10 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
     except Exception as e:
         print(f"  ❌ IG 게시 실패: {e}")
         return {"topic_id": topic_id, "ok": False, "error": str(e),
-                "video_url": video_url, "cover_url": cover_url}
+                "video_url": video_url, "cover_url": cover_url,
+                "youtube_id": yt_id}
 
     # 자동 첫 댓글 — 첫 노출 댓글로 엔게이지먼트 시동 + 쿠팡 단축링크 시드.
-    # IG 코멘트 URL 은 자동 클릭 X 지만 텍스트로 노출 → 복사·터치 가능. 24h 라스트클릭
-    # 쿠키 발동을 위한 추가 채널 (bio 클릭 외).
     # 게시 직후 너무 빠른 댓글은 봇 패턴 우려 → 30초 대기.
     comment_text = topic.get("auto_comment") or _default_comment(topic.get("style"))
     aff_line = comment_affiliate_line(topic_id)
@@ -375,23 +411,7 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         except Exception as e:
             print(f"  ⚠️  자동 댓글 실패 (비치명): {e}")
 
-    # ─── 멀티플랫폼 신디케이션 (수익원 확장) ───
-    # 같은 mp4 를 YouTube Shorts 로 + 헤드라인을 Threads 로. 미설정 시 silent skip.
-    yt_id = None
     threads_id = None
-    local_mp4 = OUTPUT_DIR / f"{topic_id}.mp4"
-    if post_youtube.is_configured() and local_mp4.exists():
-        try:
-            hint = topic.get("rule_hint") or topic.get("hint", "")
-            tags = TOPIC_TAGS.get(topic_id, []) + COMMON_TAGS
-            yt_title, yt_desc = post_youtube.build_youtube_meta(
-                title=topic["title"], hint=hint, hashtags=tags,
-                disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
-            )
-            yt_id = post_youtube.upload_short(
-                local_mp4, yt_title, yt_desc, tags=tags)
-        except Exception as e:
-            print(f"  ⚠️  YouTube 업로드 실패 (비치명): {e}")
 
     if post_threads.is_configured():
         try:
