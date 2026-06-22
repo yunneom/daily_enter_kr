@@ -348,16 +348,35 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         try:
             hint = topic.get("rule_hint") or topic.get("hint", "")
             tags = TOPIC_TAGS.get(topic_id, []) + COMMON_TAGS
+            aff_url = get_topic_affiliate_url(topic_id)
+            from coupang_affiliate import get_topic_category, category_emoji
+            aff_label = ""
+            if aff_url:
+                cat = get_topic_category(topic_id)
+                aff_label = f"{category_emoji(cat)} {cat} 추천템"
             yt_title, yt_desc = post_youtube.build_youtube_meta(
                 title=topic["title"], hint=hint, hashtags=tags,
-                disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
+                disclosure=COUPANG_DISCLOSURE if aff_url else "",
+                affiliate_url=aff_url, affiliate_label=aff_label,
             )
             category_id = post_youtube.youtube_category_for(topic_id, topic.get("style"))
             yt_id = post_youtube.upload_short(
                 local_mp4, yt_title, yt_desc, tags=tags,
                 category_id=category_id)
+            # ─── 자동 댓글 2개 (force-ssl scope 필요. upload-only 면 silent skip) ───
+            if yt_id:
+                # 1) 토픽별 댓글 미션 (IG auto_comment 와 동일 톤)
+                ac = topic.get("auto_comment") or "💬 본인 픽 댓글로 남겨주세요!"
+                post_youtube.post_comment(yt_id, ac)
+                # 2) 어필리에이트 + 디스클로저 (단축링크 있는 토픽만)
+                if aff_url:
+                    aff_comment = (
+                        f"{aff_label} 🛒 {aff_url}\n"
+                        f"({COUPANG_DISCLOSURE})"
+                    )
+                    post_youtube.post_comment(yt_id, aff_comment)
         except Exception as e:
-            print(f"  ⚠️  YouTube 업로드 실패 (비치명): {e}")
+            print(f"  ⚠️  YouTube 업로드/댓글 실패 (비치명): {e}")
 
     # ─── IG Reels 게시 (YouTube 인덱싱 시작 후) ───
     try:
