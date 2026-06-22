@@ -39,6 +39,43 @@ CARD_BG = (255, 255, 255)
 VS_RED = (220, 50, 90)
 
 
+# 그룹 → 대표 emoji 매핑 (회사 IP 우회 + 시각 identity).
+# 팬덤 commonly used 컬러/모티프 기반. 안 보이면 ✨ 폴백.
+GROUP_EMOJI = {
+    "아이브": "👑",            # IVE — queen
+    "블랙핑크": "🩷",          # BP — pink
+    "에스파": "🦋",            # aespa — synk butterfly
+    "뉴진스": "🐰",            # NJ — bunny
+    "리센느": "💎",            # Lisenne — diamond
+    "아일릿": "🍓",            # ILLIT — strawberry
+    "르세라핌": "🔥",          # LE SSERAFIM — fearless flame
+    "엔믹스": "🎶",            # NMIXX — music mix
+    "레드벨벳": "❤️",          # RV — red
+    "트와이스": "✌️",          # TWICE — V sign
+    "ITZY": "⚡",             # ITZY — energy
+    "소녀시대": "⭐",          # SNSD — star
+    "우주소녀": "🌙",          # WJSN — cosmos
+    "시그니처": "🎼",          # tripleS — note
+    "마마무": "🌈",            # MAMAMOO — rainbow
+    "위키미키": "✏️",          # Weki Meki — sketch
+    "프로미스나인": "💫",      # fromis_9 — sparkle
+    "다이아": "💎",            # DIA — diamond
+    "베이비몬스터": "👶",      # BabyMonster — baby
+    "키스오브라이프": "💋",    # KISS OF LIFE — kiss
+    "미야오": "🐱",            # MEOVV — cat
+    "에이핑크": "🌸",          # Apink — sakura
+    "오마이걸": "🌷",          # Oh My Girl — tulip
+    "걸스데이": "👯",          # Girl's Day — twins
+    "피프티피프티": "🎯",      # FIFTY FIFTY — target
+    "트리플에스": "📐",        # tripleS — geometry
+    "케플러": "🪐",            # Kep1er — planet
+    "하츠투하츠": "💞",        # Hearts2Hearts — heart
+}
+
+def group_emoji_for(group: str) -> str:
+    return GROUP_EMOJI.get(group, "✨")
+
+
 def _font(weight: str, size: int):
     p = _resolve_font(weight)
     return ImageFont.truetype(p, size)
@@ -69,39 +106,29 @@ def _draw_centered(draw, text, font, cx, y, fill=WHITE, stroke=0, stroke_fill=No
 
 
 def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
-                 member: Dict, label_number: int,
-                 role_emoji: str = "✨"):
-    """단일 멤버 카드 — 흰 박스 + 이름 + 그룹 + 번호 배지."""
+                 member: Dict):
+    """단일 멤버 카드 — 흰 박스 + 그룹 emoji + 이름 + 그룹 + BR 순위.
+    인물 번호 배지 X (4지선다 1·2·3·4 와 혼동 방지)."""
     d = ImageDraw.Draw(img)
     # 카드 박스
     d.rounded_rectangle([x, y, x + w, y + h], radius=24,
                         fill=CARD_BG, outline=GOLD, width=4)
-    # 번호 배지 (좌상단)
-    badge_r = 38
-    bx, by = x + 14, y + 14
-    d.ellipse([bx, by, bx + badge_r * 2, by + badge_r * 2], fill=RED)
-    bf = _font("Bold", 48)
-    nstr = str(label_number)
-    bb = bf.getbbox(nstr)
-    nw = bb[2] - bb[0]
-    d.text((bx + badge_r - nw / 2 - 2, by + 4), nstr,
-           font=bf, fill=WHITE)
-    # 이모지 (중앙 상단)
-    em = _get_emoji_image(role_emoji, 110)
+    # 그룹 emoji (중앙 상단, 큼직)
+    grp = member.get("group", "")
+    em = _get_emoji_image(group_emoji_for(grp), 140)
     if em:
-        img.alpha_composite(em, (x + (w - 110) // 2, y + 90))
+        img.alpha_composite(em, (x + (w - 140) // 2, y + 30))
     # 이름 (중앙)
     name = member.get("member", "")
-    nf = _font("Bold", 58)
+    nf = _font("Bold", 62)
     bb = nf.getbbox(name)
     nw = bb[2] - bb[0]
-    d.text((x + (w - nw) / 2, y + 220), name, font=nf, fill=INK)
+    d.text((x + (w - nw) / 2, y + 200), name, font=nf, fill=INK)
     # 그룹 (이름 아래)
-    grp = member.get("group", "")
-    gf = _font("Medium", 32)
+    gf = _font("Medium", 34)
     bb = gf.getbbox(grp)
     gw = bb[2] - bb[0]
-    d.text((x + (w - gw) / 2, y + 286), grp, font=gf, fill=(120, 120, 130))
+    d.text((x + (w - gw) / 2, y + 274), grp, font=gf, fill=(120, 120, 130))
     # BR 순위 (선택)
     rk = member.get("rank")
     if rk:
@@ -118,9 +145,8 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
 
 
 def _match_block(img: Image.Image, x0: int, y0: int, width: int,
-                 match_idx: int, a: Dict, b: Dict,
-                 a_label: int, b_label: int):
-    """매치 1개 — 두 멤버 카드 + 중앙 VS."""
+                 match_idx: int, a: Dict, b: Dict):
+    """매치 1개 — 두 멤버 카드 + 중앙 VS. 인물 번호 X (4지선다와 분리)."""
     d = ImageDraw.Draw(img)
     # 매치 라벨
     lf = _font("Bold", 36)
@@ -142,9 +168,8 @@ def _match_block(img: Image.Image, x0: int, y0: int, width: int,
     left_x = x0
     right_x = x0 + card_w + gap + vs_w + gap
 
-    role = "💃" if match_idx % 2 == 0 else "✨"
-    _member_card(img, left_x, card_y, card_w, card_h, a, a_label, role_emoji=role)
-    _member_card(img, right_x, card_y, card_w, card_h, b, b_label, role_emoji=role)
+    _member_card(img, left_x, card_y, card_w, card_h, a)
+    _member_card(img, right_x, card_y, card_w, card_h, b)
 
     # VS 텍스트 (중앙)
     vsf = _font("Bold", 120)
@@ -255,11 +280,11 @@ def make_worldcup_match_card(
 
     # === 매치 1 ===
     _match_block(img, 30, 245, CANVAS[0] - 60, 1,
-                 match1["a"], match1["b"], a_label=1, b_label=2)
+                 match1["a"], match1["b"])
 
     # === 매치 2 ===
     _match_block(img, 30, 765, CANVAS[0] - 60, 2,
-                 match2["a"], match2["b"], a_label=3, b_label=4)
+                 match2["a"], match2["b"])
 
     # === 4지선다 ===
     _choice_grid(img, 1310, match1["a"], match1["b"],
