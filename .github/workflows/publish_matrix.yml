@@ -72,6 +72,11 @@ jobs:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          # abc 송(@sunnyandgigi) 음악 크레딧 — 캡션/댓글/YT설명에 풀버전 링크.
+          # MUSIC_YT_URL 미설정 시 전체 silent skip (기존 동작 유지).
+          MUSIC_YT_URL: ${{ secrets.MUSIC_YT_URL }}
+          MUSIC_TITLE: ${{ secrets.MUSIC_TITLE }}
+          MUSIC_HANDLE: ${{ secrets.MUSIC_HANDLE }}
           # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
           # 수동 dispatch 우선. cron 호출 시 21:00 KST(UTC 12:00) 슬롯은 스피너 전용,
           # 나머지 cron 슬롯은 매트릭스 회전.
