@@ -22,6 +22,17 @@
       "youtube_id": "FxbjyhecgR0",
       "threads_id": null,
       "bgm": "ambient_warm.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T01:51:38.142125+09:00",
+      "topic_id": "spinner_food_man",
+      "title": "먹을지 vs 운동 갈지",
+      "style": "spinner",
+      "seed": 1915,
+      "ig_media_id": "17901908937298312",
+      "youtube_id": "bfoMiCYjBVw",
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
