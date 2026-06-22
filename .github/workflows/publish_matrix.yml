@@ -78,17 +78,36 @@ jobs:
           TOPIC: ${{ inputs.topic || (github.event.schedule == '0 12 * * *' && 'auto_spinner' || 'auto_matrix') }}
         run: python scripts/publish_matrix.py
 
-      - name: Commit landing page (docs/index.html) if changed
+      - name: Fetch IG insights (게시별 + 계정 단위 abc송 퍼널)
         if: success()
+        env:
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: python fetch_insights.py
+        continue-on-error: true  # 인사이트 실패해도 게시 자체는 성공 처리
+
+      - name: Cross-platform 통합 분석 (IG↔YT 조인 + abc송 퍼널 + BGM A/B)
+        if: success()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python cross_platform_report.py
+        continue-on-error: true
+
+      - name: Commit landing + ledger + insights + cross-platform report
+        if: always()
         run: |
-          if git diff --quiet docs/ 2>/dev/null; then
-            echo "랜딩 페이지 변경 없음 — 커밋 스킵"
+          changes=""
+          if [ -n "$(git status --porcelain docs/ 2>/dev/null)" ]; then changes="$changes docs/"; fi
+          if [ -f post_ledger.json ] && [ -n "$(git status --porcelain post_ledger.json 2>/dev/null)" ]; then changes="$changes post_ledger.json"; fi
+          if [ -f insights.json ] && [ -n "$(git status --porcelain insights.json 2>/dev/null)" ]; then changes="$changes insights.json"; fi
+          if [ -z "$changes" ]; then
+            echo "변경 없음 — 커밋 스킵"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          git commit -m "랜딩 페이지 갱신 — $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          git add $changes
+          git commit -m "matrix state: $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
           BRANCH="${GITHUB_REF_NAME}"
           git pull --rebase --autostash origin "$BRANCH" || true
           git push origin "HEAD:$BRANCH"

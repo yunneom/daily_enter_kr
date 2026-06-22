@@ -106,6 +106,64 @@ def fetch_recent_media(ig_user_id: str, token: str, limit: int = MEDIA_FETCH_LIM
 REELS_INSIGHT_METRICS = ["plays", "reach", "saved", "shares", "total_interactions"]
 
 
+# ─── 계정 단위 인사이트 (abc 송 퍼널 프록시) ───
+# [정직한 한계] IG Graph API 는 "오디오 페이지 클릭 수"를 노출하지 않음.
+# 따라서 abc 송이 트래픽을 만드는지는 다음 계정 단위 신호로 간접 측정:
+#   profile_views  — 음원/게시물 → 프로필 방문 (오디오 라벨 탭의 주 도착지)
+#   website_clicks — 프로필 bio 링크(=YT) 클릭. 퍼널의 최종 도착
+#   reach          — 전체 도달 (분모)
+#   accounts_engaged / follower_count — 보조
+# 이 일별 추세를 abc 송 도입 전/후로 비교하면 음원 효과를 근사할 수 있음.
+ACCOUNT_METRICS_TOTAL = ["reach", "profile_views", "website_clicks",
+                         "accounts_engaged"]
+ACCOUNT_METRICS_PLAIN = ["follower_count"]
+
+
+def fetch_account_insights(ig_user_id: str, token: str) -> dict:
+    """계정 단위 일별 인사이트. 메트릭별 grace — 일부 막혀도 나머지 수집.
+
+    2025+ Graph API 변경으로 일부 메트릭은 metric_type=total_value 필요.
+    두 호출 형태(total_value / plain)로 나눠 시도하고, 실패한 메트릭은 조용히 스킵.
+    """
+    out = {}
+    base = f"{GRAPH_BASE}/{ig_user_id}/insights"
+
+    # 1) total_value 형식 (reach/profile_views/website_clicks/accounts_engaged)
+    try:
+        resp = requests.get(base, params={
+            "metric": ",".join(ACCOUNT_METRICS_TOTAL),
+            "metric_type": "total_value",
+            "period": "day",
+            "access_token": token,
+        }, timeout=20)
+        if resp.ok:
+            for item in resp.json().get("data", []):
+                name = item.get("name")
+                tv = item.get("total_value") or {}
+                if name and "value" in tv:
+                    out[name] = tv["value"]
+    except Exception:
+        pass
+
+    # 2) plain 형식 (follower_count — values 배열)
+    try:
+        resp = requests.get(base, params={
+            "metric": ",".join(ACCOUNT_METRICS_PLAIN),
+            "period": "day",
+            "access_token": token,
+        }, timeout=20)
+        if resp.ok:
+            for item in resp.json().get("data", []):
+                name = item.get("name")
+                vals = item.get("values", [])
+                if name and vals:
+                    out[name] = vals[-1].get("value")
+    except Exception:
+        pass
+
+    return out
+
+
 def fetch_reels_insights(media_id: str, token: str) -> dict:
     """단일 Reels 의 plays/reach/saved/shares 등 인사이트.
     실패해도 빈 dict 반환 — 일부 메트릭만 막혀있는 경우도 있어서 게시별 grace.
@@ -173,15 +231,26 @@ def main():
 
         snapshot_posts.append(post_data)
 
+    # 계정 단위 인사이트 (abc 송 퍼널 프록시 — profile_views/website_clicks 등)
+    account = fetch_account_insights(ig_user_id, token)
+
     data = load_insights()
-    # 버전 마이그레이션: v1 → v2 (Reels insights 추가). 기존 스냅샷은 그대로 둠.
-    data["version"] = 2
+    # 버전 마이그레이션: v2 → v3 (계정 단위 인사이트 추가). 기존 스냅샷은 그대로 둠.
+    data["version"] = 3
     data["snapshots"].append({
         "snapshot_at": now.isoformat(),
+        "account": account,
         "posts": snapshot_posts,
     })
     save_insights(data)
 
+    if account:
+        print(f"✓ 계정 인사이트 — 👤프로필조회 {account.get('profile_views','-')} "
+              f"🔗bio클릭 {account.get('website_clicks','-')} "
+              f"📡reach {account.get('reach','-')} "
+              f"팔로워 {account.get('follower_count','-')}")
+    else:
+        print("⚠️  계정 인사이트 비어있음 (권한/메트릭 변경 가능 — 게시별 인사이트는 정상)")
     print(f"✓ 인사이트 스냅샷 저장 — {len(snapshot_posts)}개 게시물")
     for p in snapshot_posts[:5]:
         likes = p["like_count"] if p["like_count"] is not None else "-"
