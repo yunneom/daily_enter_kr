@@ -214,12 +214,45 @@ def build_caption(topic_id: str, topic: dict) -> str:
 # build_and_upload 가 _pick_bgm() 호출 시 갱신, publish_one 이 읽어 결과에 주입.
 _LAST_BGM = None
 
+# 시그니처 BGM 분기 — 컨텍스트별 톤 매치 (A: 밝은 K-pop / C: 게임 톤)
+# 미존재 시 같은 폴더 내 다른 mp3 폴백.
+# topic_id 매핑이 우선 (특정 토픽만 다른 톤), style 매핑이 폴백.
+_BGM_BY_TOPIC = {
+    "slot_girlgroup_5x3": "daily_enter_theme_a.mp3",  # 걸그룹 슬롯 — A 톤 (밝게)
+    "slot_boygroup_5x3":  "daily_enter_theme_c.mp3",  # 보이그룹 슬롯 — C 톤 (다크)
+}
+_BGM_BY_STYLE = {
+    "spinner":         "daily_enter_theme_c.mp3",   # 일시정지 챌린지 — 긴장감
+    "brand_chart":     "daily_enter_theme_c.mp3",   # TOP30 차트 — 에픽
+    "worldcup_match":  "daily_enter_theme_c.mp3",   # 월드컵 매치 — 게임 톤
+    # 기본 (matrix/emblem/photo/drawing/powerpick) → A
+}
+_BGM_DEFAULT = "daily_enter_theme_a.mp3"
 
-def _pick_bgm():
+
+def _pick_bgm(style: str = None, topic_id: str = None):
+    """토픽 id/style 에 맞는 시그니처 BGM 선택. 없으면 폴더 내 fallback.
+
+    Priority: topic_id 매핑 > style 매핑 > default(A) > 폴더 랜덤.
+    """
     global _LAST_BGM
     if not BGM_DIR.exists():
         _LAST_BGM = None
         return None
+    # topic_id 명시 매핑 우선
+    target = None
+    if topic_id and topic_id in _BGM_BY_TOPIC:
+        target = _BGM_BY_TOPIC[topic_id]
+    elif style and style in _BGM_BY_STYLE:
+        target = _BGM_BY_STYLE[style]
+    else:
+        target = _BGM_DEFAULT
+
+    p = BGM_DIR / target
+    if p.exists():
+        _LAST_BGM = p.name
+        return p
+    # 폴백: 같은 폴더 어떤 mp3 든
     candidates = sorted(BGM_DIR.glob("*.mp3"))
     chosen = _random.choice(candidates) if candidates else None
     _LAST_BGM = chosen.name if chosen else None
@@ -268,7 +301,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             brand=BRAND,
         )
         print(f"  🐻 정답: {ans}번째 ({_typ})")
-        bgm = _pick_bgm()
+        bgm = _pick_bgm(style, topic_id)
         make_motion_video(
             image_path=local_jpg, output_path=local_mp4,
             duration=REEL_SECONDS, bgm_path=bgm,
@@ -289,7 +322,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             source_note=topic.get("source_note", ""),
             cta_text=topic.get("cta_text", "💬 당신의 영입 조합은? 댓글로 ⬇️"),
         )
-        bgm = _pick_bgm()
+        bgm = _pick_bgm(style, topic_id)
         make_motion_video(
             image_path=local_jpg, output_path=local_mp4,
             duration=REEL_SECONDS, bgm_path=bgm,
@@ -306,7 +339,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         if not data_path.exists():
             raise FileNotFoundError(f"브랜드평판 데이터 파일 없음: {data_path}")
         make_brand_reputation_chart(data_path=data_path, output_path=local_jpg)
-        bgm = _pick_bgm()
+        bgm = _pick_bgm(style, topic_id)
         make_slideshow_video(
             image_paths=[local_jpg], output_path=local_mp4,
             durations=[REEL_SECONDS], bgm_path=bgm,
@@ -318,7 +351,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
     # ─── slot_machine: 3열 다른 방향 스크롤 mp4 + 빨강 PICK zone ───
     if style == "slot_machine":
         from make_slot_machine_video import make_slot_machine_video
-        bgm = _pick_bgm()
+        bgm = _pick_bgm(style, topic_id)
         make_slot_machine_video(
             title=topic["title"],
             rule_hint=topic.get("rule_hint", "멈춰서 본인 픽 만들기!"),
@@ -342,7 +375,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             picks=picks, output_path=local_jpg, brand=BRAND,
             source_note=topic.get("source_note", ""),
         )
-        bgm = _pick_bgm()
+        bgm = _pick_bgm(style, topic_id)
         make_motion_video(
             image_path=local_jpg, output_path=local_mp4,
             duration=REEL_SECONDS, bgm_path=bgm,
@@ -380,7 +413,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
     else:
         make_premium_matrix(**args)
 
-    bgm = _pick_bgm()
+    bgm = _pick_bgm(style, topic_id)
     make_motion_video(
             image_path=local_jpg, output_path=local_mp4,
             duration=REEL_SECONDS, bgm_path=bgm,
@@ -485,6 +518,13 @@ def _default_comment(style: str) -> str:
 
 
 def main() -> int:
+    # 🏆 걸그룹 월드컵 캠페인 (6/23~29) 기간 동안 매트릭스 자동 게시 일시정지 —
+    # 시청자 어텐션을 월드컵에 집중. cron 자체는 유지 (캠페인 후 자연 재개).
+    from datetime import date as _date
+    _CAMPAIGN_DATES = {_date(2026, 6, d) for d in range(23, 30)}
+    if _date.today() in _CAMPAIGN_DATES:
+        print("🏆 걸그룹 월드컵 캠페인 기간 — 매트릭스 자동 게시 일시정지")
+        return 0
     target = os.environ.get("TOPIC", "all").strip().lower()
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
