@@ -33,6 +33,7 @@ from coupang_affiliate import (
 )
 import post_youtube
 import post_threads
+import post_ledger
 import random as _random
 
 
@@ -194,11 +195,20 @@ def build_caption(topic_id: str, topic: dict) -> str:
     return "\n".join(lines)
 
 
+# 마지막으로 선택된 BGM 파일명 — 원장(post_ledger) 음원 A/B 추적용.
+# build_and_upload 가 _pick_bgm() 호출 시 갱신, publish_one 이 읽어 결과에 주입.
+_LAST_BGM = None
+
+
 def _pick_bgm():
+    global _LAST_BGM
     if not BGM_DIR.exists():
+        _LAST_BGM = None
         return None
     candidates = sorted(BGM_DIR.glob("*.mp3"))
-    return _random.choice(candidates) if candidates else None
+    chosen = _random.choice(candidates) if candidates else None
+    _LAST_BGM = chosen.name if chosen else None
+    return chosen
 
 
 def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
@@ -394,7 +404,9 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
 
     return {"topic_id": topic_id, "ok": True, "media_id": media_id,
             "video_url": video_url, "cover_url": cover_url,
-            "youtube_id": yt_id, "threads_id": threads_id}
+            "youtube_id": yt_id, "threads_id": threads_id,
+            "title": topic.get("title", ""), "style": topic.get("style", ""),
+            "seed": seed, "bgm": _LAST_BGM}
 
 
 def _default_comment(style: str) -> str:
@@ -476,6 +488,17 @@ def main() -> int:
             time.sleep(INTER_POST_SLEEP)
         # 'all' 모드는 토픽마다 시드를 약간 어긋나게 (i 더함) → 라인업 다양화
         results.append(publish_one(tid, topic, publisher, seed=run_seed + i))
+
+    # 게시 원장 기록 — IG↔YT↔topic 조인 키 + 음원 추적 (크로스플랫폼 분석 기반)
+    try:
+        n_ledger = post_ledger.record_results(
+            [r for r in results if r.get("ok")],
+            bgm=results[0].get("bgm") if results else None,
+        )
+        if n_ledger:
+            print(f"📒 게시 원장 기록: {n_ledger}건 (post_ledger.json)")
+    except Exception as e:
+        print(f"  ⚠️  원장 기록 실패 (비치명): {e}")
 
     # 요약
     print("\n" + "=" * 50)
