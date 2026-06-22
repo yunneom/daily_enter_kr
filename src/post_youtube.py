@@ -41,7 +41,13 @@ UPLOAD_URL = (
     "https://www.googleapis.com/upload/youtube/v3/videos"
     "?uploadType=multipart&part=snippet,status"
 )
-SCOPE = "https://www.googleapis.com/auth/youtube.upload"
+COMMENT_URL = (
+    "https://www.googleapis.com/youtube/v3/commentThreads"
+    "?part=snippet"
+)
+# 댓글 기능까지 쓰려면 force-ssl 스코프 필요 (upload 만으로는 댓글 불가).
+# 이 코드는 force-ssl 로 받은 refresh_token 도 자동 인식 — 업그레이드 안 했으면 댓글만 silent skip.
+SCOPE = "https://www.googleapis.com/auth/youtube.force-ssl"
 
 
 def is_configured() -> bool:
@@ -72,7 +78,9 @@ def _refresh_access_token() -> Optional[str]:
 
 def build_youtube_meta(title: str, hint: str, hashtags: List[str],
                        bio_url: str = "https://yunneom.github.io/daily_enter_kr/",
-                       disclosure: str = "") -> tuple:
+                       disclosure: str = "",
+                       affiliate_url: Optional[str] = None,
+                       affiliate_label: str = "") -> tuple:
     """YouTube Shorts 제목 + 설명 빌드 — 2026 알고리즘 최적화.
 
     [2026 YouTube Shorts 베스트 프랙티스]
@@ -101,8 +109,12 @@ def build_youtube_meta(title: str, hint: str, hashtags: List[str],
         "",
         "👉 매일 새로운 밸런스 시리즈! 구독 + 좋아요로 응원해주세요",
         f"📲 추천템·전체 시리즈: {bio_url}",
-        "",
     ]
+    # 쿠팡 단축링크 — YT 는 IG 캡션과 달리 외부 링크 클릭 가능 → 24h 라스트클릭 시드 채널 +1
+    if affiliate_url:
+        label = affiliate_label or "오늘의 추천템"
+        desc_lines += ["", f"🛒 {label}: {affiliate_url}"]
+    desc_lines.append("")
     if extra_line:
         desc_lines += [extra_line, ""]
     # 끝 라인 = 분류 보조 (#Shorts 필수 + 한글 #쇼츠)
@@ -210,6 +222,51 @@ def upload_short(video_path: Path, title: str, description: str,
         return vid
     except Exception as e:
         print(f"  ❌ YouTube 업로드 예외: {e}")
+        return None
+
+
+def post_comment(video_id: str, text: str) -> Optional[str]:
+    """업로드 영상에 자동 첫 댓글 작성.
+
+    YouTube API commentThreads.insert. quota = 50 units / call (저렴).
+    필요 scope: youtube.force-ssl (또는 youtube). upload-only refresh_token 으로는
+    403 떨어짐 — 그 경우 scope-upgrade 안내 출력하고 silent skip.
+    """
+    if not is_configured():
+        return None
+    token = _refresh_access_token()
+    if not token:
+        return None
+    payload = {
+        "snippet": {
+            "videoId": video_id,
+            "topLevelComment": {
+                "snippet": {"textOriginal": text[:9990]},
+            },
+        },
+    }
+    try:
+        resp = requests.post(
+            COMMENT_URL,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+            json=payload, timeout=30,
+        )
+        if resp.status_code == 403:
+            print("  ⚠️  YouTube 댓글 403 — OAuth scope 업그레이드 필요")
+            print("     해결: docs/youtube/scope-upgrade.md 참고")
+            return None
+        if not resp.ok:
+            print(f"  ❌ YouTube 댓글 실패 HTTP {resp.status_code}: {resp.text[:300]}")
+            return None
+        cid = resp.json().get("id")
+        if cid:
+            print(f"  💬 YouTube 댓글: {cid}")
+        return cid
+    except Exception as e:
+        print(f"  ❌ YouTube 댓글 예외: {e}")
         return None
 
 
