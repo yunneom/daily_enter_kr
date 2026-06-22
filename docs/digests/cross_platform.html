@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>크로스플랫폼 통합 분석 — @daily_enter_kr</title>
+<style>
+  :root{--bg:#0f1115;--panel:#161a22;--line:#262c38;--text:#e7e9ee;
+    --muted:#9aa3b2;--accent:#7c9cff;--ok:#5dd39e;--warn:#ffb86b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:14px/1.55 'Pretendard','Apple SD Gothic Neo',-apple-system,sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:48px 24px}
+  h1{font-size:30px;margin:0;letter-spacing:-.02em}
+  h2{font-size:20px;margin:40px 0 8px;border-top:1px solid var(--line);padding-top:28px}
+  .sub{color:var(--muted);margin:6px 0 14px}
+  .kicker{color:var(--accent);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  .banner{background:#2a2410;border:1px solid var(--warn);border-radius:10px;
+    padding:12px 16px;margin:18px 0;color:var(--warn);font-size:13px}
+  .banner code{color:#ffd9a0}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0 20px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .num{font-variant-numeric:tabular-nums;text-align:right;width:78px}
+  .muted{color:var(--muted)}
+  .bgm{font-size:11px;color:var(--muted)}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted);font-size:12px}
+  .footnote{color:var(--muted);font-size:12px;margin-top:48px;border-top:1px solid var(--line);padding-top:18px}
+</style></head><body><div class="wrap">
+
+<div class="kicker">cross-platform · 자동 생성</div>
+<h1>크로스플랫폼 통합 분석</h1>
+<div class="sub">@daily_enter_kr · 최근 14일 · 게시 1건 ·
+YT 조인 0건 · 생성 2026-06-22 18:44 KST</div>
+
+<div class="banner">⏳ YouTube 인사이트 미연동 — <code>insights_youtube.json</code> 이 생기면
+(2주 뒤 #1 YT Shorts 인사이트 수집) YT views·retention 컬럼이 자동 점등됩니다.
+현재는 IG·퍼널·BGM 섹션만 활성.</div>
+
+<h2>1. abc 송 퍼널 — 계정 단위 추세</h2>
+<p class="sub">오디오 → 프로필 방문(profile_views) → bio 링크 클릭(website_clicks=YT 도착).
+IG API 는 오디오별 클릭을 노출하지 않으므로 이 계정 단위 추세가 음원 퍼널의 근사치입니다.</p>
+<table>
+<thead><tr><th>일자</th><th class="num">👤 프로필조회</th><th class="num">🔗 bio클릭</th>
+<th class="num">📡 reach</th><th class="num">팔로워</th></tr></thead>
+<tbody>
+      <tr>
+        <td><span class="mono">2026-06-22</span></td>
+        <td class="num">358</td>
+        <td class="num">2</td>
+        <td class="num">123402</td>
+        <td class="num">—</td>
+      </tr></tbody>
+</table>
+<p class="sub" style="font-size:12px">abc 송 도입일 전후로 profile_views·website_clicks 가 오르면 음원 효과 신호.</p>
+
+<h2>2. 토픽별 IG ↔ YouTube 성과</h2>
+<p class="sub">같은 mp4 가 두 플랫폼에서 어떻게 다른지. reach 내림차순.</p>
+<table>
+<thead><tr><th>일자</th><th>토픽</th>
+<th class="num">IG reach</th><th class="num">IG shares</th><th class="num">IG saved</th>
+<th class="num">YT views</th><th class="num">YT retention</th><th>BGM</th></tr></thead>
+<tbody>
+      <tr>
+        <td><span class="mono">2026-06-22</span></td>
+        <td>만 5천원으로 점심 즐기기</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num muted">대기</td><td class="num muted">대기</td>
+        <td class="bgm">ambient_calm.mp3</td>
+      </tr></tbody>
+</table>
+
+<h2>3. BGM A/B — 음원별 평균 성과</h2>
+<p class="sub">abc 송(전용 전환 후) vs 기존 ambient 의 IG 평균 reach/shares/saved 비교.</p>
+<table>
+<thead><tr><th>BGM</th><th class="num">n</th>
+<th class="num">avg reach</th><th class="num">avg shares</th>
+<th class="num">avg saved</th><th class="num">avg likes</th></tr></thead>
+<tbody>
+      <tr>
+        <td><strong>ambient_calm.mp3</strong> (표본 적음)</td>
+        <td class="num">1</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+      </tr></tbody>
+</table>
+<p class="sub" style="font-size:12px">전용 모드면 모든 게시가 같은 BGM → A/B 비교는
+도입 전 기존 ambient 데이터가 window 에 남아있는 동안만 의미. 효과 보려면
+초기엔 혼합 권장.</p>
+
+<div class="footnote">
+자동 생성 · cross_platform_report.py · 2026-06-22T18:44:00.323137+09:00<br/>
+소스: post_ledger.json (조인) · insights.json (IG) · insights_youtube.json (YT ⏳대기)
+</div>
+</div></body></html>
