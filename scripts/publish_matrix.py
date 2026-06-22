@@ -34,6 +34,7 @@ from coupang_affiliate import (
 import post_youtube
 import post_threads
 import post_ledger
+import music_credit
 import random as _random
 
 
@@ -181,6 +182,10 @@ def build_caption(topic_id: str, topic: dict) -> str:
     ]
     if bio_cta:
         lines += ["", bio_cta]
+    # abc 송 음악 크레딧 — MUSIC_YT_URL 설정 시에만 (미설정 silent skip)
+    music_block = music_credit.caption_music_block()
+    if music_block:
+        lines += ["", music_block]
     lines += ["", "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요."]
     # 디스클로저는 어필리에이트 링크 노출 시에만 (공정위 표시 의무 해당)
     if has_affiliate:
@@ -377,6 +382,7 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
             yt_title, yt_desc = post_youtube.build_youtube_meta(
                 title=topic["title"], hint=hint, hashtags=tags,
                 disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
+                music_block=music_credit.youtube_music_block(),
             )
             category_id = post_youtube.youtube_category_for(topic_id, topic.get("style"))
             yt_id = post_youtube.upload_short(
@@ -403,6 +409,10 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
     aff_line = comment_affiliate_line(topic_id)
     if comment_text and aff_line:
         comment_text = f"{comment_text}\n\n{aff_line}\n({COUPANG_DISCLOSURE})"
+    # abc 송 음악 크레딧 한 줄 — 댓글로도 노출 (MUSIC_YT_URL 설정 시)
+    music_line = music_credit.comment_music_line()
+    if comment_text and music_line:
+        comment_text = f"{comment_text}\n\n{music_line}"
     if comment_text:
         time.sleep(30)
         try:

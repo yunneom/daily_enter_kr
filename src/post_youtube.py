@@ -72,7 +72,7 @@ def _refresh_access_token() -> Optional[str]:
 
 def build_youtube_meta(title: str, hint: str, hashtags: List[str],
                        bio_url: str = "https://yunneom.github.io/daily_enter_kr/",
-                       disclosure: str = "") -> tuple:
+                       disclosure: str = "", music_block: str = "") -> tuple:
     """YouTube Shorts 제목 + 설명 빌드 — 2026 알고리즘 최적화.
 
     [2026 YouTube Shorts 베스트 프랙티스]
@@ -103,6 +103,9 @@ def build_youtube_meta(title: str, hint: str, hashtags: List[str],
         f"📲 추천템·전체 시리즈: {bio_url}",
         "",
     ]
+    # abc 송 음악 크레딧 — YT 설명은 외부 링크 클릭 가능 → 가장 강한 트래픽 경로
+    if music_block:
+        desc_lines += [music_block, ""]
     if extra_line:
         desc_lines += [extra_line, ""]
     # 끝 라인 = 분류 보조 (#Shorts 필수 + 한글 #쇼츠)

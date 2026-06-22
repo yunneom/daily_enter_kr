@@ -1,0 +1,23 @@
+{
+  "_comment": "abc 송 A~O 15곡 메타데이터 입력 양식. 이 파일을 data/music_tracks.json 으로 복사 → 곡 정보 채우고 scripts/generate_music_metadata.py 실행. 아래 값은 형식 참고용 placeholder (실제 장르/무드로 교체).",
+  "artist": "Sunny & Gigi",
+  "artist_handle_ig": "@sunnyandgigi.official",
+  "artist_handle_yt": "@sunnyandgigi",
+  "tracks": [
+    {
+      "code": "A",
+      "title": "(곡 제목)",
+      "title_en": "(English title, optional)",
+      "genre": "(장르 — 예: Pop / Ballad / Dance / Kids)",
+      "mood": ["(분위기1)", "(분위기2)"],
+      "bpm": 0,
+      "language": "한국어",
+      "duration_sec": 0,
+      "theme": "(곡 한 줄 설명)",
+      "hashtags": ["(직접 지정할 해시태그, 없으면 빈 배열)"],
+      "has_vocal": true,
+      "yt_url": "",
+      "release_status": "unreleased"
+    }
+  ]
+}
