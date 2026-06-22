@@ -18,13 +18,21 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-from topic_registry import TOPICS, resolve_topic_cells
+from topic_registry import TOPICS, resolve_topic_cells, resolve_pick_pool
 from make_emblem_matrix import SOFT_BG_ROTATION
 from make_photo_matrix import make_photo_matrix
 from make_premium_matrix import make_premium_matrix
+from make_powerpick_matrix import make_powerpick_matrix
+from make_soccer_squad_matrix import make_soccer_squad_matrix
 from make_video import make_slideshow_video
 from post_instagram import InstagramPublisher, upload_image, upload_video
 from notify import notify_discord
+from coupang_affiliate import (
+    caption_bio_cta, comment_affiliate_line, COUPANG_DISCLOSURE,
+    get_topic_affiliate_url,
+)
+import post_youtube
+import post_threads
 import random as _random
 
 
@@ -104,6 +112,34 @@ TOPIC_TAGS = {
     "spinner_idol_pick": ["#밸런스게임", "#일시정지챌린지", "#최애", "#아이돌",
                            "#케이팝", "#장원영", "#카리나", "#윈터", "#민지",
                            "#최애뽑기", "#kpop"],
+    "powerpick_office": ["#초능력", "#직장인", "#직장인공감", "#회사원",
+                          "#밸런스게임", "#카드뉴스", "#월요일", "#퇴근",
+                          "#회식", "#일상공감", "#밈", "#릴스", "#reels"],
+    "powerpick_student": ["#초능력", "#학생", "#학생공감", "#고등학생",
+                           "#중학생", "#대학생", "#수험생", "#시험",
+                           "#밸런스게임", "#카드뉴스", "#학생일상", "#릴스"],
+    "powerpick_teacher": ["#초능력", "#선생님", "#교사", "#교사공감",
+                           "#스승의날", "#학교", "#교무실", "#방학",
+                           "#밸런스게임", "#카드뉴스", "#일상공감", "#릴스"],
+    "powerpick_neet": ["#초능력", "#백수", "#무직", "#백수일상",
+                        "#취준", "#취준생", "#휴식", "#잠",
+                        "#넷플릭스", "#밸런스게임", "#카드뉴스", "#릴스"],
+    "powerpick_landlord": ["#초능력", "#건물주", "#임대", "#재테크",
+                            "#부동산", "#임대료", "#건물", "#투자",
+                            "#밸런스게임", "#카드뉴스", "#일상", "#릴스"],
+    "powerpick_idol": ["#초능력", "#아이돌", "#아이돌일상", "#케이팝",
+                        "#kpop", "#아이돌공감", "#무대", "#컴백",
+                        "#밸런스게임", "#카드뉴스", "#릴스", "#reels"],
+    "soccer_nationalteam_1000eok": ["#축구", "#국가대표", "#손흥민", "#이강인",
+                                  "#김민재", "#황희찬", "#조규성", "#박지성",
+                                  "#차범근", "#월드컵", "#축구국대",
+                                  "#밸런스게임", "#football", "#soccer"],
+    "job_pick_10k": ["#직장", "#취준", "#취준생", "#직장인", "#재택근무",
+                      "#연봉", "#회사", "#출근", "#월급", "#야근",
+                      "#밸런스게임", "#카드뉴스", "#일상공감"],
+    "power_budget_10k": ["#초능력", "#밸런스게임", "#로또", "#순간이동",
+                          "#기상예측", "#슈퍼파워", "#카드뉴스",
+                          "#일상공감", "#밈", "#릴스"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -126,6 +162,10 @@ def build_caption(topic_id: str, topic: dict) -> str:
         if len(uniq) >= 30:
             break
 
+    # 쿠팡 파트너스 CTA — 단축링크 설정된 카테고리만 (가짜 링크 X)
+    bio_cta = caption_bio_cta(topic_id)
+    has_affiliate = bool(get_topic_affiliate_url(topic_id))
+
     lines = [
         title,
         "",
@@ -135,11 +175,14 @@ def build_caption(topic_id: str, topic: dict) -> str:
         "👥 친구 소환해서 누구 조합이 이겼나 대결!",
         "📲 스토리에 공유하고 친구 조합이랑 비교해보세요",
         "🔖 저장해두면 다음 시리즈도 챙겨보기 좋아요",
-        "",
-        "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요.",
-        "",
-        " ".join(uniq),
     ]
+    if bio_cta:
+        lines += ["", bio_cta]
+    lines += ["", "⌁ 매일 새로운 밸런스 시리즈. 팔로우하고 받아보세요."]
+    # 디스클로저는 어필리에이트 링크 노출 시에만 (공정위 표시 의무 해당)
+    if has_affiliate:
+        lines.append(f"({COUPANG_DISCLOSURE})")
+    lines += ["", " ".join(uniq)]
     return "\n".join(lines)
 
 
@@ -183,6 +226,43 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         video_url = upload_video(local_mp4)
         return video_url, None
 
+    # ─── soccer_squad: 5컬럼 × 3로우 + 절차적 캐릭터 헤드 + 미니 포메이션 ───
+    if style == "soccer_squad":
+        make_soccer_squad_matrix(
+            title=topic["title"], highlight=topic["highlight"],
+            rule_hint=topic["rule_hint"],
+            col_headers=topic["col_headers"], row_headers=topic["row_headers"],
+            cells=topic["cells"], output_path=local_jpg, brand=BRAND,
+            precondition_lines=topic.get("precondition_lines"),
+            source_note=topic.get("source_note", ""),
+            cta_text=topic.get("cta_text", "💬 당신의 영입 조합은? 댓글로 ⬇️"),
+        )
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
+
+    # ─── powerpick: 9-셀 단일 픽 grid (가격/매트릭스 X) ───
+    if style == "powerpick":
+        picks = resolve_pick_pool(topic, seed=seed, n=9)
+        make_powerpick_matrix(
+            title=topic["title"], rule_hint=topic["rule_hint"],
+            picks=picks, output_path=local_jpg, brand=BRAND,
+            source_note=topic.get("source_note", ""),
+        )
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
+
     # col_pools 있으면 seed 로 멤버 라인업 회전, 없으면 고정 cells.
     cells = resolve_topic_cells(topic, seed=seed)
 
@@ -204,6 +284,9 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             base_bg = SOFT_BG_ROTATION[seed % len(SOFT_BG_ROTATION)]
         args["background_style"] = base_bg
         args["source_note"] = topic.get("source_note", "")
+        args["precondition"] = topic.get("precondition", "")
+        if topic.get("budget_label"):
+            args["budget_label"] = topic["budget_label"]
         make_emblem_matrix(**args)
     else:
         make_premium_matrix(**args)
@@ -242,19 +325,52 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         return {"topic_id": topic_id, "ok": False, "error": str(e),
                 "video_url": video_url, "cover_url": cover_url}
 
-    # 자동 첫 댓글 — 첫 노출 댓글로 엔게이지먼트 시동.
+    # 자동 첫 댓글 — 첫 노출 댓글로 엔게이지먼트 시동 + 쿠팡 단축링크 시드.
+    # IG 코멘트 URL 은 자동 클릭 X 지만 텍스트로 노출 → 복사·터치 가능. 24h 라스트클릭
+    # 쿠키 발동을 위한 추가 채널 (bio 클릭 외).
     # 게시 직후 너무 빠른 댓글은 봇 패턴 우려 → 30초 대기.
     comment_text = topic.get("auto_comment") or _default_comment(topic.get("style"))
+    aff_line = comment_affiliate_line(topic_id)
+    if comment_text and aff_line:
+        comment_text = f"{comment_text}\n\n{aff_line}\n({COUPANG_DISCLOSURE})"
     if comment_text:
         time.sleep(30)
         try:
             comment_id = publisher.post_comment(media_id, comment_text)
-            print(f"  💬 자동 댓글: {comment_id}")
+            print(f"  💬 자동 댓글: {comment_id}" + (" + 쿠팡링크" if aff_line else ""))
         except Exception as e:
             print(f"  ⚠️  자동 댓글 실패 (비치명): {e}")
 
+    # ─── 멀티플랫폼 신디케이션 (수익원 확장) ───
+    # 같은 mp4 를 YouTube Shorts 로 + 헤드라인을 Threads 로. 미설정 시 silent skip.
+    yt_id = None
+    threads_id = None
+    local_mp4 = OUTPUT_DIR / f"{topic_id}.mp4"
+    if post_youtube.is_configured() and local_mp4.exists():
+        try:
+            hint = topic.get("rule_hint") or topic.get("hint", "")
+            tags = TOPIC_TAGS.get(topic_id, []) + COMMON_TAGS
+            yt_title, yt_desc = post_youtube.build_youtube_meta(
+                title=topic["title"], hint=hint, hashtags=tags,
+                disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
+            )
+            yt_id = post_youtube.upload_short(
+                local_mp4, yt_title, yt_desc, tags=tags)
+        except Exception as e:
+            print(f"  ⚠️  YouTube 업로드 실패 (비치명): {e}")
+
+    if post_threads.is_configured():
+        try:
+            reel_link = f"https://www.instagram.com/reel/{media_id}/" if media_id else None
+            threads_id = post_threads.post_thread(
+                top_titles=[topic["title"], topic.get("rule_hint", "")],
+                date_str="", label_short="밸런스게임", reel_link=reel_link)
+        except Exception as e:
+            print(f"  ⚠️  Threads 게시 실패 (비치명): {e}")
+
     return {"topic_id": topic_id, "ok": True, "media_id": media_id,
-            "video_url": video_url, "cover_url": cover_url}
+            "video_url": video_url, "cover_url": cover_url,
+            "youtube_id": yt_id, "threads_id": threads_id}
 
 
 def _default_comment(style: str) -> str:
@@ -293,7 +409,7 @@ def main() -> int:
     # 멤버/배경 회전 시드 — KST yday*7+hour. col_pools 라인업 + 배경이 매번 달라짐.
     from datetime import datetime, timezone, timedelta
     _kst_now = datetime.now(timezone(timedelta(hours=9)))
-    run_seed = _kst_now.timetuple().tm_yday * 7 + _kst_now.hour
+    run_seed = _kst_now.timetuple().tm_yday * 11 + _kst_now.hour
 
     if target == "all":
         topics_to_post = list(TOPICS.items())
@@ -308,9 +424,9 @@ def main() -> int:
             seed = now_kst.timetuple().tm_yday
         elif target == "auto_matrix":
             pool = matrix_ids
-            # 시드 = yday*7 + hour. 7은 6(매트릭스 풀 크기)과 코프라임이라
-            # 매일 같은 슬롯에서 다른 토픽 + 같은 날 슬롯마다 다른 토픽 보장.
-            seed = now_kst.timetuple().tm_yday * 7 + now_kst.hour
+            # 시드 = yday*11 + hour. 11은 22/33 외 모든 풀 크기와 코프라임 →
+            # 풀이 6~30 사이 어떤 값이든 모든 토픽이 cron 슬롯에 노출됨.
+            seed = now_kst.timetuple().tm_yday * 11 + now_kst.hour
         else:  # 하위 호환 (기존 'auto')
             pool = topic_ids
             seed = now_kst.weekday()
@@ -342,10 +458,32 @@ def main() -> int:
     ok = [r for r in results if r.get("ok")]
     fail = [r for r in results if not r.get("ok")]
     print(f"✅ 성공: {len(ok)} / 전체 {len(results)}")
+    yt_ok = sum(1 for r in ok if r.get("youtube_id"))
+    th_ok = sum(1 for r in ok if r.get("threads_id"))
+    print(f"   ↳ YouTube Shorts: {yt_ok} · Threads: {th_ok} 동시 게시")
     for r in ok:
-        print(f"  • {r['topic_id']}: {r['media_id']}")
+        extra = []
+        if r.get("youtube_id"):
+            extra.append(f"YT:{r['youtube_id']}")
+        if r.get("threads_id"):
+            extra.append("TH✓")
+        suffix = (" [" + " ".join(extra) + "]") if extra else ""
+        print(f"  • {r['topic_id']}: {r['media_id']}{suffix}")
     for r in fail:
         print(f"  ❌ {r['topic_id']}: {r.get('error', '?')}")
+
+    # 쿠팡 파트너스 랜딩 + 협찬 미디어 키트 재생성 (게시 1건이라도 성공한 경우)
+    if ok:
+        try:
+            import generate_landing
+            generate_landing.main()
+        except Exception as e:
+            print(f"  ⚠️  랜딩 페이지 생성 실패 (비치명): {e}")
+        try:
+            import generate_mediakit
+            generate_mediakit.main()
+        except Exception as e:
+            print(f"  ⚠️  미디어 키트 생성 실패 (비치명): {e}")
 
     # Discord 알림
     lines = [f"📣 **매트릭스 시리즈 게시 결과** ({len(ok)}/{len(results)} 성공)"]

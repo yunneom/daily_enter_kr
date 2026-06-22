@@ -42,6 +42,13 @@ def resolve_topic_cells(topic: dict, seed: int = 0):
     return [[dict(cell) for cell in row] for row in topic["cells"]]
 
 
+def resolve_pick_pool(topic: dict, seed: int = 0, n: int = 9):
+    """pick_pool 에서 seed 기준 연속 n 개 픽 — 게시마다 회전. pool 12개면 4개 매번 교체."""
+    pool = topic.get("pick_pool", [])
+    L = len(pool)
+    return [dict(pool[(seed + i) % L]) for i in range(n)]
+
+
 # 공통 출처 한 줄 (아이돌/티어 토픽에 공신력 부여 — 논란 완화)
 BR_SOURCE_NOTE = "※ 한국기업평판연구소 브랜드평판지수 기준 · 매월 갱신"
 
@@ -778,5 +785,255 @@ TOPICS = {
         ],
         "source_note": BR_SOURCE_NOTE,
         "auto_comment": "🌟 5세대 보이그룹 1티어 — CORTIS·TWS·보이넥스트도어·KickFlip! 더 강한 픽 댓글로 ⬇️",
+    },
+
+    # ════════════════════════════════════════════════════════════
+    #  초능력 픽 — 단일 픽 9-셀 grid (가격/합산 없음, 손그림 cute)
+    #  pick_pools 길이 = 9 의 배수 → 게시마다 다른 9개 회전
+    # ════════════════════════════════════════════════════════════
+    # === 초능력 픽 시리즈 (단일 픽 9-셀 grid) ===
+    # 밸런스 룰: 본 직역/신분을 유지하면서 인생질 ↑↑↑. 직역 탈출 OP 금지.
+    "powerpick_office": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(직장인편)",
+        # 12개 풀에서 9개 회전 (seed offset). 한 토픽 = 여러 콘텐츠.
+        "pick_pool": [
+            {"emoji": "💼", "label": "연봉 매년\n2배 인상"},
+            {"emoji": "🎁", "label": "매년 보너스\n5천만원"},
+            {"emoji": "📈", "label": "모든 평가\nS등급 자동"},
+            {"emoji": "📊", "label": "PPT/엑셀\n자동 완성"},
+            {"emoji": "🚪", "label": "평생 칼퇴\n보장권"},
+            {"emoji": "🏖️", "label": "원하는 날\n연차 무조건 승인"},
+            {"emoji": "⏰", "label": "일할 때만\n시간 정지"},
+            {"emoji": "✈️", "label": "출퇴근\n순간이동"},
+            {"emoji": "😴", "label": "잠 안 자도\n풀컨디션"},
+            {"emoji": "🧠", "label": "한 번 보면\n100% 암기"},
+            {"emoji": "🌐", "label": "모든 언어\n즉시 마스터"},
+            {"emoji": "📅", "label": "월요일\n영구 삭제"},
+        ],
+        "auto_comment": "💬 단 하나만! 본인 픽 댓글로 ⬇️ 친구는 뭐 고를까?",
+    },
+
+    # 학생편 — 학교는 다니되 학교생활 라이프 ↑↑↑
+    "powerpick_student": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(학생편)",
+        "pick_pool": [
+            {"emoji": "📝", "label": "시험 자동\n100점"},
+            {"emoji": "📚", "label": "한 번 보면\n100% 암기"},
+            {"emoji": "🛏️", "label": "자는 동안\n자동 공부"},
+            {"emoji": "🏃", "label": "체육 100점\n무한 체력"},
+            {"emoji": "📅", "label": "등교 X\n출석 인정"},
+            {"emoji": "✏️", "label": "수업 필기\n자동 작성"},
+            {"emoji": "🎯", "label": "학원 무조건\n자동 패스"},
+            {"emoji": "🍱", "label": "급식 줄\n자동 1등"},
+            {"emoji": "⏰", "label": "시험 시간만\n시간 정지"},
+            {"emoji": "✈️", "label": "등교\n순간이동"},
+            {"emoji": "😇", "label": "부모님 잔소리\n영구 차단"},
+            {"emoji": "📅", "label": "월요일\n영구 삭제"},
+        ],
+        "auto_comment": "💬 학생이면 무조건 이거지! 본인 픽 댓글로 ⬇️ 친구한테도 물어봐!",
+    },
+
+    # 선생님편 — 교사 직업 유지, 워라밸 ↑↑↑
+    "powerpick_teacher": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(선생님편)",
+        "pick_pool": [
+            {"emoji": "📝", "label": "채점 자동\n즉시 완료"},
+            {"emoji": "📞", "label": "학부모 민원\n자동 차단"},
+            {"emoji": "📊", "label": "PPT/판서\n자동 생성"},
+            {"emoji": "🚪", "label": "평생 칼퇴\n보장권"},
+            {"emoji": "🏖️", "label": "방학 +30일\n자동 추가"},
+            {"emoji": "⏰", "label": "수업 시간만\n시간 정지"},
+            {"emoji": "✈️", "label": "출퇴근\n순간이동"},
+            {"emoji": "🧠", "label": "모든 학생 이름\n1초 암기"},
+            {"emoji": "🎁", "label": "매년 보너스\n5천만원"},
+            {"emoji": "💼", "label": "잡무/회의\n자동 패스권"},
+            {"emoji": "🙉", "label": "학생 떠들어도\n자동 집중"},
+            {"emoji": "📅", "label": "월요일\n영구 삭제"},
+        ],
+        "auto_comment": "💬 선생님이면 뭐 고를래요? 본인 픽 댓글로 ⬇️ 학생들한테 들키지 마세요!",
+    },
+
+    # 백수편 — 백수 라이프 ↑↑↑ (취직 시키지 않음)
+    "powerpick_neet": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(백수편)",
+        "pick_pool": [
+            {"emoji": "💸", "label": "매달 용돈\n200만원 자동 입금"},
+            {"emoji": "🙊", "label": "가족 잔소리\n영구 차단"},
+            {"emoji": "🛌", "label": "잠 무제한\n체력 100%"},
+            {"emoji": "🎮", "label": "게임 자동\n모든 장르 1등"},
+            {"emoji": "🎬", "label": "넷플릭스/유튜브\n적중률 100%"},
+            {"emoji": "🍔", "label": "배달비\n평생 무료"},
+            {"emoji": "⏰", "label": "낮잠\n시간 무한 정지"},
+            {"emoji": "💪", "label": "운동 X\n몸매 자동 유지"},
+            {"emoji": "📵", "label": "알람\n무한 스누즈"},
+            {"emoji": "👫", "label": "친구 자동 호출\n언제든 만남"},
+            {"emoji": "💤", "label": "카페인 0\n풀컨디션"},
+            {"emoji": "🏠", "label": "부모님 자동\n백수 인정"},
+        ],
+        "auto_comment": "💬 백수만의 특권! 본인 픽 댓글로 ⬇️ 친구한테도 추천!",
+    },
+
+    # 건물주편 — 건물주 ↑↑↑ (이미 OP 직군, 한층 더)
+    "powerpick_landlord": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(건물주편)",
+        "pick_pool": [
+            {"emoji": "💰", "label": "임대료 매년\n+50% 인상"},
+            {"emoji": "🏢", "label": "공실 자동 방지\n계약 자동 갱신"},
+            {"emoji": "🤝", "label": "세입자 자동\n친절 분쟁 0"},
+            {"emoji": "🔧", "label": "건물 수리\n자동 비용 0"},
+            {"emoji": "📉", "label": "재산세/종부세\n영구 면제"},
+            {"emoji": "📈", "label": "건물 가치\n매년 +20%"},
+            {"emoji": "🔮", "label": "시세 변동\n1년 전 예측"},
+            {"emoji": "⏰", "label": "임차인 결제\n자동 연체 X"},
+            {"emoji": "🏪", "label": "건물 주변 상권\n자동 활성화"},
+            {"emoji": "😴", "label": "잠 안 자도\n풀컨디션"},
+            {"emoji": "✈️", "label": "관리 순간이동\n출장 0초"},
+            {"emoji": "📅", "label": "월요일\n영구 삭제"},
+        ],
+        "auto_comment": "💬 건물주 꿈! 본인 픽 댓글로 ⬇️ 친구한테도 추천!",
+    },
+
+    # 아이돌편 — 아이돌 활동 ↑↑↑
+    "powerpick_idol": {
+        "style": "powerpick",
+        "title": "단 하나의 초능력만 고를 수 있다면?",
+        "rule_hint": "(아이돌편)",
+        "pick_pool": [
+            {"emoji": "🏆", "label": "음원 차트\n자동 1위"},
+            {"emoji": "🎁", "label": "굿즈/앨범\n매진 보장"},
+            {"emoji": "🌍", "label": "해외 투어\n매진 보장"},
+            {"emoji": "🛡️", "label": "악플 자동 차단\n멘탈 100%"},
+            {"emoji": "💃", "label": "안무 한 번에\n완벽 암기"},
+            {"emoji": "🤝", "label": "멤버 케미\n자동 환상"},
+            {"emoji": "✨", "label": "비주얼 365일\n컨디션 ↑↑"},
+            {"emoji": "🎤", "label": "카메라 앞\n떨림 0"},
+            {"emoji": "🌐", "label": "모든 언어\n즉시 마스터"},
+            {"emoji": "😴", "label": "잠 안 자도\n풀컨디션"},
+            {"emoji": "🏖️", "label": "휴식기 자동\n회사 못 막음"},
+            {"emoji": "💼", "label": "광고 평생\n매월 5억"},
+        ],
+        "auto_comment": "💬 아이돌이라면 뭐 고를래요? 본인 픽 댓글로 ⬇️ 최애한테도 물어봐!",
+    },
+
+    # ════════════════════════════════════════════════════════════
+    #  precondition 패턴 토픽 — "조건" 박스 명시로 논란 회피.
+    #  예: 축구 영입 / 직장 / 초능력 buget 매트릭스
+    # ════════════════════════════════════════════════════════════
+
+    # 1000억으로 국대 영입 — 5컬럼 × 3로우 (참고 이미지 구도 재현)
+    # style="soccer_squad" 전용 렌더러 (make_soccer_squad_matrix) 사용
+    "soccer_nationalteam_1000eok": {
+        "style": "soccer_squad",
+        "title": "1000억으로 국대 영입하기",
+        "highlight": "1000억",
+        "rule_hint": "당신의 영입 픽은?",
+        "precondition_lines": [
+            "현재 팀: 대한민국 (4-2-1-3)",
+            "구성: 스트라이커·미드필더·골키퍼",
+            "→ 각 1명씩 영입 (총 1000억)",
+        ],
+        "col_headers": ["100억", "200억", "300억", "400억", "500억"],
+        "row_headers": ["스트라이커", "미드필더", "골키퍼"],
+        # cells[row][col] — 가격 낮음 → 높음 순. 마지막(5000억)은 레전드
+        "cells": [
+            # ST
+            [
+                {"name": "오현규"},
+                {"name": "조규성"},
+                {"name": "황희찬"},
+                {"name": "손흥민"},
+                {"name": "차범근", "is_legend": True},
+            ],
+            # CDM/MF
+            [
+                {"name": "백승호"},
+                {"name": "박용우"},
+                {"name": "황인범"},
+                {"name": "기성용", "is_legend": True},
+                {"name": "박지성", "is_legend": True},
+            ],
+            # GK
+            [
+                {"name": "김동준"},
+                {"name": "송범근"},
+                {"name": "조현우"},
+                {"name": "김승규"},
+                {"name": "이운재", "is_legend": True},
+            ],
+        ],
+        "source_note": "※ 가상 영입 시나리오 — 실제 이적료 X",
+        "auto_comment": "⚽ 당신의 영입 조합은? 댓글로 ⬇️ 예) 손흥민·박지성·조현우",
+    },
+
+    # 1만원으로 다닐 직장 구하기 — 직장 매트릭스 (precondition 명시)
+    "job_pick_10k": {
+        "style": "drawing",
+        "title": "만원으로 다닐 직장 구하기",
+        "highlight": "직장",
+        "rule_hint": "각 항목 1개씩 골라 합 1만원 — 당신의 직장은?",
+        "col_headers": ["교통", "시간", "페이"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원 (premium)
+            [
+                {"emoji": "🏠", "label": "재택근무"},
+                {"emoji": "✨", "label": "주 4일제"},
+                {"emoji": "💸", "label": "세후 월 700"},
+            ],
+            # 3천원 (mid)
+            [
+                {"emoji": "🚇", "label": "지옥철 30분"},
+                {"emoji": "🚪", "label": "매일 칼퇴"},
+                {"emoji": "💰", "label": "세전 월 300"},
+            ],
+            # 2천원 (budget)
+            [
+                {"emoji": "🚌", "label": "편도 2시간"},
+                {"emoji": "🌙", "label": "매일 야근"},
+                {"emoji": "😅", "label": "세전 월 180"},
+            ],
+        ],
+        "auto_comment": "💼 당신의 직장 조합은? 댓글로 ⬇️ 친구는 어느 회사?",
+    },
+
+    # 1만원으로 원하는 초능력 갖기 — 초능력 budget 매트릭스 (image 2 참고)
+    "power_budget_10k": {
+        "style": "drawing",
+        "title": "만원으로 원하는 초능력 갖기",
+        "highlight": "초능력",
+        "rule_hint": "각 카테고리 1개씩 골라 합 1만원 — 당신의 초능력은?",
+        "col_headers": ["이동", "예지", "신체"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            # 5천원
+            [
+                {"emoji": "✨", "label": "순간이동"},
+                {"emoji": "🎰", "label": "로또번호 알기"},
+                {"emoji": "💪", "label": "괴력의 힘"},
+            ],
+            # 3천원
+            [
+                {"emoji": "☁️", "label": "구름 타기"},
+                {"emoji": "📝", "label": "시험답 알기"},
+                {"emoji": "🛡️", "label": "강철 피부"},
+            ],
+            # 2천원
+            [
+                {"emoji": "🏃", "label": "빠른 달리기"},
+                {"emoji": "🌧️", "label": "날씨 맞히기"},
+                {"emoji": "😴", "label": "절대 안 지침"},
+            ],
+        ],
+        "auto_comment": "💫 당신의 1만원짜리 초능력 조합은? 댓글로 ⬇️",
     },
 }
