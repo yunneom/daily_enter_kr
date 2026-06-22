@@ -144,6 +144,22 @@ TOPIC_TAGS = {
     "spot_diff_bear": ["#틀린그림찾기", "#곰돌이", "#숨은그림찾기", "#두뇌게임",
                         "#집중력테스트", "#관찰력", "#곰", "#귀여운",
                         "#밈", "#카드뉴스", "#릴스", "#reels"],
+    "kpop_concept_love_hate": ["#케이팝", "#kpop", "#컨셉", "#걸크러쉬",
+                                "#청순컨셉", "#큐트댄스", "#이지리스닝",
+                                "#밸런스게임", "#호불호", "#카드뉴스",
+                                "#아이돌컨셉", "#릴스"],
+    "brand_rep_girlgroup": ["#브랜드평판", "#걸그룹", "#케이팝", "#kpop",
+                             "#장원영", "#제니", "#카리나", "#로제",
+                             "#리센느", "#원이", "#미나미", "#아이브",
+                             "#블랙핑크", "#TOP30", "#한국기업평판연구소"],
+    "slot_girlgroup_5x3": ["#슬롯머신", "#걸그룹조합", "#밸런스게임",
+                            "#일시정지챌린지", "#케이팝", "#kpop", "#아이돌조합",
+                            "#카리나", "#장원영", "#민지", "#카즈하", "#윈터",
+                            "#안유진", "#릴스", "#reels"],
+    "slot_boygroup_5x3": ["#슬롯머신", "#보이그룹조합", "#밸런스게임",
+                           "#일시정지챌린지", "#케이팝", "#kpop", "#아이돌조합",
+                           "#필릭스", "#정원", "#성훈", "#앤톤", "#TXT",
+                           "#엔하이픈", "#RIIZE", "#릴스", "#reels"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -298,6 +314,25 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         video_url = upload_video(local_mp4)
         cover_url = upload_image(local_jpg)
         return video_url, cover_url
+
+    # ─── slot_machine: 3열 다른 방향 스크롤 mp4 + 빨강 PICK zone ───
+    if style == "slot_machine":
+        from make_slot_machine_video import make_slot_machine_video
+        bgm = _pick_bgm()
+        make_slot_machine_video(
+            title=topic["title"],
+            rule_hint=topic.get("rule_hint", "멈춰서 본인 픽 만들기!"),
+            col_headers=topic["col_headers"],
+            col_pools=topic["col_pools"],
+            output_path=local_mp4,
+            chances_text=topic.get("chances_text", "🎰 기회 3번"),
+            duration=topic.get("duration", 10.0),
+            cta=topic.get("cta", "⏸ 일시정지로 멈춰서 조합 댓글 ⬇️"),
+            brand=BRAND,
+            bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        return video_url, None  # cover_url 없음 — IG 자동 추출
 
     # ─── powerpick: 9-셀 단일 픽 grid (가격/매트릭스 X) ───
     if style == "powerpick":

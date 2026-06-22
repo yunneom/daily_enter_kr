@@ -1024,6 +1024,63 @@ TOPICS = {
         "auto_comment": "👑 내 최애 몇 위? 우리 픽이랑 비교 댓글로 ⬇️ 다음 달엔 누가 1위?",
     },
 
+    # ════════════════════════════════════════════════════════════
+    #  🎰 슬롯머신 매트릭스 — 3열이 다른 방향으로 스크롤
+    #  일시정지로 멈춰 조합 픽 (기회 3번 룰).
+    #  열당 5명 = 5^3 = 125 조합. 기존 9-cell fixed 대비 풍부.
+    # ════════════════════════════════════════════════════════════
+    "slot_girlgroup_5x3": {
+        "style": "slot_machine",
+        "title": "🎰 슬롯머신 걸그룹 조합",
+        "rule_hint": "멈춰서 본인 픽 만들기!",
+        "chances_text": "🎰 기회 3번 — 일시정지로 멈춰!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "col_pools": [
+            [{"role_emoji": "🎤", "name": "카리나", "subtitle": "에스파"},
+             {"role_emoji": "🎤", "name": "민지", "subtitle": "뉴진스"},
+             {"role_emoji": "🎤", "name": "안유진", "subtitle": "IVE"},
+             {"role_emoji": "🎤", "name": "김채원", "subtitle": "르세라핌"},
+             {"role_emoji": "🎤", "name": "닝닝", "subtitle": "에스파"}],
+            [{"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
+             {"role_emoji": "💃", "name": "하니", "subtitle": "뉴진스"},
+             {"role_emoji": "💃", "name": "지젤", "subtitle": "에스파"},
+             {"role_emoji": "💃", "name": "사쿠라", "subtitle": "르세라핌"},
+             {"role_emoji": "💃", "name": "해린", "subtitle": "뉴진스"}],
+            [{"role_emoji": "✨", "name": "장원영", "subtitle": "IVE"},
+             {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
+             {"role_emoji": "✨", "name": "리즈", "subtitle": "IVE"},
+             {"role_emoji": "✨", "name": "허윤진", "subtitle": "르세라핌"},
+             {"role_emoji": "✨", "name": "다니엘", "subtitle": "뉴진스"}],
+        ],
+        "auto_comment": "🎰 본인 조합 댓글 ⬇️ 기회 3번 안에 만들었어요? 친구한테도 시켜봐!",
+    },
+
+    "slot_boygroup_5x3": {
+        "style": "slot_machine",
+        "title": "🎰 슬롯머신 보이그룹 조합",
+        "rule_hint": "멈춰서 본인 픽 만들기!",
+        "chances_text": "🎰 기회 3번 — 일시정지로 멈춰!",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "col_pools": [
+            [{"role_emoji": "🎤", "name": "필릭스", "subtitle": "스키즈"},
+             {"role_emoji": "🎤", "name": "정원", "subtitle": "엔하이픈"},
+             {"role_emoji": "🎤", "name": "태현", "subtitle": "TXT"},
+             {"role_emoji": "🎤", "name": "승한", "subtitle": "RIIZE"},
+             {"role_emoji": "🎤", "name": "성한빈", "subtitle": "제로베이스원"}],
+            [{"role_emoji": "💃", "name": "현진", "subtitle": "스키즈"},
+             {"role_emoji": "💃", "name": "니키", "subtitle": "엔하이픈"},
+             {"role_emoji": "💃", "name": "휴닝카이", "subtitle": "TXT"},
+             {"role_emoji": "💃", "name": "앤톤", "subtitle": "RIIZE"},
+             {"role_emoji": "💃", "name": "산", "subtitle": "ATEEZ"}],
+            [{"role_emoji": "✨", "name": "성훈", "subtitle": "엔하이픈"},
+             {"role_emoji": "✨", "name": "연준", "subtitle": "TXT"},
+             {"role_emoji": "✨", "name": "원빈", "subtitle": "RIIZE"},
+             {"role_emoji": "✨", "name": "윤호", "subtitle": "ATEEZ"},
+             {"role_emoji": "✨", "name": "장하오", "subtitle": "제로베이스원"}],
+        ],
+        "auto_comment": "🎰 본인 조합 댓글 ⬇️ 기회 3번 안에 만들었어요?",
+    },
+
     # 1만원으로 원하는 초능력 갖기 — 초능력 budget 매트릭스 (image 2 참고)
     "power_budget_10k": {
         "style": "drawing",
