@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-21T09:19:12.007625+09:00",
+  "last_run_at": "2026-06-22T09:21:24.776807+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1530,6 +1530,70 @@
       "caption_variant": "headlines_dotted",
       "media_id": "18119254111693297",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "5d39f7a966b695ce",
+      "card_title": "허남준 '멋진 신세계' 촬영 후기 공개 — 임지연·연진과 호흡",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "05bc662d176e7cb1",
+      "card_title": "안영미, 둘째 출산 앞두고 라디오 마지막 출근 인증",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "e310130e01a00020",
+      "card_title": "허영만 화백 쾌유를 기원하며, '백반기행' 7년 종영",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "d9c772ee43f9b030",
+      "card_title": "토이 스토리5, 주말 71만 관객 돌파…박스오피스 1위",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "4a0b4f22f5f7d8a6",
+      "card_title": "고아성, 홍상수 감독과의 협업 뒷이야기 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "a6569f8047cbe907",
+      "card_title": "엔하이픈 희승, 솔로 프로젝트 에반으로 새 출발",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "2aa609b6330c56b9",
+      "card_title": "스트레이 키즈, 24일 신곡 'RUN IT' 발매·월드투어 확정",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-22",
+      "title_hash": "2f5ff96a8d5760ed",
+      "card_title": "TXT 연준, 미니 2집 'NO LABELS' 트랙리스트 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18016473539696414",
+      "card_style": "manhwa"
     }
   ]
 }
