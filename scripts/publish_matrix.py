@@ -140,6 +140,14 @@ TOPIC_TAGS = {
     "power_budget_10k": ["#초능력", "#밸런스게임", "#로또", "#순간이동",
                           "#기상예측", "#슈퍼파워", "#카드뉴스",
                           "#일상공감", "#밈", "#릴스"],
+    "kpop_concept_love_hate": ["#케이팝", "#kpop", "#컨셉", "#걸크러쉬",
+                                "#청순컨셉", "#큐트댄스", "#이지리스닝",
+                                "#밸런스게임", "#호불호", "#카드뉴스",
+                                "#아이돌컨셉", "#릴스"],
+    "brand_rep_girlgroup": ["#브랜드평판", "#걸그룹", "#케이팝", "#kpop",
+                             "#장원영", "#제니", "#카리나", "#로제",
+                             "#리센느", "#원이", "#미나미", "#아이브",
+                             "#블랙핑크", "#TOP30", "#한국기업평판연구소"],
 }
 
 COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
@@ -237,6 +245,22 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
             source_note=topic.get("source_note", ""),
             cta_text=topic.get("cta_text", "💬 당신의 영입 조합은? 댓글로 ⬇️"),
         )
+        bgm = _pick_bgm()
+        make_slideshow_video(
+            image_paths=[local_jpg], output_path=local_mp4,
+            durations=[REEL_SECONDS], bgm_path=bgm,
+        )
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
+
+    # ─── brand_chart: 외부 출처(한국기업평판연구소) JSON → TOP30 차트 ───
+    if style == "brand_chart":
+        from make_brand_reputation_chart import make_brand_reputation_chart
+        data_path = ROOT / topic["data_path"]
+        if not data_path.exists():
+            raise FileNotFoundError(f"브랜드평판 데이터 파일 없음: {data_path}")
+        make_brand_reputation_chart(data_path=data_path, output_path=local_jpg)
         bgm = _pick_bgm()
         make_slideshow_video(
             image_paths=[local_jpg], output_path=local_mp4,
