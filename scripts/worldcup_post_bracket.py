@@ -23,7 +23,7 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-from make_worldcup_bracket_card import make_bracket_half  # noqa: E402
+from make_worldcup_bracket_card import make_bracket_full  # noqa: E402
 from post_instagram import InstagramPublisher, upload_image  # noqa: E402
 import post_ledger  # noqa: E402
 from notify import notify_discord  # noqa: E402
@@ -44,7 +44,7 @@ def build_caption(current_round: str) -> str:
     return "\n".join([
         "🏆 걸그룹 월드컵 32강 대진표",
         "",
-        "스와이프 👉 상반부 / 하반부 전체 대진",
+        "좌 16명 / 우 16명 → 중앙 결승까지 한 눈에!",
         "숫자 = 브랜드평판 시드순위",
         "(TOP1-4 분산 → 빅매치는 결승까지 안 만남)",
         "",
@@ -78,13 +78,10 @@ def main():
 
     out_dir = ROOT / "output_enter" / "publish" / "worldcup_bracket"
     out_dir.mkdir(parents=True, exist_ok=True)
-    urls = []
-    for half in ("top", "bottom"):
-        jpg = out_dir / f"bracket_{half}.jpg"
-        make_bracket_half(half, bracket, jpg, vote_note=vote_note)
-        url = upload_image(jpg)
-        urls.append(url)
-        print(f"  ✓ {half}: {url}")
+    jpg = out_dir / "bracket_full.jpg"
+    make_bracket_full(bracket, jpg, vote_note=vote_note)
+    url = upload_image(jpg)
+    print(f"  ✓ bracket: {url}")
 
     publisher = InstagramPublisher(ig_user_id, ig_token)
     health = publisher.health_check()
@@ -93,8 +90,8 @@ def main():
         return 1
 
     caption = build_caption(cur)
-    media_id = publisher.post_carousel(urls, caption)
-    print(f"✅ 대진표 캐러셀 게시: {media_id}")
+    media_id = publisher.post_single_image(url, caption)
+    print(f"✅ 대진표 게시: {media_id}")
 
     # 자동 댓글
     time.sleep(30)
