@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-22T09:21:24.776807+09:00",
+  "last_run_at": "2026-06-23T09:17:35.876862+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1594,6 +1594,70 @@
       "caption_variant": "question_hook",
       "media_id": "18016473539696414",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "c68aceb59bd15e36",
+      "card_title": "지연수, 전 남편 일라이 재혼에 따뜻한 축하 메시지",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "3ba07085b1e35c82",
+      "card_title": "SS501 김형준, 서울·도쿄·제주 다처소 운영…\"모두 자가는 아냐\"",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "d3a587f9d60c690e",
+      "card_title": "정세운, 23일 입대 앞두고 팬들과 마지막 인사 '건강히 다녀오겠습니다'",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "f7fc26249a41c8cb",
+      "card_title": "빅뱅 대성, 카라 허영지와의 열애설 부인…'친한 동료'",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "be23c7bba09db553",
+      "card_title": "안영미, 둘째 아들은 한국에서 출산했다고 공식 입장",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "c852257baef0126b",
+      "card_title": "박수진, 40세 동안 매력 돋보이며 배용준과 함께 포착",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "381c1e1cd69f90c7",
+      "card_title": "토이 스토리5, 4일 연속 박스오피스 1위 기록",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-23",
+      "title_hash": "ad5f47fcd9681ba3",
+      "card_title": "손석희, 13년 만에 MBC 라디오 복귀…새 프로그램 진행",
+      "caption_variant": "list_count",
+      "media_id": "17934866295290946",
+      "card_style": "minimal"
     }
   ]
 }
