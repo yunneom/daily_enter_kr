@@ -1,15 +1,16 @@
 name: 🏆 걸그룹 월드컵 캠페인
 
-# 6/23 ~ 6/28 동안 매 30분 cron 트리거 → orchestrator 가 일정 슬롯 매칭 시만 실행.
+# 6/23 ~ 7/5 동안 매 30분 cron 트리거 → orchestrator 가 일정 슬롯 매칭 시만 실행.
 # 캠페인 시간 외엔 silent skip. manual dispatch 로 라운드 강제 실행 가능.
 
 on:
   schedule:
-    - cron: '*/30 * 23-29 6 *'   # 6월 23~29일 매 30분
+    - cron: '*/30 * 23-30 6 *'   # 6월 23~30일 매 30분
+    - cron: '*/30 * 1-6 7 *'     # 7월 1~6일 매 30분 (연장 — 결승 7/5)
   workflow_dispatch:
     inputs:
       action:
-        description: 'publish | tally'
+        description: 'publish | tally | announce | bracket'
         required: false
         default: ''
       round:
@@ -19,6 +20,12 @@ on:
 
 permissions:
   contents: write
+
+# 게시 진행 중(15-20분) 다음 cron 이 겹치면 중복 게시 위험 → 직렬화.
+# 큐잉된 두 번째 run 은 already_done 으로 silent skip.
+concurrency:
+  group: worldcup-campaign
+  cancel-in-progress: false
 
 jobs:
   orchestrate:

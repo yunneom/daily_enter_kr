@@ -196,6 +196,55 @@ class InstagramPublisher:
         print(f"  ✅ 단일 이미지 게시 완료! Media ID: {media_id}")
         return media_id
 
+    def _create_carousel_child(self, image_url: str) -> str:
+        """캐러셀 자식 이미지 컨테이너 (is_carousel_item=true)."""
+        url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
+        params = {
+            "image_url": image_url,
+            "is_carousel_item": "true",
+            "access_token": self.access_token,
+        }
+        resp = self._post_ig(url, params, step="carousel_child")
+        return resp.json()["id"]
+
+    def post_carousel(self, image_urls: list, caption: str) -> str:
+        """캐러셀(스와이프 다중 이미지) 피드 게시. 2-10장.
+
+        Args:
+            image_urls: 공개 이미지 URL 리스트 (Cloudinary). 순서 = 스와이프 순서.
+            caption: 캡션 (해시태그 포함)
+        Returns: published media id
+        """
+        if not (2 <= len(image_urls) <= 10):
+            raise ValueError(f"캐러셀은 2-10장 — 현재 {len(image_urls)}")
+        print(f"[1/4] 자식 이미지 {len(image_urls)}장 컨테이너 생성...")
+        child_ids = []
+        for i, u in enumerate(image_urls, 1):
+            cid = self._create_carousel_child(u)
+            child_ids.append(cid)
+            print(f"  ✓ child {i}: {cid}")
+
+        print("[2/4] 캐러셀 컨테이너 생성...")
+        url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
+        params = {
+            "media_type": "CAROUSEL",
+            "children": ",".join(child_ids),
+            "caption": caption,
+            "access_token": self.access_token,
+        }
+        resp = self._post_ig(url, params, step="create_carousel")
+        carousel_id = resp.json()["id"]
+        print(f"  ✓ carousel_id: {carousel_id}")
+
+        print("[3/4] 컨테이너 준비 대기...")
+        self._wait_container_ready(carousel_id, timeout=120)
+        print("  ✓ FINISHED")
+
+        print("[4/4] 게시...")
+        media_id = self._publish_container(carousel_id)
+        print(f"  ✅ 캐러셀 게시 완료! Media ID: {media_id}")
+        return media_id
+
     def post_comment(self, media_id: str, text: str) -> str:
         """게시물에 댓글 추가 (게시 직후 호출하면 첫 댓글로 노출).
 

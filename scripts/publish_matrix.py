@@ -518,12 +518,12 @@ def _default_comment(style: str) -> str:
 
 
 def main() -> int:
-    # 🏆 걸그룹 월드컵 캠페인 (6/23~29) 기간 동안 매트릭스 자동 게시 일시정지 —
+    # 🏆 걸그룹 월드컵 캠페인 (6/23 ~ 7/5, 연장) 기간 동안 매트릭스 자동 게시 일시정지 —
     # 시청자 어텐션을 월드컵에 집중. cron 자체는 유지 (캠페인 후 자연 재개).
     from datetime import date as _date
-    _CAMPAIGN_DATES = {_date(2026, 6, d) for d in range(23, 30)}
-    if _date.today() in _CAMPAIGN_DATES:
-        print("🏆 걸그룹 월드컵 캠페인 기간 — 매트릭스 자동 게시 일시정지")
+    _today = _date.today()
+    if _date(2026, 6, 23) <= _today <= _date(2026, 7, 5):
+        print("🏆 걸그룹 월드컵 캠페인 기간(6/23~7/5) — 매트릭스 자동 게시 일시정지")
         return 0
     target = os.environ.get("TOPIC", "all").strip().lower()
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
