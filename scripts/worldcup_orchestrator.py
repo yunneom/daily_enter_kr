@@ -36,6 +36,9 @@ TOLERANCE_MIN = 40  # cron 매 30분 + 정시 부하 지연(최대 10-15분) 흡
 SCHEDULE = [
     # === Day 1 (화 6/23) — 32강 게시 (완료) ===
     (datetime(2026, 6, 23, 12,  0, tzinfo=KST), "publish",  "R32"),
+    # === Day 2 (수 6/24) 07:00 — 32강 대진표 홍보 (한 장, 양사이드) ===
+    # 사용자 결정: 6/24는 월드컵 홍보 게시글만. 7시 = 출근/등교 시간대 노출.
+    (datetime(2026, 6, 24,  7,  0, tzinfo=KST), "bracket",  ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
@@ -120,6 +123,17 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         tid = f"worldcup_announce_{round_key.lower()}"
         return any((e.get("topic_id") or "") == tid
+                   for e in ledger.get("entries", []))
+    elif action == "bracket":
+        # ledger 에 worldcup_bracket 기록 있으면 done — 중복 게시 방지.
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_bracket"
                    for e in ledger.get("entries", []))
     return False
 
