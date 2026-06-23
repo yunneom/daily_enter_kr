@@ -28,7 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 KST = timezone(timedelta(hours=9))
-TOLERANCE_MIN = 25  # cron 매 30분이라 ±25분 안에 매칭하면 1번만 실행
+TOLERANCE_MIN = 40  # cron 매 30분 + 정시 부하 지연(최대 10-15분) 흡수
 
 # (KST datetime, action, round)
 SCHEDULE = [

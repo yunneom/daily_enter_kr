@@ -31,7 +31,8 @@ import post_ledger  # noqa: E402
 from notify import notify_discord  # noqa: E402
 
 
-INTER_POST_SLEEP = 180  # 3분 간격 — 30분 안 8개 분산 + 봇 패턴 회피
+INTER_POST_SLEEP = 120  # 2분 간격 — 16분 안 8개 분산 + 봇 패턴 회피
+                        # (cron 정시 지연 흡수 + 총 게시 시간 단축. 3분→2분 = 8분 절약)
 
 
 def main():
