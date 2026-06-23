@@ -33,6 +33,94 @@
       "youtube_id": "bfoMiCYjBVw",
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-06-23T13:18:30.479962+09:00",
+      "topic_id": "worldcup_r32_1",
+      "title": "걸그룹 월드컵 R32 #1",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "17887144185571055",
+      "youtube_id": "ShUrbA5cMfs",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:22:25.783661+09:00",
+      "topic_id": "worldcup_r32_5",
+      "title": "걸그룹 월드컵 R32 #5",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18085106771553042",
+      "youtube_id": "hLybM4BQk2E",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:26:57.746864+09:00",
+      "topic_id": "worldcup_r32_2",
+      "title": "걸그룹 월드컵 R32 #2",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18131204374617644",
+      "youtube_id": "NXUvp-r9-A8",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:31:04.762415+09:00",
+      "topic_id": "worldcup_r32_6",
+      "title": "걸그룹 월드컵 R32 #6",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18379731880200917",
+      "youtube_id": "6NsqQR_5biU",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:35:31.232943+09:00",
+      "topic_id": "worldcup_r32_3",
+      "title": "걸그룹 월드컵 R32 #3",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "17956229970140245",
+      "youtube_id": "fvF5Lq8MJdM",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:40:36.894783+09:00",
+      "topic_id": "worldcup_r32_7",
+      "title": "걸그룹 월드컵 R32 #7",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "17866902060572634",
+      "youtube_id": "nxvxXWELZ64",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:44:43.096109+09:00",
+      "topic_id": "worldcup_r32_4",
+      "title": "걸그룹 월드컵 R32 #4",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18049629119612473",
+      "youtube_id": "Wn0V7SmdD7k",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-23T13:48:49.030180+09:00",
+      "topic_id": "worldcup_r32_8",
+      "title": "걸그룹 월드컵 R32 #8",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18078375344658404",
+      "youtube_id": "b-3vkSe1ti4",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
     }
   ]
 }
