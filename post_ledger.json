@@ -121,6 +121,17 @@
       "youtube_id": "b-3vkSe1ti4",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-24T17:35:25.494877+09:00",
+      "topic_id": "worldcup_bracket",
+      "title": "걸그룹 월드컵 32강 대진표",
+      "style": "worldcup_bracket",
+      "seed": null,
+      "ig_media_id": "18109006186994216",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
