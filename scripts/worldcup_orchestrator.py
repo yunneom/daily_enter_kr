@@ -28,7 +28,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 KST = timezone(timedelta(hours=9))
-TOLERANCE_MIN = 40  # cron 매 30분 + 정시 부하 지연(최대 10-15분) 흡수
+TOLERANCE_MIN = 60  # cron 매 30분 + 정시 부하 지연(실측 47분) 흡수. find_slot 은
+                    # 최단 거리 슬롯만 반환하므로 30분 간격 인접 슬롯과도 안전 매칭.
 
 # (KST datetime, action, round)
 # [일정 연장 — 도달 누적 우선] 첫 라운드 노출이 약해서 앞 라운드에 48~63h 몰아주고
