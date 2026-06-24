@@ -170,8 +170,16 @@ def execute(action: str, round_key: str) -> int:
 
 def main():
     # manual dispatch (env로 강제)
-    forced_action = os.environ.get("WORLDCUP_ACTION")
-    forced_round = os.environ.get("WORLDCUP_ROUND")
+    forced_action = os.environ.get("WORLDCUP_ACTION", "").strip()
+    forced_round = os.environ.get("WORLDCUP_ROUND", "").strip()
+    # workflow_dispatch event 면 GITHUB_EVENT_NAME=workflow_dispatch.
+    # input 비어있는 dispatch (사용자가 입력란 안 채움) = 의도 불명 → 명확한 에러.
+    is_dispatch = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+    if is_dispatch and not forced_action:
+        print("❌ workflow_dispatch 인데 action 입력란이 비어있음.")
+        print("   유효 값: publish | tally | announce | bracket")
+        print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
+        return 1
     # bracket 은 round 불필요
     if forced_action == "bracket":
         print("🔧 manual dispatch: bracket")
@@ -179,6 +187,10 @@ def main():
     if forced_action and forced_round:
         print(f"🔧 manual dispatch: {forced_action} {forced_round}")
         return execute(forced_action, forced_round)
+    if is_dispatch and forced_action and not forced_round:
+        print(f"❌ workflow_dispatch action={forced_action!r} 인데 round 비어있음.")
+        print("   bracket 외 액션은 round 필수 (R32 | R16 | R8 | R4 | R2 | R1).")
+        return 1
 
     now = now_kst()
     print(f"⏰ now KST: {now.isoformat()}")
