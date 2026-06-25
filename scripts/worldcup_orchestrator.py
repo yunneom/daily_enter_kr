@@ -139,6 +139,19 @@ def already_done(action: str, round_key: str) -> bool:
     return False
 
 
+def _round_has_winners(round_key: str) -> bool:
+    """라운드 매치 winner 가 모두 채워졌는지 (announce 선행 tally 판단용)."""
+    bp = ROOT / "data" / "worldcup_bracket.json"
+    if not bp.exists():
+        return False
+    try:
+        b = json.loads(bp.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    matches = b.get("rounds", {}).get(round_key, {}).get("matches", [])
+    return bool(matches) and all(m.get("winner") for m in matches)
+
+
 def run(cmd: list) -> int:
     print(f"$ {' '.join(cmd)}")
     return subprocess.run(cmd, cwd=str(ROOT)).returncode
@@ -158,6 +171,14 @@ def execute(action: str, round_key: str) -> int:
     elif action == "tally":
         return run([sys.executable, "scripts/worldcup_tally.py", round_key])
     elif action == "announce":
+        # 자가복구: cron 지연으로 tally 슬롯을 놓치고 announce 만 잡힌 경우,
+        # winner 가 비어있으면 announce 전에 tally 를 먼저 실행 (R1 은 R2 winner 기준이라 예외).
+        if round_key not in ("R1",) and not _round_has_winners(round_key):
+            print(f"⚠️  {round_key} winner 미정 — announce 전에 tally 먼저 실행")
+            rc = run([sys.executable, "scripts/worldcup_tally.py", round_key])
+            if rc != 0:
+                print(f"❌ 선행 tally {round_key} 실패 (rc={rc})")
+                return rc
         # 라운드 진출자 결과 발표 카드 게시
         return run([sys.executable, "scripts/worldcup_announce.py", round_key])
     elif action == "bracket":
