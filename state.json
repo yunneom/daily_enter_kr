@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-24T09:07:57.431493+09:00",
+  "last_run_at": "2026-06-25T09:15:11.745882+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1602,6 +1602,70 @@
       "caption_variant": "tease_one",
       "media_id": "18166556038437546",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "794fd21275667c01",
+      "card_title": "황인엽·이혜리, 신드라마서 첫사랑 로맨스 예고",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "26ba11773ccd4055",
+      "card_title": "이성미, TV조선 '퍼펙트 라이프' 6주년 특집 의뢰인으로 출연",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "06d31ff76be87476",
+      "card_title": "tvN '구기동 프렌즈' 시즌2 제작 확정",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "4d35cbef15cc9620",
+      "card_title": "'나는 솔로' 현숙, 감정 폭발의 1분 장면 화제",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "f3cbe41c538b6a09",
+      "card_title": "방탄소년단, 일본 오리콘 상반기 앨범 부문 2관왕 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "12d950b05a752d17",
+      "card_title": "송혜교 여름 휴가 룩 7가지, 스타일 팁 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "f236ce5000a3bc39",
+      "card_title": "신지, 44세 나이에 2세 계획 고민 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-25",
+      "title_hash": "ebdb58452ae307fc",
+      "card_title": "'참교육', 넷플릭스 글로벌 3주 연속 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18066224975446481",
+      "card_style": "minimal"
     }
   ]
 }
