@@ -65,6 +65,9 @@ jobs:
         env:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          # 실사 사진 off — K-pop 아이돌 위키 사진 대부분 비CC 라서 합법 커버리지 ~6%.
+          # 1명만 사진+15명 이모지 짝짝이 방지 → 이모지 통일. render_test 로 보려면 on 으로.
+          IDOL_PHOTOS: "off"
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
