@@ -44,7 +44,7 @@ VS_RED = (220, 50, 90)
 # 팬덤 commonly used 컬러/모티프 기반. 안 보이면 ✨ 폴백.
 GROUP_EMOJI = {
     "아이브": "👑",            # IVE — queen
-    "블랙핑크": "🩷",          # BP — pink
+    "블랙핑크": "🖤",          # BP — black heart (🩷 핑크하트는 Twemoji 미지원 → 빈칸)
     "에스파": "🦋",            # aespa — synk butterfly
     "뉴진스": "🐰",            # NJ — bunny
     "리센느": "💎",            # Lisenne — diamond
@@ -75,6 +75,62 @@ GROUP_EMOJI = {
 
 def group_emoji_for(group: str) -> str:
     return GROUP_EMOJI.get(group, "✨")
+
+
+# 그룹 → 영문 표기 ("IVE 장원영" 한 줄 표기용). 미등록 시 한글 그대로.
+GROUP_EN = {
+    "아이브": "IVE", "블랙핑크": "BLACKPINK", "에스파": "aespa", "뉴진스": "NewJeans",
+    "리센느": "Lisenne", "아일릿": "ILLIT", "르세라핌": "LE SSERAFIM", "엔믹스": "NMIXX",
+    "레드벨벳": "Red Velvet", "트와이스": "TWICE", "ITZY": "ITZY", "소녀시대": "SNSD",
+    "우주소녀": "WJSN", "시그니처": "tripleS", "마마무": "MAMAMOO", "위키미키": "Weki Meki",
+    "프로미스나인": "fromis_9", "다이아": "DIA", "베이비몬스터": "BABYMONSTER",
+    "키스오브라이프": "KISS OF LIFE", "미야오": "MEOVV", "에이핑크": "Apink",
+    "오마이걸": "OH MY GIRL", "걸스데이": "Girl's Day", "피프티피프티": "FIFTY FIFTY",
+    "트리플에스": "tripleS", "케플러": "Kep1er", "하츠투하츠": "Hearts2Hearts",
+    # 보이그룹 (향후 보이그룹 월드컵용)
+    "스트레이키즈": "Stray Kids", "엔하이픈": "ENHYPEN", "TXT": "TXT", "RIIZE": "RIIZE",
+    "ATEEZ": "ATEEZ", "제로베이스원": "ZB1",
+}
+
+def group_en_for(group: str) -> str:
+    return GROUP_EN.get(group, group)
+
+
+# 그룹 → 팬덤 시그니처 컬러 (카드 그라데이션). (top, bottom) RGB.
+# 흰 글씨 가독 위해 중간~진한 채도. 미등록 시 기본 보라.
+GROUP_COLOR = {
+    "아이브": ((255, 90, 140), (200, 40, 110)),       # IVE — 핑크/마젠타
+    "블랙핑크": ((255, 80, 160), (30, 30, 36)),        # BP — 핑크+블랙
+    "에스파": ((40, 44, 60), (120, 30, 120)),          # aespa — 블랙+네온퍼플
+    "뉴진스": ((120, 200, 255), (60, 130, 230)),       # NJ — 베이비블루
+    "리센느": ((90, 160, 220), (40, 90, 170)),         # Lisenne — 블루
+    "아일릿": ((255, 130, 170), (235, 90, 130)),       # ILLIT — 코랄핑크
+    "르세라핌": ((60, 70, 90), (200, 60, 70)),         # LSRFM — 차콜+레드
+    "엔믹스": ((90, 70, 200), (200, 60, 150)),         # NMIXX — 퍼플/마젠타
+    "레드벨벳": ((230, 50, 70), (140, 20, 40)),        # RV — 레드
+    "트와이스": ((255, 120, 170), (250, 80, 90)),      # TWICE — 핑크/애프리콧
+    "ITZY": ((255, 70, 90), (230, 30, 60)),            # ITZY — 레드
+    "소녀시대": ((255, 160, 190), (230, 110, 150)),    # SNSD — 파스텔로즈
+    "우주소녀": ((120, 90, 210), (70, 50, 160)),       # WJSN — 퍼플
+    "시그니처": ((90, 100, 120), (50, 55, 75)),        # tripleS — 그레이블루
+    "마마무": ((255, 140, 60), (220, 90, 40)),         # MAMAMOO — 오렌지
+    "위키미키": ((255, 110, 150), (220, 70, 120)),     # WM — 핑크
+    "프로미스나인": ((90, 170, 230), (130, 90, 220)),  # fromis — 블루퍼플
+    "다이아": ((110, 180, 220), (70, 130, 190)),       # DIA — 블루
+    "베이비몬스터": ((60, 60, 70), (200, 50, 60)),     # BM — 블랙레드
+    "키스오브라이프": ((230, 60, 110), (160, 30, 80)), # KIOF — 로즈
+    "미야오": ((255, 100, 130), (210, 50, 90)),        # MEOVV — 핑크
+    "에이핑크": ((255, 150, 180), (240, 110, 150)),    # Apink — 핑크
+    "오마이걸": ((255, 160, 120), (230, 110, 150)),    # OMG — 코랄
+    "걸스데이": ((255, 140, 160), (220, 90, 120)),     # GD — 핑크
+    "피프티피프티": ((130, 110, 210), (80, 70, 170)),  # FF — 퍼플
+    "트리플에스": ((90, 100, 120), (50, 55, 75)),
+    "케플러": ((150, 110, 220), (90, 70, 180)),        # Kep1er — 퍼플
+    "하츠투하츠": ((255, 120, 150), (230, 80, 120)),   # H2H — 핑크
+}
+
+def group_color_for(group: str):
+    return GROUP_COLOR.get(group, ((90, 60, 150), (50, 30, 100)))
 
 
 def _font(weight: str, size: int):
@@ -124,61 +180,92 @@ def _circle_photo(path: str, size: int) -> Optional[Image.Image]:
         return None
 
 
+def _rounded_grad(w: int, h: int, top, bot, radius: int = 24) -> Image.Image:
+    """그룹 시그니처 컬러 그라데이션 + 둥근 모서리 RGBA 카드."""
+    grad = _vgrad((w, h), top, bot).convert("RGBA")
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w - 1, h - 1], radius=radius, fill=255)
+    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    out.paste(grad, (0, 0), mask)
+    return out
+
+
 def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
                  member: Dict):
-    """단일 멤버 카드 — 흰 박스 + (실사 사진 or 그룹 emoji) + 이름 + 그룹 + BR 순위.
-    위키미디어 CC 사진 있으면 원형 합성, 없으면 그룹 emoji 폴백."""
-    d = ImageDraw.Draw(img)
-    # 카드 박스
-    d.rounded_rectangle([x, y, x + w, y + h], radius=24,
-                        fill=CARD_BG, outline=GOLD, width=4)
+    """단일 멤버 카드 — 그룹 시그니처 컬러 그라데이션 + 큰 emoji +
+    'IVE 장원영' 한 줄 표기(그룹영문+이름) + BR 순위 배지.
+    (실사 사진은 IDOL_PHOTOS=on 일 때만, 기본 off)."""
     grp = member.get("group", "")
-    # 1) 위키미디어 CC 실사 사진 시도 (환경변수 IDOL_PHOTOS=off 면 스킵)
+    name = member.get("member", "")
+    top, bot = group_color_for(grp)
+    # 시그니처 컬러 그라데이션 카드 + 금 테두리
+    card = _rounded_grad(w, h, top, bot)
+    img.alpha_composite(card, (x, y))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([x, y, x + w - 1, y + h - 1], radius=24,
+                        outline=GOLD, width=4)
+
+    # (옵션) 실사 사진 — 기본 off
     photo_done = False
-    if os.environ.get("IDOL_PHOTOS", "on").lower() != "off":
+    if os.environ.get("IDOL_PHOTOS", "off").lower() == "on":
         try:
             import idol_photo
-            rec = idol_photo.fetch_photo(member.get("member", ""))
+            rec = idol_photo.fetch_photo(name)
             if rec and rec.get("path"):
                 circ = _circle_photo(rec["path"], 150)
                 if circ:
-                    # 금색 테두리 원
-                    d.ellipse([x + (w - 158) // 2, y + 24,
-                               x + (w - 158) // 2 + 158, y + 24 + 158],
-                              outline=GOLD, width=4)
-                    img.alpha_composite(circ, (x + (w - 150) // 2, y + 28))
+                    d.ellipse([x + (w - 158) // 2, y + 22,
+                               x + (w - 158) // 2 + 158, y + 22 + 158],
+                              outline=WHITE, width=4)
+                    img.alpha_composite(circ, (x + (w - 150) // 2, y + 26))
                     photo_done = True
         except Exception:
             pass
-    # 2) 폴백 — 그룹 emoji
+    # 폴백/기본 — 큰 그룹 emoji (불투명 흰 원 배경 위 → 모든 emoji 가독)
     if not photo_done:
-        em = _get_emoji_image(group_emoji_for(grp), 140)
+        cx = x + w // 2
+        # 반투명→거의 불투명 흰 원 (블랙핑크 🩷 등 옅은 emoji 도 선명하게)
+        disc = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+        ImageDraw.Draw(disc).ellipse([w // 2 - 88, 24, w // 2 + 88, 24 + 176],
+                                     fill=(255, 255, 255, 235), outline=(255, 255, 255, 255), width=3)
+        img.alpha_composite(disc, (x, y))
+        em = _get_emoji_image(group_emoji_for(grp), 150)
         if em:
-            img.alpha_composite(em, (x + (w - 140) // 2, y + 30))
-    # 이름 (중앙)
-    name = member.get("member", "")
-    nf = _font("Bold", 62)
-    bb = nf.getbbox(name)
-    nw = bb[2] - bb[0]
-    d.text((x + (w - nw) / 2, y + 200), name, font=nf, fill=INK)
-    # 그룹 (이름 아래)
-    gf = _font("Medium", 34)
-    bb = gf.getbbox(grp)
-    gw = bb[2] - bb[0]
-    d.text((x + (w - gw) / 2, y + 274), grp, font=gf, fill=(120, 120, 130))
-    # BR 순위 (선택)
+            img.alpha_composite(em, (cx - 75, y + 38))
+
+    # "IVE 장원영" 한 줄 — 그룹영문 + 이름 같은 폰트/크기/색 (흰색 Bold).
+    # 한 줄에 다 들어가면 한 줄, 너무 길면 그룹/이름 2줄 (둘 다 같은 폰트·색).
+    cx = x + w // 2
+    grp_en = group_en_for(grp)
+    one_line = f"{grp_en} {name}"
+    size = 56
+    nf = _font("Bold", size)
+    def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
+    # 한 줄 우선 — w-28 안에 들어갈 때까지 축소 (min 34)
+    while _tw(one_line, nf) > w - 28 and size > 34:
+        size -= 2; nf = _font("Bold", size)
+    if _tw(one_line, nf) <= w - 28:
+        d.text((cx - _tw(one_line, nf) / 2, y + 234), one_line, font=nf,
+               fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+    else:
+        # 2줄 (그룹 / 이름) — 같은 폰트·크기·색
+        size = 52; nf = _font("Bold", size)
+        while max(_tw(grp_en, nf), _tw(name, nf)) > w - 28 and size > 32:
+            size -= 2; nf = _font("Bold", size)
+        d.text((cx - _tw(grp_en, nf) / 2, y + 210), grp_en, font=nf,
+               fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+        d.text((cx - _tw(name, nf) / 2, y + 210 + size + 6), name, font=nf,
+               fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+
+    # BR 순위 배지 (좌상단, 골드)
     rk = member.get("rank")
     if rk:
         rf = _font("Bold", 26)
-        rstr = f"BR #{rk}위"
-        bb = rf.getbbox(rstr)
-        rw = bb[2] - bb[0]
-        # 우하단
-        d.rounded_rectangle([x + w - rw - 36, y + h - 50,
-                             x + w - 14, y + h - 14],
+        rstr = f"BR {rk}위"
+        rbb = rf.getbbox(rstr); rw = rbb[2] - rbb[0]
+        d.rounded_rectangle([x + 14, y + 14, x + 14 + rw + 28, y + 14 + 44],
                             radius=12, fill=GOLD)
-        d.text((x + w - rw - 25, y + h - 46), rstr,
-               font=rf, fill=INK)
+        d.text((x + 14 + 14, y + 14 + 6), rstr, font=rf, fill=INK)
 
 
 def _match_block(img: Image.Image, x0: int, y0: int, width: int,

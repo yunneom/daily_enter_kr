@@ -63,45 +63,44 @@ def _draw_centered(draw, text, font, cx, y, fill=WHITE, stroke=0, stroke_fill=No
 
 
 def _member_mini(img, x, y, w, h, member: Dict):
-    """진출자 미니 카드 — 셀 내부 중앙 정렬, 공백 최소화."""
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle([x, y, x + w, y + h], radius=16,
-                        fill=CARD_BG, outline=GOLD, width=3)
+    """진출자 미니 카드 — 그룹 시그니처 컬러 + emoji + 그룹영문(골드) + 이름(흰)."""
+    from make_worldcup_match_card import group_color_for, group_en_for
     grp = member.get("group", "")
     name = member.get("member", "")
+    top, bot = group_color_for(grp)
+    # 시그니처 컬러 그라데이션 카드
+    grad = _vgrad((w, h), top, bot).convert("RGBA")
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w - 1, h - 1], radius=16, fill=255)
+    img.paste(grad, (x, y), mask)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([x, y, x + w - 1, y + h - 1], radius=16, outline=GOLD, width=3)
 
-    # 셀을 3등분: emoji(상) / 이름(중) / 그룹(하). 모두 중앙 정렬.
-    em_size = min(w, h) // 2 - 8  # 셀의 절반 - 패딩
-    em_size = max(48, min(em_size, 110))
+    # emoji (불투명 흰 원 위) — 상단
+    em_size = max(48, min(min(w, h) // 2 - 8, 96))
+    disc_d = em_size + 22
+    cx = x + w // 2
+    disc = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(disc).ellipse([w // 2 - disc_d // 2, int(h * 0.10),
+                                  w // 2 + disc_d // 2, int(h * 0.10) + disc_d],
+                                 fill=(255, 255, 255, 235))
+    img.alpha_composite(disc, (x, y))
     em = _get_emoji_image(group_emoji_for(grp), em_size)
     if em:
-        em_x = x + (w - em_size) // 2
-        em_y = y + int(h * 0.13)  # 상단 13%
-        img.alpha_composite(em, (em_x, em_y))
+        img.alpha_composite(em, (cx - em_size // 2, y + int(h * 0.10) + 11))
 
-    # 이름 — 셀 너비에 맞게 폰트 사이즈 자동 조정
-    name_size = max(28, min(w // 7, 52))
-    nf = _font("Bold", name_size)
-    bb = nf.getbbox(name)
-    while bb[2] - bb[0] > w - 16 and name_size > 22:
-        name_size -= 2
-        nf = _font("Bold", name_size)
-        bb = nf.getbbox(name)
-    nw = bb[2] - bb[0]
-    name_y = y + int(h * 0.60)  # 중하단
-    d.text((x + (w - nw) / 2, name_y), name, font=nf, fill=INK)
-
-    # 그룹 — 작게
-    grp_size = max(20, min(w // 11, 28))
-    gf = _font("Medium", grp_size)
-    bb = gf.getbbox(grp)
-    while bb[2] - bb[0] > w - 12 and grp_size > 16:
-        grp_size -= 1
-        gf = _font("Medium", grp_size)
-        bb = gf.getbbox(grp)
-    gw = bb[2] - bb[0]
-    grp_y = name_y + name_size + 4  # 이름 바로 아래
-    d.text((x + (w - gw) / 2, grp_y), grp, font=gf, fill=(120, 120, 130))
+    # 그룹영문 + 이름 같은 폰트/크기/색 (흰), 2줄 (셀 좁아 한 줄은 어려움)
+    grp_en = group_en_for(grp)
+    def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
+    size = max(22, min(w // 6, 40))
+    nf = _font("Bold", size)
+    while max(_tw(grp_en, nf), _tw(name, nf)) > w - 12 and size > 16:
+        size -= 1; nf = _font("Bold", size)
+    gy = y + int(h * 0.56)
+    d.text((cx - _tw(grp_en, nf) / 2, gy), grp_en, font=nf,
+           fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
+    d.text((cx - _tw(name, nf) / 2, gy + size + 3), name, font=nf,
+           fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
 
 
 def make_round_announce_card(
