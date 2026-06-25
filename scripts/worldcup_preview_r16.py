@@ -70,7 +70,26 @@ def main():
         print(f"  ✓ post{idx}: {jpg.name} + {mp4.name}")
 
     print(f"\n✅ 미리보기 렌더 완료 → {out.relative_to(ROOT)}/")
-    print("   workflow 아티팩트(worldcup-<run>) 에서 다운로드 → 실사 사진 확인")
+
+    # 컨테이너/로컬에서 아티팩트 다운로드가 막히는 경우 대비:
+    # 추적되는 docs/worldcup_preview/ 로 jpg + 커버리지 json 복사 → 워크플로우가 커밋
+    # → git pull 로 확인 가능. (mp4 는 용량 커서 jpg 만)
+    import shutil
+    pub = ROOT / "docs" / "worldcup_preview"
+    if pub.exists():
+        shutil.rmtree(pub)
+    pub.mkdir(parents=True, exist_ok=True)
+    for f in sorted(out.glob("*.jpg")):
+        shutil.copy(f, pub / f.name)
+    # 커버리지 요약 json
+    (pub / "_coverage.json").write_text(json.dumps({
+        "photo_ok": photo_ok, "photo_none": photo_no,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    # idol_photos attribution 도 복사 (어떤 라이선스/저작자인지)
+    attr_src = ROOT / "output_enter" / "idol_photos" / "_attribution.json"
+    if attr_src.exists():
+        shutil.copy(attr_src, pub / "_attribution.json")
+    print(f"📋 docs/worldcup_preview/ 에 jpg + 커버리지 복사 (커밋 대상)")
     return 0
 
 

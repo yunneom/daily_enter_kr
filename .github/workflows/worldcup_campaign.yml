@@ -84,6 +84,7 @@ jobs:
           changes=""
           if [ -n "$(git status --porcelain data/worldcup_bracket.json 2>/dev/null)" ]; then changes="$changes data/worldcup_bracket.json"; fi
           if [ -n "$(git status --porcelain post_ledger.json 2>/dev/null)" ]; then changes="$changes post_ledger.json"; fi
+          if [ -d docs/worldcup_preview ] && [ -n "$(git status --porcelain docs/worldcup_preview 2>/dev/null)" ]; then changes="$changes docs/worldcup_preview"; fi
           if [ -z "$changes" ]; then
             echo "변경 없음 — 커밋 스킵"
             exit 0
