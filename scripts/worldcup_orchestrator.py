@@ -163,6 +163,9 @@ def execute(action: str, round_key: str) -> int:
     elif action == "bracket":
         # 32강 대진표 캐러셀 게시 (manual dispatch 전용 — SCHEDULE 에 없음)
         return run([sys.executable, "scripts/worldcup_post_bracket.py"])
+    elif action == "render_test":
+        # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
+        return run([sys.executable, "scripts/worldcup_preview_r16.py"])
     else:
         print(f"❌ 알 수 없는 action: {action}")
         return 1
@@ -180,10 +183,10 @@ def main():
         print("   유효 값: publish | tally | announce | bracket")
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
-    # bracket 은 round 불필요
-    if forced_action == "bracket":
-        print("🔧 manual dispatch: bracket")
-        return execute("bracket", "")
+    # bracket / render_test 는 round 불필요
+    if forced_action in ("bracket", "render_test"):
+        print(f"🔧 manual dispatch: {forced_action}")
+        return execute(forced_action, "")
     if forced_action and forced_round:
         print(f"🔧 manual dispatch: {forced_action} {forced_round}")
         return execute(forced_action, forced_round)

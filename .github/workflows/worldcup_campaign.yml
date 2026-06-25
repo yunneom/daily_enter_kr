@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: 'publish | tally | announce | bracket'
+        description: 'publish | tally | announce | bracket | render_test'
         required: false
         default: ''
       round:
