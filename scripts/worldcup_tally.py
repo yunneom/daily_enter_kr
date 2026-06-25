@@ -101,64 +101,71 @@ def fetch_all_comments(media_id: str, token: str) -> List[Dict]:
 
 
 def tally_post(media_id: str, token: str) -> Dict:
-    """게시글 1개 → 1·2·3·4 카운트 + 사용자 dedup."""
+    """게시글 1개 → 1·2·3·4 집계.
+
+    [집계 3요소 — 사용자 지정]
+    1. 댓글 숫자 : 1·2·3·4 파싱 = 어느 콤비를 골랐나
+    2. 이름      : username 으로 dedup (한 사람 1표, 마지막 댓글 채택)
+    3. 좋아요     : 그 댓글의 like_count → 표 가중치 = 1 + likes
+                   (좋아요 많은 댓글 = 그만큼 더 많은 사람이 동의 → 가중)
+
+    반환: weighted(가중 집계, winner 결정용) + raw(순수 인원수, 투명성 표기용).
+    """
     comments = fetch_all_comments(media_id, token)
-    user_vote = {}        # username → '1'·'2'·'3'·'4' (마지막 댓글 채택)
-    user_like_weight = {} # username → sum of likes on their voting comments (tiebreak 용)
+    user_vote = {}         # username → '1'·'2'·'3'·'4' (마지막 댓글)
+    user_final_likes = {}  # username → 마지막 투표 댓글의 like_count
     raw_comments = len(comments)
 
-    # IG 가 최신순으로 줘서 그대로 순회하면서 사용자별 마지막 표 == 가장 처음 본 표
-    # 안정성 위해 timestamp 오름차순(=오래된→최신) 재정렬 후 덮어쓰기
+    # timestamp 오름차순(오래된→최신) 순회 → 덮어쓰면 사용자별 '마지막' 표 + 그 댓글 likes
     def _ts(c):
         return c.get("timestamp", "")
     for c in sorted(comments, key=_ts):
         user = c.get("username", "anon")
-        text = c.get("text") or ""
-        v = parse_vote(text)
+        v = parse_vote(c.get("text") or "")
         if not v:
             continue
         user_vote[user] = v
-        user_like_weight[user] = user_like_weight.get(user, 0) + (c.get("like_count") or 0)
+        user_final_likes[user] = c.get("like_count") or 0
 
-    counts = {"1": 0, "2": 0, "3": 0, "4": 0}
-    like_w = {"1": 0, "2": 0, "3": 0, "4": 0}
+    raw = {"1": 0, "2": 0, "3": 0, "4": 0}       # 순수 인원수
+    weighted = {"1": 0, "2": 0, "3": 0, "4": 0}  # 1 + likes 가중
     for user, v in user_vote.items():
-        counts[v] += 1
-        like_w[v] += user_like_weight.get(user, 0)
+        raw[v] += 1
+        weighted[v] += 1 + user_final_likes.get(user, 0)
     return {
         "raw_comments": raw_comments,
         "valid_votes": len(user_vote),
-        "counts": counts,
-        "like_w": like_w,
+        "counts": raw,        # 하위호환 (raw)
+        "weighted": weighted,
     }
 
 
-def decide_winners(match1: Dict, match2: Dict, counts: Dict, like_w: Dict) -> Tuple[Dict, Dict, Dict]:
-    """4지선다 → 매치1·2 winner. 동률시 like_w 로 tiebreak.
+def decide_winners(match1: Dict, match2: Dict, weighted: Dict,
+                   raw: Dict = None) -> Tuple[Dict, Dict, Dict]:
+    """4지선다 → 매치1·2 winner. 가중집계(weighted)로 결정, 동률시 raw 인원수.
 
-    Returns: (m1_votes, m2_votes, winners) — winners = {"m1": Dict, "m2": Dict}
+    Returns: (m1_votes, m2_votes, winners). m*_votes 에 weighted/raw 둘 다 담음.
     """
-    # 매치1: A(1+2) vs B(3+4)
-    m1_a_votes = counts["1"] + counts["2"]
-    m1_b_votes = counts["3"] + counts["4"]
-    # 매치2: A(1+3) vs B(2+4)
-    m2_a_votes = counts["1"] + counts["3"]
-    m2_b_votes = counts["2"] + counts["4"]
+    raw = raw or weighted
+    # 가중 집계 — 매치1: A(1+2) vs B(3+4) / 매치2: A(1+3) vs B(2+4)
+    w1a, w1b = weighted["1"] + weighted["2"], weighted["3"] + weighted["4"]
+    w2a, w2b = weighted["1"] + weighted["3"], weighted["2"] + weighted["4"]
+    # raw 인원수 (동률 tiebreak + 표기)
+    r1a, r1b = raw["1"] + raw["2"], raw["3"] + raw["4"]
+    r2a, r2b = raw["1"] + raw["3"], raw["2"] + raw["4"]
 
-    def pick(a, b, lw_a, lw_b, m):
-        if a > b: return m["a"]
-        if b > a: return m["b"]
-        # tiebreak — like_w
-        if lw_a >= lw_b: return m["a"]
-        return m["b"]
+    def pick(wa, wb, ra, rb, m):
+        if wa != wb:
+            return m["a"] if wa > wb else m["b"]
+        # 가중 동률 → raw 인원수 / 그래도 동률 → 시드 높은(rank 낮은) 쪽
+        if ra != rb:
+            return m["a"] if ra > rb else m["b"]
+        return m["a"] if m["a"].get("rank", 99) <= m["b"].get("rank", 99) else m["b"]
 
-    m1_winner = pick(m1_a_votes, m1_b_votes,
-                     like_w["1"] + like_w["2"], like_w["3"] + like_w["4"], match1)
-    m2_winner = pick(m2_a_votes, m2_b_votes,
-                     like_w["1"] + like_w["3"], like_w["2"] + like_w["4"], match2)
-
-    m1_votes = {"a": m1_a_votes, "b": m1_b_votes}
-    m2_votes = {"a": m2_a_votes, "b": m2_b_votes}
+    m1_winner = pick(w1a, w1b, r1a, r1b, match1)
+    m2_winner = pick(w2a, w2b, r2a, r2b, match2)
+    m1_votes = {"a": w1a, "b": w1b, "raw_a": r1a, "raw_b": r1b}
+    m2_votes = {"a": w2a, "b": w2b, "raw_a": r2a, "raw_b": r2b}
     return m1_votes, m2_votes, {"m1": m1_winner, "m2": m2_winner}
 
 
@@ -331,7 +338,7 @@ def main():
             continue
         tally = tally_post(media_id, token)
         m1 = post["match1"]; m2 = post["match2"]
-        m1_v, m2_v, winners = decide_winners(m1, m2, tally["counts"], tally["like_w"])
+        m1_v, m2_v, winners = decide_winners(m1, m2, tally["weighted"], tally["counts"])
         # matches 안의 해당 매치 객체에 winner 기록
         m1["winner"] = winners["m1"]
         m2["winner"] = winners["m2"]
@@ -340,15 +347,17 @@ def main():
         post["tally"] = {
             "raw_comments": tally["raw_comments"],
             "valid_votes": tally["valid_votes"],
-            "counts": tally["counts"],
+            "counts": tally["counts"],       # 인원수
+            "weighted": tally["weighted"],   # 1+좋아요 가중
         }
-        print(f"  post #{idx+1}: 댓글 {tally['raw_comments']} (유효 {tally['valid_votes']}) "
-              f"1={tally['counts']['1']} 2={tally['counts']['2']} "
-              f"3={tally['counts']['3']} 4={tally['counts']['4']}")
-        print(f"    매치1: {m1['a']['member']}({m1_v['a']}) vs {m1['b']['member']}({m1_v['b']}) → "
-              f"승: {winners['m1']['member']}")
-        print(f"    매치2: {m2['a']['member']}({m2_v['a']}) vs {m2['b']['member']}({m2_v['b']}) → "
-              f"승: {winners['m2']['member']}")
+        c, w = tally["counts"], tally["weighted"]
+        print(f"  post #{idx+1}: 댓글 {tally['raw_comments']} (유효투표 {tally['valid_votes']}명)")
+        print(f"    인원: 1={c['1']} 2={c['2']} 3={c['3']} 4={c['4']}  "
+              f"가중(+좋아요): 1={w['1']} 2={w['2']} 3={w['3']} 4={w['4']}")
+        print(f"    매치1: {m1['a']['member']}(가중{m1_v['a']}/{m1_v['raw_a']}명) vs "
+              f"{m1['b']['member']}(가중{m1_v['b']}/{m1_v['raw_b']}명) → 승: {winners['m1']['member']}")
+        print(f"    매치2: {m2['a']['member']}(가중{m2_v['a']}/{m2_v['raw_a']}명) vs "
+              f"{m2['b']['member']}(가중{m2_v['b']}/{m2_v['raw_b']}명) → 승: {winners['m2']['member']}")
 
     # 다음 라운드 자동 빌드
     print(f"\n=== 다음 라운드 페어링 생성 ===")
