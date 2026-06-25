@@ -233,29 +233,35 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
         if em:
             img.alpha_composite(em, (cx - 75, y + 38))
 
-    # "IVE 장원영" 한 줄 — 그룹영문 + 이름 같은 폰트/크기/색 (흰색 Bold).
-    # 한 줄에 다 들어가면 한 줄, 너무 길면 그룹/이름 2줄 (둘 다 같은 폰트·색).
+    # "IVE 장원영" — 흰 라운드 박스 위 검정 글씨 (집중 ↑). 그룹+이름 같은 폰트/크기.
     cx = x + w // 2
     grp_en = group_en_for(grp)
     one_line = f"{grp_en} {name}"
-    size = 56
-    nf = _font("Bold", size)
     def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
-    # 한 줄 우선 — w-28 안에 들어갈 때까지 축소 (min 34)
-    while _tw(one_line, nf) > w - 28 and size > 34:
+    box_x0, box_x1 = x + 12, x + w - 12
+    box_inner = (box_x1 - box_x0) - 24  # 박스 안쪽 텍스트 가용폭
+    # 한 줄 시도
+    size = 54; nf = _font("Bold", size)
+    while _tw(one_line, nf) > box_inner and size > 34:
         size -= 2; nf = _font("Bold", size)
-    if _tw(one_line, nf) <= w - 28:
-        d.text((cx - _tw(one_line, nf) / 2, y + 234), one_line, font=nf,
-               fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+    if _tw(one_line, nf) <= box_inner:
+        lines = [one_line]
     else:
-        # 2줄 (그룹 / 이름) — 같은 폰트·크기·색
-        size = 52; nf = _font("Bold", size)
-        while max(_tw(grp_en, nf), _tw(name, nf)) > w - 28 and size > 32:
+        # 2줄 (그룹 / 이름)
+        size = 50; nf = _font("Bold", size)
+        while max(_tw(grp_en, nf), _tw(name, nf)) > box_inner and size > 30:
             size -= 2; nf = _font("Bold", size)
-        d.text((cx - _tw(grp_en, nf) / 2, y + 210), grp_en, font=nf,
-               fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
-        d.text((cx - _tw(name, nf) / 2, y + 210 + size + 6), name, font=nf,
-               fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+        lines = [grp_en, name]
+    # 흰 박스 (이름 영역 배경)
+    pad_y = 12
+    box_h = len(lines) * size + (len(lines) - 1) * 6 + pad_y * 2
+    box_y0 = y + 206
+    d.rounded_rectangle([box_x0, box_y0, box_x1, box_y0 + box_h],
+                        radius=16, fill=(255, 255, 255), outline=GOLD, width=2)
+    ty = box_y0 + pad_y
+    for ln in lines:
+        d.text((cx - _tw(ln, nf) / 2, ty), ln, font=nf, fill=INK)
+        ty += size + 6
 
     # BR 순위 배지 (좌상단, 골드)
     rk = member.get("rank")

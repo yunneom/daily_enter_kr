@@ -43,8 +43,8 @@ SCHEDULE = [
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
-    # === Day 4 (금 6/26) 21:00 — 16강 게시 (금밤 → 주말 관통) ===
-    (datetime(2026, 6, 26, 21,  0, tzinfo=KST), "publish",  "R16"),
+    # === Day 4 (금 6/26) 12:00 — 16강 게시 (점심 슬롯, 투표창 72h 주말 전체) ===
+    (datetime(2026, 6, 26, 12,  0, tzinfo=KST), "publish",  "R16"),
     # === Day 7 (월 6/29) — 16강 집계 (주말 63h) + 8강 진출 발표 + 8강 게시 ===
     (datetime(2026, 6, 29, 12,  0, tzinfo=KST), "tally",    "R16"),
     (datetime(2026, 6, 29, 12, 30, tzinfo=KST), "announce", "R16"),

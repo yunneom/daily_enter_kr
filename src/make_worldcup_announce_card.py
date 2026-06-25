@@ -89,18 +89,24 @@ def _member_mini(img, x, y, w, h, member: Dict):
     if em:
         img.alpha_composite(em, (cx - em_size // 2, y + int(h * 0.10) + 11))
 
-    # 그룹영문 + 이름 같은 폰트/크기/색 (흰), 2줄 (셀 좁아 한 줄은 어려움)
+    # 그룹영문 + 이름 — 흰 박스 위 검정 글씨 (집중 ↑), 2줄 같은 폰트/크기
     grp_en = group_en_for(grp)
     def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
-    size = max(22, min(w // 6, 40))
+    box_x0, box_x1 = x + 8, x + w - 8
+    box_inner = (box_x1 - box_x0) - 12
+    size = max(20, min(w // 6, 38))
     nf = _font("Bold", size)
-    while max(_tw(grp_en, nf), _tw(name, nf)) > w - 12 and size > 16:
+    while max(_tw(grp_en, nf), _tw(name, nf)) > box_inner and size > 15:
         size -= 1; nf = _font("Bold", size)
-    gy = y + int(h * 0.56)
-    d.text((cx - _tw(grp_en, nf) / 2, gy), grp_en, font=nf,
-           fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
-    d.text((cx - _tw(name, nf) / 2, gy + size + 3), name, font=nf,
-           fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
+    pad = 8
+    box_h = size * 2 + 4 + pad * 2
+    box_y0 = y + h - box_h - 8
+    d.rounded_rectangle([box_x0, box_y0, box_x1, box_y0 + box_h],
+                        radius=10, fill=(255, 255, 255), outline=GOLD, width=2)
+    ty = box_y0 + pad
+    for ln in (grp_en, name):
+        d.text((cx - _tw(ln, nf) / 2, ty), ln, font=nf, fill=INK)
+        ty += size + 4
 
 
 def make_round_announce_card(
