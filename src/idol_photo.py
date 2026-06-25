@@ -194,6 +194,24 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
         _save_attr(attr)
         return None
 
+    # ── 가드1: 이름-제목 일치 ── 그룹 페이지/동명이인 회피.
+    # 설윤→"NMIXX"(그룹 단체사진), 잘못된 인물 등 차단. 멤버명이 제목에 없으면 거부.
+    resolved = hit.get("title") or ""
+    if member_name not in resolved:
+        attr[member_name] = {"none": True, "reason": f"제목불일치({resolved})"}
+        _save_attr(attr)
+        return None
+
+    # ── 가드2: CC/PD 라이선스만 ── 비자유(fair-use) 이미지 차단 (저작권 안전).
+    lic = _fetch_license(hit.get("file"))
+    lic_str = (lic.get("license") or "").lower()
+    is_free = any(k in lic_str for k in
+                  ["cc", "public domain", "cc0", "pd", "공용", "creative commons"])
+    if not is_free:
+        attr[member_name] = {"none": True, "reason": f"비CC라이선스({lic_str[:30]})"}
+        _save_attr(attr)
+        return None
+
     # 다운로드
     try:
         r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=15)
@@ -208,7 +226,7 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
         _save_attr(attr)
         return None
 
-    lic = _fetch_license(hit.get("file"))
+    # lic 은 가드2에서 이미 조회됨 (재사용)
     rec = {
         "path": fname,
         "artist": lic.get("artist", ""),
