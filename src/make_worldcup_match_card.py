@@ -13,6 +13,7 @@
 브랜드평판 차트와 비슷한 다크 그라데이션 (네이비→마젠타). 빅매치 느낌.
 """
 
+import os
 import sys
 from pathlib import Path
 from typing import Dict, Optional
@@ -105,19 +106,55 @@ def _draw_centered(draw, text, font, cx, y, fill=WHITE, stroke=0, stroke_fill=No
     draw.text((cx - w / 2, y), text, **kw)
 
 
+def _circle_photo(path: str, size: int) -> Optional[Image.Image]:
+    """사진 → 정사각 center-crop → 원형 마스크. 실패 시 None."""
+    try:
+        from PIL import ImageDraw as _ID
+        ph = Image.open(path).convert("RGB")
+        pw, phh = ph.size
+        s = min(pw, phh)
+        ph = ph.crop(((pw - s) // 2, (phh - s) // 2,
+                      (pw - s) // 2 + s, (phh - s) // 2 + s)).resize((size, size), Image.LANCZOS)
+        mask = Image.new("L", (size, size), 0)
+        _ID.Draw(mask).ellipse([0, 0, size, size], fill=255)
+        out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        out.paste(ph, (0, 0), mask)
+        return out
+    except Exception:
+        return None
+
+
 def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
                  member: Dict):
-    """단일 멤버 카드 — 흰 박스 + 그룹 emoji + 이름 + 그룹 + BR 순위.
-    인물 번호 배지 X (4지선다 1·2·3·4 와 혼동 방지)."""
+    """단일 멤버 카드 — 흰 박스 + (실사 사진 or 그룹 emoji) + 이름 + 그룹 + BR 순위.
+    위키미디어 CC 사진 있으면 원형 합성, 없으면 그룹 emoji 폴백."""
     d = ImageDraw.Draw(img)
     # 카드 박스
     d.rounded_rectangle([x, y, x + w, y + h], radius=24,
                         fill=CARD_BG, outline=GOLD, width=4)
-    # 그룹 emoji (중앙 상단, 큼직)
     grp = member.get("group", "")
-    em = _get_emoji_image(group_emoji_for(grp), 140)
-    if em:
-        img.alpha_composite(em, (x + (w - 140) // 2, y + 30))
+    # 1) 위키미디어 CC 실사 사진 시도 (환경변수 IDOL_PHOTOS=off 면 스킵)
+    photo_done = False
+    if os.environ.get("IDOL_PHOTOS", "on").lower() != "off":
+        try:
+            import idol_photo
+            rec = idol_photo.fetch_photo(member.get("member", ""))
+            if rec and rec.get("path"):
+                circ = _circle_photo(rec["path"], 150)
+                if circ:
+                    # 금색 테두리 원
+                    d.ellipse([x + (w - 158) // 2, y + 24,
+                               x + (w - 158) // 2 + 158, y + 24 + 158],
+                              outline=GOLD, width=4)
+                    img.alpha_composite(circ, (x + (w - 150) // 2, y + 28))
+                    photo_done = True
+        except Exception:
+            pass
+    # 2) 폴백 — 그룹 emoji
+    if not photo_done:
+        em = _get_emoji_image(group_emoji_for(grp), 140)
+        if em:
+            img.alpha_composite(em, (x + (w - 140) // 2, y + 30))
     # 이름 (중앙)
     name = member.get("member", "")
     nf = _font("Bold", 62)

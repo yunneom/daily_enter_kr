@@ -164,9 +164,17 @@ def build_worldcup_caption(round_label: str, post_idx: int, post_total: int,
         "  → 스토리에 본인 픽 공유",
         "",
         f"📊 출처: 한국기업평판연구소 {source_date}",
-        "",
-        " ".join(uniq),
     ]
+    # 위키미디어 CC 사진 사용 시 출처 표기 (저작권 준수). 사진 미사용이면 빈 줄.
+    try:
+        import idol_photo
+        attr = idol_photo.attribution_line(
+            [a["member"], b["member"], c["member"], d["member"]])
+        if attr:
+            lines.append(attr)
+    except Exception:
+        pass
+    lines += ["", " ".join(uniq)]
     return "\n".join(lines)
 
 
