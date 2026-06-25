@@ -326,6 +326,10 @@ def main():
 
     ledger = load_ledger()
 
+    # JSON load 후 posts.match* 와 rounds.matches[i] 가 다른 객체 → quarter+slot
+    # 으로 인덱싱해서 양쪽 다 winner/votes 채워야 build_next_round 가 동작.
+    matches_idx = {(m["quarter"], m["slot"]): m for m in rnd.get("matches", [])}
+
     print(f"=== {round_key} 댓글 집계 시작 ({len(posts)} 게시글, {len(matches)} 매치) ===")
     # 게시글 단위로 댓글 수집 + 매치 1·2 winner 결정
     for post in posts:
@@ -339,11 +343,17 @@ def main():
         tally = tally_post(media_id, token)
         m1 = post["match1"]; m2 = post["match2"]
         m1_v, m2_v, winners = decide_winners(m1, m2, tally["weighted"], tally["counts"])
-        # matches 안의 해당 매치 객체에 winner 기록
-        m1["winner"] = winners["m1"]
-        m2["winner"] = winners["m2"]
-        m1["votes"] = m1_v
-        m2["votes"] = m2_v
+        # posts 카피 + rounds.matches 의 원본 양쪽에 동기화
+        for target in (m1, matches_idx.get((m1.get("quarter"), m1.get("slot")))):
+            if target is None:
+                continue
+            target["winner"] = winners["m1"]
+            target["votes"] = m1_v
+        for target in (m2, matches_idx.get((m2.get("quarter"), m2.get("slot")))):
+            if target is None:
+                continue
+            target["winner"] = winners["m2"]
+            target["votes"] = m2_v
         post["tally"] = {
             "raw_comments": tally["raw_comments"],
             "valid_votes": tally["valid_votes"],
