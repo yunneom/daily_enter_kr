@@ -311,6 +311,29 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
         cover_url = upload_image(local_jpg)
         return video_url, cover_url
 
+    # ─── message: 육성/권위/전환 텍스트 카드 (3-1-2-1 보강) ───
+    if style == "message":
+        from make_message_card import make_message_card
+        # headline/lines 풀에서 seed 회전
+        hp = topic.get("headline_pool") or [topic.get("headline", "")]
+        lp = topic.get("lines_pool") or [topic.get("lines", [])]
+        headline = hp[seed % len(hp)]
+        lines = lp[seed % len(lp)]
+        make_message_card(
+            category=topic.get("category", "authority"),
+            badge=topic.get("badge", ""),
+            headline=headline, lines=lines,
+            cta=topic.get("cta", ""), output_path=local_jpg,
+            subhead=topic.get("subhead", ""),
+            source_note=topic.get("source_note", ""), brand=BRAND,
+        )
+        bgm = _pick_bgm(style, topic_id)
+        make_motion_video(image_path=local_jpg, output_path=local_mp4,
+                          duration=REEL_SECONDS, bgm_path=bgm, motion='kenburns_in')
+        video_url = upload_video(local_mp4)
+        cover_url = upload_image(local_jpg)
+        return video_url, cover_url
+
     # ─── soccer_squad: 5컬럼 × 3로우 + 절차적 캐릭터 헤드 + 미니 포메이션 ───
     if style == "soccer_squad":
         make_soccer_squad_matrix(
@@ -517,6 +540,74 @@ def _default_comment(style: str) -> str:
     }.get(style or "", "🤔 댓글로 알려주세요 ⬇️")
 
 
+def _category_of(topic_id: str) -> str:
+    """토픽 콘텐츠 카테고리 (3-1-2-1)."""
+    try:
+        from topic_registry import category_for
+        return category_for(topic_id)
+    except Exception:
+        return "inflow"
+
+
+def _recent_categories(days: int = 7) -> list:
+    """최근 days 일 게시한 토픽들의 카테고리 (post_ledger 기준)."""
+    from datetime import datetime, timezone, timedelta
+    kst = timezone(timedelta(hours=9))
+    cutoff = (datetime.now(kst) - timedelta(days=days)).isoformat()
+    cats = []
+    try:
+        led = post_ledger.load_ledger()
+        for e in led.get("entries", []):
+            if e.get("posted_at", "") < cutoff:
+                continue
+            tid = e.get("topic_id") or ""
+            # 월드컵 등 매트릭스 외 게시는 카테고리 분석에서 제외 (auto_matrix 만)
+            if tid.startswith("worldcup"):
+                continue
+            cats.append(_category_of(tid))
+    except Exception:
+        pass
+    return cats
+
+
+def _pick_balanced(pool: list, seed: int) -> str:
+    """3-1-2-1 콘텐츠 믹스 균형 picker.
+
+    최근 7일 발행 카테고리 분포 vs 목표 비율(3:1:2:1) 비교 → 가장 부족한
+    카테고리의 토픽 풀에서 seed 회전 선택. 데이터 없으면 기본 회전.
+    """
+    from collections import Counter
+    from topic_registry import CONTENT_RATIO, category_for
+    # 풀을 카테고리별로 그룹
+    by_cat = {}
+    for tid in pool:
+        by_cat.setdefault(category_for(tid), []).append(tid)
+    if not by_cat:
+        return pool[seed % len(pool)]
+
+    recent = _recent_categories(7)
+    total_recent = max(len(recent), 1)
+    counts = Counter(recent)
+    ratio_total = sum(CONTENT_RATIO.values())
+
+    # 각 카테고리의 (목표 비율 - 현재 비율) 결핍도 → 가장 큰 + 풀 존재하는 카테고리
+    deficits = []
+    for cat, target in CONTENT_RATIO.items():
+        if cat not in by_cat:           # 해당 카테고리 토픽 없으면 스킵
+            continue
+        target_frac = target / ratio_total
+        cur_frac = counts.get(cat, 0) / total_recent
+        deficits.append((target_frac - cur_frac, cat))
+    if not deficits:
+        return pool[seed % len(pool)]
+    deficits.sort(reverse=True)         # 결핍 큰 순
+    chosen_cat = deficits[0][1]
+    cat_pool = by_cat[chosen_cat]
+    picked = cat_pool[seed % len(cat_pool)]
+    print(f"   🎯 3-1-2-1 균형: 최근7일 {dict(counts)} → 부족 '{chosen_cat}' 픽")
+    return picked
+
+
 def main() -> int:
     # 🏆 걸그룹 월드컵 캠페인 (6/23 ~ 7/5, 연장) 기간 동안 매트릭스 자동 게시 일시정지 —
     # 시청자 어텐션을 월드컵에 집중. cron 자체는 유지 (캠페인 후 자연 재개).
@@ -574,8 +665,13 @@ def main() -> int:
         if not pool:
             print(f"❌ {target} 풀이 비어있음")
             return 1
-        picked = pool[seed % len(pool)]
-        print(f"🤖 {target} 회전 — KST {now_kst.strftime('%a %H시')} → {picked}")
+        # 3-1-2-1 콘텐츠 믹스 — auto_matrix 는 카테고리 비율 균형 picker.
+        if target == "auto_matrix":
+            picked = _pick_balanced(pool, seed)
+        else:
+            picked = pool[seed % len(pool)]
+        print(f"🤖 {target} 회전 — KST {now_kst.strftime('%a %H시')} → {picked} "
+              f"[{_category_of(picked)}]")
         topics_to_post = [(picked, TOPICS[picked])]
     else:
         if target not in TOPICS:
