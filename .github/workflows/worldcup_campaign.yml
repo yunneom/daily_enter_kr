@@ -101,6 +101,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: worldcup-${{ github.run_number }}
-          path: output_enter/publish/worldcup_*/
+          # 라운드별 출력(worldcup_r32/r16/.../bracket/announce) +
+          # render_test 의 worldcup_r16_preview/ + idol_photos/ 캐시까지 포함.
+          path: |
+            output_enter/publish/worldcup_*/
+            output_enter/worldcup_*/
+            output_enter/idol_photos/
           retention-days: 14
           if-no-files-found: ignore
