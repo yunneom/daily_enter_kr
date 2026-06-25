@@ -146,6 +146,106 @@ def _pageimage_via_search(name: str) -> Optional[dict]:
     return None
 
 
+# pageimage 가 비어도 페이지 내 다른 이미지로 폴백.
+# 인포박스 이미지는 prop=pageimages 가 자주 누락 → prop=images 로 모든 파일 후보 후
+# CC + 인물사진(파일명 + 크기) 필터.
+_EXCLUDE_FILENAME_KEYWORDS = (
+    "logo", "signature", "서명", "map", "flag", "icon", "wikimedia", "commons",
+    "ambox", "stub", "yes_check", "x_mark", "edit-icon", "question_mark",
+    "음악_아이콘", "노래방", "장르", "텍스트", "글자", "_text_"
+)
+
+
+def _is_candidate_filename(filename: str) -> bool:
+    """파일명으로 인물사진 후보 1차 필터."""
+    fn = filename.lower()
+    if not any(fn.endswith(ext) for ext in (".jpg", ".jpeg", ".png", ".webp")):
+        return False
+    if any(k in fn for k in _EXCLUDE_FILENAME_KEYWORDS):
+        return False
+    if fn.endswith(".svg"):
+        return False
+    return True
+
+
+def _imageinfo_with_thumb(file_titles: List[str], width: int = THUMB_SIZE) -> List[dict]:
+    """File:X|File:Y… 다중 imageinfo (URL/라이선스/크기). titles 50개 한도."""
+    if not file_titles:
+        return []
+    data = _api_get({
+        "action": "query", "titles": "|".join(file_titles[:50]),
+        "prop": "imageinfo",
+        "iiprop": "url|extmetadata|size|mime",
+        "iiurlwidth": width,  # → thumburl 자동 생성 (width px)
+    })
+    if not data:
+        return []
+    out = []
+    for _, p in data.get("query", {}).get("pages", {}).items():
+        for ii in (p.get("imageinfo") or []):
+            ii["_title"] = p.get("title", "")
+            out.append(ii)
+    return out
+
+
+def _page_images_filter(title: str) -> Optional[dict]:
+    """페이지의 모든 이미지에서 첫 CC 인물사진. pageimages 폴백."""
+    # 1) 페이지의 image 파일명 모두
+    data = _api_get({
+        "action": "query", "titles": title, "redirects": 1,
+        "prop": "images", "imlimit": 30,
+    })
+    if not data:
+        return None
+    file_titles = []
+    for _, p in data.get("query", {}).get("pages", {}).items():
+        for img in p.get("images", []):
+            t = img.get("title", "")  # "파일:..." or "File:..."
+            fname = t.split(":", 1)[-1] if ":" in t else t
+            if _is_candidate_filename(fname):
+                file_titles.append(t)
+    if not file_titles:
+        return None
+    # 2) 모든 후보 imageinfo 일괄 조회
+    infos = _imageinfo_with_thumb(file_titles, width=THUMB_SIZE)
+    # 3) CC + 인물크기 후보 첫 1개
+    for ii in infos:
+        if not ii.get("thumburl") and not ii.get("url"):
+            continue
+        if (ii.get("width") or 0) < 200:  # 너무 작으면 아이콘
+            continue
+        ext = ii.get("extmetadata", {})
+        lic = (ext.get("LicenseShortName", {}).get("value") or "").lower()
+        if not any(k in lic for k in ["cc", "public domain", "cc0", "pd",
+                                       "공용", "creative commons"]):
+            continue
+        # extmetadata 의 ObjectName/ImageDescription 으로 추가 필터 (선택)
+        return {
+            "thumb_url": ii.get("thumburl") or ii.get("url"),
+            "title": title,
+            "file": (ii.get("_title", "") or "").split(":", 1)[-1],
+        }
+    return None
+
+
+def _page_images_via_search(name: str) -> Optional[dict]:
+    """검색으로 인물 페이지 추정 → page_images_filter."""
+    data = _api_get({
+        "action": "query", "list": "search",
+        "srsearch": f"{name} 가수 아이돌", "srlimit": 3,
+    })
+    if not data:
+        return None
+    for hit in (data.get("query") or {}).get("search") or []:
+        title = hit.get("title", "")
+        if name not in title:
+            continue  # 이름-제목 일치 가드 (검색 결과도)
+        r = _page_images_filter(title)
+        if r:
+            return r
+    return None
+
+
 def _fetch_license(file_name: Optional[str]) -> dict:
     """File:xxx 의 라이선스/저작자 메타 (출처 표기용). 실패 시 빈 dict."""
     if not file_name:
@@ -188,7 +288,17 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
 
     # 후보 제목
     titles = WIKI_TITLE_OVERRIDES.get(member_name, [member_name, f"{member_name} (가수)"])
-    hit = _pageimage_for_titles(titles) or _pageimage_via_search(member_name)
+    # 4단계 폴백: pageimages → page_images_filter → pageimages 검색 → page_images 검색
+    hit = _pageimage_for_titles(titles)
+    if not hit:
+        for t in titles:
+            hit = _page_images_filter(t)
+            if hit:
+                break
+    if not hit:
+        hit = _pageimage_via_search(member_name)
+    if not hit:
+        hit = _page_images_via_search(member_name)
     if not hit:
         attr[member_name] = {"none": True}
         _save_attr(attr)
