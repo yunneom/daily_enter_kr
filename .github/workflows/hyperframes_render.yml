@@ -1,0 +1,115 @@
+name: 🎬 HyperFrames 렌더 (PoC)
+
+# manual dispatch 전용 — HTML 컴포지션을 mp4 로 렌더.
+# 결과는 아티팩트로 다운로드 + docs/hf_preview/ 에 jpg 미리보기 커밋.
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition:
+        description: 'HTML 파일 경로 (compositions/ 안)'
+        required: false
+        default: 'r16_announce.html'
+      duration:
+        description: '영상 길이(초)'
+        required: false
+        default: '6'
+      quality:
+        description: 'draft (빠름) | standard | high'
+        required: false
+        default: 'standard'
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+
+      - name: Install Chromium + ffmpeg + fonts (Pretendard)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser ffmpeg unzip fonts-noto-cjk
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/p.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/p.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f
+
+      - name: Render with HyperFrames
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
+        run: |
+          mkdir -p output_enter/hf_render
+          INPUT="compositions/${{ inputs.composition }}"
+          OUTPUT="output_enter/hf_render/${{ inputs.composition }}.mp4"
+          # HyperFrames CLI — npx 캐시 활용. duration 은 HTML data-duration 이 1차, --duration 으로 덮어쓰기.
+          npx --yes hyperframes@latest render "$INPUT" \
+            --output "$OUTPUT" \
+            --duration ${{ inputs.duration }} \
+            --quality ${{ inputs.quality }} \
+            --resolution portrait || {
+              echo "::warning::HyperFrames render 실패 — Puppeteer 직접 fallback 시도"
+              # Fallback: 직접 puppeteer 로 6초 30fps 프레임 캡처 + ffmpeg
+              npm i -g puppeteer-core
+              node -e '
+                const p = require("puppeteer-core");
+                const fs = require("fs"), path = require("path");
+                (async () => {
+                  const b = await p.launch({
+                    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+                    args: ["--no-sandbox","--disable-setuid-sandbox","--disable-gpu"]
+                  });
+                  const page = await b.newPage();
+                  await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
+                  await page.goto("file://"+path.resolve("'"$INPUT"'"));
+                  fs.mkdirSync("frames", { recursive: true });
+                  const fps=30, dur=${{ inputs.duration }};
+                  for (let i=0; i<fps*dur; i++) {
+                    await page.evaluate(t => {
+                      document.querySelectorAll("*").forEach(el=>{
+                        if(el.style && el.style.animation==="" && getComputedStyle(el).animationName!=="none"){
+                          el.style.animationDelay = "0s"; // 그대로 시간 흐름
+                        }
+                      });
+                    }, i/fps);
+                    await new Promise(r=>setTimeout(r, 1000/fps));
+                    await page.screenshot({ path:`frames/f${String(i).padStart(4,"0")}.jpg`, type:"jpeg", quality:90 });
+                  }
+                  await b.close();
+                })();
+              '
+              ffmpeg -y -framerate 30 -i frames/f%04d.jpg -c:v libx264 -pix_fmt yuv420p -crf 20 "$OUTPUT"
+            }
+          ls -lh output_enter/hf_render/
+
+      - name: Capture preview jpg (첫 1초)
+        run: |
+          ffmpeg -y -i "output_enter/hf_render/${{ inputs.composition }}.mp4" \
+            -ss 00:00:01 -vframes 1 "docs/hf_preview/${{ inputs.composition }}_preview.jpg"
+
+      - name: Commit preview to repo
+        run: |
+          if [ -n "$(git status --porcelain docs/hf_preview 2>/dev/null)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/hf_preview
+            git commit -m "hf preview: ${{ inputs.composition }} [skip ci]"
+            git pull --rebase --autostash origin main || true
+            git push origin HEAD:main
+          fi
+
+      - name: Upload mp4 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hf_render_${{ github.run_number }}
+          path: output_enter/hf_render/*.mp4
+          retention-days: 14

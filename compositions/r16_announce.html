@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--
+HyperFrames PoC — 16강 진출 발표 모션그래픽
+=========================================
+이 파일은 HyperFrames 호환 컴포지션 형식 (1080x1920 9:16, data-duration / data-frame 속성).
+브라우저로 열면 모션 미리보기. GitHub Actions 에서 `npx hyperframes render` 로 mp4 생성.
+
+비교: 우리 기존 결과발표는 정적 그리드 + sparkle. 이건:
+1. 트로피 펑 + 빛살
+2. 16명 카드가 4×4 그리드로 차례차례 떨어지며 등장 (stagger)
+3. 각 카드 시그니처 컬러 배경 + 그룹로고+이름
+4. 다음 라운드 박스 슬라이드업
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>16강 진출 발표 — Daily Enter</title>
+<style>
+  :root {
+    --gold: #ffdc78;
+    --ink: #1c1c24;
+    --bg-top: #1c1644;
+    --bg-bot: #4e1c60;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif; }
+  body {
+    width:1080px; height:1920px; overflow:hidden;
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
+    color: white;
+  }
+  /* hyperframes data-duration: 6초 */
+  .scene { width:100%; height:100%; position:relative; }
+
+  /* ── 헤더 (0~0.6s) ── */
+  .label {
+    text-align:center; padding-top:60px;
+    font-size:44px; color:#dcd6f0; font-weight:700;
+    opacity:0; animation: fadeIn 0.4s ease-out 0.1s forwards;
+  }
+  .title {
+    text-align:center; margin-top:18px;
+    font-size:96px; color:var(--gold); font-weight:900;
+    text-shadow: -3px -3px 0 var(--ink), 3px 3px 0 var(--ink);
+    opacity:0; transform: scale(0.6);
+    animation: pop 0.5s cubic-bezier(.34,1.56,.64,1) 0.3s forwards;
+  }
+  /* 트로피 펑 (0.2s) */
+  .trophy {
+    position:absolute; top:40px; left:50%; transform:translateX(-50%) scale(0);
+    font-size:90px; filter: drop-shadow(0 0 18px var(--gold));
+    animation: trophyPop 0.6s cubic-bezier(.34,1.56,.64,1) 0.2s forwards;
+  }
+  /* 빛살 (트로피 뒤) */
+  .rays {
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:600px; height:600px; opacity:0;
+    background: conic-gradient(from 0deg, transparent 0deg, var(--gold) 6deg, transparent 12deg, transparent 30deg, var(--gold) 36deg, transparent 42deg);
+    animation: raysSpin 4s linear 0.5s infinite, raysIn 0.5s ease-out 0.5s forwards;
+    mask: radial-gradient(circle, transparent 80px, black 120px);
+    -webkit-mask: radial-gradient(circle, transparent 80px, black 120px);
+    z-index:-1;
+  }
+
+  /* ── 4×4 그리드 (0.8s ~ 3.0s, stagger 0.12s) ── */
+  .grid {
+    margin:300px 40px 0;
+    display:grid; grid-template-columns: repeat(4, 1fr);
+    gap:18px;
+  }
+  .card {
+    aspect-ratio: 1/1.15;
+    border-radius:16px;
+    border: 3px solid var(--gold);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+    opacity:0; transform: translateY(-60px) scale(0.8);
+    animation: cardDrop 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .card .grp {
+    font-size:22px; font-weight:700; color:#fff;
+    background: white; color:#1c1c24;
+    padding:4px 10px; border-radius:8px;
+    margin-bottom: 4px;
+  }
+  .card .name {
+    font-size:36px; font-weight:900; color:#1c1c24;
+    background: white; padding:4px 10px; border-radius:8px;
+  }
+  .badge {
+    position:absolute; top:6px; left:6px;
+    background: var(--gold); color:var(--ink);
+    padding:4px 10px; border-radius:8px;
+    font-size:18px; font-weight:800;
+  }
+
+  /* 그룹별 시그니처 컬러 */
+  .ive       { background: linear-gradient(180deg, #ff5a8c 0%, #c8286e 100%); }
+  .illit     { background: linear-gradient(180deg, #ff82aa 0%, #eb5a82 100%); }
+  .blackpink { background: linear-gradient(180deg, #ff50a0 0%, #1e1e24 100%); }
+  .aespa     { background: linear-gradient(180deg, #282c3c 0%, #781e78 100%); }
+  .lesserafim{ background: linear-gradient(180deg, #3c4660 0%, #c83c46 100%); }
+  .redvelvet { background: linear-gradient(180deg, #e63246 0%, #8c1428 100%); }
+  .twice     { background: linear-gradient(180deg, #ff78aa 0%, #fa505a 100%); }
+  .snsd      { background: linear-gradient(180deg, #ffa0be 0%, #e66e96 100%); }
+  .lisenne   { background: linear-gradient(180deg, #5aa0dc 0%, #285aaa 100%); }
+  .dia       { background: linear-gradient(180deg, #6eb4dc 0%, #4682be 100%); }
+  .nmixx     { background: linear-gradient(180deg, #5a46c8 0%, #c83c96 100%); }
+
+  /* ── 다음 라운드 박스 (3.5s slide up) ── */
+  .next {
+    position:absolute; bottom:90px; left:40px; right:40px;
+    background: var(--gold); color: var(--ink);
+    padding:24px; border-radius:24px; text-align:center;
+    border: 4px solid var(--ink);
+    opacity:0; transform: translateY(60px);
+    animation: slideUp 0.6s cubic-bezier(.34,1.56,.64,1) 3.4s forwards;
+  }
+  .next .next-label { font-size:34px; font-weight:800; }
+  .next .next-time { font-size:42px; font-weight:900; margin-top:8px; }
+  .next .next-cta { font-size:28px; margin-top:8px; color:#783c64; }
+
+  .footer {
+    position:absolute; bottom:30px; left:0; right:0; text-align:center;
+    font-size:22px; color:#bdb4d4;
+  }
+
+  /* ── 키프레임 ── */
+  @keyframes fadeIn { to { opacity:1; } }
+  @keyframes pop { to { opacity:1; transform: scale(1); } }
+  @keyframes trophyPop {
+    50% { transform: translateX(-50%) scale(1.15); }
+    100% { transform: translateX(-50%) scale(1); }
+  }
+  @keyframes raysIn { to { opacity:0.35; } }
+  @keyframes raysSpin { to { transform: translateX(-50%) rotate(360deg); } }
+  @keyframes cardDrop {
+    to { opacity:1; transform: translateY(0) scale(1); }
+  }
+  @keyframes slideUp { to { opacity:1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="scene" data-duration="6">
+  <div class="rays"></div>
+  <div class="trophy">🏆</div>
+  <div class="label">32강 → 16강</div>
+  <div class="title">16강 진출 16명!</div>
+
+  <div class="grid">
+    <!-- 16명 카드 — stagger animation-delay 로 차례 등장 -->
+    <div class="card ive" style="animation-delay: 0.8s"><span class="badge">1위</span><span class="grp">IVE</span><span class="name">장원영</span></div>
+    <div class="card illit" style="animation-delay: 0.92s"><span class="badge">6위</span><span class="grp">ILLIT</span><span class="name">원희</span></div>
+    <div class="card blackpink" style="animation-delay: 1.04s"><span class="badge">11위</span><span class="grp">BLACKPINK</span><span class="name">지수</span></div>
+    <div class="card aespa" style="animation-delay: 1.16s"><span class="badge">15위</span><span class="grp">aespa</span><span class="name">닝닝</span></div>
+
+    <div class="card blackpink" style="animation-delay: 1.28s"><span class="badge">4위</span><span class="grp">BLACKPINK</span><span class="name">로제</span></div>
+    <div class="card ive" style="animation-delay: 1.40s"><span class="badge">8위</span><span class="grp">IVE</span><span class="name">안유진</span></div>
+    <div class="card aespa" style="animation-delay: 1.52s"><span class="badge">9위</span><span class="grp">aespa</span><span class="name">윈터</span></div>
+    <div class="card redvelvet" style="animation-delay: 1.64s"><span class="badge">14위</span><span class="grp">Red Velvet</span><span class="name">조이</span></div>
+
+    <div class="card aespa" style="animation-delay: 1.76s"><span class="badge">3위</span><span class="grp">aespa</span><span class="name">카리나</span></div>
+    <div class="card blackpink" style="animation-delay: 1.88s"><span class="badge">7위</span><span class="grp">BLACKPINK</span><span class="name">리사</span></div>
+    <div class="card lesserafim" style="animation-delay: 2.00s"><span class="badge">10위</span><span class="grp">LE SSERAFIM</span><span class="name">김채원</span></div>
+    <div class="card snsd" style="animation-delay: 2.12s"><span class="badge">16위</span><span class="grp">SNSD</span><span class="name">태연</span></div>
+
+    <div class="card blackpink" style="animation-delay: 2.24s"><span class="badge">2위</span><span class="grp">BLACKPINK</span><span class="name">제니</span></div>
+    <div class="card lisenne" style="animation-delay: 2.36s"><span class="badge">5위</span><span class="grp">Lisenne</span><span class="name">원이</span></div>
+    <div class="card dia" style="animation-delay: 2.48s"><span class="badge">13위</span><span class="grp">DIA</span><span class="name">정채연</span></div>
+    <div class="card nmixx" style="animation-delay: 2.60s"><span class="badge">12위</span><span class="grp">NMIXX</span><span class="name">설윤</span></div>
+  </div>
+
+  <div class="next">
+    <div class="next-label">⏰ 다음 라운드</div>
+    <div class="next-time">6/26(금) 12:00 KST — 16강 4경기</div>
+    <div class="next-cta">🔔 팔로우 + 알림 ON 으로 놓치지 마세요!</div>
+  </div>
+
+  <div class="footer">출처: 한국기업평판연구소 2026.6.21 · @daily_enter_kr</div>
+</div>
+</body>
+</html>
