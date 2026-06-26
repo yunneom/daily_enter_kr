@@ -187,6 +187,17 @@
       "youtube_id": "63O5mNqo-8U",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-27T06:48:04.834071+09:00",
+      "topic_id": "worldcup_bracket_r16",
+      "title": "걸그룹 월드컵 대진표 (R16)",
+      "style": "worldcup_bracket",
+      "seed": null,
+      "ig_media_id": "18066698843705272",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
