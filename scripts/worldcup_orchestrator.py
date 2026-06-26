@@ -40,6 +40,10 @@ SCHEDULE = [
     # === Day 2 (수 6/24) 07:00 — 32강 대진표 홍보 (한 장, 양사이드) ===
     # 사용자 결정: 6/24는 월드컵 홍보 게시글만. 7시 = 출근/등교 시간대 노출.
     (datetime(2026, 6, 24,  7,  0, tzinfo=KST), "bracket",  ""),
+    # === Day 5 (토 6/27) 02:15 — 16강 단독 대진표 홍보 (R16 투표창 중반) ===
+    # current_round=R16 시점에 진출자(WIN 배지) + 결승 라인 노출. 라운드별 ledger
+    # (worldcup_bracket_r16) 로 32강 대진표와 중복 안 됨.
+    (datetime(2026, 6, 27,  2, 15, tzinfo=KST), "bracket",  ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
