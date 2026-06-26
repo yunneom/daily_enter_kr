@@ -202,12 +202,17 @@ R_CHIP_X0, R_CHIP_X1 = 830, 1064
 FULL_ZONE_TOP, FULL_ZONE_BOT = 286, 1664
 
 
-def _chip_side(img, draw, cy, member: Dict, side: str, eliminated: bool = False):
+def _chip_side(img, draw, cy, member: Dict, side: str, eliminated: bool = False,
+               winner: bool = False, x_range=None, chip_h: int = 70):
     """양사이드용 chip — 시그니처 컬러 그라데이션 + 흰 박스 'GRP 이름'.
-    eliminated=True 면 회색 톤(탈락 표시)."""
+    eliminated=True 면 회색 톤(탈락 표시). winner=True 면 우측에 WIN 배지.
+    x_range=(x0,x1) 로 너비 override. chip_h 로 높이 override."""
     from make_worldcup_match_card import group_color_for, group_en_for
-    h = 70
-    x0, x1 = (L_CHIP_X0, L_CHIP_X1) if side == "L" else (R_CHIP_X0, R_CHIP_X1)
+    h = chip_h
+    if x_range is not None:
+        x0, x1 = x_range
+    else:
+        x0, x1 = (L_CHIP_X0, L_CHIP_X1) if side == "L" else (R_CHIP_X0, R_CHIP_X1)
     y0, y1 = int(cy - h / 2), int(cy + h / 2)
     w_, h_ = x1 - x0, y1 - y0
     grp = member.get("group", "")
@@ -272,6 +277,18 @@ def _chip_side(img, draw, cy, member: Dict, side: str, eliminated: bool = False)
                                radius=8, fill=(255, 255, 255))
         draw.text((bxl + (bxr - bxl - tw) / 2, cy - nf.size / 2 - 2),
                   text, font=nf, fill=INK if not eliminated else (140, 140, 150))
+
+    # WIN 배지 — 우상단에 작은 골드 캡슐
+    if winner:
+        wf = _font("Bold", 16)
+        wstr = "WIN"
+        wbb = wf.getbbox(wstr); ww = wbb[2] - wbb[0]
+        wxr = x1 - 4
+        wxl = wxr - ww - 14
+        wy0 = y0 - 8
+        wy1 = wy0 + 24
+        draw.rounded_rectangle([wxl, wy0, wxr, wy1], radius=10, fill=(50, 200, 90))
+        draw.text((wxl + 7, wy0 + 2), wstr, font=wf, fill=WHITE)
 
 
 def _connect_side(draw, src_cys, src_x, tgt_cys, tgt_x):
@@ -386,6 +403,118 @@ def make_bracket_full(data: dict, output_path: Path,
     return output_path
 
 
+# ════════════════════════════════════════════════════════════
+#  16강 단독 대진표 — chip 8 좌 + 8 우, R8/R4/결승 라인 완전 연결
+# ════════════════════════════════════════════════════════════
+
+# 16강 chip x 범위 (32강보다 약간 넓음 = 가독성 ↑)
+R16_L_X0, R16_L_X1 = 16, 320
+R16_R_X0, R16_R_X1 = 760, 1064
+R16_ZONE_TOP, R16_ZONE_BOT = 290, 1670
+
+
+def make_bracket_r16(data: dict, output_path: Path,
+                     vote_note: str = "🔴 16강 투표 진행 중! ~6/29(월) 12시 마감",
+                     source_note: str = "출처: 한국기업평판연구소 2026.6.21",
+                     show_r32_winner_badge: bool = True) -> Path:
+    """16강 대진표 단독 — 좌 4 매치 + 우 4 매치 → 결승. 결승 라인 완전 연결.
+    show_r32_winner_badge=True 면 R32 winner chip 들에 WIN 배지 (= 16강 진출 표시)."""
+    matches = data["rounds"]["R16"]["matches"]
+    left_ms = sorted([m for m in matches if m["quarter"] in (0, 1)],
+                     key=lambda m: (m["quarter"], m["slot"]))
+    right_ms = sorted([m for m in matches if m["quarter"] in (2, 3)],
+                      key=lambda m: (m["quarter"], m["slot"]))
+
+    img = _vgrad(CANVAS, BG_TOP, BG_BOT).convert("RGBA")
+    d = ImageDraw.Draw(img)
+
+    # 헤더
+    em = _get_emoji_image("🏆", 72)
+    title = "걸그룹 월드컵 16강"
+    tf = _font("Bold", 64)
+    bb = tf.getbbox(title); tw = bb[2] - bb[0]
+    sx = (CANVAS[0] - tw - 90) // 2
+    if em:
+        img.alpha_composite(em, (sx, 56))
+    d.text((sx + 90, 60), title, font=tf, fill=GOLD,
+           stroke_width=3, stroke_fill=INK)
+    hf = _font("Medium", 26)
+    _centered(d, "WIN = 32강 통과한 진출자 · 결승까지 한 눈에",
+              hf, CANVAS[0] // 2, 152, fill=WHITE_DIM)
+
+    # 컬럼 헤더 (4강은 라인이 표현 → 헤더는 16강/8강 + 중앙 결승)
+    colf = _font("Bold", 28)
+    for cx, lbl in [(168, "16강"), (380, "8강"),
+                    (912, "16강"), (700, "8강")]:
+        _centered(d, lbl, colf, cx, 198, fill=GOLD)
+    _centered(d, "결승", _font("Bold", 32), CANVAS[0] // 2, 194, fill=PINK)
+
+    # y 좌표 — 8 chip
+    H = R16_ZONE_BOT - R16_ZONE_TOP
+    cy_chip = [R16_ZONE_TOP + (k + 0.5) * H / 8 for k in range(8)]
+    cy_r8 = [(cy_chip[2 * j] + cy_chip[2 * j + 1]) / 2 for j in range(4)]
+    cy_r4 = [(cy_r8[2 * j] + cy_r8[2 * j + 1]) / 2 for j in range(2)]
+    cy_final_in = (cy_r4[0] + cy_r4[1]) / 2
+    center_cy = (R16_ZONE_TOP + R16_ZONE_BOT) / 2
+
+    # 라인 x 좌표
+    LX_R8, LX_R4, LX_FIN = 420, 530, 600
+    RX_R8 = CANVAS[0] - 420
+    RX_R4 = CANVAS[0] - 530
+    RX_FIN = CANVAS[0] - 600
+
+    # 좌측 라인
+    _connect_side(d, cy_chip, R16_L_X1, cy_r8, LX_R8)
+    _connect_side(d, cy_r8, LX_R8, cy_r4, LX_R4)
+    _connect_side(d, cy_r4, LX_R4, [cy_final_in], LX_FIN)
+    # 좌 결승 진출자 → 중앙 결승 (수평 → 수직 → 수평)
+    cx_fin_in = CANVAS[0] // 2 - 70
+    d.line([(LX_FIN, cy_final_in), (cx_fin_in, cy_final_in)], fill=LINE, width=3)
+    d.line([(cx_fin_in, cy_final_in), (cx_fin_in, center_cy)], fill=LINE, width=3)
+    d.line([(cx_fin_in, center_cy), (CANVAS[0] // 2 - 8, center_cy)], fill=LINE, width=3)
+
+    # 우측 라인 (대칭)
+    _connect_side(d, cy_chip, R16_R_X0, cy_r8, RX_R8)
+    _connect_side(d, cy_r8, RX_R8, cy_r4, RX_R4)
+    _connect_side(d, cy_r4, RX_R4, [cy_final_in], RX_FIN)
+    cx_fin_in_r = CANVAS[0] // 2 + 70
+    d.line([(RX_FIN, cy_final_in), (cx_fin_in_r, cy_final_in)], fill=LINE, width=3)
+    d.line([(cx_fin_in_r, cy_final_in), (cx_fin_in_r, center_cy)], fill=LINE, width=3)
+    d.line([(cx_fin_in_r, center_cy), (CANVAS[0] // 2 + 8, center_cy)], fill=LINE, width=3)
+
+    # chip 그리기 — 매치 쌍 a/b 인접. 모두 R32 통과자 = WIN 배지.
+    for j, m in enumerate(left_ms):
+        for k, mem in [(2 * j, m["a"]), (2 * j + 1, m["b"])]:
+            _chip_side(img, d, cy_chip[k], mem, "L",
+                       x_range=(R16_L_X0, R16_L_X1), chip_h=88,
+                       winner=show_r32_winner_badge)
+    for j, m in enumerate(right_ms):
+        for k, mem in [(2 * j, m["a"]), (2 * j + 1, m["b"])]:
+            _chip_side(img, d, cy_chip[k], mem, "R",
+                       x_range=(R16_R_X0, R16_R_X1), chip_h=88,
+                       winner=show_r32_winner_badge)
+
+    # 중앙 결승 트로피
+    tem = _get_emoji_image("🏆", 120)
+    if tem:
+        img.alpha_composite(tem, (CANVAS[0] // 2 - 60, int(center_cy - 100)))
+    _centered(d, "결승", _font("Bold", 38), CANVAS[0] // 2, int(center_cy + 32),
+              fill=GOLD, stroke=2, sfill=INK)
+
+    # 하단 vote 박스 + 풋터
+    d.rounded_rectangle([40, 1700, CANVAS[0] - 40, 1796],
+                        radius=20, fill=GOLD)
+    _centered(d, vote_note, _font("Bold", 32), CANVAS[0] // 2, 1722, fill=INK)
+    mf = _font("Medium", 23)
+    _centered(d, source_note, mf, CANVAS[0] // 2, 1818, fill=WHITE_DIM)
+    _centered(d, "@daily_enter_kr · 매일 새로운 픽", mf, CANVAS[0] // 2, 1854,
+              fill=(190, 180, 215))
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    img.convert("RGB").save(output_path, "JPEG", quality=94)
+    return output_path
+
+
 if __name__ == "__main__":
     ROOT = Path(__file__).parent.parent
     data = json.loads((ROOT / "data" / "worldcup_bracket.json").read_text(encoding="utf-8"))
@@ -393,3 +522,6 @@ if __name__ == "__main__":
     full = out_dir / "bracket_full.jpg"
     make_bracket_full(data, full)
     print(f"✓ {full} ({full.stat().st_size // 1024}KB)")
+    r16 = out_dir / "bracket_r16.jpg"
+    make_bracket_r16(data, r16)
+    print(f"✓ {r16} ({r16.stat().st_size // 1024}KB)")

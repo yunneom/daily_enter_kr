@@ -23,7 +23,7 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-from make_worldcup_bracket_card import make_bracket_full  # noqa: E402
+from make_worldcup_bracket_card import make_bracket_full, make_bracket_r16  # noqa: E402
 from post_instagram import InstagramPublisher, upload_image  # noqa: E402
 import post_ledger  # noqa: E402
 from notify import notify_discord  # noqa: E402
@@ -82,8 +82,13 @@ def main():
 
     out_dir = ROOT / "output_enter" / "publish" / "worldcup_bracket"
     out_dir.mkdir(parents=True, exist_ok=True)
-    jpg = out_dir / "bracket_full.jpg"
-    make_bracket_full(bracket, jpg, vote_note=vote_note)
+    # 라운드별 분기: R16 부터는 단독 대진표(8 chip × 2 sides + 결승 라인 완전 수렴)
+    if cur in ("R16", "R8", "R4"):
+        jpg = out_dir / f"bracket_{cur.lower()}.jpg"
+        make_bracket_r16(bracket, jpg, vote_note=vote_note)
+    else:
+        jpg = out_dir / "bracket_full.jpg"
+        make_bracket_full(bracket, jpg, vote_note=vote_note)
     url = upload_image(jpg)
     print(f"  ✓ bracket: {url}")
 
