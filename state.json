@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-25T09:15:11.745882+09:00",
+  "last_run_at": "2026-06-26T09:24:20.284080+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1666,6 +1666,70 @@
       "caption_variant": "you_wont_believe",
       "media_id": "18066224975446481",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "a58de0d605532d8c",
+      "card_title": "안영미, 25일 둘째 득남…산모와 아이 모두 건강",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "4aabd8bfc0790933",
+      "card_title": "혜리·지수·정호연, 첫 여행 셀카 공개 '화사한 일상'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "a5c70643826c6e57",
+      "card_title": "원빈, 새로운 작품 준비 중…머리 기르며 스크린 복귀 예고",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "9abc8b21753a66ac",
+      "card_title": "대성, 허영지 열애설에 직접 입 열다 '소속사 확인 없었다'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "707378cb8f08c4c5",
+      "card_title": "송혜교, UAA와 14년 전속계약 종료…새로운 여정 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "e7c38b14c3821893",
+      "card_title": "하이파이유니콘, 신곡 발매·투어로 한·일 시장 동시 공략",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "ba2b3d4088b4889c",
+      "card_title": "이혜영, 재혼 15년만에 의붓딸 첫 공개 '26살 뉴욕 거주'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-26",
+      "title_hash": "da8d2c7e0fd5a353",
+      "card_title": "코쿤, '나혼산' 박지현 패션 코치로 변신 \"최고의 패션 공개\"",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17971584687110678",
+      "card_style": "manhwa"
     }
   ]
 }
