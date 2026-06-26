@@ -202,46 +202,76 @@ R_CHIP_X0, R_CHIP_X1 = 830, 1064
 FULL_ZONE_TOP, FULL_ZONE_BOT = 286, 1664
 
 
-def _chip_side(img, draw, cy, member: Dict, side: str):
-    """양사이드용 chip — side='L'(좌) / 'R'(우). 우측은 텍스트 우정렬·요소 미러."""
+def _chip_side(img, draw, cy, member: Dict, side: str, eliminated: bool = False):
+    """양사이드용 chip — 시그니처 컬러 그라데이션 + 흰 박스 'GRP 이름'.
+    eliminated=True 면 회색 톤(탈락 표시)."""
+    from make_worldcup_match_card import group_color_for, group_en_for
     h = 70
     x0, x1 = (L_CHIP_X0, L_CHIP_X1) if side == "L" else (R_CHIP_X0, R_CHIP_X1)
     y0, y1 = int(cy - h / 2), int(cy + h / 2)
-    draw.rounded_rectangle([x0, y0, x1, y1], radius=12,
-                           fill=CARD_BG, outline=GOLD, width=3)
+    w_, h_ = x1 - x0, y1 - y0
+    grp = member.get("group", "")
+    if eliminated:
+        top, bot = (130, 130, 140), (90, 90, 100)
+    else:
+        top, bot = group_color_for(grp)
+    # 그라데이션 카드
+    grad = _vgrad((w_, h_), top, bot).convert("RGBA")
+    mask = Image.new("L", (w_, h_), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w_-1, h_-1], radius=12, fill=255)
+    chip = Image.new("RGBA", (w_, h_), (0, 0, 0, 0))
+    chip.paste(grad, (0, 0), mask)
+    img.alpha_composite(chip, (x0, y0))
+    draw.rounded_rectangle([x0, y0, x1, y1], radius=12, outline=GOLD, width=3)
+
     rk = str(member.get("rank", ""))
     name = member.get("member", "")
+    grp_en = group_en_for(grp)
+    one = f"{grp_en} {name}"
     badge_d = 38
-    nf = _font("Bold", 30)
-    gf = _font("Medium", 17)
-    em = _get_emoji_image(group_emoji_for(member.get("group", "")), 30)
-    nbb = nf.getbbox(name); nw = nbb[2] - nbb[0]
+    nf = _font("Bold", 22)
+    def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
+    # 흰 박스 안 한 줄 시도 (그룹영문 + 이름), 너무 길면 이름만
+    box_w = w_ - badge_d - 18  # 배지 자리 빼고
+    while _tw(one, nf) > box_w - 14 and nf.size > 14:
+        nf = _font("Bold", nf.size - 1)
+    if _tw(one, nf) > box_w - 14:
+        # 이름만
+        text = name
+        while _tw(text, nf) > box_w - 14 and nf.size > 14:
+            nf = _font("Bold", nf.size - 1)
+    else:
+        text = one
+    tw = _tw(text, nf)
+
     if side == "L":
+        # 좌측: 배지(좌) + 흰박스(우)
         bx = x0 + 6
         draw.ellipse([bx, cy - badge_d / 2, bx + badge_d, cy + badge_d / 2], fill=PINK)
         bf = _font("Bold", 22 if len(rk) < 2 else 20)
         bbb = bf.getbbox(rk)
         draw.text((bx + badge_d / 2 - (bbb[2] - bbb[0]) / 2 - 1,
                    cy - (bbb[3] - bbb[1]) / 2 - bbb[1]), rk, font=bf, fill=WHITE)
-        if em:
-            img.alpha_composite(em, (x0 + 50, int(cy - 15)))
-        tx = x0 + 86
-        draw.text((tx, cy - 26), name, font=nf, fill=INK)
-        draw.text((tx, cy + 8), member.get("group", ""), font=gf, fill=(120, 120, 130))
-    else:  # 우측 미러
+        # 흰 박스
+        bxl = x0 + badge_d + 12
+        bxr = x1 - 6
+        draw.rounded_rectangle([bxl, cy - 18, bxr, cy + 18],
+                               radius=8, fill=(255, 255, 255))
+        draw.text((bxl + (bxr - bxl - tw) / 2, cy - nf.size / 2 - 2),
+                  text, font=nf, fill=INK if not eliminated else (140, 140, 150))
+    else:
         bx = x1 - 6 - badge_d
         draw.ellipse([bx, cy - badge_d / 2, bx + badge_d, cy + badge_d / 2], fill=PINK)
         bf = _font("Bold", 22 if len(rk) < 2 else 20)
         bbb = bf.getbbox(rk)
         draw.text((bx + badge_d / 2 - (bbb[2] - bbb[0]) / 2 - 1,
                    cy - (bbb[3] - bbb[1]) / 2 - bbb[1]), rk, font=bf, fill=WHITE)
-        if em:
-            img.alpha_composite(em, (x1 - 50 - 30, int(cy - 15)))
-        tx = x1 - 86 - nw
-        draw.text((tx, cy - 26), name, font=nf, fill=INK)
-        gbb = gf.getbbox(member.get("group", "")); gw = gbb[2] - gbb[0]
-        draw.text((x1 - 86 - gw, cy + 8), member.get("group", ""),
-                  font=gf, fill=(120, 120, 130))
+        bxl = x0 + 6
+        bxr = x1 - badge_d - 12
+        draw.rounded_rectangle([bxl, cy - 18, bxr, cy + 18],
+                               radius=8, fill=(255, 255, 255))
+        draw.text((bxl + (bxr - bxl - tw) / 2, cy - nf.size / 2 - 2),
+                  text, font=nf, fill=INK if not eliminated else (140, 140, 150))
 
 
 def _connect_side(draw, src_cys, src_x, tgt_cys, tgt_x):
@@ -283,13 +313,21 @@ def make_bracket_full(data: dict, output_path: Path,
         _centered(d, lbl, colf, cx, 178, fill=GOLD)
     _centered(d, "결승", _font("Bold", 28), CANVAS[0] // 2, 174, fill=PINK)
 
-    # 좌/우 chip 데이터
+    # 진출 추적: R32 매치별 winner.rank → 진출자 set (eliminated chip 회색 처리용)
+    advanced_ranks = set()
+    for m in data["rounds"]["R32"].get("matches", []):
+        w = m.get("winner")
+        if w and w.get("rank") is not None:
+            advanced_ranks.add(w["rank"])
+
+    # 좌/우 chip 데이터 (member 와 eliminated 플래그)
     def half_chips(quarters):
         ms = [m for m in data["rounds"]["R32"]["matches"] if m["quarter"] in quarters]
         ms.sort(key=lambda m: (m["quarter"], m["slot"]))
         ch = []
         for m in ms:
-            ch.append(m["a"]); ch.append(m["b"])
+            ch.append((m["a"], m["a"]["rank"] not in advanced_ranks))
+            ch.append((m["b"], m["b"]["rank"] not in advanced_ranks))
         return ch
     left = half_chips((0, 1))
     right = half_chips((2, 3))
@@ -321,8 +359,10 @@ def make_bracket_full(data: dict, output_path: Path,
 
     # chip 그리기
     for k in range(16):
-        _chip_side(img, d, cy16[k], left[k], "L")
-        _chip_side(img, d, cy16[k], right[k], "R")
+        lm, lelim = left[k]
+        rm, relim = right[k]
+        _chip_side(img, d, cy16[k], lm, "L", eliminated=lelim)
+        _chip_side(img, d, cy16[k], rm, "R", eliminated=relim)
 
     # 중앙 🏆 결승 트로피
     tem = _get_emoji_image("🏆", 96)

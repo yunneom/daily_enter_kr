@@ -134,7 +134,10 @@ def already_done(action: str, round_key: str) -> bool:
             ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
         except Exception:
             return False
-        return any((e.get("topic_id") or "") == "worldcup_bracket"
+        # 라운드별 분리 — current_round 의 대진표가 게시됐는지만 체크
+        cur = bracket.get("current_round", "R32").lower()
+        target_tid = f"worldcup_bracket_{cur}"
+        return any((e.get("topic_id") or "") == target_tid
                    for e in ledger.get("entries", []))
     return False
 

@@ -31,15 +31,19 @@ from notify import notify_discord  # noqa: E402
 
 # 현재 진행 라운드별 투표 안내 (대진표 카드 하단 + 캡션)
 ROUND_VOTE_NOTE = {
-    "R32": "🔴 32강 투표 진행 중 — 목요일까지! 프로필에서 참여",
-    "R16": "🔴 16강 투표 진행 중 — 주말 내내! 프로필에서 참여",
+    "R32": "🔴 32강 투표 진행 중! 프로필에서 참여",
+    "R16": "🔴 16강 투표 진행 중! ~6/29(월) 12시까지",
+    "R8":  "🔴 8강 투표 진행 중! 프로필에서 참여",
+    "R4":  "🔴 4강 투표 진행 중! 프로필에서 참여",
 }
 
 
 def build_caption(current_round: str) -> str:
     note = {
         "R32": "🔴 32강 투표 진행 중! (~6/25 목)",
-        "R16": "🔴 16강 투표 진행 중! (주말 내내)",
+        "R16": "🔴 16강 투표 진행 중! ~6/29(월) 12시 마감",
+        "R8":  "🔴 8강 투표 진행 중!",
+        "R4":  "🔴 4강 투표 진행 중!",
     }.get(current_round, "🔴 투표 진행 중!")
     return "\n".join([
         "🏆 걸그룹 월드컵 32강 대진표",
@@ -107,8 +111,8 @@ def main():
         print(f"  ⚠️  댓글 실패 (비치명): {e}")
 
     post_ledger.record_results([{
-        "ok": True, "topic_id": "worldcup_bracket",
-        "title": "걸그룹 월드컵 32강 대진표", "style": "worldcup_bracket",
+        "ok": True, "topic_id": f"worldcup_bracket_{cur.lower()}",
+        "title": f"걸그룹 월드컵 대진표 ({cur})", "style": "worldcup_bracket",
         "seed": None, "media_id": media_id, "youtube_id": None,
         "threads_id": None, "bgm": None,
     }])
