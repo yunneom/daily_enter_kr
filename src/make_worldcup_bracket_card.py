@@ -415,10 +415,8 @@ R16_ZONE_TOP, R16_ZONE_BOT = 290, 1670
 
 def make_bracket_r16(data: dict, output_path: Path,
                      vote_note: str = "🔴 16강 투표 진행 중! ~6/29(월) 12시 마감",
-                     source_note: str = "출처: 한국기업평판연구소 2026.6.21",
-                     show_r32_winner_badge: bool = True) -> Path:
-    """16강 대진표 단독 — 좌 4 매치 + 우 4 매치 → 결승. 결승 라인 완전 연결.
-    show_r32_winner_badge=True 면 R32 winner chip 들에 WIN 배지 (= 16강 진출 표시)."""
+                     source_note: str = "출처: 한국기업평판연구소 2026.6.21") -> Path:
+    """16강 대진표 단독 — 좌 4 매치 + 우 4 매치 → 결승. 결승 라인 완전 연결."""
     matches = data["rounds"]["R16"]["matches"]
     left_ms = sorted([m for m in matches if m["quarter"] in (0, 1)],
                      key=lambda m: (m["quarter"], m["slot"]))
@@ -439,13 +437,13 @@ def make_bracket_r16(data: dict, output_path: Path,
     d.text((sx + 90, 60), title, font=tf, fill=GOLD,
            stroke_width=3, stroke_fill=INK)
     hf = _font("Medium", 26)
-    _centered(d, "WIN = 32강 통과한 진출자 · 결승까지 한 눈에",
+    _centered(d, "결승까지 한 눈에 · 숫자 = 브랜드평판 시드순위",
               hf, CANVAS[0] // 2, 152, fill=WHITE_DIM)
 
-    # 컬럼 헤더 (4강은 라인이 표현 → 헤더는 16강/8강 + 중앙 결승)
+    # 컬럼 헤더 — 16강 / 8강 / 4강 (좌우 대칭) + 중앙 결승
     colf = _font("Bold", 28)
-    for cx, lbl in [(168, "16강"), (380, "8강"),
-                    (912, "16강"), (700, "8강")]:
+    for cx, lbl in [(168, "16강"), (365, "8강"), (455, "4강"),
+                    (912, "16강"), (715, "8강"), (625, "4강")]:
         _centered(d, lbl, colf, cx, 198, fill=GOLD)
     _centered(d, "결승", _font("Bold", 32), CANVAS[0] // 2, 194, fill=PINK)
 
@@ -457,42 +455,37 @@ def make_bracket_r16(data: dict, output_path: Path,
     cy_final_in = (cy_r4[0] + cy_r4[1]) / 2
     center_cy = (R16_ZONE_TOP + R16_ZONE_BOT) / 2
 
-    # 라인 x 좌표
-    LX_R8, LX_R4, LX_FIN = 420, 530, 600
-    RX_R8 = CANVAS[0] - 420
-    RX_R4 = CANVAS[0] - 530
-    RX_FIN = CANVAS[0] - 600
+    # 라인 x 좌표 — 브라켓이 중앙을 넘지 않도록 center=540 이내 유지
+    LX_R8, LX_R4, LX_FIN = 400, 460, 490
+    RX_R8 = CANVAS[0] - 400   # 680
+    RX_R4 = CANVAS[0] - 460   # 620
+    RX_FIN = CANVAS[0] - 490  # 590
 
     # 좌측 라인
     _connect_side(d, cy_chip, R16_L_X1, cy_r8, LX_R8)
     _connect_side(d, cy_r8, LX_R8, cy_r4, LX_R4)
     _connect_side(d, cy_r4, LX_R4, [cy_final_in], LX_FIN)
-    # 좌 결승 진출자 → 중앙 결승 (수평 → 수직 → 수평)
-    cx_fin_in = CANVAS[0] // 2 - 70
-    d.line([(LX_FIN, cy_final_in), (cx_fin_in, cy_final_in)], fill=LINE, width=3)
-    d.line([(cx_fin_in, cy_final_in), (cx_fin_in, center_cy)], fill=LINE, width=3)
-    d.line([(cx_fin_in, center_cy), (CANVAS[0] // 2 - 8, center_cy)], fill=LINE, width=3)
+    # 4강 수렴점 → 결승 트로피: 수직 ↓ + 수평 → (선 하나)
+    d.line([(LX_FIN, cy_final_in), (LX_FIN, center_cy)], fill=LINE, width=3)
+    d.line([(LX_FIN, center_cy), (CANVAS[0] // 2 - 8, center_cy)], fill=LINE, width=3)
 
     # 우측 라인 (대칭)
     _connect_side(d, cy_chip, R16_R_X0, cy_r8, RX_R8)
     _connect_side(d, cy_r8, RX_R8, cy_r4, RX_R4)
     _connect_side(d, cy_r4, RX_R4, [cy_final_in], RX_FIN)
-    cx_fin_in_r = CANVAS[0] // 2 + 70
-    d.line([(RX_FIN, cy_final_in), (cx_fin_in_r, cy_final_in)], fill=LINE, width=3)
-    d.line([(cx_fin_in_r, cy_final_in), (cx_fin_in_r, center_cy)], fill=LINE, width=3)
-    d.line([(cx_fin_in_r, center_cy), (CANVAS[0] // 2 + 8, center_cy)], fill=LINE, width=3)
+    # 4강 수렴점 → 결승 트로피: 수직 ↓ + 수평 ← (선 하나)
+    d.line([(RX_FIN, cy_final_in), (RX_FIN, center_cy)], fill=LINE, width=3)
+    d.line([(RX_FIN, center_cy), (CANVAS[0] // 2 + 8, center_cy)], fill=LINE, width=3)
 
-    # chip 그리기 — 매치 쌍 a/b 인접. 모두 R32 통과자 = WIN 배지.
+    # chip 그리기 — WIN 배지 없음 (16강 진출자만 모아놓은 브라켓이라 불필요)
     for j, m in enumerate(left_ms):
         for k, mem in [(2 * j, m["a"]), (2 * j + 1, m["b"])]:
             _chip_side(img, d, cy_chip[k], mem, "L",
-                       x_range=(R16_L_X0, R16_L_X1), chip_h=88,
-                       winner=show_r32_winner_badge)
+                       x_range=(R16_L_X0, R16_L_X1), chip_h=88)
     for j, m in enumerate(right_ms):
         for k, mem in [(2 * j, m["a"]), (2 * j + 1, m["b"])]:
             _chip_side(img, d, cy_chip[k], mem, "R",
-                       x_range=(R16_R_X0, R16_R_X1), chip_h=88,
-                       winner=show_r32_winner_badge)
+                       x_range=(R16_R_X0, R16_R_X1), chip_h=88)
 
     # 중앙 결승 트로피
     tem = _get_emoji_image("🏆", 120)
