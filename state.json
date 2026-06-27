@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-26T09:24:20.284080+09:00",
+  "last_run_at": "2026-06-27T09:19:45.523389+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1730,6 +1730,70 @@
       "caption_variant": "headlines_dotted",
       "media_id": "17971584687110678",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "a69531e1462b8477",
+      "card_title": "가수 장기하·배우 윤가이 열애 공개, 18살 나이 차 극복",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "299f43c94b2c2760",
+      "card_title": "故 이주희 별세, 1세대 인플루언서의 열정 기억하며",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "948438b6e1af9135",
+      "card_title": "홍석천, 전 연인과의 헤어짐 인터뷰 공개 '고마움 전했다'",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "f160f68f5aff625d",
+      "card_title": "SBS드라마 '김부장', 거제에서 촬영 진행 중",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "a01f43c6958b87cc",
+      "card_title": "신민아, 김우빈도 반한 입담 '나 진짜 웃기대요'",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "f1171dc735e4a032",
+      "card_title": "레이디제인♥임현태, 가족 사진 공개 — 동료들 '다 예쁘네' 호평",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "99188ebad055403b",
+      "card_title": "방탄소년단 '아리랑', 14주 연속 글로벌 차트 최상위권 점령",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-27",
+      "title_hash": "8260bbaa26abf8d5",
+      "card_title": "KBS '기쁜우리좋은날' 시청률 10.2% 달성, 지상파 1위 기록",
+      "caption_variant": "question_hook",
+      "media_id": "18010744562877089",
+      "card_style": "minimal"
     }
   ]
 }
