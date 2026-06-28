@@ -190,6 +190,10 @@ def execute(action: str, round_key: str) -> int:
     elif action == "bracket":
         # 32강 대진표 캐러셀 게시 (manual dispatch 전용 — SCHEDULE 에 없음)
         return run([sys.executable, "scripts/worldcup_post_bracket.py"])
+    elif action == "promo_blast":
+        # 16강 홍보 블라스트: 캐러셀 + 티저 + 조별 릴스 + HF 릴스
+        extra = ["--skip", round_key] if round_key else []
+        return run([sys.executable, "scripts/worldcup_promo_blast.py"] + extra)
     elif action == "render_test":
         # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
@@ -210,8 +214,8 @@ def main():
         print("   유효 값: publish | tally | announce | bracket")
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
-    # bracket / render_test 는 round 불필요
-    if forced_action in ("bracket", "render_test"):
+    # bracket / promo_blast / render_test 는 round 불필요 (skip 번호로 씀)
+    if forced_action in ("bracket", "promo_blast", "render_test"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
@@ -219,7 +223,7 @@ def main():
         return execute(forced_action, forced_round)
     if is_dispatch and forced_action and not forced_round:
         print(f"❌ workflow_dispatch action={forced_action!r} 인데 round 비어있음.")
-        print("   bracket 외 액션은 round 필수 (R32 | R16 | R8 | R4 | R2 | R1).")
+        print("   bracket/promo_blast/render_test 외 액션은 round 필수 (R32 | R16 | R8 | R4 | R2 | R1).")
         return 1
 
     now = now_kst()
