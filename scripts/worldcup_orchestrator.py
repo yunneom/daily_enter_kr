@@ -43,6 +43,9 @@ SCHEDULE = [
     # === Day 5 (토 6/27) 07:00 — 16강 단독 대진표 홍보 (아침 출근 슬롯) ===
     # v4: WIN 배지 제거 + 4강 헤더 + 결승 선 단순화. current_round=R16.
     (datetime(2026, 6, 27,  7,  0, tzinfo=KST), "bracket",  ""),
+    # === Day 5 (토 6/27) 02:30 — 16강 홍보 블라스트 ===
+    # 캐러셀 + D-1 티저 + 조별 릴스 4개 + HF 릴스 즉시 게시.
+    (datetime(2026, 6, 27,  2, 30, tzinfo=KST), "promo_blast", ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
@@ -141,6 +144,18 @@ def already_done(action: str, round_key: str) -> bool:
         cur = bracket.get("current_round", "R32").lower()
         target_tid = f"worldcup_bracket_{cur}"
         return any((e.get("topic_id") or "") == target_tid
+                   for e in ledger.get("entries", []))
+    elif action == "promo_blast":
+        # ledger 에 캐러셀 기록 있으면 done (1번만 실행)
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        cur = bracket.get("current_round", "R16").lower()
+        return any((e.get("topic_id") or "") == f"worldcup_promo_{cur}_carousel"
                    for e in ledger.get("entries", []))
     return False
 
