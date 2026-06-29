@@ -49,6 +49,8 @@ SCHEDULE = [
     # (datetime(2026, 6, 29,  9, 15, tzinfo=KST), "promo_blast", ""),  # cron 2h 드롭으로 미발화
     # === Day 7 (월 6/29) 11:30 — 16강 홍보 블라스트 최종 즉시 실행 ===
     (datetime(2026, 6, 29, 11, 30, tzinfo=KST), "promo_blast", ""),
+    # === Day 7 (월 6/29) 12:30 — HF 릴스 재시도 (playwright 수정 후) ===
+    (datetime(2026, 6, 29, 12, 30, tzinfo=KST), "hf_blast",   ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
@@ -160,6 +162,18 @@ def already_done(action: str, round_key: str) -> bool:
         cur = bracket.get("current_round", "R16").lower()
         return any((e.get("topic_id") or "") == f"worldcup_promo_{cur}_carousel"
                    for e in ledger.get("entries", []))
+    elif action == "hf_blast":
+        # HF 릴스 기록 있으면 done
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        cur = bracket.get("current_round", "R16").lower()
+        return any((e.get("topic_id") or "") == f"worldcup_promo_{cur}_hf_reels"
+                   for e in ledger.get("entries", []))
     return False
 
 
@@ -212,6 +226,10 @@ def execute(action: str, round_key: str) -> int:
         # 16강 홍보 블라스트: 캐러셀 + 티저 + 조별 릴스 + HF 릴스
         extra = ["--skip", round_key] if round_key else []
         return run([sys.executable, "scripts/worldcup_promo_blast.py"] + extra)
+    elif action == "hf_blast":
+        # HF 릴스만 재실행 (파트 1·2·3 스킵)
+        return run([sys.executable, "scripts/worldcup_promo_blast.py",
+                    "--skip", "1", "2", "3"])
     elif action == "render_test":
         # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
