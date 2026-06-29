@@ -1285,9 +1285,9 @@
             "score": 7538960
           },
           "votes": {
-            "a": 0,
+            "a": 1,
             "b": 0,
-            "raw_a": 0,
+            "raw_a": 1,
             "raw_b": 0
           }
         },
@@ -1308,16 +1308,16 @@
             "score": 1596316
           },
           "winner": {
-            "rank": 11,
-            "group": "블랙핑크",
-            "member": "지수",
-            "score": 2096499
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
           },
           "votes": {
             "a": 0,
-            "b": 0,
+            "b": 1,
             "raw_a": 0,
-            "raw_b": 0
+            "raw_b": 1
           }
         },
         {
@@ -1337,16 +1337,16 @@
             "score": 2696338
           },
           "winner": {
-            "rank": 4,
-            "group": "블랙핑크",
-            "member": "로제",
-            "score": 4267284
+            "rank": 8,
+            "group": "아이브",
+            "member": "안유진",
+            "score": 2696338
           },
           "votes": {
             "a": 0,
-            "b": 0,
+            "b": 1,
             "raw_a": 0,
-            "raw_b": 0
+            "raw_b": 1
           }
         },
         {
@@ -1372,9 +1372,9 @@
             "score": 2361861
           },
           "votes": {
-            "a": 0,
+            "a": 1,
             "b": 0,
-            "raw_a": 0,
+            "raw_a": 1,
             "raw_b": 0
           }
         },
@@ -1401,9 +1401,9 @@
             "score": 4736626
           },
           "votes": {
-            "a": 0,
+            "a": 1,
             "b": 0,
-            "raw_a": 0,
+            "raw_a": 1,
             "raw_b": 0
           }
         },
@@ -1424,16 +1424,16 @@
             "score": 1572474
           },
           "winner": {
-            "rank": 10,
-            "group": "르세라핌",
-            "member": "김채원",
-            "score": 2199906
+            "rank": 16,
+            "group": "소녀시대",
+            "member": "태연",
+            "score": 1572474
           },
           "votes": {
             "a": 0,
-            "b": 0,
+            "b": 1,
             "raw_a": 0,
-            "raw_b": 0
+            "raw_b": 1
           }
         },
         {
@@ -1459,9 +1459,9 @@
             "score": 7166269
           },
           "votes": {
-            "a": 0,
+            "a": 1,
             "b": 0,
-            "raw_a": 0,
+            "raw_a": 1,
             "raw_b": 0
           }
         },
@@ -1489,9 +1489,9 @@
           },
           "votes": {
             "a": 0,
-            "b": 0,
+            "b": 1,
             "raw_a": 0,
-            "raw_b": 0
+            "raw_b": 1
           }
         }
       ],
@@ -1521,9 +1521,9 @@
               "score": 7538960
             },
             "votes": {
-              "a": 0,
+              "a": 1,
               "b": 0,
-              "raw_a": 0,
+              "raw_a": 1,
               "raw_b": 0
             }
           },
@@ -1550,9 +1550,9 @@
               "score": 4736626
             },
             "votes": {
-              "a": 0,
+              "a": 1,
               "b": 0,
-              "raw_a": 0,
+              "raw_a": 1,
               "raw_b": 0
             }
           },
@@ -1592,16 +1592,16 @@
               "score": 1596316
             },
             "winner": {
-              "rank": 11,
-              "group": "블랙핑크",
-              "member": "지수",
-              "score": 2096499
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
             },
             "votes": {
               "a": 0,
-              "b": 0,
+              "b": 1,
               "raw_a": 0,
-              "raw_b": 0
+              "raw_b": 1
             }
           },
           "match2": {
@@ -1621,16 +1621,16 @@
               "score": 1572474
             },
             "winner": {
-              "rank": 10,
-              "group": "르세라핌",
-              "member": "김채원",
-              "score": 2199906
+              "rank": 16,
+              "group": "소녀시대",
+              "member": "태연",
+              "score": 1572474
             },
             "votes": {
               "a": 0,
-              "b": 0,
+              "b": 1,
               "raw_a": 0,
-              "raw_b": 0
+              "raw_b": 1
             }
           },
           "tally": {
@@ -1669,16 +1669,16 @@
               "score": 2696338
             },
             "winner": {
-              "rank": 4,
-              "group": "블랙핑크",
-              "member": "로제",
-              "score": 4267284
+              "rank": 8,
+              "group": "아이브",
+              "member": "안유진",
+              "score": 2696338
             },
             "votes": {
               "a": 0,
-              "b": 0,
+              "b": 1,
               "raw_a": 0,
-              "raw_b": 0
+              "raw_b": 1
             }
           },
           "match2": {
@@ -1704,9 +1704,9 @@
               "score": 7166269
             },
             "votes": {
-              "a": 0,
+              "a": 1,
               "b": 0,
-              "raw_a": 0,
+              "raw_a": 1,
               "raw_b": 0
             }
           },
@@ -1752,9 +1752,9 @@
               "score": 2361861
             },
             "votes": {
-              "a": 0,
+              "a": 1,
               "b": 0,
-              "raw_a": 0,
+              "raw_a": 1,
               "raw_b": 0
             }
           },
@@ -1782,9 +1782,9 @@
             },
             "votes": {
               "a": 0,
-              "b": 0,
+              "b": 1,
               "raw_a": 0,
-              "raw_b": 0
+              "raw_b": 1
             }
           },
           "tally": {
@@ -1819,10 +1819,10 @@
             "score": 7538960
           },
           "b": {
-            "rank": 11,
-            "group": "블랙핑크",
-            "member": "지수",
-            "score": 2096499
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
           },
           "winner": null
         },
@@ -1831,10 +1831,10 @@
           "slot": 1,
           "round": "R8",
           "a": {
-            "rank": 4,
-            "group": "블랙핑크",
-            "member": "로제",
-            "score": 4267284
+            "rank": 8,
+            "group": "아이브",
+            "member": "안유진",
+            "score": 2696338
           },
           "b": {
             "rank": 9,
@@ -1855,10 +1855,10 @@
             "score": 4736626
           },
           "b": {
-            "rank": 10,
-            "group": "르세라핌",
-            "member": "김채원",
-            "score": 2199906
+            "rank": 16,
+            "group": "소녀시대",
+            "member": "태연",
+            "score": 1572474
           },
           "winner": null
         },
@@ -1895,10 +1895,10 @@
               "score": 7538960
             },
             "b": {
-              "rank": 11,
-              "group": "블랙핑크",
-              "member": "지수",
-              "score": 2096499
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
             },
             "winner": null
           },
@@ -1913,10 +1913,10 @@
               "score": 4736626
             },
             "b": {
-              "rank": 10,
-              "group": "르세라핌",
-              "member": "김채원",
-              "score": 2199906
+              "rank": 16,
+              "group": "소녀시대",
+              "member": "태연",
+              "score": 1572474
             },
             "winner": null
           }
@@ -1928,10 +1928,10 @@
             "slot": 1,
             "round": "R8",
             "a": {
-              "rank": 4,
-              "group": "블랙핑크",
-              "member": "로제",
-              "score": 4267284
+              "rank": 8,
+              "group": "아이브",
+              "member": "안유진",
+              "score": 2696338
             },
             "b": {
               "rank": 9,
