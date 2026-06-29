@@ -19,10 +19,9 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_manhwa_card, make_sources_card, make_reels_thumbnail
-from make_video import make_slideshow_video
+from make_card import make_card, make_manhwa_card, make_sources_card
 from post_instagram import (
-    InstagramPublisher, upload_image, upload_video,
+    InstagramPublisher, upload_image,
     build_caption_with_variant,
 )
 import post_threads
@@ -70,7 +69,7 @@ os.environ.setdefault("STATE_PATH", CHANNEL["state_path"])
 # === 운영 설정 ===
 FETCH_LIMIT = 20       # 안전/중복 필터 후 충분히 확보를 위해 여유롭게 수집
 MIN_CARDS = 3          # 게시 가능한 최소 본문 카드 수 (이보다 적으면 게시 스킵)
-MAX_CARDS = 8          # Reels 길이 ≈ (본문 N + 출처 + 표지) × 3s. 8+2 = 30s (90s 한도 내)
+MAX_CARDS = 9          # 캐러셀 최대 10장 — 뉴스 9 + 출처 1 = 10장 딱 맞춤
 UPLOAD_RETRIES = 3     # 호스팅 업로드 재시도 횟수
 UPLOAD_BACKOFF = 2.0   # 지수 백오프 base (sec)
 CRON_JITTER_MAX_SEC = 1800  # CI cron 만 적용 (0-30분 랜덤 지연). 90분에서 축소 — 사용자가 게시 시각 예측 가능하도록.
@@ -117,10 +116,6 @@ def _upload_with_retry(path: Path, uploader, kind: str) -> str:
 
 def upload_with_retry(path: Path) -> str:
     return _upload_with_retry(path, upload_image, "image")
-
-
-def video_upload_with_retry(path: Path) -> str:
-    return _upload_with_retry(path, upload_video, "video")
 
 
 def main():
@@ -207,13 +202,12 @@ def main():
         print(f"  [{i}]{marker} {s.card_title}")
 
     # === 3. 카드 이미지 생성 (9:16 미니멀: 흰 배경 + 검정 제목) ===
-    # 슬라이드 순서: 본문 N장 (2.5s) → 출처 (2.5s). 표지는 사용자 피드백으로 제거.
+    # 캐러셀 순서: 본문 N장 → 출처 카드 마지막.
     # 카드 스타일 — 날짜 기반 격일 회전 (minimal / manhwa) → A/B 분석 가능.
     print("\n" + "="*60)
     print("3️⃣  카드 이미지 생성 (9:16)")
     print("="*60)
     image_paths = []
-    total_cards = len(summaries)
 
     card_style = _card_style_for_date(date_str)
     print(f"  🎨 카드 스타일: {card_style} (date={date_str}, 격일 회전)")
@@ -235,60 +229,33 @@ def main():
     image_paths.append(sources_path)
     print(f"  ✓ {sources_path.name}: 출처 카드")
 
-    # Reels 그리드 썸네일 (cover_url 용 — 프로필 그리드 첫인상 강화)
-    thumb_path = output_dir / "00_thumb.jpg"
-    make_reels_thumbnail(
-        top_titles=[s.card_title for s in summaries],
-        output_path=thumb_path,
-    )
-    print(f"  ✓ {thumb_path.name}: Reels 그리드 썸네일")
-
-    # === 3-b. 슬라이드쇼 mp4 빌드 (FFmpeg) ===
-    # 모든 카드 2.5초 균일. BGM: assets/bgm/ 에서 랜덤 선택.
-    print("\n" + "="*60)
-    print("3️⃣b 슬라이드쇼 mp4 생성 (BGM mux)")
-    print("="*60)
-    from make_video import SECONDS_PER_CARD
-    durations = [SECONDS_PER_CARD] * len(image_paths)
-
-    bgm_dir = Path(__file__).parent / "assets" / "bgm"
-    bgm_path = None
-    if bgm_dir.exists():
-        candidates = sorted(bgm_dir.glob("*.mp3"))
-        if candidates:
-            bgm_path = random.choice(candidates)
-            print(f"  🎵 BGM 선택: {bgm_path.name}")
-
-    video_path = output_dir / "reel.mp4"
-    make_slideshow_video(image_paths, video_path, durations=durations, bgm_path=bgm_path)
-    total_sec = sum(durations) - max(0, (len(image_paths) - 1) * 0.3)
-    print(f"  ✓ {video_path.name} ({video_path.stat().st_size / 1024 / 1024:.1f} MB, ≈{total_sec:.1f}s)")
-
     # === 4. 인스타그램 업로드 사전 체크 ===
-    # Reels 는 mp4 만 받음 → Cloudinary 비디오 업로드 필수 (Imgur 비디오 미지원).
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
-    has_video_hosting = (
+    has_image_hosting = (
         os.environ.get("CLOUDINARY_CLOUD_NAME") and os.environ.get("CLOUDINARY_UPLOAD_PRESET")
     )
 
-    if not (ig_user_id and ig_token and has_video_hosting):
+    if not (ig_user_id and ig_token and has_image_hosting):
         print("\n⚠️  인스타그램/Cloudinary 환경변수 미설정 → 업로드 스킵")
-        print(f"    카드/mp4는 {output_dir}에서 확인 가능합니다.")
+        print(f"    카드 이미지는 {output_dir}에서 확인 가능합니다.")
         record_run(state, "skipped_no_upload_credentials")
         save_state(state)
         return
 
-    # === 5. mp4 호스팅 업로드 (재시도 포함) ===
+    # === 5. 이미지 호스팅 업로드 (재시도 포함) ===
     print("\n" + "="*60)
-    print("4️⃣  mp4 호스팅 업로드 (Cloudinary 비디오)")
+    print("4️⃣  이미지 호스팅 업로드 (Cloudinary)")
     print("="*60)
-    video_url = video_upload_with_retry(video_path)
-    print(f"  ✓ {video_path.name} → {video_url}")
+    image_urls = []
+    for img_path in image_paths:
+        url = upload_with_retry(img_path)
+        image_urls.append(url)
+        print(f"  ✓ {img_path.name} → {url}")
 
-    # === 6. 인스타그램 Reels 게시 ===
+    # === 6. 인스타그램 캐러셀 게시 ===
     print("\n" + "="*60)
-    print("5️⃣  인스타그램 Reels 게시")
+    print("5️⃣  인스타그램 캐러셀 게시")
     print("="*60)
     publisher = InstagramPublisher(ig_user_id, ig_token)
 
@@ -309,47 +276,28 @@ def main():
         default_hashtags=CHANNEL["default_hashtags"])
     print(f"  📝 캡션 variant: {caption_variant}")
 
-    # 썸네일 업로드 (선택적 — 실패해도 Reels 게시는 진행)
-    cover_url = None
-    try:
-        cover_url = upload_with_retry(thumb_path)
-        print(f"  🖼  커스텀 썸네일: {cover_url}")
-    except Exception as e:
-        print(f"  ⚠️  썸네일 업로드 실패 ({e}) — 기본 첫프레임 사용")
+    media_id = publisher.post_carousel(image_urls=image_urls, caption=caption)
+    print(f"\n완료! 캐러셀 Media ID: {media_id}")
 
-    media_id = publisher.post_reel(video_url=video_url, caption=caption,
-                                   cover_url=cover_url, share_to_feed=True)
-    print(f"\n🎉 완료! Reels Media ID: {media_id}")
-
-    # === 6-b. Stories 자동 게시 (B2 자동화) ===
-    # Reels 와 동일 mp4 를 Stories 에도 → 도달 1.5-2배 + 팔로워 노출 강화
-    try:
-        story_id = publisher.post_story_video(video_url)
-        print(f"  📖 Stories Media ID: {story_id}")
-    except Exception as e:
-        print(f"  ⚠️  Stories 게시 실패 ({e}) — 계속 진행")
-        story_id = None
-
-    # === 6-c. Threads cross-post (A3 자동화) ===
+    # === 6-b. Threads cross-post (A3 자동화) ===
     threads_id = None
     if post_threads.is_configured():
         try:
-            reel_link = f"https://www.instagram.com/reel/{media_id}/" if media_id else None
             threads_id = post_threads.post_thread(
                 top_titles=[s.card_title for s in summaries],
                 date_str=date_str,
                 label_short=CHANNEL["label_short"],
-                reel_link=reel_link,
+                reel_link=None,
             )
         except Exception as e:
             print(f"  ⚠️  Threads 게시 실패 ({e}) — 계속 진행")
 
-    # === 6-d. Discord 게시 완료 알림 (A5 일부) ===
+    # === 6-c. Discord 게시 완료 알림 ===
     notify_discord(
-        f"✅ **daily_enter_kr Reels 게시 완료**\n"
+        f"✅ **daily_enter_kr 캐러셀 게시 완료**\n"
         f"• 미디어: `{media_id}`\n"
         f"• 캡션 variant: `{caption_variant}` · 카드 스타일: `{card_style}`\n"
-        f"• Stories: {'✅' if story_id else '❌'} · Threads: {'✅' if threads_id else '⏭️'}\n"
+        f"• 카드 {len(image_urls)}장 · Threads: {'✅' if threads_id else '⏭️'}\n"
         f"• 헤드라인 #1: {summaries[0].card_title if summaries else '-'}",
         username="daily_enter_kr",
     )
@@ -364,7 +312,7 @@ def main():
         status="success",
     )
     save_state(state)
-    print(f"📝 state.json 업데이트됨 (총 {len(state['posted_history'])}개 history)")
+    print(f"state.json 업데이트됨 (총 {len(state['posted_history'])}개 history)")
 
 
 if __name__ == "__main__":
