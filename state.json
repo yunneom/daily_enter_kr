@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-28T08:57:45.361193+09:00",
+  "last_run_at": "2026-06-29T09:17:08.468718+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-05-29",
-      "title_hash": "70ba20e9d6e9cc9b",
-      "card_title": "전지현, 연상호 감독과 'K-좀비' 도전…새로운 매력 선보여"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "da154457284ccf05",
-      "card_title": "소유, 기내 만취 루머에 직접 입장 표명"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "822576ff5a37b385",
-      "card_title": "김소영, 둘째 출산 중에도 경영 업무 지시"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "47ce2f1f43a091d0",
-      "card_title": "최지수, 알바로 9년 만에 학자금 대출금 전액 완납"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "96479e6c98718405",
-      "card_title": "김수현, '가세연' 김세의에 300억 손해배상 청구 시사"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "66c06fc0bfcb2dd1",
-      "card_title": "최예나·장하오·한유진, '아는형님' 출격"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "d74ad0d5624b1eb5",
-      "card_title": "조혜련, '개콘' 무대서 '가사 수준미달죄' 재판 받다"
-    },
-    {
-      "date": "2026-05-29",
-      "title_hash": "9c4f040ec5d9d39b",
-      "card_title": "이지현, 미용실 합리적 가격 공개로 화제"
-    },
     {
       "date": "2026-05-30",
       "title_hash": "0043f60ef8de59b5",
@@ -1777,6 +1737,70 @@
       "card_title": "천록담, 신장암 1기 투병 중 '불후의 명곡' 출연",
       "caption_variant": "question_hook",
       "media_id": "17953865403187544",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "95fe3ab527b5e61c",
+      "card_title": "진구, '신입사원 강회장'으로 반전 매력 입증 — 분당 최고 12.1%",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "d6e79bf2c6f1188e",
+      "card_title": "전미선, 오늘 7주기…배우로서의 따뜻한 유산 기억하다",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "4185cbbcdddf4f60",
+      "card_title": "세븐틴 V8, 도전과 성장으로 물든 청춘",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "46925f82cf9a1efc",
+      "card_title": "장기하·윤가이, 나이 차 극복하고 열애 공개",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "b747e27f10c29ce3",
+      "card_title": "린·이수 이혼 발표, 윤종신이 남긴 한 마디",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "6abd944a39af181c",
+      "card_title": "이본, 27년만의 컴백 '블랙 콩'으로 음악 무대 복귀",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "0f6ae422d14da1b1",
+      "card_title": "서인국·박지현, 퇴근 후 마트 장보기 포착",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-29",
+      "title_hash": "c39caffca20282fd",
+      "card_title": "윤은혜, 29살 이후 연애 없이 술도 끊었다",
+      "caption_variant": "tease_one",
+      "media_id": "18109432226064551",
       "card_style": "minimal"
     }
   ]
