@@ -55,7 +55,7 @@ SCHEDULE = [
     # === Day 7 (월 6/29) — 16강 집계 (주말 63h) + 8강 진출 발표 + 8강 게시 ===
     (datetime(2026, 6, 29, 12,  0, tzinfo=KST), "tally",    "R16"),
     (datetime(2026, 6, 29, 12, 30, tzinfo=KST), "announce", "R16"),
-    (datetime(2026, 6, 29, 21,  0, tzinfo=KST), "publish",  "R8"),
+    (datetime(2026, 6, 29, 17,  0, tzinfo=KST), "publish",  "R8"),
     # === Day 8 (화 6/30) — 8강 집계 (24h) + 4강 진출 발표 ===
     (datetime(2026, 6, 30, 21,  0, tzinfo=KST), "tally",    "R8"),
     (datetime(2026, 6, 30, 21, 30, tzinfo=KST), "announce", "R8"),
