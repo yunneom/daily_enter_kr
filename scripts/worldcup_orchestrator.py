@@ -55,7 +55,9 @@ SCHEDULE = [
     (datetime(2026, 6, 29, 13, 25, tzinfo=KST), "chain_r16_r8", ""),
     # === Day 7 (월 6/29) 14:00 — R8 HF 대진표 릴스 (Playwright 수정 후 재시도) ===
     (datetime(2026, 6, 29, 14,  0, tzinfo=KST), "hf_r8", ""),
-    # === Day 7 (월 6/29) 17:05 — R8 HF 대진표 릴스 재게시 (올바른 R8 대진 반영) ===
+    # === Day 7 (월 6/29) 16:30 — R16 승자 수동 수정 + R8 HF 대진표 재게시 ===
+    (datetime(2026, 6, 29, 16, 30, tzinfo=KST), "fix_republish_r8", ""),
+    # === Day 7 (월 6/29) 17:05 — R8 HF 대진표 릴스 재게시 (올바른 R8 대진 반영, 폴백) ===
     (datetime(2026, 6, 29, 17,  5, tzinfo=KST), "hf_r8", ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
@@ -202,6 +204,26 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_hf_r8_bracket"
                    for e in ledger.get("entries", []))
+    elif action == "fix_republish_r8":
+        # R16 slot 1 승자가 닝닝이고 HF R8 대진표가 게시됐으면 완료
+        r16 = bracket.get("rounds", {}).get("R16", {})
+        matches = r16.get("matches", [])
+        slot1 = next((m for m in matches if m.get("slot") == 1), None)
+        if slot1 is None:
+            return False
+        winner = (slot1.get("winner") or {})
+        if winner.get("member") != "닝닝":
+            return False
+        # 브래킷은 패치됐음 — HF R8 게시 여부도 확인
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_hf_r8_bracket"
+                   for e in ledger.get("entries", []))
     return False
 
 
@@ -264,6 +286,18 @@ def execute(action: str, round_key: str) -> int:
     elif action == "hf_r8":
         # R8 HF 대진표 릴스 단독 게시
         return run([sys.executable, "scripts/worldcup_post_hf_reel.py", "R8"])
+    elif action == "fix_republish_r8":
+        # 1) R16 승자 수동 패치 + ledger 잘못된 항목 제거
+        rc = run([sys.executable, "scripts/fix_bracket_r16_winners.py"])
+        if rc != 0:
+            print(f"❌ fix_bracket_r16_winners 실패 (rc={rc})")
+            return rc
+        # 2) 올바른 R8 HF 대진표 릴스 게시
+        rc = run([sys.executable, "scripts/worldcup_post_hf_reel.py", "R8"])
+        if rc != 0:
+            print(f"❌ worldcup_post_hf_reel R8 실패 (rc={rc})")
+            return rc
+        return 0
     elif action == "render_test":
         # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
@@ -285,7 +319,7 @@ def main():
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
     # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
-    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8"):
+    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
