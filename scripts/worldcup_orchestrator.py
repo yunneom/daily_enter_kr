@@ -38,9 +38,15 @@ SCHEDULE = [
     # === Day 1 (화 6/23) — 32강 게시 (완료) ===
     (datetime(2026, 6, 23, 12,  0, tzinfo=KST), "publish",  "R32"),
     # === Day 2 (수 6/24) 07:00 — 32강 대진표 홍보 (한 장, 양사이드) ===
+    # 사용자 결정: 6/24는 월드컵 홍보 게시글만. 7시 = 출근/등교 시간대 노출.
     (datetime(2026, 6, 24,  7,  0, tzinfo=KST), "bracket",  ""),
     # === Day 5 (토 6/27) 07:00 — 16강 단독 대진표 홍보 (아침 출근 슬롯) ===
+    # v4: WIN 배지 제거 + 4강 헤더 + 결승 선 단순화. current_round=R16.
     (datetime(2026, 6, 27,  7,  0, tzinfo=KST), "bracket",  ""),
+    # === Day 5 (토 6/27) 02:30 — 16강 홍보 블라스트 (missed) ===
+    # (datetime(2026, 6, 27,  2, 30, tzinfo=KST), "promo_blast", ""),  # 코드 푸시 전 슬롯
+    # === Day 7 (월 6/29) 09:15 — 16강 홍보 블라스트 1차 재시도 (cron 드롭) ===
+    # (datetime(2026, 6, 29,  9, 15, tzinfo=KST), "promo_blast", ""),  # cron 2h 드롭으로 미발화
     # === Day 7 (월 6/29) 11:30 — 16강 홍보 블라스트 최종 즉시 실행 ===
     (datetime(2026, 6, 29, 11, 30, tzinfo=KST), "promo_blast", ""),
     # === Day 7 (월 6/29) 12:30 — HF 릴스 재시도 (playwright 수정 후) ===
@@ -57,6 +63,8 @@ SCHEDULE = [
     (datetime(2026, 6, 29, 17, 15, tzinfo=KST), "announce", "R16"),
     # === Day 7 (월 6/29) 17:20 — R8 게시 즉시 재실행 슬롯 ===
     (datetime(2026, 6, 29, 17, 20, tzinfo=KST), "publish",  "R8"),
+    # === Day 7 (월 6/29) 18:20 — R16 결과 발표 폴백 슬롯 (18:00 publish R8 완료 후) ===
+    (datetime(2026, 6, 29, 18, 20, tzinfo=KST), "announce", "R16"),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
@@ -111,6 +119,7 @@ def already_done(action: str, round_key: str) -> bool:
     bracket = json.loads(bracket_path.read_text(encoding="utf-8"))
     rnd = bracket.get("rounds", {}).get(round_key, {})
     if action == "publish":
+        # ledger 체크
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -129,6 +138,8 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return all(m.get("winner") for m in matches)
     elif action == "announce":
+        # ledger 에 worldcup_announce_{round} 기록이 있으면 done — 중복 발표 방지.
+        # (cron 40분 윈도우에 announce 슬롯이 두 번 매칭될 수 있어 필수)
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -140,6 +151,7 @@ def already_done(action: str, round_key: str) -> bool:
         return any((e.get("topic_id") or "") == tid
                    for e in ledger.get("entries", []))
     elif action == "bracket":
+        # ledger 에 worldcup_bracket 기록 있으면 done — 중복 게시 방지.
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -147,11 +159,13 @@ def already_done(action: str, round_key: str) -> bool:
             ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
         except Exception:
             return False
+        # 라운드별 분리 — current_round 의 대진표가 게시됐는지만 체크
         cur = bracket.get("current_round", "R32").lower()
         target_tid = f"worldcup_bracket_{cur}"
         return any((e.get("topic_id") or "") == target_tid
                    for e in ledger.get("entries", []))
     elif action == "promo_blast":
+        # ledger 에 캐러셀 기록 있으면 done (1번만 실행)
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -163,6 +177,7 @@ def already_done(action: str, round_key: str) -> bool:
         return any((e.get("topic_id") or "") == f"worldcup_promo_{cur}_carousel"
                    for e in ledger.get("entries", []))
     elif action == "hf_blast":
+        # HF 릴스 기록 있으면 done
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -174,6 +189,7 @@ def already_done(action: str, round_key: str) -> bool:
         return any((e.get("topic_id") or "") == f"worldcup_promo_{cur}_hf_reels"
                    for e in ledger.get("entries", []))
     elif action == "chain_r16_r8":
+        # R8 posts 가 ledger 에 있으면 완료
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -184,6 +200,7 @@ def already_done(action: str, round_key: str) -> bool:
         return any((e.get("topic_id") or "").startswith("worldcup_r8_")
                    for e in ledger.get("entries", []))
     elif action == "hf_r8":
+        # R8 HF 대진표 릴스가 ledger 에 있으면 완료
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -194,6 +211,7 @@ def already_done(action: str, round_key: str) -> bool:
         return any((e.get("topic_id") or "") == "worldcup_hf_r8_bracket"
                    for e in ledger.get("entries", []))
     elif action == "fix_republish_r8":
+        # R16 slot 1 승자가 닝닝이고 HF R8 대진표가 게시됐으면 완료
         r16 = bracket.get("rounds", {}).get("R16", {})
         matches = r16.get("matches", [])
         slot1 = next((m for m in matches if m.get("slot") == 1), None)
@@ -202,6 +220,7 @@ def already_done(action: str, round_key: str) -> bool:
         winner = (slot1.get("winner") or {})
         if winner.get("member") != "닝닝":
             return False
+        # 브래킷은 패치됐음 — HF R8 게시 여부도 확인
         ledger_path = ROOT / "post_ledger.json"
         if not ledger_path.exists():
             return False
@@ -246,36 +265,47 @@ def execute(action: str, round_key: str) -> int:
     elif action == "tally":
         return run([sys.executable, "scripts/worldcup_tally.py", round_key])
     elif action == "announce":
+        # 자가복구: cron 지연으로 tally 슬롯을 놓치고 announce 만 잡힌 경우,
+        # winner 가 비어있으면 announce 전에 tally 를 먼저 실행 (R1 은 R2 winner 기준이라 예외).
         if round_key not in ("R1",) and not _round_has_winners(round_key):
             print(f"⚠️  {round_key} winner 미정 — announce 전에 tally 먼저 실행")
             rc = run([sys.executable, "scripts/worldcup_tally.py", round_key])
             if rc != 0:
                 print(f"❌ 선행 tally {round_key} 실패 (rc={rc})")
                 return rc
+        # 라운드 진출자 결과 발표 카드 게시
         return run([sys.executable, "scripts/worldcup_announce.py", round_key])
     elif action == "bracket":
+        # 32강 대진표 캐러셀 게시 (manual dispatch 전용 — SCHEDULE 에 없음)
         return run([sys.executable, "scripts/worldcup_post_bracket.py"])
     elif action == "promo_blast":
+        # 16강 홍보 블라스트: 캐러셀 + 티저 + 조별 릴스 + HF 릴스
         extra = ["--skip", round_key] if round_key else []
         return run([sys.executable, "scripts/worldcup_promo_blast.py"] + extra)
     elif action == "hf_blast":
+        # HF 릴스만 재실행 (파트 1·2·3 스킵)
         return run([sys.executable, "scripts/worldcup_promo_blast.py",
                     "--skip", "1", "2", "3"])
     elif action == "chain_r16_r8":
+        # R16 집계·발표 → R8 빌드·게시 전체 체인
         return run([sys.executable, "scripts/worldcup_chain.py", "R16", "R8"])
     elif action == "hf_r8":
+        # R8 HF 대진표 릴스 단독 게시
         return run([sys.executable, "scripts/worldcup_post_hf_reel.py", "R8"])
     elif action == "fix_republish_r8":
+        # 1) R16 승자 수동 패치 + ledger 잘못된 항목 제거
         rc = run([sys.executable, "scripts/fix_bracket_r16_winners.py"])
         if rc != 0:
             print(f"❌ fix_bracket_r16_winners 실패 (rc={rc})")
             return rc
+        # 2) 올바른 R8 HF 대진표 릴스 게시
         rc = run([sys.executable, "scripts/worldcup_post_hf_reel.py", "R8"])
         if rc != 0:
             print(f"❌ worldcup_post_hf_reel R8 실패 (rc={rc})")
             return rc
         return 0
     elif action == "render_test":
+        # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
     else:
         print(f"❌ 알 수 없는 action: {action}")
@@ -283,14 +313,18 @@ def execute(action: str, round_key: str) -> int:
 
 
 def main():
+    # manual dispatch (env로 강제)
     forced_action = os.environ.get("WORLDCUP_ACTION", "").strip()
     forced_round = os.environ.get("WORLDCUP_ROUND", "").strip()
+    # workflow_dispatch event 면 GITHUB_EVENT_NAME=workflow_dispatch.
+    # input 비어있는 dispatch (사용자가 입력란 안 채움) = 의도 불명 → 명확한 에러.
     is_dispatch = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
     if is_dispatch and not forced_action:
         print("❌ workflow_dispatch 인데 action 입력란이 비어있음.")
         print("   유효 값: publish | tally | announce | bracket")
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
+    # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
     if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
@@ -305,6 +339,7 @@ def main():
     now = now_kst()
     print(f"⏰ now KST: {now.isoformat()}")
 
+    # 캠페인 윈도우 외엔 skip (연장: 6/23 ~ 7/5 우승 발표)
     if not (datetime(2026, 6, 23, tzinfo=KST) <= now <
             datetime(2026, 7, 6, tzinfo=KST)):
         print("⏭️  캠페인 윈도우(6/23 ~ 7/5) 외 — skip")
@@ -327,12 +362,14 @@ def main():
         print(f"⚠️  execute 실패 rc={rc} — 즉시 1회 재시도")
         rc = execute(action, rnd)
 
+    # 게시 완료 검증 (ledger 기록 확인)
     import time as _time
     _time.sleep(10)
     if already_done(action, rnd):
         print(f"✅ {action} {rnd} 검증 완료 — ledger 기록 확인됨")
     else:
         print(f"⚠️  {action} {rnd} 검증 실패 — ledger 미기록. rc={rc}")
+        # rc=0 이어도 실제 게시 안됐으면 한 번 더
         if rc == 0:
             print("↩️  rc=0 이지만 ledger 미기록 — 마지막 재시도")
             rc = execute(action, rnd)
