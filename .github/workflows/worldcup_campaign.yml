@@ -4,6 +4,10 @@ name: 🏆 걸그룹 월드컵 캠페인
 # 캠페인 시간 외엔 silent skip. manual dispatch 로 라운드 강제 실행 가능.
 
 on:
+  push:
+    branches: [main]
+    # push 트리거: cron 드롭 시 수동 커밋으로 즉시 실행 가능.
+    # orchestrator 가 SCHEDULE 슬롯 매칭 + already_done 으로 중복 방지.
   schedule:
     # 15분 간격 — GitHub 스케줄러가 피크시간대 cron 을 자주 드롭/지연시켜서
     # (실측: 12:00 KST 슬롯 미발화) 빈도 ↑ 로 발화 기회 확보. TOLERANCE 60분과 결합.
