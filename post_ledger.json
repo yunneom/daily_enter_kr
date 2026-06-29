@@ -198,6 +198,72 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-06-29T12:25:52.185749+09:00",
+      "topic_id": "worldcup_promo_r16_carousel",
+      "title": "16강 전체 매치 캐러셀",
+      "style": "worldcup_promo",
+      "seed": null,
+      "ig_media_id": "18069879191387036",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
+    },
+    {
+      "posted_at": "2026-06-29T12:26:10.014922+09:00",
+      "topic_id": "worldcup_promo_r16_teaser",
+      "title": "16강 D-1 티저",
+      "style": "worldcup_promo",
+      "seed": null,
+      "ig_media_id": "18271561330291435",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
+    },
+    {
+      "posted_at": "2026-06-29T12:27:43.999115+09:00",
+      "topic_id": "worldcup_promo_r16_zone_a",
+      "title": "16강 A조 릴스",
+      "style": "worldcup_promo",
+      "seed": null,
+      "ig_media_id": "18177909112410464",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
+    },
+    {
+      "posted_at": "2026-06-29T12:29:32.519284+09:00",
+      "topic_id": "worldcup_promo_r16_zone_b",
+      "title": "16강 B조 릴스",
+      "style": "worldcup_promo",
+      "seed": null,
+      "ig_media_id": "17990987723813963",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
+    },
+    {
+      "posted_at": "2026-06-29T12:30:48.695838+09:00",
+      "topic_id": "worldcup_promo_r16_zone_c",
+      "title": "16강 C조 릴스",
+      "style": "worldcup_promo",
+      "seed": null,
+      "ig_media_id": "18102623054150174",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
+    },
+    {
+      "posted_at": "2026-06-29T12:32:04.898398+09:00",
+      "topic_id": "worldcup_promo_r16_zone_d",
+      "title": "16강 D조 릴스",
+      "style": "worldcup_promo",
+      "seed": null,
+      "ig_media_id": "18467564878111734",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
