@@ -59,6 +59,10 @@ SCHEDULE = [
     (datetime(2026, 6, 29, 16, 30, tzinfo=KST), "fix_republish_r8", ""),
     # === Day 7 (월 6/29) 17:05 — R8 HF 대진표 릴스 재게시 (올바른 R8 대진 반영, 폴백) ===
     (datetime(2026, 6, 29, 17,  5, tzinfo=KST), "hf_r8", ""),
+    # === Day 7 (월 6/29) 17:15 — R16 결과 발표 즉시 재실행 슬롯 ===
+    (datetime(2026, 6, 29, 17, 15, tzinfo=KST), "announce", "R16"),
+    # === Day 7 (월 6/29) 17:20 — R8 게시 즉시 재실행 슬롯 ===
+    (datetime(2026, 6, 29, 17, 20, tzinfo=KST), "publish",  "R8"),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
