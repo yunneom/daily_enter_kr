@@ -45,17 +45,19 @@ SCHEDULE = [
     (datetime(2026, 6, 27,  7,  0, tzinfo=KST), "bracket",  ""),
     # === Day 5 (토 6/27) 02:30 — 16강 홍보 블라스트 (missed) ===
     # (datetime(2026, 6, 27,  2, 30, tzinfo=KST), "promo_blast", ""),  # 코드 푸시 전 슬롯
-    # === Day 7 (월 6/29) 09:15 — 16강 홍보 블라스트 (재시도, 마감 D-DAY) ===
-    (datetime(2026, 6, 29,  9, 15, tzinfo=KST), "promo_blast", ""),
+    # === Day 7 (월 6/29) 09:15 — 16강 홍보 블라스트 1차 재시도 (cron 드롭) ===
+    # (datetime(2026, 6, 29,  9, 15, tzinfo=KST), "promo_blast", ""),  # cron 2h 드롭으로 미발화
+    # === Day 7 (월 6/29) 11:30 — 16강 홍보 블라스트 최종 즉시 실행 ===
+    (datetime(2026, 6, 29, 11, 30, tzinfo=KST), "promo_blast", ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
     # === Day 4 (금 6/26) 12:00 — 16강 게시 (점심 슬롯, 투표창 72h 주말 전체) ===
     (datetime(2026, 6, 26, 12,  0, tzinfo=KST), "publish",  "R16"),
-    # === Day 7 (월 6/29) — 16강 집계 (주말 63h) + 8강 진출 발표 + 8강 게시 ===
-    (datetime(2026, 6, 29, 12,  0, tzinfo=KST), "tally",    "R16"),
-    (datetime(2026, 6, 29, 12, 30, tzinfo=KST), "announce", "R16"),
-    (datetime(2026, 6, 29, 17,  0, tzinfo=KST), "publish",  "R8"),
+    # === Day 7 (월 6/29) — 16강 집계 (주말 63h) 오후 5시 + 발표 + 오후 6시 8강 게시 ===
+    (datetime(2026, 6, 29, 17,  0, tzinfo=KST), "tally",    "R16"),
+    (datetime(2026, 6, 29, 17, 30, tzinfo=KST), "announce", "R16"),
+    (datetime(2026, 6, 29, 18,  0, tzinfo=KST), "publish",  "R8"),
     # === Day 8 (화 6/30) — 8강 집계 (24h) + 4강 진출 발표 ===
     (datetime(2026, 6, 30, 21,  0, tzinfo=KST), "tally",    "R8"),
     (datetime(2026, 6, 30, 21, 30, tzinfo=KST), "announce", "R8"),
@@ -263,7 +265,23 @@ def main():
         print(f"✅ {action} {rnd} 이미 완료 — idempotent skip")
         return 0
 
-    return execute(action, rnd)
+    rc = execute(action, rnd)
+    if rc != 0:
+        print(f"⚠️  execute 실패 rc={rc} — 즉시 1회 재시도")
+        rc = execute(action, rnd)
+
+    # 게시 완료 검증 (ledger 기록 확인)
+    import time as _time
+    _time.sleep(10)
+    if already_done(action, rnd):
+        print(f"✅ {action} {rnd} 검증 완료 — ledger 기록 확인됨")
+    else:
+        print(f"⚠️  {action} {rnd} 검증 실패 — ledger 미기록. rc={rc}")
+        # rc=0 이어도 실제 게시 안됐으면 한 번 더
+        if rc == 0:
+            print("↩️  rc=0 이지만 ledger 미기록 — 마지막 재시도")
+            rc = execute(action, rnd)
+    return rc
 
 
 if __name__ == "__main__":

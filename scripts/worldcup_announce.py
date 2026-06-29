@@ -35,7 +35,7 @@ KST = timezone(timedelta(hours=9))
 # 다음 라운드 시각 (캡션에 안내) — orchestrator SCHEDULE 과 일치 유지
 NEXT_PUBLISH_HINT = {
     "R32": "6/26(금) 12:00 KST — 16강 4경기 (주말 내내 투표!)",
-    "R16": "6/29(월) 21:00 KST — 8강 2경기",
+    "R16": "6/29(월) 18:00 KST — 8강 4경기 투표 시작!",
     "R8":  "7/1(수) 21:00 KST — 4강",
     "R4":  "7/3(금) 21:00 KST — 결승전 + 3·4위전",
     "R2":  "7/5(일) 12:30 KST — 🏆 우승 발표",
@@ -241,6 +241,38 @@ def main():
         "threads_id": None,
         "bgm": "daily_enter_theme_c.mp3",
     }])
+
+    # HyperFrames 릴스 — round별 HTML 컴포지션이 있으면 추가 게시
+    hf_html = ROOT / "compositions" / f"{round_key.lower()}_announce.html"
+    if hf_html.exists():
+        print(f"\n▶ HyperFrames 릴스 추가 게시 ({hf_html.name})")
+        try:
+            sys.path.insert(0, str(ROOT / "scripts"))
+            from render_hf import render_html_to_mp4  # noqa: E402
+            hf_mp4 = out_dir / "hf_reel.mp4"
+            rc_hf = render_html_to_mp4(hf_html, hf_mp4, duration=6.0, fps=30)
+            if rc_hf == 0 and hf_mp4.exists():
+                hf_url = upload_video(hf_mp4)
+                hf_caption = (
+                    f"🏆 걸그룹 월드컵 {round_key} 결과 — HyperFrames 하이라이트\n\n"
+                    f"🔥 다음 라운드: {NEXT_PUBLISH_HINT.get(round_key, '')}\n"
+                    "#걸그룹월드컵 #케이팝 #kpop #아이돌"
+                )
+                hf_id = publisher.post_reel(hf_url, hf_caption,
+                                            cover_url=None, share_to_feed=True)
+                print(f"  ✅ HF 릴스: {hf_id}")
+                post_ledger.record_results([{
+                    "ok": True,
+                    "topic_id": f"worldcup_hf_{round_key.lower()}",
+                    "title": f"걸그룹 월드컵 {round_key} HF 릴스",
+                    "style": "worldcup_hf", "seed": None,
+                    "media_id": hf_id, "youtube_id": None,
+                    "threads_id": None, "bgm": None,
+                }])
+            else:
+                print(f"  ⚠️ HF 렌더 실패 rc={rc_hf} — 스킵")
+        except Exception as e:
+            print(f"  ⚠️ HF 릴스 실패 (비치명): {e}")
 
     notify_discord(
         f"🏆 **걸그룹 월드컵 {round_key} 결과 발표 완료**\n"

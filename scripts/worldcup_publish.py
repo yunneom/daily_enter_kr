@@ -147,13 +147,62 @@ def main():
 
     ok = sum(1 for r in results if r.get("ok"))
     print(f"\n✅ {round_key} 게시 완료: {ok}/{len(posts)}")
+
+    # HyperFrames 릴스 — 매치 게시 완료 후 추가 (대진표 HF)
+    if ok > 0:
+        _post_hf_reel(publisher, round_key, out_dir=ROOT / "output_enter" / "publish" / f"worldcup_{round_key.lower()}")
+
     # Discord 알림
     summary = (f"🏆 **걸그룹 월드컵 {round_key}** 게시 완료\n"
-               f"{ok}/{len(posts)} 성공\n"
+               f"{ok}/{len(posts)} 성공 + HF 릴스\n"
                f"⏰ 집계 예정: 24h 후\n"
                f"💬 댓글에 1·2·3·4 번호로 투표!")
     notify_discord(summary, username="daily_enter_kr worldcup")
     return 0 if ok > 0 else 1
+
+
+def _post_hf_reel(publisher, round_key: str, out_dir: Path):
+    """라운드 대진표 HyperFrames 릴스 생성 + 게시."""
+    print(f"\n▶ {round_key} HyperFrames 릴스")
+    try:
+        # 1) 동적 HTML 생성
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from make_worldcup_hf_html import generate as gen_hf_html  # noqa: E402
+        from render_hf import render_html_to_mp4                    # noqa: E402
+
+        hf_html = out_dir / "hf_bracket.html"
+        gen_hf_html(round_key, hf_html)
+
+        # 2) Playwright 렌더
+        hf_mp4 = out_dir / "hf_bracket.mp4"
+        rc = render_html_to_mp4(hf_html, hf_mp4, duration=6.0, fps=30)
+        if rc != 0 or not hf_mp4.exists():
+            print(f"  ⚠️ HF 렌더 실패 rc={rc} — 스킵")
+            return
+
+        # 3) IG 게시
+        hf_url = upload_video(hf_mp4)
+        labels = {"R8": "8강", "R4": "4강", "R2": "결승전"}
+        lbl = labels.get(round_key, round_key)
+        hf_caption = (
+            f"🏆 걸그룹 월드컵 {lbl} 대진표!\n\n"
+            "지금 피드에서 각 경기 게시글 찾아서 댓글로 투표! 💬\n"
+            "🔔 팔로우 + 알림 ON → 결과 즉시 알림\n\n"
+            f"#걸그룹월드컵 #{lbl} #케이팝 #kpop #아이돌투표"
+        )
+        hf_id = publisher.post_reel(hf_url, hf_caption,
+                                    cover_url=None, share_to_feed=True)
+        print(f"  ✅ HF 릴스: {hf_id}")
+        post_ledger.record_results([{
+            "ok": True,
+            "topic_id": f"worldcup_hf_{round_key.lower()}_bracket",
+            "title": f"걸그룹 월드컵 {round_key} HF 대진표",
+            "style": "worldcup_hf", "seed": None,
+            "media_id": hf_id, "youtube_id": None,
+            "threads_id": None, "bgm": None,
+        }])
+    except Exception as e:
+        print(f"  ⚠️ HF 릴스 실패 (비치명): {e}")
 
 
 if __name__ == "__main__":

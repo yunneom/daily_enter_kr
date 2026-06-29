@@ -256,8 +256,17 @@ def main():
         jpgs = [r16_dir / f"post_{i:02d}.jpg" for i in range(1, 5)]
         missing = [j for j in jpgs if not j.exists()]
         if missing:
-            print(f"  ⚠️  이미지 없음: {missing} — 빌드 먼저 필요")
-        else:
+            print(f"  이미지 없음 ({len(missing)}개) — 자동 빌드 시작")
+            import subprocess
+            rc_build = subprocess.run(
+                [sys.executable, "scripts/build_worldcup_round.py", "R16"],
+                cwd=str(ROOT)).returncode
+            if rc_build != 0:
+                print(f"  ❌ R16 빌드 실패 (rc={rc_build}) — 파트 1 스킵")
+                missing = jpgs  # force skip below
+            else:
+                missing = [j for j in jpgs if not j.exists()]
+        if not missing:
             urls = []
             for jpg in jpgs:
                 url = upload_image(jpg)
