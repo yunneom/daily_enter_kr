@@ -51,6 +51,8 @@ SCHEDULE = [
     (datetime(2026, 6, 29, 11, 30, tzinfo=KST), "promo_blast", ""),
     # === Day 7 (월 6/29) 12:30 — HF 릴스 재시도 (playwright 수정 후) ===
     (datetime(2026, 6, 29, 12, 30, tzinfo=KST), "hf_blast",   ""),
+    # === Day 7 (월 6/29) 13:25 — R16 집계·발표 + R8 빌드·게시 즉시 체인 ===
+    (datetime(2026, 6, 29, 13, 25, tzinfo=KST), "chain_r16_r8", ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
@@ -174,6 +176,17 @@ def already_done(action: str, round_key: str) -> bool:
         cur = bracket.get("current_round", "R16").lower()
         return any((e.get("topic_id") or "") == f"worldcup_promo_{cur}_hf_reels"
                    for e in ledger.get("entries", []))
+    elif action == "chain_r16_r8":
+        # R8 posts 가 ledger 에 있으면 완료
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "").startswith("worldcup_r8_")
+                   for e in ledger.get("entries", []))
     return False
 
 
@@ -230,6 +243,9 @@ def execute(action: str, round_key: str) -> int:
         # HF 릴스만 재실행 (파트 1·2·3 스킵)
         return run([sys.executable, "scripts/worldcup_promo_blast.py",
                     "--skip", "1", "2", "3"])
+    elif action == "chain_r16_r8":
+        # R16 집계·발표 → R8 빌드·게시 전체 체인
+        return run([sys.executable, "scripts/worldcup_chain.py", "R16", "R8"])
     elif action == "render_test":
         # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
@@ -250,8 +266,8 @@ def main():
         print("   유효 값: publish | tally | announce | bracket")
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
-    # bracket / promo_blast / render_test 는 round 불필요 (skip 번호로 씀)
-    if forced_action in ("bracket", "promo_blast", "render_test"):
+    # bracket / promo_blast / render_test / chain_r16_r8 는 round 불필요
+    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
