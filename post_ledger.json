@@ -297,6 +297,17 @@
       "youtube_id": "jl0vIBMeT2M",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-29T15:09:05.138564+09:00",
+      "topic_id": "worldcup_hf_r8_bracket",
+      "title": "걸그룹 월드컵 R8 HF 대진표",
+      "style": "worldcup_hf",
+      "seed": null,
+      "ig_media_id": "18029448656812797",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
