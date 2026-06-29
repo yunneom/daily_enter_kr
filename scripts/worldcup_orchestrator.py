@@ -43,9 +43,10 @@ SCHEDULE = [
     # === Day 5 (토 6/27) 07:00 — 16강 단독 대진표 홍보 (아침 출근 슬롯) ===
     # v4: WIN 배지 제거 + 4강 헤더 + 결승 선 단순화. current_round=R16.
     (datetime(2026, 6, 27,  7,  0, tzinfo=KST), "bracket",  ""),
-    # === Day 5 (토 6/27) 02:30 — 16강 홍보 블라스트 ===
-    # 캐러셀 + D-1 티저 + 조별 릴스 4개 + HF 릴스 즉시 게시.
-    (datetime(2026, 6, 27,  2, 30, tzinfo=KST), "promo_blast", ""),
+    # === Day 5 (토 6/27) 02:30 — 16강 홍보 블라스트 (missed) ===
+    # (datetime(2026, 6, 27,  2, 30, tzinfo=KST), "promo_blast", ""),  # 코드 푸시 전 슬롯
+    # === Day 7 (월 6/29) 09:15 — 16강 홍보 블라스트 (재시도, 마감 D-DAY) ===
+    (datetime(2026, 6, 29,  9, 15, tzinfo=KST), "promo_blast", ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),

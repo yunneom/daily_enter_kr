@@ -83,11 +83,11 @@ def make_teaser_card(zone_matches: list, output_path: Path):
 
     # 상단 카운트다운 배너
     d.rounded_rectangle([40, 60, CANVAS[0]-40, 160], radius=24, fill=GOLD)
-    _cx(d, "⏰ 투표 마감 D-1!", _font("Bold", 60), CANVAS[0]//2, 74, fill=INK)
+    _cx(d, "🔥 오늘 투표 마감! D-DAY", _font("Bold", 56), CANVAS[0]//2, 76, fill=INK)
 
     # 날짜 강조
-    _cx(d, "6/29(월) 12:00 마감", _font("Bold", 52), CANVAS[0]//2, 196, fill=WHITE,
-        stroke=2, sfill=INK)
+    _cx(d, "오늘(월) 12:00 마감 — 지금 바로 투표!", _font("Bold", 44),
+        CANVAS[0]//2, 196, fill=WHITE, stroke=2, sfill=INK)
 
     # 서브
     _cx(d, "지금 투표 안 하면 내 최애가 탈락할 수도! 😱",
@@ -154,9 +154,9 @@ def _carousel_caption():
 
 def _teaser_caption():
     return "\n".join([
-        "⏰ 걸그룹 월드컵 16강 투표 마감 D-1!",
+        "🔥 걸그룹 월드컵 16강 투표 D-DAY! 오늘 12시 마감!",
         "",
-        "6/29(월) 12:00까지 투표 가능!",
+        "오늘(월) 12:00까지만 투표 가능!",
         "지금 각 경기 게시글에서 댓글로 투표해주세요 🗳️",
         "",
         "👑 A조: 장원영·지수 vs 원희·닝닝",
