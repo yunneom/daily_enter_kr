@@ -341,6 +341,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-06-30T21:21:08.378561+09:00",
+      "topic_id": "worldcup_announce_r8",
+      "title": "걸그룹 월드컵 R8 결과",
+      "style": "worldcup_announce",
+      "seed": null,
+      "ig_media_id": "18019730789899234",
+      "youtube_id": "Y_IZRBcmqpI",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
     }
   ]
 }
