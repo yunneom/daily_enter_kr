@@ -1,0 +1,61 @@
+name: 🗳️ 월드컵 웹 투표 → bracket 동기화
+
+# 웹 투표 집계(data/web_votes.json)를 data/worldcup_bracket.json 의 votes/winner 로
+# 수렴시킨 뒤 commit-back. 기존 worldcup_campaign.yml 의 announce 파이프라인과
+# (quarter,slot) 좌표·승자 규칙(가중→raw→rank)을 공유한다.
+#
+# 주의(MVP): 현재 동기화원은 레포의 data/web_votes.json 파일이다. 운영 배포에서
+# 투표가 서버리스 DB(Vercel KV/Postgres)에 쌓이면, 이 워크플로 앞단에 "DB→
+# web_votes.json 덤프" 스텝을 추가하거나 worldcup_web_sync.py 가 DB 를 직접 읽도록
+# 바꾼다. 그 전까지는 수동 dispatch 위주로 사용.
+
+on:
+  workflow_dispatch:
+    inputs:
+      round:
+        description: '동기화할 라운드 (예: R8). 비우면 전체'
+        required: false
+        default: ''
+      dry_run:
+        description: 'true 면 저장 안 함(미리보기)'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: worldcup-web-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run web→bracket sync
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.round }}" ]; then ARGS="$ARGS --round ${{ inputs.round }}"; fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          echo "python3 scripts/worldcup_web_sync.py $ARGS"
+          python3 scripts/worldcup_web_sync.py $ARGS
+
+      - name: Commit bracket changes
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          if [ -z "$(git status --porcelain data/worldcup_bracket.json)" ]; then
+            echo "변경 없음 — 커밋 스킵"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/worldcup_bracket.json
+          git commit -m "worldcup-web: $(date -u '+%Y-%m-%d %H:%M UTC') 웹표 동기화 [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
