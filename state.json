@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-29T09:17:08.468718+09:00",
+  "last_run_at": "2026-06-30T09:10:49.883077+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-05-30",
-      "title_hash": "0043f60ef8de59b5",
-      "card_title": "슈주 이특, 신차 출고 2주 만에 교통사고"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "0d109c84dadf8dbf",
-      "card_title": "'오십프로', 시청률 상승세 탔다"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "fd0cb0b5d762c448",
-      "card_title": "서지혜, '허수아비'로 이미지 탈피…'터닝 포인트' 인터뷰"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "4be6fba0f94a17f1",
-      "card_title": "최지수, '나혼산' 10년 만에 공개한 화장실 청소 루틴"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "e9634ff0bc85eb69",
-      "card_title": "유재석 예능 프로젝트, 6만 팀 지원 몰려... 지예은 친동생은 누나 출연 미처 몰라"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "2ec08a4f825e91b4",
-      "card_title": "쯔양 측 법률 대리인, 김세의 구속 관련 입장 발표"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "92fc4d5d4b9c84b1",
-      "card_title": "아이오아이, 완전체 컴백으로 음원차트 1위·챌린지 열풍"
-    },
-    {
-      "date": "2026-05-30",
-      "title_hash": "e068109687a7fe55",
-      "card_title": "영화 '군체' 229만 관객 동원, 주말 박스오피스 1위"
-    },
     {
       "date": "2026-05-31",
       "title_hash": "46757959dad4ad83",
@@ -1802,6 +1762,78 @@
       "caption_variant": "tease_one",
       "media_id": "18109432226064551",
       "card_style": "minimal"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "d2916535db8db894",
+      "card_title": "배우 김규선, 결혼 9년 만에 임신 소식 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "9b38b7ce40fea4e1",
+      "card_title": "BTS, K팝 팬 아닌 층도 사로잡은 글로벌 앨범 파워",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "5509096c51c65e7f",
+      "card_title": "지민, 브랜드평판 1위 석권 — 아이돌·보이그룹 개인 동시 달성",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "7123b21049f6bb07",
+      "card_title": "윤은혜, 13년 솔로 마감 희망 '기독교 신앙 가진 남자 만나고 싶어'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "9b1735b1d7ad0fdd",
+      "card_title": "류화영, 9월 결혼식 앞두고 웨딩 화보 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "27ad2196b0e0e5b4",
+      "card_title": "박용하, 16년 전 그날로 멈춘 시간",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "307725ad74805c1c",
+      "card_title": "김세의, 서울구치소 독방 수감…신변 위협 사유로 요청",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "6fd251ad0f63be6b",
+      "card_title": "드웨인 존슨, '모아나' 출연 위해 18kg 특수 분장과 곱슬머리 가발 변신",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
+    },
+    {
+      "date": "2026-06-30",
+      "title_hash": "bab0a90f402eabb3",
+      "card_title": "김나영·마이큐, 결혼 7개월 만에 혼인신고 완료",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18092155571354592",
+      "card_style": "manhwa"
     }
   ]
 }
