@@ -308,6 +308,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-06-30T10:07:16.809817+09:00",
+      "topic_id": "worldcup_r8_match_promo",
+      "title": "걸그룹 월드컵 8강 매치 홍보",
+      "style": "worldcup_r8_promo",
+      "seed": null,
+      "ig_media_id": "18216129193328548",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
