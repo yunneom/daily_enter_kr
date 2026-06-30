@@ -67,6 +67,8 @@ SCHEDULE = [
     (datetime(2026, 6, 29, 18, 20, tzinfo=KST), "announce", "R16"),
     # === Day 8 (화 6/30) — R8 매치 홍보 릴스 (HP) ===
     (datetime(2026, 6, 30, 10,  0, tzinfo=KST), "r8_promo", ""),
+    # === Day 8 (화 6/30) 10:30 — R16 결과 발표 최종 폴백 슬롯 ===
+    (datetime(2026, 6, 30, 10, 30, tzinfo=KST), "announce", "R16"),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
