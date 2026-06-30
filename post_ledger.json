@@ -319,6 +319,28 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-06-30T10:28:38.511145+09:00",
+      "topic_id": "worldcup_announce_r16",
+      "title": "걸그룹 월드컵 R16 결과",
+      "style": "worldcup_announce",
+      "seed": null,
+      "ig_media_id": "17876780031655008",
+      "youtube_id": "xr5g3jg1Wpw",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-06-30T10:29:31.224949+09:00",
+      "topic_id": "worldcup_hf_r16",
+      "title": "걸그룹 월드컵 R16 HF 릴스",
+      "style": "worldcup_hf",
+      "seed": null,
+      "ig_media_id": "17978021042880606",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
