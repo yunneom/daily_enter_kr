@@ -6,7 +6,7 @@ import VoteClient from "./VoteClient";
 
 export const dynamic = "force-dynamic";
 
-export default function VoteMatchPage({
+export default async function VoteMatchPage({
   params,
 }: {
   params: { round: string; quarter: string; slot: string };
@@ -26,7 +26,7 @@ export default function VoteMatchPage({
     );
   }
 
-  const tally = tallyMatch(round, quarter, slot);
+  const tally = await tallyMatch(round, quarter, slot);
   const status = matchStatus(b, round, match);
 
   return (

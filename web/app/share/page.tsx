@@ -12,7 +12,7 @@ interface SearchParams {
   slot?: string;
 }
 
-export default function SharePage({ searchParams }: { searchParams: SearchParams }) {
+export default async function SharePage({ searchParams }: { searchParams: SearchParams }) {
   const round = searchParams.round ?? "";
   const quarter = Number(searchParams.quarter);
   const slot = Number(searchParams.slot);
@@ -27,7 +27,7 @@ export default function SharePage({ searchParams }: { searchParams: SearchParams
       const b = loadBracket();
       const m = getMatch(b, round, quarter, slot);
       if (m) {
-        const t = tallyMatch(round, quarter, slot);
+        const t = await tallyMatch(round, quarter, slot);
         // Lead candidate = higher raw count (ties → A).
         const lead = t.rawB > t.rawA ? m.b : m.a;
         const leadPct = t.rawB > t.rawA ? t.pctB : t.pctA;

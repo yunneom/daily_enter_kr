@@ -27,14 +27,25 @@ npm run dev
      스냅샷을 `web/data/` 로 복사한다. bracket.json 이 갱신될 때마다 푸시→자동 재배포되어 최신 유지.
 4. 환경변수(선택): `ADMIN_KEY`(어드민 API 헤더 키). `BRACKET_PATH`(커스텀 경로).
 
-### ⚠️ Vercel 의 투표 영속성 — [결정필요]
-Vercel 서버리스 함수의 파일시스템은 **쓰기 불가/휘발성**이라 `data/web_votes.json` 파일 저장소로는
-투표가 영속되지 않는다. 운영 배포에서 실제 투표를 받으려면 `lib/voteStore.ts` 본문을
-서버리스 DB 로 교체해야 한다(시그니처 `recordVote`/`tallyMatch` 는 그대로 유지 = 교체 지점 1곳).
-- 추천: **Vercel KV(Upstash Redis)** 또는 **Vercel Postgres / Neon**.
-- 자격증명(KV/DB URL)을 주시면 어댑터 구현 + 연결까지 진행 가능.
+### 투표 영속성 — Vercel KV (이미 구현됨, 연결만 하면 됨)
+Vercel 서버리스 FS 는 휘발성이라 파일 저장소로는 투표가 안 쌓인다. 그래서 `lib/voteStore.ts` 가
+**KV(Upstash Redis) 백엔드를 내장**하고 env 로 자동 전환한다:
+- `KV_REST_API_URL` + `KV_REST_API_TOKEN` (또는 `UPSTASH_REDIS_REST_URL`/`_TOKEN`) 이 있으면 → **KV 사용**
+- 없으면 → 로컬 파일(`data/web_votes.json`)
 
-즉 Vercel 에서 **UI·대진표·OG 는 즉시 동작**하고, **투표 영속은 DB 어댑터 추가 후** 완성된다.
+**연결 절차 (자격증명 직접 입력 불필요 — Vercel 이 env 자동 주입):**
+1. Vercel 프로젝트 → **Storage** 탭 → **Create Database** → **KV (Upstash Redis)** 또는 Marketplace 의 Upstash.
+2. 만든 스토어를 이 프로젝트에 **Connect** → `KV_REST_API_URL`/`KV_REST_API_TOKEN` 이 자동으로 env 에 주입됨.
+3. **Redeploy**. 끝 — 투표가 KV 에 영속되고 실시간 집계가 동작한다.
+
+KV 키 모델: `wc:voted:{round}:{q}:{s}`(SET, device dedup) / `wc:tally:{round}:{q}:{s}:a|b`(INCR).
+
+> 즉 Vercel 에서 KV 스토어만 연결하면 **투표까지 풀기능 라이브**. 코드 변경 불필요.
+
+#### KV → bracket.json 수렴 (선택, 운영 ops)
+프로덕션 투표는 KV 에 있으므로, `worldcup_web_sync.py`(파일 기준)로 바로 수렴하려면
+KV 집계를 `data/web_votes.json` 형태로 덤프하는 스텝이 앞단에 필요하다. 최종 승자 확정은 어차피
+기존 announce 단계를 거치므로, 이 수렴은 ops 편의 기능이다. (덤프용 admin export 엔드포인트는 follow-up)
 
 ## 2) IG ↔ 웹 동기화 자동화
 - `.github/workflows/worldcup_web_sync.yml` (수동 dispatch): `web_votes.json` → `bracket.json`

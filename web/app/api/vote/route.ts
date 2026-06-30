@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "unknown";
 
   try {
-    recordVote({
+    await recordVote({
       round,
       quarter,
       slot,
@@ -67,6 +67,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "STORE_FAILED", detail: String(err) }, { status: 500 });
   }
 
-  const tally = tallyMatch(round, quarter, slot);
+  const tally = await tallyMatch(round, quarter, slot);
   return NextResponse.json({ tally });
 }

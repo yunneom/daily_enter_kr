@@ -6,19 +6,21 @@ import AdminClient from "./AdminClient";
 
 export const dynamic = "force-dynamic";
 
-export default function AdminPage() {
+export default async function AdminPage() {
   const b = loadBracket();
   const overrides = getRoundStates();
   const round = b.current_round;
   const matches = listMatches(b, round);
 
-  const tallies = matches.map((m) => ({
-    quarter: m.quarter,
-    slot: m.slot,
-    a: m.a.member,
-    bMember: m.b.member,
-    tally: tallyMatch(round, m.quarter, m.slot),
-  }));
+  const tallies = await Promise.all(
+    matches.map(async (m) => ({
+      quarter: m.quarter,
+      slot: m.slot,
+      a: m.a.member,
+      bMember: m.b.member,
+      tally: await tallyMatch(round, m.quarter, m.slot),
+    })),
+  );
 
   const stateLabel = overrides[round]?.state ?? "OPEN (derived)";
 

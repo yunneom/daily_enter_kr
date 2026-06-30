@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "NOT_FOUND" }, { status: 404 });
   }
 
-  const tally = tallyMatch(round, quarter, slot);
+  const tally = await tallyMatch(round, quarter, slot);
   const status = matchStatus(bracket, round, match);
 
   return NextResponse.json({ match, tally, status });
