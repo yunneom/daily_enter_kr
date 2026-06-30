@@ -65,6 +65,8 @@ SCHEDULE = [
     (datetime(2026, 6, 29, 17, 20, tzinfo=KST), "publish",  "R8"),
     # === Day 7 (월 6/29) 18:20 — R16 결과 발표 폴백 슬롯 (18:00 publish R8 완료 후) ===
     (datetime(2026, 6, 29, 18, 20, tzinfo=KST), "announce", "R16"),
+    # === Day 8 (화 6/30) — R8 매치 홍보 릴스 (HP) ===
+    (datetime(2026, 6, 30, 10,  0, tzinfo=KST), "r8_promo", ""),
     # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
     (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
     (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
@@ -210,6 +212,17 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_hf_r8_bracket"
                    for e in ledger.get("entries", []))
+    elif action == "r8_promo":
+        # worldcup_r8_match_promo 가 ledger 에 있으면 완료
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_r8_match_promo"
+                   for e in ledger.get("entries", []))
     elif action == "fix_republish_r8":
         # R16 slot 1 승자가 닝닝이고 HF R8 대진표가 게시됐으면 완료
         r16 = bracket.get("rounds", {}).get("R16", {})
@@ -292,6 +305,9 @@ def execute(action: str, round_key: str) -> int:
     elif action == "hf_r8":
         # R8 HF 대진표 릴스 단독 게시
         return run([sys.executable, "scripts/worldcup_post_hf_reel.py", "R8"])
+    elif action == "r8_promo":
+        # R8 매치 홍보 릴스 (HP HTML → MP4)
+        return run([sys.executable, "scripts/worldcup_post_r8_promo.py"])
     elif action == "fix_republish_r8":
         # 1) R16 승자 수동 패치 + ledger 잘못된 항목 제거
         rc = run([sys.executable, "scripts/fix_bracket_r16_winners.py"])
@@ -325,7 +341,7 @@ def main():
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
     # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
-    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8"):
+    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:

@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fetch_news import fetch_google_news_korea
 from summarize import summarize_news, filter_postable, SummarizedNews
-from make_card import make_card, make_manhwa_card, make_sources_card
+from make_card import make_card, make_sources_card
 from post_instagram import (
     InstagramPublisher, upload_image,
     build_caption_with_variant,
@@ -75,14 +75,8 @@ UPLOAD_BACKOFF = 2.0   # 지수 백오프 base (sec)
 CRON_JITTER_MAX_SEC = 1800  # CI cron 만 적용 (0-30분 랜덤 지연). 90분에서 축소 — 사용자가 게시 시각 예측 가능하도록.
 
 
-def _card_style_for_date(date_str: str) -> str:
-    """date_str 기반 격일 회전 — 'minimal' / 'manhwa'.
-
-    같은 날에 같은 스타일, 2일 주기. 1주 = 3-4회씩 → 주간 다이제스트에서
-    스타일별 reach/shares 비교 가능 (state 에 card_style 기록).
-    """
-    digits = "".join(ch for ch in date_str if ch.isdigit())
-    return "manhwa" if int(digits) % 2 == 0 else "minimal"
+def _card_style_for_date(date_str: str) -> str:  # noqa: ARG001
+    return "minimal"
 
 
 def apply_cron_jitter():
@@ -210,14 +204,11 @@ def main():
     image_paths = []
 
     card_style = _card_style_for_date(date_str)
-    print(f"  🎨 카드 스타일: {card_style} (date={date_str}, 격일 회전)")
+    print(f"  🎨 카드 스타일: {card_style}")
 
     for i, s in enumerate(summaries, 1):
         path = output_dir / f"{i:02d}_card.jpg"
-        if card_style == "manhwa":
-            make_manhwa_card(title=s.card_title, output_path=path, seed=i)
-        else:
-            make_card(title=s.card_title, output_path=path)
+        make_card(title=s.card_title, output_path=path)
         image_paths.append(path)
         print(f"  ✓ {path.name}: {s.card_title}")
 
