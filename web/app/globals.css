@@ -452,24 +452,26 @@ h3 {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 14px;
   position: relative;
-  align-items: stretch;
+  align-items: center; /* compact cards centered vertically (no tall stretch) */
   min-height: 0;
 }
 .duel-panel {
   position: relative;
   border: 1px solid var(--border-2);
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--panel);
-  padding: 0;
+  padding: 26px 12px 20px;
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 14px;
   transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.2s ease;
   color: var(--ink);
-  text-align: left;
+  text-align: center;
 }
 .duel-panel:active {
   transform: scale(0.985);
@@ -483,10 +485,17 @@ h3 {
   opacity: 0.15;
   transform: scale(0.94);
 }
+/* Circular face medallion — roughly a third of the card, face-cropped */
 .duel-photo {
-  flex: 1;
-  min-height: 0;
+  width: 62%;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
   position: relative;
+  flex: 0 0 auto;
+  background: var(--panel-2);
+  box-shadow: 0 0 0 3px #ffffff12, 0 10px 26px -12px #000a;
 }
 .duel-photo .member-img,
 .duel-photo .member-fallback {
@@ -494,18 +503,18 @@ h3 {
   height: 100%;
 }
 .duel-caption {
-  padding: 12px 12px 14px;
-  background: linear-gradient(0deg, #0c0b14 0%, #0c0b1400 100%);
+  padding: 0;
+  background: none;
 }
 .duel-name {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 900;
   letter-spacing: -0.01em;
 }
 .duel-group {
   font-size: 13px;
   color: var(--ink-2);
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .vs-badge {
@@ -636,6 +645,13 @@ h3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
+}
+/* compact/avatar mode: initial fills the circle, no name/group inside */
+.member-fallback-initial.solo {
+  position: static;
+  transform: none;
+  opacity: 0.95;
+  font-size: calc(var(--mi-size, 200px) * 0.5);
 }
 .member-fallback-name {
   position: relative;

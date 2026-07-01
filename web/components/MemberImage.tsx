@@ -12,6 +12,8 @@ interface Props {
   size?: number;
   className?: string;
   rounded?: boolean;
+  /** avatar mode: gradient fallback shows only the big initial (name comes from the caption) */
+  compact?: boolean;
 }
 
 /**
@@ -30,6 +32,7 @@ export default function MemberImage({
   size = 240,
   className,
   rounded = false,
+  compact = false,
 }: Props) {
   // Build the ordered source candidates once.
   const sources = useMemo(() => {
@@ -57,13 +60,17 @@ export default function MemberImage({
         }}
         aria-label={`${member} ${group}`}
       >
-        <span className="member-fallback-initial" aria-hidden>
+        <span className={`member-fallback-initial ${compact ? "solo" : ""}`} aria-hidden>
           {initial}
         </span>
-        <span className="member-fallback-name">{member}</span>
-        <span className="member-fallback-group" style={{ color }}>
-          {group}
-        </span>
+        {compact ? null : (
+          <>
+            <span className="member-fallback-name">{member}</span>
+            <span className="member-fallback-group" style={{ color }}>
+              {group}
+            </span>
+          </>
+        )}
       </div>
     );
   }
