@@ -35,6 +35,10 @@ TOLERANCE_MIN = 60  # cron 매 30분 + 정시 부하 지연(실측 47분) 흡수
 # [일정 연장 — 도달 누적 우선] 첫 라운드 노출이 약해서 앞 라운드에 48~63h 몰아주고
 # 빅매치(16강)·클라이맥스(결승)를 주말에 배치. 뒤 라운드는 24h (모멘텀 구축 후).
 SCHEDULE = [
+    # === Day 9 (수 7/1) — R8 승자 정정(닝닝·윈터·카리나·설윤) + 4강 진출자 홍보 즉시 ===
+    (datetime(2026, 7,  1, 11, 25, tzinfo=KST), "r4_entrants", ""),
+    # === Day 9 (수 7/1) 17:00 — 4강(준결승) 경기 게시 (사용자 지정) ===
+    (datetime(2026, 7,  1, 17,  0, tzinfo=KST), "publish",  "R4"),
     # === Day 1 (화 6/23) — 32강 게시 (완료) ===
     (datetime(2026, 6, 23, 12,  0, tzinfo=KST), "publish",  "R32"),
     # === Day 2 (수 6/24) 07:00 — 32강 대진표 홍보 (한 장, 양사이드) ===
@@ -225,6 +229,17 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_r8_match_promo"
                    for e in ledger.get("entries", []))
+    elif action == "r4_entrants":
+        # worldcup_r4_entrants_promo 가 ledger 에 있으면 완료
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_r4_entrants_promo"
+                   for e in ledger.get("entries", []))
     elif action == "fix_republish_r8":
         # R16 slot 1 승자가 닝닝이고 HF R8 대진표가 게시됐으면 완료
         r16 = bracket.get("rounds", {}).get("R16", {})
@@ -310,6 +325,14 @@ def execute(action: str, round_key: str) -> int:
     elif action == "r8_promo":
         # R8 매치 홍보 릴스 (HP HTML → MP4)
         return run([sys.executable, "scripts/worldcup_post_r8_promo.py"])
+    elif action == "r4_entrants":
+        # 1) R8 승자 정정(닝닝·윈터·카리나·설윤) + R4 재구성
+        rc = run([sys.executable, "scripts/fix_bracket_r8_winners.py"])
+        if rc != 0:
+            print(f"❌ fix_bracket_r8_winners 실패 (rc={rc})")
+            return rc
+        # 2) 4강 진출자 홍보 릴스 게시
+        return run([sys.executable, "scripts/worldcup_post_r4_promo.py"])
     elif action == "fix_republish_r8":
         # 1) R16 승자 수동 패치 + ledger 잘못된 항목 제거
         rc = run([sys.executable, "scripts/fix_bracket_r16_winners.py"])
@@ -343,7 +366,7 @@ def main():
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
     # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
-    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo"):
+    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo", "r4_entrants"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
