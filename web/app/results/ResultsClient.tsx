@@ -28,6 +28,8 @@ export default function ResultsClient() {
   const [data, setData] = useState<Results | null>(null);
   const [reveal, setReveal] = useState(false);
   const [tab, setTab] = useState<"champ" | "adv">("champ");
+  const [updatedAt, setUpdatedAt] = useState<number | null>(null);
+  const [ago, setAgo] = useState(0);
 
   useEffect(() => {
     let alive = true;
@@ -35,7 +37,10 @@ export default function ResultsClient() {
       fetch("/api/results")
         .then((r) => r.json())
         .then((d: Results) => {
-          if (alive) setData(d);
+          if (alive) {
+            setData(d);
+            setUpdatedAt(Date.now());
+          }
         })
         .catch(() => {});
     };
@@ -47,6 +52,14 @@ export default function ResultsClient() {
     };
   }, []);
 
+  // Tick "N초 전 갱신" once a second.
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (updatedAt != null) setAgo(Math.round((Date.now() - updatedAt) / 1000));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [updatedAt]);
+
   if (!data) {
     return <div className="results-loading">불러오는 중…</div>;
   }
@@ -56,6 +69,13 @@ export default function ResultsClient() {
 
   return (
     <div className="results-wrap">
+      <div className="results-live-row">
+        <span className="live-badge">
+          <span className="live-dot" aria-hidden />
+          LIVE · 실시간 집계
+        </span>
+        <span className="results-ago">{ago <= 1 ? "방금 갱신" : `${ago}초 전 갱신`}</span>
+      </div>
       <div className="results-head">
         <div className="results-total">
           <span className="results-total-num">{data.runsTotal.toLocaleString()}</span>

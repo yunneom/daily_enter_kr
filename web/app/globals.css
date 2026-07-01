@@ -1055,3 +1055,230 @@ h3 {
     font-size: 24px;
   }
 }
+
+/* ── Feature additions (hook / live / footer / ads / mini-lb) ──────────────── */
+
+/* Hero kicker (small line above the big headline) */
+.hero-kicker {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #e9d5ff;
+  background: #7c3aed33;
+  border: 1px solid #7c3aed55;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+/* Hero live island (replaces the old two-stat layout with a single line) */
+.hero-live {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 14px;
+  background: #ffffff0a;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+}
+.hero-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--win);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+  animation: livepulse 1.8s infinite;
+  flex: 0 0 auto;
+}
+.hero-live-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hero-live-lead {
+  font-size: 14px;
+  font-weight: 800;
+}
+.hero-live-sub,
+.hero-live-text {
+  font-size: 12px;
+  color: var(--sub);
+}
+.hero-live-text {
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+@keyframes livepulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* LIVE badge (results + play mini-lb) */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--win);
+}
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--win);
+  animation: livepulse 1.8s infinite;
+}
+.results-live-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.results-ago {
+  font-size: 11px;
+  color: var(--sub);
+}
+
+/* Mini leaderboard (play champion / already screens) */
+.mini-lb {
+  width: 100%;
+  max-width: 340px;
+  margin: 4px auto 16px;
+  padding: 12px 14px;
+  background: #ffffff08;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+}
+.mini-lb-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.mini-lb-total {
+  font-size: 11px;
+  color: var(--sub);
+}
+.mini-lb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mini-lb-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.mini-lb-rank {
+  width: 16px;
+  font-weight: 800;
+  color: var(--ink-2);
+}
+.mini-lb-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+.mini-lb-name {
+  flex: 1;
+  font-weight: 700;
+  word-break: keep-all;
+}
+.mini-lb-pct {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Already-participated secondary actions */
+.already-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0 8px;
+  align-items: center;
+}
+.already-link {
+  background: none;
+  border: none;
+  color: var(--sub);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.already-link:hover {
+  color: var(--ink-2);
+}
+
+/* Site footer */
+.site-footer {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px 20px calc(var(--nav-h) + 18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--sub);
+}
+.site-footer-link {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.site-footer-link:hover {
+  text-decoration: underline;
+}
+.site-footer-sep {
+  opacity: 0.5;
+}
+
+/* Ad slot spacing (renders nothing until NEXT_PUBLIC_ADSENSE_CLIENT is set) */
+.ad-slot {
+  margin: 20px auto 8px;
+  min-height: 0;
+  text-align: center;
+}
+
+/* Privacy / legal doc */
+.legal-doc {
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+.legal-doc h2 {
+  color: var(--ink);
+  font-size: 17px;
+  margin: 22px 0 8px;
+}
+.legal-doc ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+.legal-doc li {
+  margin-bottom: 4px;
+}
+.legal-meta {
+  font-size: 12px;
+  color: var(--sub);
+  margin-bottom: 16px;
+}
+.legal-link {
+  word-break: break-all;
+  color: var(--ink);
+}

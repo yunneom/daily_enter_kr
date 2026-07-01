@@ -12,11 +12,11 @@ export default function HomePage() {
   return (
     <AppShell title="이상형 월드컵">
       <section className="hero-wc">
-        <div className="hero-badge">32강 토너먼트</div>
-        <h1 className="hero-title">이상형 월드컵</h1>
-        <p className="hero-sub">둘 중 하나. 끝까지 골라 나만의 우승자를 정하세요.</p>
+        <div className="hero-kicker">2026 상반기 걸그룹 월드컵</div>
+        <h1 className="hero-title">당신이 뽑는 우승자는?</h1>
+        <p className="hero-sub">TOP 32 중 최애를 골라 결승까지 · 결과는 실시간 집계</p>
         <Link href="/play" className="btn-vs hero-cta">
-          월드컵 시작하기
+          지금 월드컵 시작
         </Link>
         <LiveStats />
       </section>
