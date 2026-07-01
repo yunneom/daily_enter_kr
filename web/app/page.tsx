@@ -1,40 +1,58 @@
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
-import { loadBracket, roundLabel } from "@/lib/bracket";
+import { loadRoster } from "@/lib/roster";
+import { groupColor } from "@/lib/colors";
+import LiveStats from "./LiveStats";
 
 export const dynamic = "force-dynamic";
 
 export default function HomePage() {
-  let currentLabel = "";
-  try {
-    const b = loadBracket();
-    currentLabel = roundLabel(b.current_round);
-  } catch {
-    currentLabel = "";
-  }
+  const roster = loadRoster();
 
   return (
-    <AppShell>
-      <div className="hero">
-        <h1>걸그룹 월드컵</h1>
-        <p>1:1 투표로 가리는 32강 토너먼트{currentLabel ? ` · 현재 ${currentLabel}` : ""}</p>
-        <Link href="/vote" className="btn btn-primary">
-          지금 투표하기
+    <AppShell title="이상형 월드컵">
+      <section className="hero-wc">
+        <div className="hero-badge">32강 토너먼트</div>
+        <h1 className="hero-title">이상형 월드컵</h1>
+        <p className="hero-sub">둘 중 하나. 끝까지 골라 나만의 우승자를 정하세요.</p>
+        <Link href="/play" className="btn-vs hero-cta">
+          월드컵 시작하기
         </Link>
-      </div>
+        <LiveStats />
+      </section>
 
-      <div className="card">
-        <strong>투표 참여 방법</strong>
-        <ol className="steps">
-          <li>두 후보 중 한 명을 한 번의 탭으로 선택합니다.</li>
-          <li>실시간 득표율과 다음 매치를 바로 확인합니다.</li>
-          <li>대진표에서 라운드별 결과를 보고 친구에게 공유합니다.</li>
+      <section className="how">
+        <h2 className="section-title">어떻게 진행되나</h2>
+        <ol className="how-steps">
+          <li>
+            <span className="how-num">1</span>
+            <span>32강부터 둘 중 한 명을 탭으로 고릅니다.</span>
+          </li>
+          <li>
+            <span className="how-num">2</span>
+            <span>16강 · 8강 · 4강 · 준결승 · 결승까지 이어집니다.</span>
+          </li>
+          <li>
+            <span className="how-num">3</span>
+            <span>우승자가 정해지면 전체 참여자 결과에 집계됩니다.</span>
+          </li>
         </ol>
-      </div>
+      </section>
 
-      <p className="muted" style={{ textAlign: "center" }}>
-        출처 한국기업평판연구소
-      </p>
+      <section className="roster">
+        <h2 className="section-title">참가 32팀</h2>
+        <div className="roster-grid">
+          {roster.candidates.map((c) => (
+            <div key={c.rank} className="roster-chip" style={{ borderColor: groupColor(c.group) }}>
+              <span className="roster-dot" style={{ background: groupColor(c.group) }} />
+              <span className="roster-name">{c.member}</span>
+              <span className="roster-group">{c.group}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <p className="muted src-line">출처 한국기업평판연구소</p>
     </AppShell>
   );
 }
