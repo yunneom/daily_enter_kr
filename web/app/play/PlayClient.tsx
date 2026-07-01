@@ -289,7 +289,8 @@ export default function PlayClient({ seeds }: Props) {
               rank={currentDuel.a.rank}
               group={currentDuel.a.group}
               member={currentDuel.a.member}
-              size={360}
+              size={200}
+              compact
             />
           </div>
           <div className="duel-caption">
@@ -312,7 +313,8 @@ export default function PlayClient({ seeds }: Props) {
               rank={currentDuel.b.rank}
               group={currentDuel.b.group}
               member={currentDuel.b.member}
-              size={360}
+              size={200}
+              compact
             />
           </div>
           <div className="duel-caption">
