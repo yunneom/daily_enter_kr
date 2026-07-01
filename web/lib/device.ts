@@ -1,7 +1,7 @@
 /**
- * Client-side device + voted-key helpers. Browser-only (uses localStorage).
- * deviceId is a UUID persisted in localStorage 'wc_device_id' and mirrored to
- * a cookie so the server can read it too.
+ * Client-side device id. Browser-only (uses localStorage). deviceId is a UUID
+ * persisted in localStorage 'wc_device_id' and mirrored to a cookie so the
+ * server can correlate it too.
  */
 
 const DEVICE_KEY = "wc_device_id";
@@ -29,39 +29,10 @@ export function getDeviceId(): string {
       /* ignore */
     }
   }
-  // mirror to cookie (1 year) for server-side correlation
   try {
     document.cookie = `${DEVICE_KEY}=${id}; path=/; max-age=31536000; samesite=lax`;
   } catch {
     /* ignore */
   }
   return id;
-}
-
-function votedStorageKey(round: string): string {
-  return `wc_voted_${round}`;
-}
-
-export function getVotedKeys(round: string): Set<string> {
-  if (!isBrowser()) return new Set();
-  try {
-    const raw = window.localStorage.getItem(votedStorageKey(round));
-    if (!raw) return new Set();
-    const arr = JSON.parse(raw) as unknown;
-    if (Array.isArray(arr)) return new Set(arr.filter((x): x is string => typeof x === "string"));
-  } catch {
-    /* ignore */
-  }
-  return new Set();
-}
-
-export function addVotedKey(round: string, quarter: number, slot: number): void {
-  if (!isBrowser()) return;
-  const set = getVotedKeys(round);
-  set.add(`${quarter}-${slot}`);
-  try {
-    window.localStorage.setItem(votedStorageKey(round), JSON.stringify([...set]));
-  } catch {
-    /* ignore */
-  }
 }

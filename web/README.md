@@ -1,11 +1,14 @@
-# 걸그룹 월드컵 — Web Voting App
+# 이상형 월드컵 — Web App
 
-Mobile-first 1:1 voting web app for the existing **걸그룹 월드컵 (32강)** tournament.
-Users vote one match at a time (1-tap, no login), see live %, browse the bracket,
-share results, and operators control round state from an admin screen.
+Single-player **이상형 월드컵** (ideal-type worldcup). Each user plays the whole
+fixed 32-candidate bracket themselves (1-tap LEFT vs RIGHT duels) down to a
+champion; finished runs are aggregated across all users (deduped per device) to
+show live champion rankings and advancement rates. Includes a visual tournament
+tree, a member-image system, and a password-protected admin.
 
-It is **not** a new tournament — it reads/writes the existing single source of
-truth `../data/worldcup_bracket.json` and reuses the existing winner rules.
+The candidate roster is the fixed source of truth `../data/worldcup_bracket.json`
+(`rounds.R32.matches` original a/b pairs). Any stored `winner` in that JSON is
+IGNORED — the web run is fresh for every player.
 
 ## Run locally
 
@@ -17,105 +20,99 @@ npm run dev        # http://localhost:3000
 npm run build && npm start
 ```
 
-Node 22. Stack: **Next.js 14 App Router + TypeScript + React 18**, plain CSS only
-(no Tailwind, no UI libs).
+Node 22. Stack: **Next.js 14 App Router + TypeScript + React 18**, plain CSS only.
 
-## Environment variables (all optional in dev)
+## Pages
+
+| Route | What |
+|---|---|
+| `/` | Worldcup hero + "월드컵 시작하기" + 참가 32팀 미리보기 + live 참여수 |
+| `/play` | The duel state machine (LEFT vs RIGHT, VS badge, pick animation, champion screen) |
+| `/bracket` | Visual tournament tree with connecting lines; toggle 내 결과 / 전체 집계 |
+| `/results` | Live aggregate leaderboard (%, count) + 진출률, polls every 5s, 발표 모드 |
+| `/admin` | PROTECTED — summary + 집계 초기화 (danger) |
+| `/admin/login` | Password form |
+| `/vote` | redirects → `/play` (legacy URL) |
+
+Bottom nav: 홈 · 대진표 · 결과 · 어드민. Play is entered from the home CTA.
+
+## Environment variables
 
 | Var | Default | Purpose |
 |---|---|---|
-| `BRACKET_PATH` | `../data/worldcup_bracket.json` | Read-only bracket source of truth |
-| `WEB_VOTES_PATH` | `../data/web_votes.json` | File-backed web vote store (self-creates) |
-| `WEB_ADMIN_PATH` | `../data/web_admin.json` | Round-state overrides (open/lock) |
-| `ADMIN_KEY` | _(unset → allow)_ | Required as `x-admin-key` header for admin writes |
+| `BRACKET_PATH` | `../data/worldcup_bracket.json` | Candidate roster source of truth |
+| `WEB_RUNS_PATH` | `../data/web_runs.json` | File-backed run store (self-creates) |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | _(unset → file backend)_ | Vercel KV / Upstash Redis |
+| `UPSTASH_REDIS_REST_URL` / `_TOKEN` | _(alt to KV_*)_ | Same, alternate names |
+| `ADMIN_PASSWORD` | _(unset → admin LOCKED)_ | Admin login password. **Unset = no admin access.** |
 
 ## Architecture
 
-```
-web vote (1-tap)
-  → POST /api/vote → lib/voteStore.ts → data/web_votes.json   (file-backed, MVP)
-  → scripts/worldcup_web_sync.py (GitHub Actions)             (aggregate + decide winner)
-  → data/worldcup_bracket.json                                 (single source of truth)
-  → existing worldcup_announce / worldcup_tally pipeline       (publish, next round)
-```
-
-- **App Router**, server components read the bracket via `lib/bracket.ts`
-  (fs at request time, `dynamic = "force-dynamic"`). API routes use the Node runtime.
-- **File-backed store for MVP.** `lib/voteStore.ts` writes a flat JSON file. For
-  production swap the body for a serverless DB (Vercel KV / Postgres) — the
-  `recordVote` / `tallyMatch` signatures are the stable interface.
-- **Isomorphic vs server-only split:** pure types + helpers live in
-  `lib/bracketTypes.ts` (safe for client). `lib/bracket.ts` adds the fs loader and
-  must not be imported from client components.
+- **Personal run:** `/play` is a client state machine. It builds the fixed R32
+  seed matches, shows one duel, and on each pick advances winners into the next
+  round (adjacent winners pair up). The full run is persisted to localStorage
+  (`lib/runLocal.ts`) so `/bracket` can render the user's own filled tree and
+  `/play` can resume. On champion, it POSTs the run once to `/api/run`.
+- **Aggregation:** `lib/runStore.ts` mirrors the old vote store's dual backend
+  (Upstash Redis when KV/UPSTASH env present, else `data/web_runs.json`). One
+  run per device (`wc:run:done` SADD dedup). Counters: `wc:runs_total`,
+  `wc:champion:{rank}`, `wc:appear:{rank}`, `wc:pick:{rank}`, hash
+  `wc:device_champ`. `getResults()` maps ranks → roster and returns champions +
+  advancement (pickRate = picks / appearances).
+- **Bracket tree:** `/bracket` computes columns from the seed matches. Winner of
+  each duel = (1) the user's localStorage pick (내 결과) or (2) the aggregate
+  consensus — higher aggregate pickRate between the two (전체 집계). CSS/flex
+  columns + connector stubs, horizontally scrollable, round tabs.
+- **Admin auth:** `middleware.ts` (edge) gates `/admin` + `/api/admin` except
+  `*/login`. Valid cookie `wc_admin` === `sha256(ADMIN_PASSWORD)` (Web Crypto).
+  If `ADMIN_PASSWORD` is unset, admin is LOCKED (never open by default). Admin
+  API handlers re-check the cookie server-side (defense in depth).
+- **Isomorphic vs server-only:** pure types/helpers in `lib/tournament.ts` &
+  `lib/bracketTypes.ts` (client-safe). The fs-backed roster builder is
+  `lib/roster.ts` (server only) — never import it from a client component.
 
 ### Key files
 
 | Path | Purpose |
 |---|---|
-| `lib/bracketTypes.ts` | Types + pure helpers (roundLabel, getMatch, nextUnvotedMatch) |
-| `lib/bracket.ts` | fs-backed `loadBracket()` (server only) |
-| `lib/winner.ts` | `decideWinner` (가중→raw→rank) + `fourChoiceToMatches` |
-| `lib/voteStore.ts` | `recordVote` (dedup → throws `DUPLICATE`) / `tallyMatch` |
-| `lib/adminStore.ts` | Round-state file store |
-| `lib/status.ts` | `matchStatus` → OPEN / LOCKED / DECIDED |
-| `lib/safety.ts` | `assertSafeCopy` / `isSafeCopy` (banned words + emoji) |
-| `lib/device.ts` | Client deviceId + voted-key localStorage helpers |
-| `app/api/*` | bracket / match / vote / og / admin route handlers |
+| `lib/tournament.ts` | Pure tournament model (seed types, nextRoundMatchups, round labels) |
+| `lib/roster.ts` | SERVER-ONLY roster builder (fs via lib/bracket) |
+| `lib/runStore.ts` | Aggregation store (KV/file), `submitRun` / `getResults` / `resetAll` |
+| `lib/runLocal.ts` | localStorage personal-run persistence + `runToPicks` |
+| `lib/colors.ts` | Group color palette + gradients |
+| `lib/memberImages.ts` | Reads `data/member_images.json` (rank → URL) |
+| `lib/adminAuth.ts` | sha256 (Web Crypto), expected-token, cookie check |
+| `lib/safety.ts` | `assertSafeCopy` (banned words + emoji) — used by `/api/og` |
+| `components/MemberImage.tsx` | Photo with URL → /members file → gradient fallback chain |
+| `middleware.ts` | Admin gate (edge) |
 
-## Integration notes
+## Member images
 
-- **Coordinates:** matches are keyed by `(quarter, slot)` — same as the Python
-  pipeline. The web sync writes back to both `rounds[r].matches[]` and the
-  `posts[].match1/match2` copies by `(quarter, slot)`.
-- **Winner rule** (replicated exactly from `scripts/worldcup_tally.py`
-  `decide_winners.pick()`): ① weighted (`votes.a/b`) → ② raw head count
-  (`votes.raw_a/raw_b`) → ③ higher seed (lower `rank`). Web vote weight = 1, so
-  weighted == raw for web-only matches.
-- **4지선다 → 2매치:** `fourChoiceToMatches` (match1 A=1+2 B=3+4; match2 A=1+3
-  B=2+4) is kept for a future IG-vote merge; not used by web 1:1 voting.
-- The IG `topic_id` join key (`worldcup_{round}_{idx}`) used by the announce
-  pipeline is **untouched** by this app.
+Real photos are added by the owner later. Two ways to add an image for a member
+(identified by their **rank**, 1..32):
 
-## Safety policy enforcement
+1. **Drop a file** in `web/public/members/` named by rank:
+   `web/public/members/1.jpg` (also `.png` / `.webp` are tried, in that order).
+2. **Paste a URL** into `web/data/member_images.json`, e.g.
+   `{ "1": "https://.../wonyoung.jpg", ... }`. An empty string means "no URL".
 
-`lib/safety.ts` enforces the same brand guardrails as the Python `SUMMARY_PROMPT`:
-no clickbait `BANNED_WORDS`, no emoji, numbers allowed, source
-`한국기업평판연구소` attributable. `assertSafeCopy` runs on dynamic OG/share text;
-on violation the OG card / share copy falls back to neutral safe text.
+Resolution order per member: `member_images.json` URL → `/members/{rank}.jpg`
+→ `.png` → `.webp` → group-colored gradient block with the member's name. No
+config needed — `MemberImage` uses a plain `<img>` with an `onError` fallback
+chain.
 
-## Python sync
+## Safety policy
 
-```bash
-python3 scripts/worldcup_web_sync.py            # current_round, overwrite with web counts
-python3 scripts/worldcup_web_sync.py --round R8 # specific round
-python3 scripts/worldcup_web_sync.py --merge-ig # add web counts onto existing IG weighted votes
-python3 scripts/worldcup_web_sync.py --dry-run  # summary only, no write
-```
+`lib/safety.ts` enforces the same guardrails as the Python `SUMMARY_PROMPT`: no
+clickbait `BANNED_WORDS`, no emoji in copy. `/api/og` runs `assertSafeCopy` on
+dynamic text and falls back to neutral copy on violation.
 
-Pure stdlib, idempotent. Matches with 0 web votes keep `winner = null` (no seed
-auto-advance — final decision belongs to the announce step). Re-implements the
-small `pick()` rather than importing the tally module (avoids coupling); keep it
-in sync with `scripts/worldcup_tally.py` `decide_winners`.
+## Open items
 
-## MVP vs Next
-
-**MVP (shipped here)**
-- File-backed vote store; deviceId + localStorage dedup; server-side
-  (round,quarter,slot,deviceId) dedup → 409.
-- Result polling every 4s. Admin auth stubbed via `ADMIN_KEY` header.
-- Image placeholders (dashed boxes); OG card is text-only.
-
-**Open decisions** — tagged in code:
-- **[가정]** Realtime: polling (4s) vs SSE/websocket. Polling chosen for MVP simplicity.
-- **[결정필요]** Web-vote weighting: currently 1 per device. Should IG-derived
-  weight (1+likes) ever apply to web votes, or stay head-count?
-- **[결정필요]** Production store: Vercel KV vs Postgres vs Redis. File store does
-  not work on read-only/serverless FS at scale.
-- **[결정필요]** IG vote merge: run `--merge-ig` or keep web/IG tallies separate
-  per round? Double-counting risk if both channels vote the same match.
-- **[결정필요]** Face image usage / 저작권: member photos are not bundled (placeholders
-  only) pending a licensed image source. The image_provider concept exists in the
-  Python side but is currently unused.
-- **[가정]** Anti-abuse: only deviceId + ip/ua hashes recorded; no rate limiting or
-  bot scoring yet (`suspected` flag reserved for future filtering).
-```
+- **[가정]** Realtime: `/results` polls every 5s (simplicity over SSE/websocket).
+- **[결정필요]** Production store: Upstash Redis via KV env vars recommended;
+  the file backend does not persist on serverless/read-only FS.
+- **[가정]** The aggregate "consensus" bracket resolves each later-round duel by
+  comparing global pickRate of the two entrants — this is an approximation, not
+  a replay of any single user's path (later rounds legitimately diverge per user).
+- Member photos are not bundled (gradient fallbacks) pending a licensed source.
