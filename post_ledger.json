@@ -352,6 +352,17 @@
       "youtube_id": "Y_IZRBcmqpI",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-07-01T11:14:01.730996+09:00",
+      "topic_id": "worldcup_r4_entrants_promo",
+      "title": "걸그룹 월드컵 4강 진출자 홍보",
+      "style": "worldcup_r4_promo",
+      "seed": null,
+      "ig_media_id": "17944632393247410",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }

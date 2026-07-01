@@ -1825,10 +1825,10 @@
             "score": 1596316
           },
           "winner": {
-            "rank": 1,
-            "group": "아이브",
-            "member": "장원영",
-            "score": 7538960
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
           },
           "votes": {
             "a": 0,
@@ -1854,10 +1854,10 @@
             "score": 2361861
           },
           "winner": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
+            "rank": 9,
+            "group": "에스파",
+            "member": "윈터",
+            "score": 2361861
           },
           "votes": {
             "a": 0,
@@ -1912,10 +1912,10 @@
             "score": 1778210
           },
           "winner": {
-            "rank": 2,
-            "group": "블랙핑크",
-            "member": "제니",
-            "score": 7166269
+            "rank": 12,
+            "group": "엔믹스",
+            "member": "설윤",
+            "score": 1778210
           },
           "votes": {
             "a": 0,
@@ -1945,10 +1945,10 @@
               "score": 1596316
             },
             "winner": {
-              "rank": 1,
-              "group": "아이브",
-              "member": "장원영",
-              "score": 7538960
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
             },
             "votes": {
               "a": 0,
@@ -2022,10 +2022,10 @@
               "score": 2361861
             },
             "winner": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
+              "rank": 9,
+              "group": "에스파",
+              "member": "윈터",
+              "score": 2361861
             },
             "votes": {
               "a": 0,
@@ -2051,10 +2051,10 @@
               "score": 1778210
             },
             "winner": {
-              "rank": 2,
-              "group": "블랙핑크",
-              "member": "제니",
-              "score": 7166269
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
             },
             "votes": {
               "a": 0,
@@ -2089,16 +2089,16 @@
           "slot": 0,
           "round": "R4",
           "a": {
-            "rank": 1,
-            "group": "아이브",
-            "member": "장원영",
-            "score": 7538960
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
           },
           "b": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
+            "rank": 9,
+            "group": "에스파",
+            "member": "윈터",
+            "score": 2361861
           },
           "winner": null
         },
@@ -2113,10 +2113,10 @@
             "score": 4736626
           },
           "b": {
-            "rank": 2,
-            "group": "블랙핑크",
-            "member": "제니",
-            "score": 7166269
+            "rank": 12,
+            "group": "엔믹스",
+            "member": "설윤",
+            "score": 1778210
           },
           "winner": null
         }
@@ -2129,16 +2129,16 @@
             "slot": 0,
             "round": "R4",
             "a": {
-              "rank": 1,
-              "group": "아이브",
-              "member": "장원영",
-              "score": 7538960
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
             },
             "b": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
+              "rank": 9,
+              "group": "에스파",
+              "member": "윈터",
+              "score": 2361861
             },
             "winner": null
           },
@@ -2153,10 +2153,10 @@
               "score": 4736626
             },
             "b": {
-              "rank": 2,
-              "group": "블랙핑크",
-              "member": "제니",
-              "score": 7166269
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
             },
             "winner": null
           }
