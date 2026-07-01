@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-06-30T09:10:49.883077+09:00",
+  "last_run_at": "2026-07-01T09:15:05.878540+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-05-31",
-      "title_hash": "46757959dad4ad83",
-      "card_title": "izna, 미니 3집 'SET THE TEMPO' 타이틀 곡 스포일러 공개"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "1e56a6d1c7d9d87a",
-      "card_title": "47세 하지원, 23년만의 음악방송 출연으로 '복근+댄스' 역주행"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "f641bb503569e51d",
-      "card_title": "이지현, 싱글맘으로서의 육아 고충 솔직히 나눔"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "05b0e884aec31474",
-      "card_title": "코르티스, 포브스 '30 언더 30 아시아' 선정…올해 K팝 보이그룹 유일"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "c73eda2247042ea4",
-      "card_title": "슈퍼주니어 이특, 포르쉐 신차 교통사고로 부상"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "abda234697015783",
-      "card_title": "양상국, 태도 논란 후 변화된 모습..주변 반응은?"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "9ccbb2d806c94d3f",
-      "card_title": "정성호, 극심한 통증으로 응급실 방문"
-    },
-    {
-      "date": "2026-05-31",
-      "title_hash": "38285a94a2cdb71a",
-      "card_title": "소유, 월세 1300만 원에서 '내 집 마련' 성공"
-    },
     {
       "date": "2026-06-01",
       "title_hash": "bfbebe65e808c68c",
@@ -1834,6 +1794,78 @@
       "caption_variant": "headlines_dotted",
       "media_id": "18092155571354592",
       "card_style": "manhwa"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "1a84b3e87096a941",
+      "card_title": "여에스더, 홍혜걸과 합가 후 변화 고백 '당신 없으면 허전해'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "70396a052e5343e0",
+      "card_title": "서인국·박지현, 드라마 '내일도출근' 최고 시청률 6.8% 기록",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "8eff81176edefc59",
+      "card_title": "던, '살롱드립2'에서 연예계 은퇴 생각 솔직 고백",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "9f987696afc29949",
+      "card_title": "박규리, 투병 경험 공개하며 건강검진 중요성 강조",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "378c2812a65435c5",
+      "card_title": "이솔이·박성광, 이혼설 부인…\"후회 없이 잘 지내고 있어\"",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "c5bfc250e0b163d6",
+      "card_title": "무명전설 TOP7 스핀오프 '전설의 사내' 15일 첫 방송",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "ceaf65f70cae9bfe",
+      "card_title": "방탄소년단 '아리랑', 38억 스트리밍·3000억 매출 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "2bab9f874b5f9b12",
+      "card_title": "최진혁, 이국주와 첫만남에 먼저 연락처 요청 '호감으로 오해받아 당황'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-01",
+      "title_hash": "f93ed3162b82421f",
+      "card_title": "코르티스, 비행기 지연 탑승 논란에 공식 사과",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17888556879576354",
+      "card_style": "minimal"
     }
   ]
 }
