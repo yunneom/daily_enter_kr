@@ -14,6 +14,8 @@ interface Props {
   rounded?: boolean;
   /** avatar mode: gradient fallback shows only the big initial (name comes from the caption) */
   compact?: boolean;
+  /** load immediately (current duel) instead of lazy */
+  eager?: boolean;
 }
 
 /**
@@ -33,6 +35,7 @@ export default function MemberImage({
   className,
   rounded = false,
   compact = false,
+  eager = false,
 }: Props) {
   // Build the ordered source candidates once.
   const sources = useMemo(() => {
@@ -82,7 +85,8 @@ export default function MemberImage({
       alt={`${member} ${group}`}
       className={`member-img ${rounded ? "rounded" : ""} ${className ?? ""}`}
       onError={() => setIdx((i) => i + 1)}
-      loading="lazy"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
     />
   );
 }
