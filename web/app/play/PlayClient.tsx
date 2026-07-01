@@ -11,6 +11,7 @@ import {
 } from "@/lib/tournament";
 import MemberImage from "@/components/MemberImage";
 import { memberImageUrl } from "@/lib/memberImages";
+import { groupColor } from "@/lib/colors";
 import { getDeviceId } from "@/lib/device";
 import {
   loadRun,
@@ -26,7 +27,12 @@ interface Props {
   tournamentName: string;
 }
 
-type Phase = "intro" | "playing" | "champion";
+type Phase = "intro" | "already" | "playing" | "champion";
+
+interface LiveResults {
+  runsTotal: number;
+  champions: { rank: number; group: string; member: string; count: number; pct: number }[];
+}
 
 // side picked, used to drive the exit animation before advancing
 type Anim = null | { winner: "a" | "b" };
@@ -56,6 +62,7 @@ export default function PlayClient({ seeds }: Props) {
   const [champion, setChampion] = useState<Candidate | null>(null);
   const [counted, setCounted] = useState<null | boolean>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [live, setLive] = useState<LiveResults | null>(null);
 
   // Preload ALL 32 candidate photos up front so every duel transition is instant
   // (Commons/gstatic are external + redirect-heavy; warming the browser cache once
@@ -76,6 +83,12 @@ export default function PlayClient({ seeds }: Props) {
   }, [seeds]);
 
   // Resume an in-progress run if present.
+  //
+  // Re-participation gate (best-effort): a device that has a finished AND
+  // server-submitted run lands on an "already participated" screen instead of a
+  // fresh start. NOTE: full prevention requires login — localStorage/cookies can
+  // be cleared, so this is best-effort only. Server-side dedup (per deviceId)
+  // remains the real aggregate protection.
   useEffect(() => {
     const saved = loadRun();
     if (saved && saved.rounds.length > 0) {
@@ -83,13 +96,33 @@ export default function PlayClient({ seeds }: Props) {
       if (saved.finished && saved.championRank != null) {
         const champ = findCandByRank(saved.rounds, saved.championRank);
         setChampion(champ);
-        setPhase("champion");
         setCounted(saved.submitted ? true : null);
+        setPhase(saved.submitted ? "already" : "champion");
       } else {
         setPhase("playing");
       }
     }
   }, []);
+
+  // Live TOP 3 for the champion / already screens. Fetch on entry, light 8s refresh.
+  useEffect(() => {
+    if (phase !== "champion" && phase !== "already") return;
+    let alive = true;
+    const load = () => {
+      fetch("/api/results")
+        .then((r) => r.json())
+        .then((d: LiveResults) => {
+          if (alive) setLive(d);
+        })
+        .catch(() => {});
+    };
+    load();
+    const id = window.setInterval(load, 8000);
+    return () => {
+      alive = false;
+      window.clearInterval(id);
+    };
+  }, [phase]);
 
   const cursor = useMemo(() => findCursor(rounds), [rounds]);
   const currentRound = cursor ? rounds[cursor.r] : null;
@@ -129,6 +162,11 @@ export default function PlayClient({ seeds }: Props) {
     clearRun();
     start();
   }, [start]);
+
+  // Show the user's own saved champion screen (from the "already" gate).
+  const viewOwnResult = useCallback(() => {
+    setPhase("champion");
+  }, []);
 
   const submit = useCallback(
     async (finalRounds: StoredRound[], championRank: number) => {
@@ -213,6 +251,57 @@ export default function PlayClient({ seeds }: Props) {
 
   // ── render ────────────────────────────────────────────────────────────────
 
+  const liveTop3 = live?.champions.filter((c) => c.count > 0).slice(0, 3) ?? [];
+  const miniLeaderboard =
+    live && liveTop3.length > 0 ? (
+      <div className="mini-lb">
+        <div className="mini-lb-head">
+          <span className="live-badge">
+            <span className="live-dot" aria-hidden />
+            LIVE · 실시간 집계
+          </span>
+          <span className="mini-lb-total">누적 참여 {live.runsTotal.toLocaleString()}회</span>
+        </div>
+        <ol className="mini-lb-list">
+          {liveTop3.map((c, i) => (
+            <li key={c.rank} className="mini-lb-row">
+              <span className="mini-lb-rank">{i + 1}</span>
+              <span className="mini-lb-dot" style={{ background: groupColor(c.group) }} />
+              <span className="mini-lb-name">{c.member}</span>
+              <span className="mini-lb-pct">{c.pct}%</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ) : null;
+
+  if (phase === "already") {
+    return (
+      <main className="play-root">
+        <div className="play-intro">
+          <div className="play-intro-badge">참여 완료</div>
+          <h1>이미 참여 완료</h1>
+          <p>이미 이 월드컵에 참여하셨습니다. 결과는 실시간으로 집계됩니다.</p>
+          {miniLeaderboard}
+          <Link href="/results" className="btn-vs">
+            실시간 결과 보기
+          </Link>
+          <div className="already-secondary">
+            <button className="already-link" onClick={viewOwnResult}>
+              내 결과 다시 보기
+            </button>
+            <button className="already-link" onClick={restart}>
+              다시 둘러보기 (집계 반영 안 됨)
+            </button>
+          </div>
+          <Link href="/" className="play-back">
+            홈으로
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
   if (phase === "intro") {
     return (
       <main className="play-root">
@@ -250,16 +339,17 @@ export default function PlayClient({ seeds }: Props) {
                   ? "집계 반영 중…"
                   : ""}
           </p>
+          {miniLeaderboard}
           <div className="champion-actions">
-            <button className="btn-vs ghost" onClick={restart}>
-              다시하기
-            </button>
-            <Link href="/bracket" className="btn-vs ghost">
-              결과 보기
-            </Link>
             <Link href="/results" className="btn-vs">
-              전체 순위
+              실시간 전체 결과
             </Link>
+            <Link href="/bracket" className="btn-vs ghost">
+              대진표 보기
+            </Link>
+            <button className="btn-vs ghost" onClick={restart}>
+              다시 플레이 (집계 반영 안 됨)
+            </button>
           </div>
         </div>
       </main>

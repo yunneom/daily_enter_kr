@@ -27,23 +27,24 @@ export default function LiveStats() {
 
   const top = data.champions.find((c) => c.count > 0);
 
-  return (
-    <div className="hero-stats">
-      <div className="hero-stat">
-        <span className="hero-stat-num">{data.runsTotal.toLocaleString()}</span>
-        <span className="hero-stat-label">참여</span>
+  if (!top || data.runsTotal === 0) {
+    return (
+      <div className="hero-live">
+        <span className="hero-live-dot" aria-hidden />
+        <span className="hero-live-text">가장 먼저 참여해보세요</span>
       </div>
-      {top ? (
-        <div className="hero-stat">
-          <span className="hero-stat-num">{top.member}</span>
-          <span className="hero-stat-label">현재 우승 1위 · {top.pct}%</span>
-        </div>
-      ) : (
-        <div className="hero-stat">
-          <span className="hero-stat-num">-</span>
-          <span className="hero-stat-label">첫 우승자를 정해보세요</span>
-        </div>
-      )}
+    );
+  }
+
+  return (
+    <div className="hero-live">
+      <span className="hero-live-dot" aria-hidden />
+      <div className="hero-live-lines">
+        <span className="hero-live-lead">
+          지금 실시간 1위: {top.member} ({top.group}) {top.pct}%
+        </span>
+        <span className="hero-live-sub">누적 참여 {data.runsTotal.toLocaleString()}회</span>
+      </div>
     </div>
   );
 }

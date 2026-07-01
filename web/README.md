@@ -45,6 +45,23 @@ Bottom nav: 홈 · 대진표 · 결과 · 어드민. Play is entered from the ho
 | `KV_REST_API_URL` / `KV_REST_API_TOKEN` | _(unset → file backend)_ | Vercel KV / Upstash Redis |
 | `UPSTASH_REDIS_REST_URL` / `_TOKEN` | _(alt to KV_*)_ | Same, alternate names |
 | `ADMIN_PASSWORD` | _(unset → admin LOCKED)_ | Admin login password. **Unset = no admin access.** |
+| `NEXT_PUBLIC_ADSENSE_CLIENT` | _(unset → no ads)_ | Google AdSense publisher id `ca-pub-XXXXXXXXXXXXXXXX`. Loader + ad units render ONLY when set. |
+| `NEXT_PUBLIC_ADSENSE_SLOT_RESULTS` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/results`. |
+| `NEXT_PUBLIC_ADSENSE_SLOT_BRACKET` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/bracket`. |
+
+### Ads (AdSense)
+
+Ads are **off by default**. To enable, set `NEXT_PUBLIC_ADSENSE_CLIENT` to your
+`ca-pub-…` publisher id (these are `NEXT_PUBLIC_*` because AdSense runs in the
+browser). Per-slot ids go in `NEXT_PUBLIC_ADSENSE_SLOT_RESULTS` /
+`NEXT_PUBLIC_ADSENSE_SLOT_BRACKET`. When `NEXT_PUBLIC_ADSENSE_CLIENT` is unset,
+the loader script is not injected and `<AdSlot>` renders nothing.
+
+Ad slots are placed only at the bottom of `/results` and `/bracket` — never in
+the `/play` voting flow. Note: even with the env set, ads won't actually show
+until the AdSense account is **approved** and the serving **domain** is added in
+the AdSense console. A `/privacy` page (linked in the footer) is required for
+approval and is included.
 
 ## Architecture
 
