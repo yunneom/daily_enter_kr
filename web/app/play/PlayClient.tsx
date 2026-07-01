@@ -10,6 +10,7 @@ import {
   roundLabelBySize,
 } from "@/lib/tournament";
 import MemberImage from "@/components/MemberImage";
+import { memberImageUrl } from "@/lib/memberImages";
 import { getDeviceId } from "@/lib/device";
 import {
   loadRun,
@@ -55,6 +56,24 @@ export default function PlayClient({ seeds }: Props) {
   const [champion, setChampion] = useState<Candidate | null>(null);
   const [counted, setCounted] = useState<null | boolean>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // Preload ALL 32 candidate photos up front so every duel transition is instant
+  // (Commons/gstatic are external + redirect-heavy; warming the browser cache once
+  //  removes the per-transition load lag).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const urls = new Set<string>();
+    for (const s of seeds) {
+      for (const c of [s.a, s.b]) {
+        urls.add(memberImageUrl(c.rank) || `/members/${c.rank}.jpg`);
+      }
+    }
+    urls.forEach((u) => {
+      const img = new window.Image();
+      img.decoding = "async";
+      img.src = u;
+    });
+  }, [seeds]);
 
   // Resume an in-progress run if present.
   useEffect(() => {
@@ -291,6 +310,7 @@ export default function PlayClient({ seeds }: Props) {
               member={currentDuel.a.member}
               size={200}
               compact
+              eager
             />
           </div>
           <div className="duel-caption">
@@ -315,6 +335,7 @@ export default function PlayClient({ seeds }: Props) {
               member={currentDuel.b.member}
               size={200}
               compact
+              eager
             />
           </div>
           <div className="duel-caption">
