@@ -17,7 +17,11 @@ export async function GET() {
     status: 200,
     headers: {
       "content-type": "text/plain; charset=utf-8",
-      "cache-control": "public, max-age=86400",
+      // Short cache — this route is derived from an env var that gets tuned
+      // during AdSense setup; a long max-age here previously caused a stale
+      // pre-fix response (pub-pub-XXXX) to stick in the browser/CDN for a
+      // full day after the bug was already fixed and redeployed.
+      "cache-control": "public, max-age=300, s-maxage=300",
     },
   });
 }
