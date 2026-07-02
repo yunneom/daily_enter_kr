@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { normalizeAdsClient } from "@/lib/adsense";
 
 /**
  * Google AdSense slot. Renders NOTHING until NEXT_PUBLIC_ADSENSE_CLIENT is set,
@@ -11,7 +12,7 @@ import { useEffect, useRef } from "react";
  * Never inside the /play voting flow.
  */
 export default function AdSlot({ slot, className }: { slot?: string; className?: string }) {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const client = normalizeAdsClient(process.env.NEXT_PUBLIC_ADSENSE_CLIENT);
   const pushed = useRef(false);
 
   useEffect(() => {
