@@ -49,7 +49,7 @@ Bottom nav: 홈 · 대진표 · 결과 · 어드민. Play is entered from the ho
 | `NEXT_PUBLIC_ADSENSE_SLOT_RESULTS` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/results`. |
 | `NEXT_PUBLIC_ADSENSE_SLOT_BRACKET` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/bracket`. |
 | `NEXT_PUBLIC_ADSENSE_SLOT_HOME` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/` (홈). |
-| `NEXT_PUBLIC_SITE_URL` | `https://daily-enter-kr.vercel.app` | Canonical origin for SEO (metadataBase, OG url, sitemap, robots, JSON-LD). Set to the real domain when connected. |
+| `NEXT_PUBLIC_SITE_URL` | `https://dailyenterkr.com` | Canonical origin for SEO (metadataBase, OG url, sitemap, robots, JSON-LD). Set to the real domain when connected. |
 
 ### Ads (AdSense) — 수익화 체크리스트
 
