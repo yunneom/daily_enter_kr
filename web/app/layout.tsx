@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import Link from "next/link";
+import { normalizeAdsClient } from "@/lib/adsense";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dailyenterkr.com";
@@ -54,7 +55,7 @@ const WEBSITE_JSONLD = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const adsClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const adsClient = normalizeAdsClient(process.env.NEXT_PUBLIC_ADSENSE_CLIENT);
 
   return (
     <html lang="ko">
