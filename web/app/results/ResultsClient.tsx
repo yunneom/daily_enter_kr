@@ -33,7 +33,10 @@ export default function ResultsClient() {
 
   useEffect(() => {
     let alive = true;
-    const load = () => {
+    const load = (force = false) => {
+      // Pause polling while the tab is hidden — no point burning KV reads
+      // for a page nobody is looking at.
+      if (!force && document.hidden) return;
       fetch("/api/results")
         .then((r) => r.json())
         .then((d: Results) => {
@@ -44,11 +47,16 @@ export default function ResultsClient() {
         })
         .catch(() => {});
     };
-    load();
-    const id = window.setInterval(load, 5000);
+    load(true);
+    const id = window.setInterval(() => load(), 5000);
+    const onVisibility = () => {
+      if (!document.hidden) load(true); // refresh immediately on return
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
       alive = false;
       window.clearInterval(id);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
