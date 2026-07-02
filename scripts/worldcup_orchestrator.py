@@ -90,11 +90,12 @@ SCHEDULE = [
     (datetime(2026, 6, 30, 21, 30, tzinfo=KST), "announce", "R8"),
     # === Day 9 (수 7/1) 21:00 — 4강 게시 ===
     (datetime(2026, 7,  1, 21,  0, tzinfo=KST), "publish",  "R4"),
-    # === Day 10 (목 7/2) — 4강 집계 (24h) + 결승 라인업 발표 ===
-    (datetime(2026, 7,  2, 21,  0, tzinfo=KST), "tally",    "R4"),
-    (datetime(2026, 7,  2, 21, 30, tzinfo=KST), "announce", "R4"),
-    # === Day 11 (금 7/3) 21:00 — 결승+3·4위전 게시 (주말 관통) ===
-    (datetime(2026, 7,  3, 21,  0, tzinfo=KST), "publish",  "R2"),
+    # === Day 12 (토 7/4) 14:00 — 4강 집계 → 결승 라인업 발표 → 결승 게시 연쇄 ===
+    # 사용자 지정: 평일(목) 대신 토요일 오후에 몰아서 진행. 한 run 이 한 액션씩
+    # 처리하므로 20분 간격 연쇄 배치 (실패 시 catch-up 이 순서대로 자동 복구).
+    (datetime(2026, 7,  4, 14,  0, tzinfo=KST), "tally",    "R4"),
+    (datetime(2026, 7,  4, 14, 20, tzinfo=KST), "announce", "R4"),
+    (datetime(2026, 7,  4, 14, 40, tzinfo=KST), "publish",  "R2"),
     # === Day 13 (일 7/5) — 결승 집계 (주말 39h) + 🏆 우승 발표 ===
     (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
     (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
@@ -105,11 +106,21 @@ def now_kst() -> datetime:
     return datetime.now(KST)
 
 
+EARLY_GRACE_MIN = 5  # 예정시각보다 이 이상 이르면 발화하지 않음 (조기 게시 방지)
+
+
 def find_slot(now: datetime):
-    """현재 시각 ±TOLERANCE 안의 SCHEDULE 슬롯 찾기. 없으면 None."""
+    """현재 시각 기준 발화 가능한 SCHEDULE 슬롯 찾기. 없으면 None.
+
+    - 이른 쪽: 예정시각 EARLY_GRACE_MIN 분 전부터만 발화 (공지 시각보다 먼저
+      게시되는 사고 방지 — 기존엔 최대 60분 조기 발화 가능했음)
+    - 늦은 쪽: TOLERANCE_MIN 분까지 매칭, 그 이후는 catch-up(find_missed)이 복구
+    """
     best = None
     best_delta = TOLERANCE_MIN * 60 + 1
     for sched, action, rnd in SCHEDULE:
+        if (sched - now).total_seconds() > EARLY_GRACE_MIN * 60:
+            continue  # 아직 이른 미래 슬롯
         delta = abs((now - sched).total_seconds())
         if delta < best_delta:
             best_delta = delta
