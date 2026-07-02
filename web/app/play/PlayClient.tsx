@@ -105,10 +105,12 @@ export default function PlayClient({ seeds }: Props) {
   }, []);
 
   // Live TOP 3 for the champion / already screens. Fetch on entry, light 8s refresh.
+  // Paused while the tab is hidden; refreshes immediately on return.
   useEffect(() => {
     if (phase !== "champion" && phase !== "already") return;
     let alive = true;
-    const load = () => {
+    const load = (force = false) => {
+      if (!force && document.hidden) return;
       fetch("/api/results")
         .then((r) => r.json())
         .then((d: LiveResults) => {
@@ -116,11 +118,16 @@ export default function PlayClient({ seeds }: Props) {
         })
         .catch(() => {});
     };
-    load();
-    const id = window.setInterval(load, 8000);
+    load(true);
+    const id = window.setInterval(() => load(), 8000);
+    const onVisibility = () => {
+      if (!document.hidden) load(true);
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
       alive = false;
       window.clearInterval(id);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [phase]);
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
+import AdSlot from "@/components/AdSlot";
 import { loadRoster } from "@/lib/roster";
 import { groupColor } from "@/lib/colors";
 import LiveStats from "./LiveStats";
@@ -53,6 +54,8 @@ export default function HomePage() {
       </section>
 
       <p className="muted src-line">출처 한국기업평판연구소</p>
+
+      <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_HOME} />
     </AppShell>
   );
 }

@@ -83,9 +83,12 @@ export default function MemberImage({
     <img
       src={sources[idx]}
       alt={`${member} ${group}`}
+      width={size}
+      height={size}
       className={`member-img ${rounded ? "rounded" : ""} ${className ?? ""}`}
       onError={() => setIdx((i) => i + 1)}
       loading={eager ? "eager" : "lazy"}
+      fetchPriority={eager ? "high" : "auto"}
       decoding="async"
     />
   );

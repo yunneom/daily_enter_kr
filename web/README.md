@@ -45,23 +45,42 @@ Bottom nav: 홈 · 대진표 · 결과 · 어드민. Play is entered from the ho
 | `KV_REST_API_URL` / `KV_REST_API_TOKEN` | _(unset → file backend)_ | Vercel KV / Upstash Redis |
 | `UPSTASH_REDIS_REST_URL` / `_TOKEN` | _(alt to KV_*)_ | Same, alternate names |
 | `ADMIN_PASSWORD` | _(unset → admin LOCKED)_ | Admin login password. **Unset = no admin access.** |
-| `NEXT_PUBLIC_ADSENSE_CLIENT` | _(unset → no ads)_ | Google AdSense publisher id `ca-pub-XXXXXXXXXXXXXXXX`. Loader + ad units render ONLY when set. |
+| `NEXT_PUBLIC_ADSENSE_CLIENT` | _(unset → no ads)_ | Google AdSense publisher id `ca-pub-XXXXXXXXXXXXXXXX`. Loader + ad units + `/ads.txt` render ONLY when set. |
 | `NEXT_PUBLIC_ADSENSE_SLOT_RESULTS` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/results`. |
 | `NEXT_PUBLIC_ADSENSE_SLOT_BRACKET` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/bracket`. |
+| `NEXT_PUBLIC_ADSENSE_SLOT_HOME` | _(optional)_ | `data-ad-slot` id for the ad at the bottom of `/` (홈). |
+| `NEXT_PUBLIC_SITE_URL` | `https://daily-enter-kr.vercel.app` | Canonical origin for SEO (metadataBase, OG url, sitemap, robots, JSON-LD). Set to the real domain when connected. |
 
-### Ads (AdSense)
+### Ads (AdSense) — 수익화 체크리스트
 
-Ads are **off by default**. To enable, set `NEXT_PUBLIC_ADSENSE_CLIENT` to your
-`ca-pub-…` publisher id (these are `NEXT_PUBLIC_*` because AdSense runs in the
-browser). Per-slot ids go in `NEXT_PUBLIC_ADSENSE_SLOT_RESULTS` /
-`NEXT_PUBLIC_ADSENSE_SLOT_BRACKET`. When `NEXT_PUBLIC_ADSENSE_CLIENT` is unset,
-the loader script is not injected and `<AdSlot>` renders nothing.
+Ads are **off by default**. When `NEXT_PUBLIC_ADSENSE_CLIENT` is unset, the
+loader script is not injected, `<AdSlot>` renders nothing, and `/ads.txt`
+returns 404. 순서대로:
 
-Ad slots are placed only at the bottom of `/results` and `/bracket` — never in
-the `/play` voting flow. Note: even with the env set, ads won't actually show
-until the AdSense account is **approved** and the serving **domain** is added in
-the AdSense console. A `/privacy` page (linked in the footer) is required for
-approval and is included.
+1. **도메인 연결** — Vercel 프로젝트에 실제 도메인을 연결한다 (AdSense는
+   `*.vercel.app` 서브도메인 승인율이 낮으므로 커스텀 도메인 권장). 연결 후
+   `NEXT_PUBLIC_SITE_URL`을 그 도메인(`https://example.com`)으로 설정해
+   canonical/OG/sitemap이 올바른 주소를 가리키게 한다.
+2. **AdSense 가입 + 사이트 추가** — [adsense.google.com](https://adsense.google.com)
+   에서 계정 생성 → Sites → 도메인 추가. 발급되는 게시자 ID(`ca-pub-…`)를
+   기록해 둔다. 승인 심사에는 `/privacy`(포함되어 있음, 푸터에 링크)와
+   충분한 콘텐츠가 필요하다.
+3. **ads.txt 자동 서빙 확인** — 이 앱은 `app/ads.txt/route.ts`가
+   `NEXT_PUBLIC_ADSENSE_CLIENT`에서 `/ads.txt`를 자동 생성한다
+   (`google.com, pub-XXXX, DIRECT, f08c47fec0942fa0`). env 설정 + 배포 후
+   `https://도메인/ads.txt`가 200으로 내려오는지 확인한다. env 미설정이면
+   404가 정상이다.
+4. **승인 후 env 설정** — Vercel 프로젝트 Environment Variables에 3종 설정:
+   `NEXT_PUBLIC_ADSENSE_CLIENT`(ca-pub-…), 그리고 AdSense 콘솔에서 만든
+   광고 단위별 슬롯 id `NEXT_PUBLIC_ADSENSE_SLOT_RESULTS` /
+   `NEXT_PUBLIC_ADSENSE_SLOT_BRACKET` / `NEXT_PUBLIC_ADSENSE_SLOT_HOME`.
+5. **Redeploy** — `NEXT_PUBLIC_*`는 빌드 타임에 번들에 인라인되므로 env 변경
+   후 반드시 재배포해야 반영된다.
+
+Ad slots are placed only at the bottom of `/` (홈), `/results` and `/bracket` —
+never in the `/play` voting flow. Note: even with the env set, ads won't
+actually show until the AdSense account is **approved** and the serving
+**domain** is added in the AdSense console.
 
 ## Architecture
 

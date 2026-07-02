@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import AppShell from "@/components/AppShell";
 
-export const metadata = {
-  title: "개인정보처리방침 — 이상형 월드컵",
-  description: "이상형 월드컵 서비스의 개인정보처리방침.",
+export const metadata: Metadata = {
+  title: "개인정보처리방침 — 걸그룹 이상형 월드컵",
+  description: "이상형 월드컵 서비스의 개인정보처리방침. 수집 항목, 쿠키, 제3자 광고 안내.",
+  alternates: { canonical: "/privacy" },
 };
 
 const UPDATED = "2026-07-01";
