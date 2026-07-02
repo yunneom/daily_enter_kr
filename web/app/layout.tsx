@@ -3,7 +3,7 @@ import Script from "next/script";
 import Link from "next/link";
 import "./globals.css";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://daily-enter-kr.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dailyenterkr.com";
 const SITE_TITLE = "걸그룹 이상형 월드컵 — 당신이 뽑는 우승자는?";
 const SITE_DESC =
   "32강부터 결승까지 직접 선택하는 걸그룹 이상형 월드컵. 우승자는 전체 참여자 기준으로 실시간 집계됩니다.";
