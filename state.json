@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-01T09:15:05.878540+09:00",
+  "last_run_at": "2026-07-02T09:16:25.012207+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-01",
-      "title_hash": "bfbebe65e808c68c",
-      "card_title": "영화 '군체', 손익분기점 돌파…박스오피스 2위 영화도 화제"
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "fcbaf6d28ea4cf8b",
-      "card_title": "신혜선X공명 '은밀한 감사', 자체 최고 10.8% 달성"
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "34174a2ddea90396",
-      "card_title": "르세라핌, 5개 앨범 연속 빌보드 200 톱10 진입..4세대 걸그룹 유일"
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "22332a7d12025bae",
-      "card_title": "방탄소년단, 데뷔 13주년 기념 축제 개최"
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "7ebdac9e2546ab74",
-      "card_title": "윤형빈, 이혼설 해명 \"동반 방송 출연은 전부 고사\""
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "ecf74da6a1c47db5",
-      "card_title": "박준금, '미우새' 럭셔리 하우스 최초 공개 \"생일 선물로 자동차 받았다\""
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "9e229557f345be84",
-      "card_title": "넉오프 김수현, 김세의 구속으로 복귀 시점 주목"
-    },
-    {
-      "date": "2026-06-01",
-      "title_hash": "da40b3c76898dd00",
-      "card_title": "임블리, 결혼 8년 만 이혼 후 전남편과 우호적 관계 유지"
-    },
     {
       "date": "2026-06-02",
       "title_hash": "ebbc3a62b5af6e72",
@@ -1865,6 +1825,78 @@
       "card_title": "코르티스, 비행기 지연 탑승 논란에 공식 사과",
       "caption_variant": "you_wont_believe",
       "media_id": "17888556879576354",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "870b354e2c930041",
+      "card_title": "김무열, '유퀴즈'에서 어머니의 헌신 공개 — 신춘문예 소설가 모친의 응원",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "b2769cf18b273866",
+      "card_title": "36세 고아라, 증명사진도 빛나는 미모 화제",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "e36aa8159bbfd6b4",
+      "card_title": "조민아, 이혼 후 6살 아들과 새출발 '행복한 일상'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "d16e3be3905101d2",
+      "card_title": "김혜수·조여정 '지금 불륜이 문제가 아닙니다', 31일 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "c543917d54e34a2f",
+      "card_title": "배윤정, I.O.I 콘서트 중 욕설 논란 700만뷰..반성 의사 전달",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "7ca13364cbb6dae7",
+      "card_title": "김호중, 가석방 후 '뉘우침으로 잔여 형기 채우겠다' 입장 표명",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "6905aeebfe4490fc",
+      "card_title": "방탄소년단 뷔, 사생활 존중 당부..호텔 앞 방문 금지",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "5ced62d9cf2f26eb",
+      "card_title": "배우 최상엽, 이봉원·박미선 아들 공개 — 성씨 변경으로 화제",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-02",
+      "title_hash": "f8dcc5934117b201",
+      "card_title": "소지섭 '김부장', 선한 적자를 흥행 흑자로 바꾸다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18027765029831962",
       "card_style": "minimal"
     }
   ]
