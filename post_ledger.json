@@ -363,6 +363,28 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-02T10:18:03.756143+09:00",
+      "topic_id": "worldcup_r4_1",
+      "title": "걸그룹 월드컵 R4 #1",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18122790487708444",
+      "youtube_id": "Xe-kdVdziRk",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-07-02T10:18:59.817245+09:00",
+      "topic_id": "worldcup_hf_r4_bracket",
+      "title": "걸그룹 월드컵 R4 HF 대진표",
+      "style": "worldcup_hf",
+      "seed": null,
+      "ig_media_id": "18382063894167467",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
