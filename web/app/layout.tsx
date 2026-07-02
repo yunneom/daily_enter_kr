@@ -8,12 +8,17 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dailyenterkr.com";
 const SITE_TITLE = "걸그룹 이상형 월드컵 — 당신이 뽑는 우승자는?";
 const SITE_DESC =
   "32강부터 결승까지 직접 선택하는 걸그룹 이상형 월드컵. 우승자는 전체 참여자 기준으로 실시간 집계됩니다.";
+// Official AdSense site-ownership meta tag (<meta name="google-adsense-account">) —
+// a second, independent verification signal alongside the adsbygoogle.js snippet
+// and ads.txt. Renders only once NEXT_PUBLIC_ADSENSE_CLIENT is set.
+const ADS_CLIENT = normalizeAdsClient(process.env.NEXT_PUBLIC_ADSENSE_CLIENT);
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_TITLE,
   description: SITE_DESC,
   alternates: { canonical: "/" },
+  ...(ADS_CLIENT ? { other: { "google-adsense-account": ADS_CLIENT } } : {}),
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESC,
