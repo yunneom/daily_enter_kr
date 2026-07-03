@@ -18,11 +18,14 @@
  *   wc:appear:{rank}       → INCR per appearance in a played match
  *   wc:pick:{rank}         → INCR per time picked as winner
  *   wc:device_champ        → HASH deviceId → championRank
+ *   wc:utm:{source}        → INCR per counted run attributed to a utm_source
+ *   wc:utm:sources         → SET of seen utm sources (registry for reads)
  */
 
 import fs from "fs";
 import path from "path";
 import { loadRoster } from "./roster";
+import { sanitizeUtmSource } from "./utm";
 import type { Candidate } from "./bracketTypes";
 
 export interface RunPick {
@@ -36,6 +39,8 @@ export interface SubmitRunInput {
   deviceId: string;
   championRank: number;
   picks: RunPick[];
+  /** optional first-touch utm_source (sanitized again server-side) */
+  utm?: string | null;
 }
 
 export interface SubmitRunResult {
@@ -63,6 +68,8 @@ export interface Results {
   runsTotal: number;
   champions: ChampionRow[];
   advancement: AdvancementRow[];
+  /** counted runs per utm_source (only sources seen at least once) */
+  utmBreakdown: Record<string, number>;
 }
 
 // ── backend selection ──────────────────────────────────────────────────────
@@ -90,6 +97,8 @@ const K = {
   appear: (rank: number) => `wc:appear:${rank}`,
   pick: (rank: number) => `wc:pick:${rank}`,
   deviceChamp: "wc:device_champ",
+  utm: (source: string) => `wc:utm:${source}`,
+  utmSources: "wc:utm:sources",
 };
 
 let redisClient: import("@upstash/redis").Redis | null = null;
@@ -136,6 +145,12 @@ async function kvSubmit(env: KvEnv, input: SubmitRunInput): Promise<SubmitRunRes
     p.incr(K.appear(pick.bRank));
     p.incr(K.pick(pick.winnerRank));
   }
+  // UTM attribution — only for counted runs, only sanitized sources.
+  const utmSource = sanitizeUtmSource(input.utm);
+  if (utmSource) {
+    p.incr(K.utm(utmSource));
+    p.sadd(K.utmSources, utmSource);
+  }
   await p.exec();
   return { counted: true };
 }
@@ -165,16 +180,33 @@ async function kvResults(env: KvEnv, roster: ReturnType<typeof loadRoster>): Pro
     pickCount[r] = Number(pickVals[i] ?? 0);
   });
 
-  return buildResults(roster, runsTotal, champCount, appearCount, pickCount);
+  // UTM breakdown — read counters for every registered source.
+  const utmBreakdown: Record<string, number> = {};
+  const sources = ((await redis.smembers(K.utmSources)) ?? [])
+    .map((s) => sanitizeUtmSource(s))
+    .filter((s): s is string => s !== null);
+  if (sources.length > 0) {
+    const utmVals = await redis.mget<(number | null)[]>(...sources.map((s) => K.utm(s)));
+    sources.forEach((s, i) => {
+      utmBreakdown[s] = Number(utmVals[i] ?? 0);
+    });
+  }
+
+  return buildResults(roster, runsTotal, champCount, appearCount, pickCount, utmBreakdown);
 }
 
 async function kvReset(env: KvEnv, roster: ReturnType<typeof loadRoster>): Promise<void> {
   const redis = await getRedis(env);
   const ranks = roster.candidates.map((c) => c.rank);
+  const utmSources = ((await redis.smembers(K.utmSources)) ?? []).filter(
+    (s): s is string => typeof s === "string" && s.length > 0,
+  );
   const keys = [
     K.done,
     K.runsTotal,
     K.deviceChamp,
+    K.utmSources,
+    ...utmSources.map((s) => K.utm(s)),
     ...ranks.map((r) => K.champion(r)),
     ...ranks.map((r) => K.appear(r)),
     ...ranks.map((r) => K.pick(r)),
@@ -193,6 +225,8 @@ interface FileRun {
 interface FileStore {
   runs: FileRun[];
   done: string[];
+  /** counted runs per utm_source */
+  utm: Record<string, number>;
 }
 
 function runsPath(): string {
@@ -209,9 +243,10 @@ function readStore(): FileStore {
     return {
       runs: Array.isArray(parsed.runs) ? parsed.runs : [],
       done: Array.isArray(parsed.done) ? parsed.done : [],
+      utm: parsed.utm && typeof parsed.utm === "object" ? parsed.utm : {},
     };
   } catch {
-    return { runs: [], done: [] };
+    return { runs: [], done: [], utm: {} };
   }
 }
 
@@ -234,6 +269,10 @@ function fileSubmit(input: SubmitRunInput): SubmitRunResult {
     championRank: input.championRank,
     picks: input.picks,
   });
+  const utmSource = sanitizeUtmSource(input.utm);
+  if (utmSource) {
+    store.utm[utmSource] = (store.utm[utmSource] ?? 0) + 1;
+  }
   writeStore(store);
   return { counted: true };
 }
@@ -253,11 +292,13 @@ function fileResults(roster: ReturnType<typeof loadRoster>): Results {
     }
   }
 
-  return buildResults(roster, store.runs.length, champCount, appearCount, pickCount);
+  return buildResults(roster, store.runs.length, champCount, appearCount, pickCount, {
+    ...store.utm,
+  });
 }
 
 function fileReset(): void {
-  writeStore({ runs: [], done: [] });
+  writeStore({ runs: [], done: [], utm: {} });
 }
 
 // ── shared result assembly ───────────────────────────────────────────────────
@@ -268,6 +309,7 @@ function buildResults(
   champCount: Record<number, number>,
   appearCount: Record<number, number>,
   pickCount: Record<number, number>,
+  utmBreakdown: Record<string, number>,
 ): Results {
   const champions: ChampionRow[] = roster.candidates
     .map((c) => {
@@ -286,7 +328,7 @@ function buildResults(
     })
     .sort((x, y) => y.pickRate - x.pickRate || y.picks - x.picks || x.rank - y.rank);
 
-  return { runsTotal, champions, advancement };
+  return { runsTotal, champions, advancement, utmBreakdown };
 }
 
 // ── public API ────────────────────────────────────────────────────────────────

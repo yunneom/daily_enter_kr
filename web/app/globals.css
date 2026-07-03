@@ -1254,6 +1254,205 @@ h3 {
   text-align: center;
 }
 
+/* ── Moment banner (campaign countdown) ─────────────────────────────────── */
+.moment-banner {
+  position: sticky;
+  top: calc(var(--header-h) + 8px);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #2a1f4a 0%, #1c1730 100%);
+  border: 1px solid #7c3aed66;
+  box-shadow: 0 8px 24px -14px #7c3aedaa;
+}
+.play-root .moment-banner {
+  top: 8px;
+}
+.moment-banner-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.moment-banner-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.moment-banner-count {
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.moment-banner-count b {
+  color: #fbbf24;
+  font-variant-numeric: tabular-nums;
+}
+.moment-banner-cta {
+  flex: none;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--grad);
+  padding: 8px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ── Recap page ─────────────────────────────────────────────────────────── */
+.recap-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.recap-hero {
+  text-align: center;
+}
+.recap-kicker {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fde68a;
+  background: #fbbf2422;
+  border: 1px solid #fbbf2455;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.recap-champ-card {
+  width: 280px;
+  max-width: 82vw;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid;
+  background: var(--panel);
+  padding-bottom: 16px;
+}
+.recap-champ-photo .member-img,
+.recap-champ-photo .member-fallback {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  display: block;
+}
+.recap-champ-label {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #fbbf24;
+  margin-top: 12px;
+}
+.recap-champ-name {
+  font-size: 26px;
+  font-weight: 900;
+  margin-top: 2px;
+}
+.recap-champ-group {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.recap-champ-pct {
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 8px;
+}
+.recap-editorial {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.recap-editorial p {
+  margin: 0;
+}
+.recap-editorial p + p {
+  margin-top: 12px;
+}
+.recap-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.recap-sub-link {
+  font-size: 13px;
+  color: var(--sub);
+  text-decoration: underline;
+}
+.recap-link-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+.recap-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+  background: var(--panel);
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+.recap-link:hover {
+  color: var(--ink);
+}
+
+/* ── Share card (완주 공유) ─────────────────────────────────────────────── */
+.share-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #000000d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.share-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+.share-canvas {
+  width: min(300px, 72vw);
+  height: auto;
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  border: 1px solid var(--border-2);
+  box-shadow: 0 24px 60px -20px #000;
+  background: var(--panel);
+}
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.share-btn {
+  padding: 11px 16px;
+  font-size: 14px;
+}
+.share-msg {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin: 0;
+  text-align: center;
+}
+
 /* Privacy / legal doc */
 .legal-doc {
   color: var(--ink-2);

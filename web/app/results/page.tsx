@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import AdSlot from "@/components/AdSlot";
 import ResultsClient from "./ResultsClient";
@@ -14,6 +15,11 @@ export const metadata: Metadata = {
 export default function ResultsPage() {
   return (
     <AppShell title="결과">
+      <div className="recap-link-row">
+        <Link href="/recap" className="recap-link">
+          리캡 보기
+        </Link>
+      </div>
       <ResultsClient />
       <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_RESULTS} />
     </AppShell>

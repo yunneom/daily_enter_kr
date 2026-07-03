@@ -10,3 +10,4 @@ next-env.d.ts
 /data/*
 !/data/member_images.json
 .vercel
+!/data/moment.json

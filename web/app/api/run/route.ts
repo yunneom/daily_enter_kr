@@ -8,6 +8,8 @@ interface Body {
   deviceId?: string;
   championRank?: number;
   picks?: RunPick[];
+  /** optional first-touch utm_source; sanitized in runStore before counting */
+  utm?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -18,7 +20,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "INVALID_JSON" }, { status: 400 });
   }
 
-  const { deviceId, championRank, picks } = body;
+  const { deviceId, championRank, picks, utm } = body;
   if (
     typeof deviceId !== "string" ||
     !deviceId ||
@@ -29,7 +31,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const result = await submitRun({ deviceId, championRank, picks });
+    const result = await submitRun({
+      deviceId,
+      championRank,
+      picks,
+      utm: typeof utm === "string" ? utm : null,
+    });
     return NextResponse.json(result);
   } catch (err) {
     if (err instanceof Error && err.message === "INVALID_RUN") {
