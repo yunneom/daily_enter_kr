@@ -183,11 +183,17 @@ def _resolve_override(member_name: str) -> Optional[Dict]:
         "iiurlwidth": THUMB_SIZE,
     }, api=COMMONS_API)
     if not data:
+        print(f"  ⚠️ 오버라이드 {member_name}: Commons API 응답 없음 → 폴백")
         return None
     for _, p in (data.get("query", {}).get("pages", {}) or {}).items():
+        if "missing" in p:
+            # 파일 제목이 커먼즈에 실존하지 않음 (오탈자/개명) — 조용히 죽지 말 것
+            print(f"  ⚠️ 오버라이드 {member_name}: 파일 없음(missing) — File:{file_name} → 폴백")
+            continue
         ii = (p.get("imageinfo") or [{}])[0]
         thumb = ii.get("thumburl") or ii.get("url")
         if not thumb:
+            print(f"  ⚠️ 오버라이드 {member_name}: imageinfo/thumb 없음 → 폴백")
             continue
         ext = ii.get("extmetadata", {})
         lic = ext.get("LicenseShortName", {}).get("value", "")
