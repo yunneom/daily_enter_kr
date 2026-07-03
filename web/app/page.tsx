@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import AdSlot from "@/components/AdSlot";
+import MomentBanner from "@/components/MomentBanner";
 import { loadRoster } from "@/lib/roster";
 import { groupColor } from "@/lib/colors";
 import LiveStats from "./LiveStats";
@@ -12,6 +13,7 @@ export default function HomePage() {
 
   return (
     <AppShell title="이상형 월드컵">
+      <MomentBanner />
       <section className="hero-wc">
         <div className="hero-kicker">2026 상반기 걸그룹 월드컵</div>
         <h1 className="hero-title">당신이 뽑는 우승자는?</h1>

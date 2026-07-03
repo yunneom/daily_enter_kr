@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import Link from "next/link";
 import { normalizeAdsClient } from "@/lib/adsense";
+import UtmCapture from "@/components/UtmCapture";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dailyenterkr.com";
@@ -61,6 +62,10 @@ const WEBSITE_JSONLD = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const adsClient = normalizeAdsClient(process.env.NEXT_PUBLIC_ADSENSE_CLIENT);
+  // Optional GA4 — renders nothing until NEXT_PUBLIC_GA4_ID is set.
+  // Restrict to a safe id shape so the inline snippet never gets odd input.
+  const ga4Raw = process.env.NEXT_PUBLIC_GA4_ID || "";
+  const ga4Id = /^[A-Za-z0-9-]{1,32}$/.test(ga4Raw) ? ga4Raw : "";
 
   return (
     <html lang="ko">
@@ -78,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           // Static, build-time JSON — no user input flows in here.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSONLD) }}
         />
+        <UtmCapture />
         {children}
         <footer className="site-footer">
           <Link href="/privacy" className="site-footer-link">
@@ -93,6 +99,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             crossOrigin="anonymous"
             strategy="afterInteractive"
           />
+        ) : null}
+        {ga4Id ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${ga4Id}');`}
+            </Script>
+          </>
         ) : null}
       </body>
     </html>

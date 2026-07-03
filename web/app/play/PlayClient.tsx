@@ -10,9 +10,12 @@ import {
   roundLabelBySize,
 } from "@/lib/tournament";
 import MemberImage from "@/components/MemberImage";
+import MomentBanner from "@/components/MomentBanner";
+import ShareCard from "@/components/ShareCard";
 import { memberImageUrl } from "@/lib/memberImages";
 import { groupColor } from "@/lib/colors";
 import { getDeviceId } from "@/lib/device";
+import { getUtmSource } from "@/lib/utm";
 import {
   loadRun,
   saveRun,
@@ -63,6 +66,7 @@ export default function PlayClient({ seeds }: Props) {
   const [counted, setCounted] = useState<null | boolean>(null);
   const [submitting, setSubmitting] = useState(false);
   const [live, setLive] = useState<LiveResults | null>(null);
+  const [shareOpen, setShareOpen] = useState(false);
 
   // Preload ALL 32 candidate photos up front so every duel transition is instant
   // (Commons/gstatic are external + redirect-heavy; warming the browser cache once
@@ -188,10 +192,11 @@ export default function PlayClient({ seeds }: Props) {
           submitted: false,
           updatedAt: "",
         });
+        const utm = getUtmSource();
         const res = await fetch("/api/run", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ deviceId, championRank, picks }),
+          body: JSON.stringify({ deviceId, championRank, picks, ...(utm ? { utm } : {}) }),
         });
         const data = (await res.json()) as { counted?: boolean; error?: string };
         const ok = res.ok && data.counted === true;
@@ -312,6 +317,7 @@ export default function PlayClient({ seeds }: Props) {
   if (phase === "intro") {
     return (
       <main className="play-root">
+        <MomentBanner />
         <div className="play-intro">
           <div className="play-intro-badge">이상형 월드컵</div>
           <h1>32강부터 골라서 우승까지</h1>
@@ -328,6 +334,8 @@ export default function PlayClient({ seeds }: Props) {
   }
 
   if (phase === "champion" && champion) {
+    const liveChampRow = live?.champions.find((c) => c.rank === champion.rank && c.count > 0);
+    const championPct = liveChampRow ? liveChampRow.pct : null;
     return (
       <main className="play-root">
         <div className="champion-screen">
@@ -348,7 +356,10 @@ export default function PlayClient({ seeds }: Props) {
           </p>
           {miniLeaderboard}
           <div className="champion-actions">
-            <Link href="/results" className="btn-vs">
+            <button className="btn-vs" onClick={() => setShareOpen(true)}>
+              공유 카드 만들기
+            </button>
+            <Link href="/results" className="btn-vs ghost">
               실시간 전체 결과
             </Link>
             <Link href="/bracket" className="btn-vs ghost">
@@ -359,6 +370,15 @@ export default function PlayClient({ seeds }: Props) {
             </button>
           </div>
         </div>
+        {shareOpen ? (
+          <ShareCard
+            rank={champion.rank}
+            group={champion.group}
+            member={champion.member}
+            pct={championPct}
+            onClose={() => setShareOpen(false)}
+          />
+        ) : null}
       </main>
     );
   }
