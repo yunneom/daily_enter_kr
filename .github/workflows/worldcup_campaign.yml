@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: 'publish | tally | announce | bracket | promo_blast | render_test'
+        description: 'publish | tally | announce | bracket | promo_blast | render_test | photo_test'
         required: false
         default: ''
       round:
@@ -73,9 +73,11 @@ jobs:
         env:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-          # 실사 사진 off — K-pop 아이돌 위키 사진 대부분 비CC 라서 합법 커버리지 ~6%.
-          # 1명만 사진+15명 이모지 짝짝이 방지 → 이모지 통일. render_test 로 보려면 on 으로.
-          IDOL_PHOTOS: "off"
+          # 실사 사진 on — data/idol_photo_overrides.json 의 검증된 커먼즈 파일만
+          # (27/32 커버). CC/PD 라이선스 게이트 + 성인(만 18세) 게이트 통과분만 카드에 합성.
+          # 크레딧은 카드 하단 + 캡션 양쪽 자동 표기.
+          # ⚠️ 신고/strike 대응 롤백 = 이 값을 "off" 로 (1줄 롤백, 이모지 폴백 복귀).
+          IDOL_PHOTOS: "on"
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}

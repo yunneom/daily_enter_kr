@@ -191,10 +191,12 @@ def _rounded_grad(w: int, h: int, top, bot, radius: int = 24) -> Image.Image:
 
 
 def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
-                 member: Dict):
+                 member: Dict) -> Optional[Dict]:
     """단일 멤버 카드 — 그룹 시그니처 컬러 그라데이션 + 큰 emoji +
     'IVE 장원영' 한 줄 표기(그룹영문+이름) + BR 순위 배지.
-    (실사 사진은 IDOL_PHOTOS=on 일 때만, 기본 off)."""
+    (실사 사진은 IDOL_PHOTOS=on 일 때만, 기본 off. 사진은 idol_photo 의
+    검증 커먼즈 오버라이드 + CC/PD + 성인 게이트를 통과한 것만.)
+    반환: 사진 사용 시 {"artist","license"} (카드 하단 크레딧용), 아니면 None."""
     grp = member.get("group", "")
     name = member.get("member", "")
     top, bot = group_color_for(grp)
@@ -207,6 +209,7 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
 
     # (옵션) 실사 사진 — 기본 off
     photo_done = False
+    credit = None
     if os.environ.get("IDOL_PHOTOS", "off").lower() == "on":
         try:
             import idol_photo
@@ -219,6 +222,8 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
                               outline=WHITE, width=4)
                     img.alpha_composite(circ, (x + (w - 150) // 2, y + 26))
                     photo_done = True
+                    credit = {"artist": rec.get("artist", ""),
+                              "license": rec.get("license", "")}
         except Exception:
             pass
     # 폴백/기본 — 큰 그룹 emoji (불투명 흰 원 배경 위 → 모든 emoji 가독)
@@ -273,10 +278,13 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
                             radius=12, fill=GOLD)
         d.text((x + 14 + 14, y + 14 + 6), rstr, font=rf, fill=INK)
 
+    return credit
+
 
 def _match_block(img: Image.Image, x0: int, y0: int, width: int,
-                 match_idx: int, a: Dict, b: Dict):
-    """매치 1개 — 두 멤버 카드 + 중앙 VS. 인물 번호 X (4지선다와 분리)."""
+                 match_idx: int, a: Dict, b: Dict) -> list:
+    """매치 1개 — 두 멤버 카드 + 중앙 VS. 인물 번호 X (4지선다와 분리).
+    반환: 사진 크레딧 dict 리스트 (사진 사용 멤버만)."""
     d = ImageDraw.Draw(img)
     # 매치 라벨
     lf = _font("Bold", 36)
@@ -298,8 +306,11 @@ def _match_block(img: Image.Image, x0: int, y0: int, width: int,
     left_x = x0
     right_x = x0 + card_w + gap + vs_w + gap
 
-    _member_card(img, left_x, card_y, card_w, card_h, a)
-    _member_card(img, right_x, card_y, card_w, card_h, b)
+    credits = []
+    for cr in (_member_card(img, left_x, card_y, card_w, card_h, a),
+               _member_card(img, right_x, card_y, card_w, card_h, b)):
+        if cr:
+            credits.append(cr)
 
     # VS 텍스트 (중앙)
     vsf = _font("Bold", 120)
@@ -311,6 +322,7 @@ def _match_block(img: Image.Image, x0: int, y0: int, width: int,
     vs_cy = card_y + card_h // 2
     d.text((vs_cx - vw / 2, vs_cy - vh / 2 - 18), vs_text,
            font=vsf, fill=VS_RED, stroke_width=4, stroke_fill=WHITE)
+    return credits
 
 
 def _choice_grid(img: Image.Image, y_start: int,
@@ -409,19 +421,40 @@ def make_worldcup_match_card(
                    fill=WHITE_DIM)
 
     # === 매치 1 ===
-    _match_block(img, 30, 245, CANVAS[0] - 60, 1,
-                 match1["a"], match1["b"])
+    photo_credits = _match_block(img, 30, 245, CANVAS[0] - 60, 1,
+                                 match1["a"], match1["b"])
 
     # === 매치 2 ===
-    _match_block(img, 30, 765, CANVAS[0] - 60, 2,
-                 match2["a"], match2["b"])
+    photo_credits += _match_block(img, 30, 765, CANVAS[0] - 60, 2,
+                                  match2["a"], match2["b"])
 
     # === 4지선다 ===
     _choice_grid(img, 1310, match1["a"], match1["b"],
                  match2["a"], match2["b"])
 
-    # === 풋터 ===
+    # === 사진 크레딧 (필수 표기 — 사진 사용 시) ===
+    # 위키미디어 CC 조건: 카드 이미지 자체에도 저작자/라이선스 명기.
     d = ImageDraw.Draw(img)
+    if photo_credits:
+        cf = _font("Medium", 20)
+        seen, lines = set(), []
+        for cr in photo_credits:
+            author = (cr.get("artist") or "Wikimedia 기여자").strip()
+            if len(author) > 40:
+                author = author[:39] + "…"
+            lic = (cr.get("license") or "CC").strip()
+            key = (author, lic)
+            if key in seen:
+                continue
+            seen.add(key)
+            lines.append(f"사진: {author} · {lic} · Wikimedia Commons")
+        cy = 1790 - 26 * len(lines)  # 풋터(1820) 바로 위에 아래 정렬
+        for ln in lines[:4]:
+            _draw_centered(d, ln, cf, CANVAS[0] // 2, cy,
+                           fill=(168, 160, 194))  # 저대비 크레딧
+            cy += 26
+
+    # === 풋터 ===
     sf = _font("Medium", 26)
     _draw_centered(d, source_note, sf, CANVAS[0] // 2, 1820,
                    fill=WHITE_DIM)

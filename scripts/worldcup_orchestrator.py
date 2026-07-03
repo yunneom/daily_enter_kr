@@ -36,6 +36,10 @@ TOLERANCE_MIN = 60  # cron 매 30분 + 정시 부하 지연(실측 47분) 흡수
 # [일정 연장 — 도달 누적 우선] 첫 라운드 노출이 약해서 앞 라운드에 48~63h 몰아주고
 # 빅매치(16강)·클라이맥스(결승)를 주말에 배치. 뒤 라운드는 24h (모멘텀 구축 후).
 SCHEDULE = [
+    # === Day 11 (금 7/3) 09:00 — 실사 사진 테스트 렌더 (게시 X) ===
+    # IDOL_PHOTOS=on 으로 R4 카드만 빌드 → docs/worldcup_preview/photo_test/ 커밋
+    # → 오너가 repo 에서 눈으로 컨펌 후 7/4 결승 빌드에 사진 적용.
+    (datetime(2026, 7,  3,  9,  0, tzinfo=KST), "photo_test", ""),
     # === Day 9 (수 7/1) — R8 승자 정정(닝닝·윈터·카리나·설윤) + 4강 진출자 홍보 즉시 ===
     (datetime(2026, 7,  1, 11, 25, tzinfo=KST), "r4_entrants", ""),
     # === Day 9 (수 7/1) 17:00 — 4강(준결승) 경기 게시 (미발화: 창 지남) ===
@@ -297,6 +301,10 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_r4_entrants_promo"
                    for e in ledger.get("entries", []))
+    elif action == "photo_test":
+        # docs/worldcup_preview/photo_test/ 에 jpg 가 1장이라도 있으면 완료
+        pt_dir = ROOT / "docs" / "worldcup_preview" / "photo_test"
+        return pt_dir.exists() and len(list(pt_dir.glob("*.jpg"))) >= 1
     elif action == "fix_republish_r8":
         # R16 slot 1 승자가 닝닝이고 HF R8 대진표가 게시됐으면 완료
         r16 = bracket.get("rounds", {}).get("R16", {})
@@ -405,6 +413,31 @@ def execute(action: str, round_key: str) -> int:
     elif action == "render_test":
         # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
+    elif action == "photo_test":
+        # 실사 사진 테스트 렌더 — R4 카드/영상만 빌드 (게시 X).
+        # 검증 커먼즈 오버라이드 + CC/PD + 성인 게이트를 통과한 사진이 카드에
+        # 어떻게 합성되는지 docs/worldcup_preview/photo_test/ 커밋으로 눈 컨펌.
+        # ⚠️ 신고/strike 대응 롤백 = 워크플로우 env IDOL_PHOTOS 를 "off" 로 (1줄).
+        cmd = [sys.executable, "scripts/build_worldcup_round.py", "R4"]
+        print(f"$ IDOL_PHOTOS=on {' '.join(cmd)}")
+        rc = subprocess.run(cmd, cwd=str(ROOT),
+                            env={**os.environ, "IDOL_PHOTOS": "on"}).returncode
+        if rc != 0:
+            print(f"❌ photo_test 빌드 실패 (rc={rc})")
+            return rc
+        import shutil
+        src_dir = ROOT / "output_enter" / "publish" / "worldcup_r4"
+        dst = ROOT / "docs" / "worldcup_preview" / "photo_test"
+        dst.mkdir(parents=True, exist_ok=True)
+        jpgs = sorted(src_dir.glob("*.jpg"))
+        for f in jpgs:
+            shutil.copy(f, dst / f.name)
+        # attribution(저작자/라이선스) 도 같이 커밋 → 크레딧 검수 가능
+        attr = ROOT / "output_enter" / "idol_photos" / "_attribution.json"
+        if attr.exists():
+            shutil.copy(attr, dst / "_attribution.json")
+        print(f"✅ photo_test: 카드 {len(jpgs)}장 → {dst.relative_to(ROOT)}/")
+        return 0 if jpgs else 1
     else:
         print(f"❌ 알 수 없는 action: {action}")
         return 1
@@ -423,7 +456,7 @@ def main():
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
     # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
-    if forced_action in ("bracket", "promo_blast", "render_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo", "r4_entrants"):
+    if forced_action in ("bracket", "promo_blast", "render_test", "photo_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo", "r4_entrants"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
