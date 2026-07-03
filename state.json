@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-03T09:05:57.203956+09:00",
+  "last_run_at": "2026-07-04T08:59:49.529988+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-03",
-      "title_hash": "163f532ca89e571a",
-      "card_title": "방탄소년단 'SWIM', 글로벌 'Dynamite'와 동시 상위권"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "bc0e10be04a7e586",
-      "card_title": "김세의, 불법총포 소지·모욕죄로 2심 벌금 500만 원"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "29ee070f1dea4cfd",
-      "card_title": "박미선, 암 진단 공개하며 투병 여정 나눠"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "1a39e4dbbe6e2581",
-      "card_title": "정문성, 드라마 '허수아비' 캐릭터 이기환 분석 인터뷰"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "106aa3fd565e4d5b",
-      "card_title": "김희철, 아형 잠정 하차 후 건강한 근황 공개"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "06e3528e74d8f432",
-      "card_title": "돌싱N모솔, 기적의 세 커플 탄생"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "bf47b5ae92d06999",
-      "card_title": "양세종, 드라마 '오싹한 연애'에서 귀신 보는 검사로 변신"
-    },
-    {
-      "date": "2026-06-03",
-      "title_hash": "261b167c861e943b",
-      "card_title": "문채원, 6월 결혼식 앞두고 웨딩드레스 자태 공개"
-    },
     {
       "date": "2026-06-04",
       "title_hash": "b1ee498da2e7c96c",
@@ -1929,6 +1889,78 @@
       "card_title": "어반자카파 박용인, 소송 마친 뒤 심경 전한다",
       "caption_variant": "question_hook",
       "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "91f98b134db812d7",
+      "card_title": "故 한경선, 오늘 11주기…드라마 촬영 중 별세",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "b327cd057047c496",
+      "card_title": "오윤아, 비연예인과 재혼 — 가족 함께하는 새 출발",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "225562c873b9e06a",
+      "card_title": "강소라, 팬들에 '연예인은 편함 없어야 한다' 소신 발언",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "cbe984c8217e8242",
+      "card_title": "소지섭X최대훈, '김부장'서 수트·도복 액션 완성",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "38413190eac4539d",
+      "card_title": "김구라, 송도 이사 결정…'늦둥이' 딸 위한 국제학교 진학",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "a0ea87e7ad0fff1f",
+      "card_title": "유아인, '뱀피르' 출연설에 공식 입장 — '확정된 바 없어'",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "97eae804eb426a06",
+      "card_title": "이선희, 24년 소속사 떠나다…송혜교·김남주 이어",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "3e3892172a82c4da",
+      "card_title": "윤종신, 600곡 중 저작권료 1위곡은 예상 밖",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-04",
+      "title_hash": "a33eedfa6cfd7079",
+      "card_title": "이훈, 배우로 복귀…근육 체형 유지하며 새 출발 준비",
+      "caption_variant": "question_hook",
+      "media_id": "18021649202845395",
       "card_style": "minimal"
     }
   ]
