@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-02T09:16:25.012207+09:00",
+  "last_run_at": "2026-07-03T09:05:57.203956+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-02",
-      "title_hash": "ebbc3a62b5af6e72",
-      "card_title": "영화 '군체' 관객 300만 돌파, 손익분기점 달성"
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "0a2919194806d9fd",
-      "card_title": "양상국, '태도 논란' 소회 밝혀 \"공인의 줄타기는 어렵다\""
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "9c520e95fc1c9150",
-      "card_title": "47세 한다감, 건강한 임신을 위한 신체 관리법 공개"
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "03ff0bb6cff4d13a",
-      "card_title": "길해연, '닥터 섬보이' 신예은 할머니役 출연 확정"
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "1ad0f499dada6aed",
-      "card_title": "정세운, 6월 23일 군 입대..조용한 입소 진행"
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "48a09af41304b1c3",
-      "card_title": "탑, 7월 일본에서 전석 무료 팬미팅 개최"
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "892faae9a9db4658",
-      "card_title": "김수현 명예훼손 사건, 김세의 구속적부심 심문 진행"
-    },
-    {
-      "date": "2026-06-02",
-      "title_hash": "b936470f89674aa3",
-      "card_title": "옥순, 거주지 추측 논란에 공식 입장 밝혀"
-    },
     {
       "date": "2026-06-03",
       "title_hash": "163f532ca89e571a",
@@ -1897,6 +1857,78 @@
       "card_title": "소지섭 '김부장', 선한 적자를 흥행 흑자로 바꾸다",
       "caption_variant": "headlines_dotted",
       "media_id": "18027765029831962",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "bbc62b21fb8e1771",
+      "card_title": "정준하, 결혼 16년 만에 공개한 일본인 아내와의 일상 — '식사량 많게 하려 요리학원 다녔다'",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "08b7cbcef593da7d",
+      "card_title": "김지민, 사이버 스토킹 피해 경험 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "a25f750484decbd2",
+      "card_title": "임영웅, 광고모델 브랜드평판 2개월 연속 1위 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "63452251de65c545",
+      "card_title": "조혜정, 영화 '포커스'로 부산국제영화제 개막식 참석",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "e24bc4cb0c128f71",
+      "card_title": "백지영·유리, 30년 우정의 시작은 '첫 만남에 서로 싫어했다'",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "d224d97f96fe4dcb",
+      "card_title": "부천국제판타스틱영화제 개막, 국내외 영화인 총출동",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "8cae8929df6ceaff",
+      "card_title": "쌈디, 자택 침입 피해 고급 시계 도난당해",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "769d84a8dd91ea84",
+      "card_title": "어도어, 다니엘만과 전속계약 해지 — 독자 활동·이중계약 사유",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-03",
+      "title_hash": "f9a6f495d0c57717",
+      "card_title": "어반자카파 박용인, 소송 마친 뒤 심경 전한다",
+      "caption_variant": "question_hook",
+      "media_id": "18049063463559479",
       "card_style": "minimal"
     }
   ]
