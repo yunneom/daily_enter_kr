@@ -1,0 +1,24 @@
+{
+  "닝닝": {
+    "path": "닝닝.jpg",
+    "artist": "10Asia",
+    "license": "CC BY 3.0",
+    "title": "File:Aespa Ningning 2024 MMA.jpg",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Aespa_Ningning_2024_MMA.jpg"
+  },
+  "윈터": {
+    "path": "윈터.jpg",
+    "artist": "snow plumflower",
+    "license": "CC BY-SA 2.0",
+    "title": "File:250315-16 aespa Winter 01.jpg",
+    "descurl": "https://commons.wikimedia.org/wiki/File:250315-16_aespa_Winter_01.jpg"
+  },
+  "카리나": {
+    "none": true,
+    "reason": "download failed (429/HTTP)"
+  },
+  "설윤": {
+    "none": true,
+    "reason": "download failed (429/HTTP)"
+  }
+}
