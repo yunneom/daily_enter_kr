@@ -32,9 +32,20 @@ GROUP_COLORS = {
 }
 DEFAULT_COLOR = "#6b7280"
 
+# 매치 타입별 배지 (결승전 vs 3·4위전 명확 구분 — "결승 두경기" 혼동 방지)
+TYPE_BADGE = {
+    "final":       ("결승전",   "#fbbf24", "#1a1206"),
+    "third_place": ("3·4위전",  "#cd8f52", "#1a1206"),
+}
+
 
 def _group_color(group: str) -> str:
     return GROUP_COLORS.get(group, DEFAULT_COLOR)
+
+
+def _order_matches(matches: list) -> list:
+    """결승전 먼저, 3·4위전 뒤 (사용자 요청 순서)."""
+    return sorted(matches, key=lambda m: 0 if m.get("type") == "final" else 1)
 
 
 def _match_card_html(m: dict, delay_ms: int) -> str:
@@ -42,23 +53,28 @@ def _match_card_html(m: dict, delay_ms: int) -> str:
     b = m["b"]
     col_a = _group_color(a["group"])
     col_b = _group_color(b["group"])
+    b_label, b_bg, b_fg = TYPE_BADGE.get(m.get("type", ""), ("대진", "#6b7280", "#fff"))
     return f"""
 <div class="match" style="animation-delay:{delay_ms}ms">
-  <div class="side side-a" style="background:linear-gradient(135deg,{col_a}22,{col_a}08);">
-    <div class="rank" style="color:{col_a};">#{a['rank']}</div>
-    <div class="name">{a['member']}</div>
-    <div class="group-tag" style="background:{col_a}33;color:{col_a};">{a['group']}</div>
-  </div>
-  <div class="vs-col"><div class="vs">VS</div></div>
-  <div class="side side-b" style="background:linear-gradient(135deg,{col_b}08,{col_b}22);">
-    <div class="rank" style="color:{col_b};">#{b['rank']}</div>
-    <div class="name">{b['member']}</div>
-    <div class="group-tag" style="background:{col_b}33;color:{col_b};">{b['group']}</div>
+  <div class="match-badge" style="background:{b_bg};color:{b_fg};">{b_label}</div>
+  <div class="match-body">
+    <div class="side side-a" style="background:linear-gradient(135deg,{col_a}22,{col_a}08);">
+      <div class="rank" style="color:{col_a};">#{a['rank']}</div>
+      <div class="name">{a['member']}</div>
+      <div class="group-tag" style="background:{col_a}33;color:{col_a};">{a['group']}</div>
+    </div>
+    <div class="vs-col"><div class="vs">VS</div></div>
+    <div class="side side-b" style="background:linear-gradient(135deg,{col_b}08,{col_b}22);">
+      <div class="rank" style="color:{col_b};">#{b['rank']}</div>
+      <div class="name">{b['member']}</div>
+      <div class="group-tag" style="background:{col_b}33;color:{col_b};">{b['group']}</div>
+    </div>
   </div>
 </div>"""
 
 
 def _make_html(matches: list) -> str:
+    matches = _order_matches(matches)
     cards = "\n".join(_match_card_html(m, 200 + i * 260) for i, m in enumerate(matches))
     footer_delay = 200 + len(matches) * 260 + 400
     return f"""<!DOCTYPE html>
@@ -72,38 +88,45 @@ def _make_html(matches: list) -> str:
     width:1080px; height:1920px; overflow:hidden;
     background:linear-gradient(160deg,#080618 0%,#14063a 45%,#230947 100%);
     color:#fff; display:flex; flex-direction:column;
-    align-items:center; padding:96px 56px 72px;
+    align-items:center; padding:88px 56px 68px;
   }}
-  .header {{ text-align:center; margin-bottom:56px; animation:fadeDown .55s ease both; }}
+  .header {{ text-align:center; animation:fadeDown .55s ease both; }}
   .pill {{
     display:inline-flex; align-items:center; gap:10px;
     background:#fbbf24; color:#000; font-size:30px; font-weight:800;
     letter-spacing:1px; padding:12px 34px; border-radius:40px; margin-bottom:24px;
   }}
   .header h1 {{
-    font-size:104px; font-weight:900; line-height:1.05;
+    font-size:100px; font-weight:900; line-height:1.05;
     background:linear-gradient(90deg,#fff 0%,#c4b5fd 100%);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   }}
   .header .sub {{ margin-top:18px; font-size:34px; color:rgba(255,255,255,.7); font-weight:500; }}
+  /* 매치 그룹을 헤더~푸터 사이 중앙에 배치 → 하단 빈 공간 제거 */
+  .matches {{ flex:1; width:100%; display:flex; flex-direction:column;
+              justify-content:center; gap:34px; }}
   .match {{
     width:100%; position:relative; background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.12); border-radius:22px; margin-bottom:26px;
-    display:flex; align-items:stretch; overflow:hidden;
+    border:1px solid rgba(255,255,255,.12); border-radius:24px; overflow:hidden;
     opacity:0; transform:translateY(38px); animation:slideUp .5s ease forwards;
   }}
-  .side {{ flex:1; padding:34px 24px; display:flex; flex-direction:column;
-           align-items:center; justify-content:center; gap:12px; text-align:center; }}
+  .match-badge {{
+    font-size:34px; font-weight:900; letter-spacing:2px; text-align:center;
+    padding:16px 0;
+  }}
+  .match-body {{ display:flex; align-items:stretch; }}
+  .side {{ flex:1; padding:40px 24px; display:flex; flex-direction:column;
+           align-items:center; justify-content:center; gap:14px; text-align:center; }}
   .rank {{ font-size:28px; font-weight:800; letter-spacing:1px; }}
-  .name {{ font-size:58px; font-weight:900; line-height:1.1; word-break:keep-all; }}
-  .group-tag {{ font-size:24px; font-weight:700; padding:6px 20px; border-radius:22px; }}
-  .vs-col {{ width:92px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }}
-  .vs {{ font-size:38px; font-weight:900; color:rgba(255,255,255,.9);
+  .name {{ font-size:64px; font-weight:900; line-height:1.1; word-break:keep-all; }}
+  .group-tag {{ font-size:25px; font-weight:700; padding:6px 22px; border-radius:22px; }}
+  .vs-col {{ width:100px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }}
+  .vs {{ font-size:42px; font-weight:900; color:rgba(255,255,255,.9);
          text-shadow:0 0 20px rgba(255,255,255,.4); }}
-  .footer {{ margin-top:auto; text-align:center; opacity:0;
+  .footer {{ text-align:center; opacity:0;
              animation:fadeUp .5s {footer_delay}ms ease both; }}
   .cta-box {{ background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
-              border-radius:18px; padding:26px 44px; margin-bottom:20px; }}
+              border-radius:18px; padding:28px 44px; margin-bottom:20px; }}
   .cta-main {{ font-size:42px; font-weight:800; color:#fbbf24; margin-bottom:8px; }}
   .cta-sub {{ font-size:27px; color:rgba(255,255,255,.7); }}
   .handle {{ font-size:28px; color:rgba(255,255,255,.45); font-weight:500; }}
@@ -114,14 +137,16 @@ def _make_html(matches: list) -> str:
 </head>
 <body>
   <div class="header">
-    <div class="pill">결승 대진 확정</div>
-    <h1>결승<br>대진</h1>
-    <div class="sub">우승 발표는 내일 낮 12시 30분</div>
+    <div class="pill">대진 확정</div>
+    <h1>결승 라인업</h1>
+    <div class="sub">결승전 · 3·4위전 동시 투표 · 우승 발표 내일 낮 12시 30분</div>
   </div>
+  <div class="matches">
 {cards}
+  </div>
   <div class="footer">
     <div class="cta-box">
-      <div class="cta-main">지금 결승 게시글에서 댓글 투표</div>
+      <div class="cta-main">지금 게시글에서 댓글 투표</div>
       <div class="cta-sub">팔로우 + 알림 ON → 우승 발표 즉시 알림</div>
     </div>
     <div class="handle">@daily_enter_kr</div>
@@ -182,14 +207,19 @@ def main():
         print(f"❌ IG 토큰 무효: {health.get('error_message')}")
         return 1
 
-    names = [m["a"]["member"] for m in matches] + [m["b"]["member"] for m in matches]
-    pairs = " / ".join(f"{m['a']['member']} vs {m['b']['member']}" for m in matches)
+    ordered = _order_matches(matches)
+    names = [m["a"]["member"] for m in ordered] + [m["b"]["member"] for m in ordered]
+    pair_lines = "\n".join(
+        f"{TYPE_BADGE.get(m.get('type', ''), ('대진',))[0]}: "
+        f"{m['a']['member']} vs {m['b']['member']}"
+        for m in ordered
+    )
     caption = (
-        "걸그룹 월드컵 결승 대진 확정!\n\n"
-        f"대진: {pairs}\n\n"
-        "결승 게시글에서 지금 댓글로 투표할 수 있습니다.\n"
+        "걸그룹 월드컵 결승 라인업 확정!\n\n"
+        f"{pair_lines}\n\n"
+        "각 경기 게시글에서 지금 댓글로 투표할 수 있습니다.\n"
         "팔로우 + 알림 ON → 우승 발표 즉시 알림\n\n"
-        "#걸그룹월드컵 #결승 #케이팝 #kpop #아이돌투표 "
+        "#걸그룹월드컵 #결승전 #케이팝 #kpop #아이돌투표 "
         + " ".join("#" + n for n in names)
     )
     media_id = publisher.post_reel(video_url, caption, cover_url=None, share_to_feed=True)

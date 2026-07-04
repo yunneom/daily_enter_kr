@@ -2187,23 +2187,6 @@
       "matches": [
         {
           "round": "R2",
-          "type": "third_place",
-          "a": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "b": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "winner": null
-        },
-        {
-          "round": "R2",
           "type": "final",
           "a": {
             "rank": 15,
@@ -2218,49 +2201,28 @@
             "score": 4736626
           },
           "winner": null
+        },
+        {
+          "round": "R2",
+          "type": "third_place",
+          "a": {
+            "rank": 9,
+            "group": "에스파",
+            "member": "윈터",
+            "score": 2361861
+          },
+          "b": {
+            "rank": 12,
+            "group": "엔믹스",
+            "member": "설윤",
+            "score": 1778210
+          },
+          "winner": null
         }
       ],
       "posts": [
         {
           "post_idx": 0,
-          "match1": {
-            "round": "R2",
-            "type": "third_place",
-            "a": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "winner": null
-          },
-          "match2": {
-            "round": "R2",
-            "type": "third_place",
-            "a": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "winner": null
-          },
-          "type": "third_place_solo"
-        },
-        {
-          "post_idx": 1,
           "match1": {
             "round": "R2",
             "type": "final",
@@ -2296,6 +2258,44 @@
             "winner": null
           },
           "type": "final_solo"
+        },
+        {
+          "post_idx": 1,
+          "match1": {
+            "round": "R2",
+            "type": "third_place",
+            "a": {
+              "rank": 9,
+              "group": "에스파",
+              "member": "윈터",
+              "score": 2361861
+            },
+            "b": {
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
+            },
+            "winner": null
+          },
+          "match2": {
+            "round": "R2",
+            "type": "third_place",
+            "a": {
+              "rank": 9,
+              "group": "에스파",
+              "member": "윈터",
+              "score": 2361861
+            },
+            "b": {
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
+            },
+            "winner": null
+          },
+          "type": "third_place_solo"
         }
       ]
     }

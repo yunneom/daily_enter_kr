@@ -45,13 +45,14 @@ def main() -> int:
                    "a": winners[0], "b": winners[1], "winner": None}
     third_match = {"round": "R2", "type": "third_place",
                    "a": losers[0], "b": losers[1], "winner": None}
+    # 게시 순서: 결승전(닝닝 vs 카리나) 먼저 → 3·4위전(윈터 vs 설윤). 사용자 요청.
     b["rounds"]["R2"] = {
-        "matches": [third_match, final_match],
+        "matches": [final_match, third_match],
         "posts": [
-            {"post_idx": 0, "match1": third_match, "match2": third_match,
-             "type": "third_place_solo"},
-            {"post_idx": 1, "match1": final_match, "match2": final_match,
+            {"post_idx": 0, "match1": final_match, "match2": final_match,
              "type": "final_solo"},
+            {"post_idx": 1, "match1": third_match, "match2": third_match,
+             "type": "third_place_solo"},
         ],
     }
     b["current_round"] = "R2"

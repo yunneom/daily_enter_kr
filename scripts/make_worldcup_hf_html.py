@@ -28,18 +28,30 @@ ZONE_COLORS = {
 ZONE_NAMES = ["A조", "B조", "C조", "D조"]
 ZONE_EMOJIS = ["👑", "🌹", "🦋", "💎"]
 
+# R2(결승 라운드)는 조(zone) 대신 매치 타입으로 라벨 — 결승전/3·4위전 명확 구분.
+R2_TYPE_LABELS = {
+    "final":       ("🏆 결승전",  "#c99a2e"),
+    "third_place": ("🥉 3·4위전", "#8a5a2b"),
+}
+
 
 def _match_block(m, delay_ms: int, zone_idx: int) -> str:
     a = m.get("a", {})
     b = m.get("b", {})
-    color = ZONE_COLORS.get(zone_idx, "#4e1c60")
-    a_seed = a.get("seed", "")
-    b_seed = b.get("seed", "")
+    # R2 매치는 type 기반 라벨/색 (quarter 키가 없어 zone 이 모두 A조로 뭉치는 버그 방지)
+    mtype = m.get("type")
+    if mtype in R2_TYPE_LABELS:
+        zone_label, color = R2_TYPE_LABELS[mtype]
+    else:
+        color = ZONE_COLORS.get(zone_idx, "#4e1c60")
+        zone_label = f"{ZONE_EMOJIS[zone_idx]} {ZONE_NAMES[zone_idx]}"
+    a_seed = a.get("seed") or a.get("rank", "")
+    b_seed = b.get("seed") or b.get("rank", "")
     a_name = a.get("member", "?")
     b_name = b.get("member", "?")
     return f"""
   <div class="match-card" style="animation-delay:{delay_ms}ms; border-color:{color}80;">
-    <div class="match-zone" style="background:{color};">{ZONE_EMOJIS[zone_idx]} {ZONE_NAMES[zone_idx]}</div>
+    <div class="match-zone" style="background:{color};">{zone_label}</div>
     <div class="match-inner">
       <div class="fighter a">
         <span class="seed">#{a_seed}</span>
@@ -59,22 +71,32 @@ def _make_html(bracket: dict, round_key: str) -> str:
     matches = rnd.get("matches", [])
     round_label = ROUND_LABELS.get(round_key, round_key)
     n_matches = len(matches)
-
-    # 조별 그루핑
-    zone_map: dict = {}
-    for m in matches:
-        q = m.get("quarter", 0)
-        zone_map.setdefault(q, []).append(m)
+    is_r2 = round_key == "R2"
 
     match_blocks = []
     delay = 200
-    for q in sorted(zone_map.keys()):
-        for m in zone_map[q]:
-            match_blocks.append(_match_block(m, delay, q))
+    if is_r2:
+        # R2: 조 그루핑 대신 결승전 먼저 → 3·4위전. 라벨은 _match_block 이 type 으로 처리.
+        for m in sorted(matches, key=lambda mm: 0 if mm.get("type") == "final" else 1):
+            match_blocks.append(_match_block(m, delay, 0))
             delay += 250
+    else:
+        # 조별 그루핑
+        zone_map: dict = {}
+        for m in matches:
+            q = m.get("quarter", 0)
+            zone_map.setdefault(q, []).append(m)
+        for q in sorted(zone_map.keys()):
+            for m in zone_map[q]:
+                match_blocks.append(_match_block(m, delay, q))
+                delay += 250
 
     blocks_html = "\n".join(match_blocks)
     total_anim_ms = delay + 800
+
+    badge_text = "🏆 결승 라인업" if is_r2 else f"🏆 {round_label}"
+    sub_text = ("결승전 · 3·4위전 — 지금 바로 투표!" if is_r2
+                else f"{n_matches}경기 — 지금 바로 투표!")
 
     return f"""<!DOCTYPE html>
 <html lang="ko">
@@ -175,9 +197,9 @@ def _make_html(bracket: dict, round_key: str) -> str:
 </head>
 <body>
   <div class="header">
-    <div class="round-badge">🏆 {round_label}</div>
+    <div class="round-badge">{badge_text}</div>
     <h1>걸그룹<br>월드컵</h1>
-    <div class="sub">{n_matches}경기 — 지금 바로 투표!</div>
+    <div class="sub">{sub_text}</div>
   </div>
 
 {blocks_html}

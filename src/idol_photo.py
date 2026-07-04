@@ -471,12 +471,13 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
     # Retry-After 존중 백오프(최대 3회) + 성공 후 pacing 으로 연속 요청 간격 확보.
     fname = f"{member_name}.jpg"
     ok = False
+    DL_TRIES = 5  # GHA 공유 IP 는 upload.wikimedia.org 에 자주 429 → 재시도 여유 확보
     try:
-        for attempt in range(3):
-            r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=15)
+        for attempt in range(DL_TRIES):
+            r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=20)
             if r.status_code == 429:
-                wait = min(int(r.headers.get("Retry-After") or 8) + attempt * 5, 45)
-                print(f"  ⏳ 다운로드 429: {member_name} — {wait}s 대기 후 재시도({attempt+1}/3)")
+                wait = min(int(r.headers.get("Retry-After") or 8) + attempt * 7, 60)
+                print(f"  ⏳ 다운로드 429: {member_name} — {wait}s 대기 후 재시도({attempt+1}/{DL_TRIES})")
                 time.sleep(wait)
                 continue
             if not r.ok:

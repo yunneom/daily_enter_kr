@@ -149,7 +149,9 @@ def main():
     print(f"\n✅ {round_key} 게시 완료: {ok}/{len(posts)}")
 
     # HyperFrames 릴스 — 매치 게시 완료 후 추가 (대진표 HF)
-    if ok > 0:
+    # R2(결승)는 제외: 결승전/3·4위전 2매치를 한 대진표에 넣으면 "결승 두경기"처럼
+    # 보여 혼동 → 결승 대진 홍보는 별도 worldcup_post_r2_promo.py(타입 배지)만 사용.
+    if ok > 0 and round_key != "R2":
         _post_hf_reel(publisher, round_key, out_dir=ROOT / "output_enter" / "publish" / f"worldcup_{round_key.lower()}")
 
     # Discord 알림
