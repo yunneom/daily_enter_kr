@@ -46,6 +46,7 @@ OVERRIDES_PATH = ROOT / "data" / "idol_photo_overrides.json"
 BIRTHDAYS_PATH = ROOT / "data" / "member_birthdays.json"
 UA = "daily_enter_kr-worldcup/1.0 (educational fan project; contact @daily_enter_kr)"
 THUMB_SIZE = 600
+_LAST_DL_TS = [0.0]  # 멤버 간 다운로드 throttle 용 (프록시 rate-limit 회피)
 KST = timezone(timedelta(hours=9))
 
 # disambiguation 오버라이드 — 정확한 ko.wikipedia 문서 제목.
@@ -468,15 +469,26 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
             return None
 
     # 다운로드 — upload.wikimedia.org 는 GHA 공유 IP 에 429 를 강하게 걸어(재시도로도
-    # 못 뚫림) 다중 소스로 시도: ① 직접(빠름, 될 때) → ② wsrv.nl 이미지 CDN 프록시
-    # (서버측에서 위키미디어를 대신 가져와 캐시 → GHA IP 429 우회). 같은 CC/PD 바이트라
-    # 라이선스·크레딧 동일. 각 소스 3회 백오프.
+    # 못 뚫림) 다중 프록시 폴백으로 우회: ① 직접(될 때 빠름) → ② Cloudinary fetch
+    # (프로젝트 자체 CDN, 서버측 페치+캐시) → ③ wsrv.nl 이미지 프록시. 한 프록시가
+    # rate-limit 걸려도 다른 소스로 이어받음. 같은 CC/PD 바이트라 라이선스·크레딧 동일.
+    # 멤버 간 최소 간격(throttle)으로 프록시 rate-limit 회피.
     from urllib.parse import quote  # noqa: PLC0415
     fname = f"{member_name}.jpg"
     thumb = hit["thumb_url"]
-    proxied = "https://wsrv.nl/?url=" + quote(thumb, safe="") + "&output=jpg"
-    # (소스명, url, 시도횟수) — direct 는 GHA IP 429 가 상시라 1회만 찔러보고 즉시 프록시로.
-    sources = [("direct", thumb, 1), ("wsrv", proxied, 4)]
+    enc = quote(thumb, safe="")
+    sources = [("direct", thumb, 1)]
+    cloud = os.environ.get("CLOUDINARY_CLOUD_NAME")
+    if cloud:
+        sources.append(("cloudinary",
+                        f"https://res.cloudinary.com/{cloud}/image/fetch/w_600,c_limit,f_jpg/{enc}", 3))
+    sources.append(("wsrv", f"https://wsrv.nl/?url={enc}&output=jpg", 4))
+
+    # 멤버 간 최소 간격 확보 — 첫 멤버는 대기 없음 (프록시 연속요청 rate-limit 완화)
+    _gap = 4.0 - (time.monotonic() - _LAST_DL_TS[0])
+    if _gap > 0:
+        time.sleep(_gap)
+
     ok = False
     for src_name, url, tries in sources:
         for attempt in range(tries):
@@ -489,12 +501,12 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
                 if attempt + 1 >= tries:
                     print(f"  ⏭️ {src_name} 429: {member_name} — 다음 소스로")
                     break
-                wait = min(int(r.headers.get("Retry-After") or 6) + attempt * 5, 40)
+                wait = min(int(r.headers.get("Retry-After") or 6) + attempt * 6, 45)
                 print(f"  ⏳ {src_name} 429: {member_name} — {wait}s 대기 재시도({attempt+1}/{tries})")
                 time.sleep(wait)
                 continue
             if not r.ok:
-                print(f"  ⚠️ {src_name} 실패: {member_name} — HTTP {r.status_code}")
+                print(f"  ⚠️ {src_name} 실패: {member_name} — HTTP {r.status_code} → 다음 소스")
                 break
             if len(r.content) < 2000:  # 프록시 에러 플레이스홀더 방지
                 print(f"  ⚠️ {src_name} 응답 과소({len(r.content)}B) — 다음 소스")
@@ -502,10 +514,10 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
             (CACHE_DIR / fname).write_bytes(r.content)
             ok = True
             print(f"  ✅ 사진 확보: {member_name} ({src_name}, {len(r.content)//1024}KB)")
-            time.sleep(1)  # pacing
             break
         if ok:
             break
+    _LAST_DL_TS[0] = time.monotonic()
     if not ok:
         attr[member_name] = {"none": True, "reason": "download failed (429/HTTP)"}
         _save_attr(attr)
