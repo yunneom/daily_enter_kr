@@ -169,6 +169,36 @@ def decide_winners(match1: Dict, match2: Dict, weighted: Dict,
     return m1_votes, m2_votes, {"m1": m1_winner, "m2": m2_winner}
 
 
+def decide_solo_winner(match: Dict, weighted: Dict,
+                       raw: Dict = None) -> Tuple[Dict, Dict]:
+    """솔로 게시(R2 결승전/3·4위전) — 1매치 2지선다: 1 = a, 2 = b.
+    가중집계(weighted)로 결정, 동률시 raw 인원수, 그래도 동률이면 시드(rank).
+
+    Returns: (votes, winner). votes 에 weighted/raw 둘 다 담음."""
+    raw = raw or weighted
+    wa, wb = weighted["1"], weighted["2"]
+    ra, rb = raw["1"], raw["2"]
+    if wa != wb:
+        winner = match["a"] if wa > wb else match["b"]
+    elif ra != rb:
+        winner = match["a"] if ra > rb else match["b"]
+    else:
+        winner = (match["a"]
+                  if match["a"].get("rank", 99) <= match["b"].get("rank", 99)
+                  else match["b"])
+    votes = {"a": wa, "b": wb, "raw_a": ra, "raw_b": rb}
+    return votes, winner
+
+
+def _match_key(m: Dict):
+    """posts[].match* ↔ rounds.matches[] 동기화 키.
+    R32~R4 매치는 (quarter, slot), R2 매치는 quarter/slot 없이 type
+    ("third_place"/"final") 만 있음 → type 우선."""
+    if m.get("type"):
+        return ("type", m["type"])
+    return ("qs", m.get("quarter"), m.get("slot"))
+
+
 def load_ledger() -> Dict[str, str]:
     """post_ledger.json → topic_id (또는 worldcup_post_key) → ig_media_id 매핑.
     월드컵 게시는 topic_id 가 worldcup_{round}_{post_idx} 형태로 기록되어 있어야."""
@@ -212,6 +242,20 @@ def build_next_round(bracket: Dict, cur_round: str) -> bool:
     if any(m.get("winner") is None for m in matches):
         print(f"⚠️  {cur_round} 일부 매치 winner 미정 — 다음 라운드 빌드 보류")
         return False
+    if cur_round == "R2":
+        # ── R2 → R1 특례 — 챔피언은 반드시 type=="final" 매치의 winner.
+        # (matches[0] 은 3·4위전! 일반 페어링 루프는 3·4위전 승자와 결승 승자를
+        #  가짜 매치로 묶어버림 → 우승자 오판. 여기서 명시적으로 결승만 사용)
+        final = next((m for m in matches if m.get("type") == "final"), None)
+        if not final or not final.get("winner"):
+            print("⚠️  R2 final 매치 winner 없음 — 우승 확정 보류")
+            return False
+        champion = final["winner"]
+        bracket["winner"] = champion
+        bracket["rounds"]["R1"] = {"matches": [], "posts": [], "winner": champion}
+        bracket["current_round"] = "R1"
+        print(f"🏆 토너먼트 완료 — 우승: {champion['member']} ({champion['group']})")
+        return True
     nxt_key = next_round_key(cur_round)
     if not nxt_key:
         print(f"🏆 {cur_round} 가 마지막 라운드 — 토너먼트 완료")
@@ -326,9 +370,10 @@ def main():
 
     ledger = load_ledger()
 
-    # JSON load 후 posts.match* 와 rounds.matches[i] 가 다른 객체 → quarter+slot
-    # 으로 인덱싱해서 양쪽 다 winner/votes 채워야 build_next_round 가 동작.
-    matches_idx = {(m["quarter"], m["slot"]): m for m in rnd.get("matches", [])}
+    # JSON load 후 posts.match* 와 rounds.matches[i] 가 다른 객체 → 키로
+    # 인덱싱해서 양쪽 다 winner/votes 채워야 build_next_round 가 동작.
+    # (R32~R4 = quarter+slot, R2 = type — R2 매치엔 quarter/slot 없음)
+    matches_idx = {_match_key(m): m for m in rnd.get("matches", [])}
 
     print(f"=== {round_key} 댓글 집계 시작 ({len(posts)} 게시글, {len(matches)} 매치) ===")
     # 게시글 단위로 댓글 수집 + 매치 1·2 winner 결정
@@ -341,19 +386,6 @@ def main():
             print(f"  ⚠️  post #{idx+1} ({tid}) ig_media_id 미상 — 스킵")
             continue
         tally = tally_post(media_id, token)
-        m1 = post["match1"]; m2 = post["match2"]
-        m1_v, m2_v, winners = decide_winners(m1, m2, tally["weighted"], tally["counts"])
-        # posts 카피 + rounds.matches 의 원본 양쪽에 동기화
-        for target in (m1, matches_idx.get((m1.get("quarter"), m1.get("slot")))):
-            if target is None:
-                continue
-            target["winner"] = winners["m1"]
-            target["votes"] = m1_v
-        for target in (m2, matches_idx.get((m2.get("quarter"), m2.get("slot")))):
-            if target is None:
-                continue
-            target["winner"] = winners["m2"]
-            target["votes"] = m2_v
         post["tally"] = {
             "raw_comments": tally["raw_comments"],
             "valid_votes": tally["valid_votes"],
@@ -361,6 +393,39 @@ def main():
             "weighted": tally["weighted"],   # 1+좋아요 가중
         }
         c, w = tally["counts"], tally["weighted"]
+
+        if (post.get("type") or "").endswith("_solo"):
+            # ── 솔로 게시 (R2 결승전/3·4위전) — 1매치 2지선다: 1=a, 2=b ──
+            # match1 == match2 (같은 매치) → 하나로 집계, 양쪽 + matches[] 동기화
+            m = post["match1"]
+            votes, winner = decide_solo_winner(m, tally["weighted"], tally["counts"])
+            for target in (post["match1"], post["match2"],
+                           matches_idx.get(_match_key(m))):
+                if target is None:
+                    continue
+                target["winner"] = winner
+                target["votes"] = votes
+            print(f"  post #{idx+1} ({post['type']}): 댓글 {tally['raw_comments']} "
+                  f"(유효투표 {tally['valid_votes']}명)")
+            print(f"    인원: 1={c['1']} 2={c['2']}  가중(+좋아요): 1={w['1']} 2={w['2']}")
+            print(f"    {m['a']['member']}(가중{votes['a']}/{votes['raw_a']}명) vs "
+                  f"{m['b']['member']}(가중{votes['b']}/{votes['raw_b']}명) "
+                  f"→ 승: {winner['member']}")
+            continue
+
+        m1 = post["match1"]; m2 = post["match2"]
+        m1_v, m2_v, winners = decide_winners(m1, m2, tally["weighted"], tally["counts"])
+        # posts 카피 + rounds.matches 의 원본 양쪽에 동기화
+        for target in (m1, matches_idx.get(_match_key(m1))):
+            if target is None:
+                continue
+            target["winner"] = winners["m1"]
+            target["votes"] = m1_v
+        for target in (m2, matches_idx.get(_match_key(m2))):
+            if target is None:
+                continue
+            target["winner"] = winners["m2"]
+            target["votes"] = m2_v
         print(f"  post #{idx+1}: 댓글 {tally['raw_comments']} (유효투표 {tally['valid_votes']}명)")
         print(f"    인원: 1={c['1']} 2={c['2']} 3={c['3']} 4={c['4']}  "
               f"가중(+좋아요): 1={w['1']} 2={w['2']} 3={w['3']} 4={w['4']}")

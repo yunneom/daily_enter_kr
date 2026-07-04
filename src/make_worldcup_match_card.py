@@ -191,14 +191,16 @@ def _rounded_grad(w: int, h: int, top, bot, radius: int = 24) -> Image.Image:
 
 
 def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
-                 member: Dict) -> Optional[Dict]:
+                 member: Dict, scale: float = 1.0) -> Optional[Dict]:
     """단일 멤버 카드 — 그룹 시그니처 컬러 그라데이션 + 큰 emoji +
     'IVE 장원영' 한 줄 표기(그룹영문+이름) + BR 순위 배지.
+    scale: 솔로(결승/3·4위전) 카드 확대 배율 — emoji/사진/이름 위치를 함께 스케일.
     (실사 사진은 IDOL_PHOTOS=on 일 때만, 기본 off. 사진은 idol_photo 의
     검증 커먼즈 오버라이드 + CC/PD + 성인 게이트를 통과한 것만.)
     반환: 사진 사용 시 {"artist","license"} (카드 하단 크레딧용), 아니면 None."""
     grp = member.get("group", "")
     name = member.get("member", "")
+    s = scale
     top, bot = group_color_for(grp)
     # 시그니처 컬러 그라데이션 카드 + 금 테두리
     card = _rounded_grad(w, h, top, bot)
@@ -215,12 +217,14 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
             import idol_photo
             rec = idol_photo.fetch_photo(name)
             if rec and rec.get("path"):
-                circ = _circle_photo(rec["path"], 150)
+                ph_sz = int(150 * s)
+                ring = ph_sz + 8
+                circ = _circle_photo(rec["path"], ph_sz)
                 if circ:
-                    d.ellipse([x + (w - 158) // 2, y + 22,
-                               x + (w - 158) // 2 + 158, y + 22 + 158],
+                    d.ellipse([x + (w - ring) // 2, y + int(22 * s),
+                               x + (w - ring) // 2 + ring, y + int(22 * s) + ring],
                               outline=WHITE, width=4)
-                    img.alpha_composite(circ, (x + (w - 150) // 2, y + 26))
+                    img.alpha_composite(circ, (x + (w - ph_sz) // 2, y + int(26 * s)))
                     photo_done = True
                     credit = {"artist": rec.get("artist", ""),
                               "license": rec.get("license", "")}
@@ -230,43 +234,47 @@ def _member_card(img: Image.Image, x: int, y: int, w: int, h: int,
     if not photo_done:
         cx = x + w // 2
         # 반투명→거의 불투명 흰 원 (블랙핑크 🩷 등 옅은 emoji 도 선명하게)
+        rad = int(88 * s)
+        disc_top = int(24 * s)
         disc = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-        ImageDraw.Draw(disc).ellipse([w // 2 - 88, 24, w // 2 + 88, 24 + 176],
+        ImageDraw.Draw(disc).ellipse([w // 2 - rad, disc_top, w // 2 + rad, disc_top + rad * 2],
                                      fill=(255, 255, 255, 235), outline=(255, 255, 255, 255), width=3)
         img.alpha_composite(disc, (x, y))
-        em = _get_emoji_image(group_emoji_for(grp), 150)
+        em_sz = int(150 * s)
+        em = _get_emoji_image(group_emoji_for(grp), em_sz)
         if em:
-            img.alpha_composite(em, (cx - 75, y + 38))
+            img.alpha_composite(em, (cx - em_sz // 2, y + int(38 * s)))
 
     # "IVE 장원영" — 흰 라운드 박스 위 검정 글씨 (집중 ↑). 그룹+이름 같은 폰트/크기.
     cx = x + w // 2
     grp_en = group_en_for(grp)
     one_line = f"{grp_en} {name}"
-    def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
+    def _tw(s_, f): bb = f.getbbox(s_); return bb[2] - bb[0]
     box_x0, box_x1 = x + 12, x + w - 12
     box_inner = (box_x1 - box_x0) - 24  # 박스 안쪽 텍스트 가용폭
     # 한 줄 시도
-    size = 54; nf = _font("Bold", size)
-    while _tw(one_line, nf) > box_inner and size > 34:
+    size = int(54 * s); nf = _font("Bold", size)
+    while _tw(one_line, nf) > box_inner and size > int(34 * s):
         size -= 2; nf = _font("Bold", size)
     if _tw(one_line, nf) <= box_inner:
         lines = [one_line]
     else:
         # 2줄 (그룹 / 이름)
-        size = 50; nf = _font("Bold", size)
-        while max(_tw(grp_en, nf), _tw(name, nf)) > box_inner and size > 30:
+        size = int(50 * s); nf = _font("Bold", size)
+        while max(_tw(grp_en, nf), _tw(name, nf)) > box_inner and size > int(30 * s):
             size -= 2; nf = _font("Bold", size)
         lines = [grp_en, name]
     # 흰 박스 (이름 영역 배경)
-    pad_y = 12
-    box_h = len(lines) * size + (len(lines) - 1) * 6 + pad_y * 2
-    box_y0 = y + 206
+    pad_y = int(12 * s)
+    gap_ln = int(6 * s)
+    box_h = len(lines) * size + (len(lines) - 1) * gap_ln + pad_y * 2
+    box_y0 = y + int(206 * s)
     d.rounded_rectangle([box_x0, box_y0, box_x1, box_y0 + box_h],
                         radius=16, fill=(255, 255, 255), outline=GOLD, width=2)
     ty = box_y0 + pad_y
     for ln in lines:
         d.text((cx - _tw(ln, nf) / 2, ty), ln, font=nf, fill=INK)
-        ty += size + 6
+        ty += size + gap_ln
 
     # BR 순위 배지 (좌상단, 골드)
     rk = member.get("rank")
@@ -323,6 +331,84 @@ def _match_block(img: Image.Image, x0: int, y0: int, width: int,
     d.text((vs_cx - vw / 2, vs_cy - vh / 2 - 18), vs_text,
            font=vsf, fill=VS_RED, stroke_width=4, stroke_fill=WHITE)
     return credits
+
+
+def _solo_match_block(img: Image.Image, x0: int, y0: int, width: int,
+                      a: Dict, b: Dict, card_h: int, scale: float) -> list:
+    """솔로(결승/3·4위전) 매치 — 확대된 멤버 카드 2개 + 중앙 VS.
+    콤보 카드와 같은 스타일, '매치 N' 라벨 없이 (헤더가 결승전/3·4위전 명시).
+    반환: 사진 크레딧 dict 리스트."""
+    d = ImageDraw.Draw(img)
+    gap = 20
+    vs_w = 90
+    card_w = (width - vs_w - 2 * gap) // 2
+    left_x = x0
+    right_x = x0 + card_w + gap + vs_w + gap
+
+    credits = []
+    for cr in (_member_card(img, left_x, y0, card_w, card_h, a, scale=scale),
+               _member_card(img, right_x, y0, card_w, card_h, b, scale=scale)):
+        if cr:
+            credits.append(cr)
+
+    # VS 텍스트 (중앙) — 솔로는 더 크게
+    vsf = _font("Bold", 130)
+    vs_text = "VS"
+    bb = vsf.getbbox(vs_text)
+    vw = bb[2] - bb[0]
+    vh = bb[3] - bb[1]
+    vs_cx = x0 + card_w + gap + vs_w // 2
+    vs_cy = y0 + card_h // 2
+    d.text((vs_cx - vw / 2, vs_cy - vh / 2 - 18), vs_text,
+           font=vsf, fill=VS_RED, stroke_width=4, stroke_fill=WHITE)
+    return credits
+
+
+def _solo_choice_row(img: Image.Image, y_start: int, a: Dict, b: Dict):
+    """솔로 투표 — 2지선다 한 줄 (1={a}, 2={b}). 콤보 grid 와 같은 비주얼."""
+    draw = ImageDraw.Draw(img)
+    hf = _font("Bold", 48)
+    _draw_centered(draw, "💬 댓글에 번호로 투표 ⬇️", hf,
+                   CANVAS[0] // 2, y_start, fill=WHITE,
+                   stroke=2, stroke_fill=INK)
+
+    options = [(1, a), (2, b)]
+    row_top = y_start + 70
+    cell_w = 480
+    cell_h = 130
+    gap_x = 24
+    row_x0 = (CANVAS[0] - 2 * cell_w - gap_x) // 2
+
+    cf_num = _font("Bold", 72)
+    cf_txt = _font("Bold", 48)
+
+    for i, (n, m) in enumerate(options):
+        x = row_x0 + i * (cell_w + gap_x)
+        y = row_top
+        draw.rounded_rectangle([x, y, x + cell_w, y + cell_h],
+                               radius=20, fill=CARD_BG,
+                               outline=PINK, width=4)
+        # 번호 배지
+        d_ = ImageDraw.Draw(img)
+        d_.ellipse([x + 18, y + 22, x + 18 + 86, y + 22 + 86], fill=RED)
+        ns = str(n)
+        bb = cf_num.getbbox(ns)
+        nw = bb[2] - bb[0]
+        d_.text((x + 18 + 43 - nw / 2 - 2, y + 28), ns,
+                font=cf_num, fill=WHITE)
+        # 멤버 이름
+        txt = m["member"]
+        bb = cf_txt.getbbox(txt)
+        tw = bb[2] - bb[0]
+        if tw > cell_w - 130:
+            cf_txt2 = _font("Bold", 36)
+            bb = cf_txt2.getbbox(txt)
+            tw = bb[2] - bb[0]
+            d_.text((x + 116 + (cell_w - 130 - tw) / 2, y + 44),
+                    txt, font=cf_txt2, fill=INK)
+        else:
+            d_.text((x + 116 + (cell_w - 130 - tw) / 2, y + 36),
+                    txt, font=cf_txt, fill=INK)
 
 
 def _choice_grid(img: Image.Image, y_start: int,
@@ -387,7 +473,7 @@ def _choice_grid(img: Image.Image, y_start: int,
 
 
 def make_worldcup_match_card(
-    round_label: str,            # "32강" / "16강" ...
+    round_label: str,            # "32강" / "16강" ... / 솔로는 "결승전"·"3·4위전"
     post_index: int,             # 1-based
     post_total: int,
     match1: Dict,                # {"a": {rank,group,member}, "b": {...}}
@@ -395,7 +481,11 @@ def make_worldcup_match_card(
     output_path: Path,
     source_note: str = "출처: 한국기업평판연구소 2026.6.21",
     brand: str = "@daily_enter_kr · 매일 새로운 픽",
+    post_type: str = "",         # "third_place_solo" / "final_solo" → 1매치 솔로 레이아웃
 ) -> Path:
+    # 솔로 판별 — R2(결승/3·4위전)는 match1 == match2 (같은 매치 1개뿐)
+    solo = (post_type or "").endswith("_solo") or match1 is match2 or match1 == match2
+
     img = _vgrad(CANVAS, BG_TOP, BG_BOT).convert("RGBA")
     d = ImageDraw.Draw(img)
 
@@ -420,17 +510,33 @@ def make_worldcup_match_card(
     _draw_centered(d, sub_text, sub_f, CANVAS[0] // 2, 170,
                    fill=WHITE_DIM)
 
-    # === 매치 1 ===
-    photo_credits = _match_block(img, 30, 245, CANVAS[0] - 60, 1,
-                                 match1["a"], match1["b"])
+    if solo:
+        # === 솔로 (결승전/3·4위전) — 1매치만, 세로 중앙 정렬 + 확대 카드 ===
+        a, b = match1["a"], match1["b"]
+        s = 1.7
+        card_h = int(310 * s)
+        vote_h = 70 + 130          # 투표 헤더 오프셋 + 셀 높이
+        gap_block = 60             # 카드 ↔ 투표 사이
+        block_h = card_h + gap_block + vote_h
+        # 제목 쪽으로 살짝 당겨(상향 바이어스) 상단 여백 최소화 — 오너 피드백 반영
+        zone_top, zone_bot = 260, 1780
+        y0 = max(zone_top,
+                 zone_top + (zone_bot - zone_top - block_h) // 2 - 130)
+        photo_credits = _solo_match_block(img, 30, y0, CANVAS[0] - 60,
+                                          a, b, card_h, s)
+        _solo_choice_row(img, y0 + card_h + gap_block, a, b)
+    else:
+        # === 매치 1 ===
+        photo_credits = _match_block(img, 30, 245, CANVAS[0] - 60, 1,
+                                     match1["a"], match1["b"])
 
-    # === 매치 2 ===
-    photo_credits += _match_block(img, 30, 765, CANVAS[0] - 60, 2,
-                                  match2["a"], match2["b"])
+        # === 매치 2 ===
+        photo_credits += _match_block(img, 30, 765, CANVAS[0] - 60, 2,
+                                      match2["a"], match2["b"])
 
-    # === 4지선다 ===
-    _choice_grid(img, 1310, match1["a"], match1["b"],
-                 match2["a"], match2["b"])
+        # === 4지선다 ===
+        _choice_grid(img, 1310, match1["a"], match1["b"],
+                     match2["a"], match2["b"])
 
     # === 사진 크레딧 (필수 표기 — 사진 사용 시) ===
     # 위키미디어 CC 조건: 카드 이미지 자체에도 저작자/라이선스 명기.

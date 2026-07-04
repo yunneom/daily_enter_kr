@@ -21,6 +21,7 @@ from make_worldcup_match_card import make_worldcup_match_card  # noqa: E402
 from make_worldcup_match_video import (  # noqa: E402
     make_worldcup_match_video,
     build_worldcup_caption, build_worldcup_auto_comment,
+    build_worldcup_solo_caption, build_worldcup_solo_comment,
 )
 
 
@@ -28,6 +29,9 @@ ROUND_LABELS = {
     "R32": "32강", "R16": "16강", "R8": "8강",
     "R4": "4강", "R2": "결승전·3위전", "R1": "우승 발표",
 }
+
+# R2 솔로 게시 (1매치 1게시) — post.type → 카드/캡션 타이틀
+SOLO_LABELS = {"final_solo": "결승전", "third_place_solo": "3·4위전"}
 
 
 def main():
@@ -65,27 +69,44 @@ def main():
         cap = out_dir / f"post_{idx:02d}.caption.txt"
         com = out_dir / f"post_{idx:02d}.comment.txt"
 
-        # 1. jpg 카드
+        ptype = p.get("type", "") or ""
+        solo = ptype.endswith("_solo")           # R2 결승전/3·4위전 — 1매치 1게시
+        label = SOLO_LABELS.get(ptype, round_label)
+
+        # 1. jpg 카드 (솔로는 post_type 전달 → 1매치 중앙 레이아웃 + 2지선다)
         make_worldcup_match_card(
-            round_label=round_label, post_index=idx, post_total=n,
+            round_label=label, post_index=idx, post_total=n,
             match1=p["match1"], match2=p["match2"], output_path=jpg,
             source_note=f"출처: 한국기업평판연구소 {source_date}",
+            post_type=ptype,
         )
         # 2. mp4 (sparkle motion + BGM)
         make_worldcup_match_video(
             card_jpg=jpg, output_path=mp4, duration=18.0, bgm_path=bgm)
         # 3. 캡션 / 댓글 텍스트 저장 (자동 게시 워크플로우가 읽음)
-        cap.write_text(build_worldcup_caption(
-            round_label, idx, n, p["match1"], p["match2"],
-            source_date=source_date), encoding="utf-8")
-        com.write_text(build_worldcup_auto_comment(
-            p["match1"], p["match2"]), encoding="utf-8")
+        if solo:
+            cap.write_text(build_worldcup_solo_caption(
+                label, idx, n, p["match1"],
+                source_date=source_date), encoding="utf-8")
+            com.write_text(build_worldcup_solo_comment(
+                p["match1"]), encoding="utf-8")
+        else:
+            cap.write_text(build_worldcup_caption(
+                round_label, idx, n, p["match1"], p["match2"],
+                source_date=source_date), encoding="utf-8")
+            com.write_text(build_worldcup_auto_comment(
+                p["match1"], p["match2"]), encoding="utf-8")
 
         m1 = p["match1"]; m2 = p["match2"]
-        print(f"  ✓ post_{idx:02d}: "
-              f"{m1['a']['member']}vs{m1['b']['member']} / "
-              f"{m2['a']['member']}vs{m2['b']['member']}  "
-              f"({jpg.stat().st_size//1024}KB jpg, {mp4.stat().st_size//1024}KB mp4)")
+        if solo:
+            print(f"  ✓ post_{idx:02d} ({label}): "
+                  f"{m1['a']['member']}vs{m1['b']['member']}  "
+                  f"({jpg.stat().st_size//1024}KB jpg, {mp4.stat().st_size//1024}KB mp4)")
+        else:
+            print(f"  ✓ post_{idx:02d}: "
+                  f"{m1['a']['member']}vs{m1['b']['member']} / "
+                  f"{m2['a']['member']}vs{m2['b']['member']}  "
+                  f"({jpg.stat().st_size//1024}KB jpg, {mp4.stat().st_size//1024}KB mp4)")
     print(f"\n✅ {round_label} 빌드 완료 — {out_dir.relative_to(ROOT)}/")
     return 0
 

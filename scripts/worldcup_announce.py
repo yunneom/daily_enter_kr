@@ -37,8 +37,13 @@ NEXT_PUBLISH_HINT = {
     "R32": "6/26(금) 12:00 KST — 16강 4경기 (주말 내내 투표!)",
     "R16": "6/29(월) 18:00 KST — 8강 4경기 투표 시작!",
     "R8":  "7/1(수) 21:00 KST — 4강",
-    "R4":  "7/3(금) 21:00 KST — 결승전 + 3·4위전",
+    "R4":  "결승전·3·4위전 투표 진행 중 — 우승 발표 7/5(일) 12:30",
     "R2":  "7/5(일) 12:30 KST — 🏆 우승 발표",
+}
+
+# 일정 박스 라벨 — R4 는 결승 게시가 이미 진행 중이라 "다음 라운드" 대신 진행 안내
+NEXT_LABEL = {
+    "R4": "⏰ 진행 안내",
 }
 
 
@@ -188,7 +193,8 @@ def main():
             round_label=round_lbl, title=title,
             sub=f"여러분의 픽이 다음 라운드로!",
             members=winners, output_path=jpg, cols=cols,
-            next_schedule=next_hint)  # ← 하단 강조 박스에 표시
+            next_schedule=next_hint,  # ← 하단 강조 박스에 표시
+            next_label=NEXT_LABEL.get(round_key, "⏰ 다음 라운드"))
         caption = build_announce_caption(round_key, winners, bracket)
         comment = build_announce_comment(round_key, winners)
 

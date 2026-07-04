@@ -178,6 +178,69 @@ def build_worldcup_caption(round_label: str, post_idx: int, post_total: int,
     return "\n".join(lines)
 
 
+def build_worldcup_solo_caption(title_label: str, post_idx: int, post_total: int,
+                                match: dict,
+                                source_date: str = "2026.6.21") -> str:
+    """솔로(결승전/3·4위전) 캡션 — 1매치 2지선다. 1 = A / 2 = B."""
+    a, b = match["a"], match["b"]
+    hashtags = [
+        "#걸그룹월드컵", "#월드컵토너먼트", "#아이돌투표", "#밸런스게임",
+        "#케이팝", "#kpop", "#kpopfan",
+        "#카드뉴스", "#일상공감", "#밈", "#릴스", "#reels",
+        f"#{a['group']}", f"#{b['group']}",
+        f"#{a['member']}", f"#{b['member']}",
+    ]
+    seen, uniq = set(), []
+    for h in hashtags:
+        k = h.lower()
+        if k not in seen:
+            seen.add(k); uniq.append(h)
+        if len(uniq) >= 30:
+            break
+
+    lines = [
+        f"🏆 걸그룹 월드컵 {title_label} · {post_idx}/{post_total}",
+        "",
+        f"{title_label}: {a['member']} ({a['group']}) vs {b['member']} ({b['group']})",
+        "",
+        "💬 댓글에 본인 픽 번호 ⬇️ (1·2 중 하나)",
+        f"  1️⃣ {a['member']}",
+        f"  2️⃣ {b['member']}",
+        f"  → 1 = {a['member']} / 2 = {b['member']}",
+        "",
+        "🏆 우승 발표까지 알림받기:",
+        "  → 팔로우 + 알림(🔔) ON",
+        "  → 친구 소환해서 픽 대결",
+        "  → 스토리에 본인 픽 공유",
+        "",
+        f"📊 출처: 한국기업평판연구소 {source_date}",
+    ]
+    # 위키미디어 CC 사진 사용 시 출처 표기 (저작권 준수). 사진 미사용이면 빈 줄.
+    try:
+        import idol_photo
+        attr = idol_photo.attribution_line([a["member"], b["member"]])
+        if attr:
+            lines.append(attr)
+    except Exception:
+        pass
+    lines += ["", " ".join(uniq)]
+    return "\n".join(lines)
+
+
+def build_worldcup_solo_comment(match: dict) -> str:
+    """솔로(결승전/3·4위전) 자동 첫 댓글 — 2지선다 안내."""
+    a, b = match["a"], match["b"]
+    return "\n".join([
+        "💬 본인 픽 번호 댓글로 ⬇️",
+        f"1️⃣ {a['member']}",
+        f"2️⃣ {b['member']}",
+        f"(1 = {a['member']} / 2 = {b['member']})",
+        "",
+        "👯 친구 소환 → 둘이서 픽 대결!",
+        "🔔 팔로우 + 알림 ON = 결과 자동 안내",
+    ])
+
+
 def build_worldcup_auto_comment(match1: dict, match2: dict) -> str:
     """자동 첫 댓글 — 캡션 핵심만 간결히. 댓글 노출이 가장 강한 신호라
     번호 안내가 댓글에 다시 나와야 시청자가 바로 행동."""

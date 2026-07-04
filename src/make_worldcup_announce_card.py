@@ -63,7 +63,9 @@ def _draw_centered(draw, text, font, cx, y, fill=WHITE, stroke=0, stroke_fill=No
 
 
 def _member_mini(img, x, y, w, h, member: Dict):
-    """진출자 미니 카드 — 그룹 시그니처 컬러 + emoji + 그룹영문(골드) + 이름(흰)."""
+    """진출자 미니 카드 — 그룹 시그니처 컬러 + emoji + 그룹영문 + 이름.
+    emoji 원 + 이름 박스를 카드 안에서 세로 중앙 정렬 (진출자 적어 카드가
+    커져도 빈 띠 없이 균형 유지). 이름은 카드 폭 기준으로 크게."""
     from make_worldcup_match_card import group_color_for, group_en_for
     grp = member.get("group", "")
     name = member.get("member", "")
@@ -76,31 +78,43 @@ def _member_mini(img, x, y, w, h, member: Dict):
     d = ImageDraw.Draw(img)
     d.rounded_rectangle([x, y, x + w - 1, y + h - 1], radius=16, outline=GOLD, width=3)
 
-    # emoji (불투명 흰 원 위) — 상단
-    em_size = max(48, min(min(w, h) // 2 - 8, 96))
-    disc_d = em_size + 22
     cx = x + w // 2
-    disc = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    ImageDraw.Draw(disc).ellipse([w // 2 - disc_d // 2, int(h * 0.10),
-                                  w // 2 + disc_d // 2, int(h * 0.10) + disc_d],
-                                 fill=(255, 255, 255, 235))
-    img.alpha_composite(disc, (x, y))
-    em = _get_emoji_image(group_emoji_for(grp), em_size)
-    if em:
-        img.alpha_composite(em, (cx - em_size // 2, y + int(h * 0.10) + 11))
 
-    # 그룹영문 + 이름 — 흰 박스 위 검정 글씨 (집중 ↑), 2줄 같은 폰트/크기
+    # 그룹영문 + 이름 폰트 (카드 폭 기준 — 큰 카드일수록 크게, 이름 강조)
     grp_en = group_en_for(grp)
     def _tw(s, f): bb = f.getbbox(s); return bb[2] - bb[0]
     box_x0, box_x1 = x + 8, x + w - 8
     box_inner = (box_x1 - box_x0) - 12
-    size = max(20, min(w // 6, 38))
+    size = max(20, min(w // 5, 52))
     nf = _font("Bold", size)
     while max(_tw(grp_en, nf), _tw(name, nf)) > box_inner and size > 15:
         size -= 1; nf = _font("Bold", size)
-    pad = 8
+    pad = max(8, size // 4)
     box_h = size * 2 + 4 + pad * 2
-    box_y0 = y + h - box_h - 8
+
+    # emoji 크기 + 세로 중앙 정렬 블록 (disc + gap + 이름박스)
+    em_size = max(48, min(min(w, h) // 2 - 8, 170))
+    disc_d = em_size + 22
+    gap_in = max(12, h // 16)
+    block_h = disc_d + gap_in + box_h
+    if block_h > h - 20:                       # 셀이 얕으면 emoji 축소
+        em_size = max(40, em_size - (block_h - (h - 20)))
+        disc_d = em_size + 22
+        block_h = disc_d + gap_in + box_h
+    top_in = y + max(10, (h - block_h) // 2)
+
+    # emoji (불투명 흰 원 위) — 블록 상단
+    disc = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(disc).ellipse([w // 2 - disc_d // 2, top_in - y,
+                                  w // 2 + disc_d // 2, top_in - y + disc_d],
+                                 fill=(255, 255, 255, 235))
+    img.alpha_composite(disc, (x, y))
+    em = _get_emoji_image(group_emoji_for(grp), em_size)
+    if em:
+        img.alpha_composite(em, (cx - em_size // 2, top_in + 11))
+
+    # 그룹영문 + 이름 — 흰 박스 위 검정 글씨, emoji 바로 아래
+    box_y0 = top_in + disc_d + gap_in
     d.rounded_rectangle([box_x0, box_y0, box_x1, box_y0 + box_h],
                         radius=10, fill=(255, 255, 255), outline=GOLD, width=2)
     ty = box_y0 + pad
@@ -116,7 +130,8 @@ def make_round_announce_card(
     members: List[Dict],
     output_path: Path,
     cols: int = 4,
-    next_schedule: str = "",    # "6/24(수) 21:00 KST — 16강 4 매치"  ← 하단 강조 박스
+    next_schedule: str = "",    # "6/24(수) 21:00 KST — 16강 4 매치"  ← 하단 강조 박스 (빈 값 = 박스 없음)
+    next_label: str = "⏰ 다음 라운드",   # 일정 박스 라벨 (예: "⏰ 진행 안내")
     source_note: str = "출처: 한국기업평판연구소 2026.6.21",
     brand: str = "@daily_enter_kr · 매일 새로운 픽",
 ) -> Path:
@@ -132,16 +147,22 @@ def make_round_announce_card(
     sf = _font("Medium", 30)
     _draw_centered(d, sub, sf, CANVAS[0] // 2, 224, fill=WHITE_DIM)
 
-    # === 그리드 (300-1430) ===
+    # === 그리드 — 세로 중앙 정렬 + 셀 높이 상한 (진출자 적을 때 빈 띠 방지) ===
     n = len(members)
     rows = (n + cols - 1) // cols
     gap = 14
-    grid_top = 300
-    grid_bot = 1430
+    zone_top = 300
+    zone_bot = 1430 if next_schedule else 1760   # 일정 박스 없으면 풋터까지 사용
     avail_w = CANVAS[0] - 60 - (cols - 1) * gap
-    avail_h = grid_bot - grid_top - (rows - 1) * gap
     cell_w = avail_w // cols
-    cell_h = avail_h // rows
+    # 가용영역 균등분할하되 폭 비례 상한 → 2명 진출 같은 소수 인원에서
+    # 세로로 뻥 뚫린 초상형 카드 방지 (내용은 _member_mini 가 셀 안 중앙 정렬).
+    # 넓은 카드(cols<4)는 내용 대비 여백이 커서 상한을 더 타이트하게.
+    h_ratio = 1.15 if cols >= 4 else 0.8
+    cell_h = min((zone_bot - zone_top - (rows - 1) * gap) // rows,
+                 int(cell_w * h_ratio))
+    block_h = rows * cell_h + (rows - 1) * gap
+    grid_top = zone_top + (zone_bot - zone_top - block_h) // 2
     grid_left = 30
 
     for i, m in enumerate(members):
@@ -153,16 +174,16 @@ def make_round_announce_card(
 
     d = ImageDraw.Draw(img)
 
-    # === 다음 일정 박스 (1460-1660) — 강조 ===
+    # === 다음 일정 박스 (1460-1660) — 강조 (next_schedule 파라미터, 빈 값 = 생략) ===
     if next_schedule:
         box_x0, box_y0 = 40, 1470
         box_x1, box_y1 = CANVAS[0] - 40, 1670
         # 골드 배경 박스
         d.rounded_rectangle([box_x0, box_y0, box_x1, box_y1],
                             radius=24, fill=GOLD, outline=INK, width=4)
-        # "⏰ 다음 라운드" 라벨
+        # 라벨 (기본 "⏰ 다음 라운드")
         lbl_f = _font("Bold", 42)
-        _draw_centered(d, "⏰ 다음 라운드", lbl_f,
+        _draw_centered(d, next_label, lbl_f,
                        CANVAS[0] // 2, box_y0 + 24, fill=INK)
         # 일정 텍스트
         sched_f = _font("Bold", 38)

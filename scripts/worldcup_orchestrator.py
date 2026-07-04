@@ -105,6 +105,10 @@ SCHEDULE = [
     (datetime(2026, 7,  4, 17, 15, tzinfo=KST), "r4_finalize", ""),
     (datetime(2026, 7,  4, 17, 55, tzinfo=KST), "publish",  "R2"),
     (datetime(2026, 7,  4, 18, 35, tzinfo=KST), "r2_promo", ""),
+    # === Day 12 (토 7/4) 21:30 — R2 솔로 오게시 정리 (콤보 렌더러로 잘못 게시) ===
+    # ledger 에서 worldcup_r2_1/2 + worldcup_announce_r4 제거 → catch-up 이
+    # r4_finalize(수정 발표) → publish R2(솔로 카드/캡션 수정판) 순서로 자동 재게시.
+    (datetime(2026, 7,  4, 21, 30, tzinfo=KST), "fix_republish_r2", ""),
     # === Day 13 (일 7/5) — 결승 집계 (주말 39h) + 🏆 우승 발표 ===
     (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
     (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
@@ -352,6 +356,20 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_hf_r8_bracket"
                    for e in ledger.get("entries", []))
+    elif action == "fix_republish_r2":
+        # 수정판 재게시 완료 = 21:00 이후 worldcup_announce_r4 가 다시 기록됨.
+        # (정리 직후엔 ledger 에서 announce_r4 가 빠져 False — catch-up 이
+        #  r4_finalize → publish R2 를 재실행한 뒤에야 True → 정리 루프 방지)
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_announce_r4"
+                   and (e.get("posted_at") or "") >= "2026-07-04T21:00"
+                   for e in ledger.get("entries", []))
     return False
 
 
@@ -448,6 +466,12 @@ def execute(action: str, round_key: str) -> int:
             print(f"❌ worldcup_post_hf_reel R8 실패 (rc={rc})")
             return rc
         return 0
+    elif action == "fix_republish_r2":
+        # R2 솔로 오게시 정리 — ledger 에서 worldcup_r2_1/2 + announce_r4 제거.
+        # 게시는 여기서 안 함: 이후 catch-up 이 r4_finalize → publish R2 순서로
+        # 수정판을 자동 재게시 (fix_republish_r2 의 already_done 이 재게시 완료를
+        # 감지할 때까지만 발화).
+        return run([sys.executable, "scripts/fix_republish_r2.py"])
     elif action == "render_test":
         # 16강 미리보기 렌더 (게시 X — 아티팩트로 실사 사진 컨펌). manual 전용.
         return run([sys.executable, "scripts/worldcup_preview_r16.py"])
@@ -494,7 +518,7 @@ def main():
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
     # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
-    if forced_action in ("bracket", "promo_blast", "render_test", "photo_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo", "r4_entrants", "r4_finalize", "r2_promo"):
+    if forced_action in ("bracket", "promo_blast", "render_test", "photo_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "fix_republish_r2", "r8_promo", "r4_entrants", "r4_finalize", "r2_promo"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
