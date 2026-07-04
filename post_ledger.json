@@ -418,6 +418,17 @@
       "youtube_id": "gfu-9q9v-J0",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-07-05T00:33:24.574226+09:00",
+      "topic_id": "worldcup_r2_finals_promo",
+      "title": "걸그룹 월드컵 결승 대진 홍보",
+      "style": "worldcup_r2_promo",
+      "seed": null,
+      "ig_media_id": "18081789677233051",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
