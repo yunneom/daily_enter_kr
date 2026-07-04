@@ -109,9 +109,12 @@ SCHEDULE = [
     # ledger 에서 worldcup_r2_1/2 + worldcup_announce_r4 제거 → catch-up 이
     # r4_finalize(수정 발표) → publish R2(솔로 카드/캡션 수정판) 순서로 자동 재게시.
     (datetime(2026, 7,  4, 21, 30, tzinfo=KST), "fix_republish_r2", ""),
-    # === Day 13 (일 7/5) — 결승 집계 (주말 39h) + 🏆 우승 발표 ===
-    (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
-    (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
+    # === Day 13 (일 7/5) — 결승 집계·발표 [보류] ===
+    # 사용자 지정(7/5): 주말 트래픽이 좋아 참여도 극대화 위해 투표를 월요일(7/6) 아침까지
+    # 열어둠. 우승 발표는 운영자 신호 시점에 게시 → 아래 두 슬롯 비활성화.
+    # 월요일 발표 확정 시 (7,6,HH,MM,"tally","R2") + (7,6,HH,MM,"announce","R1") 재활성.
+    # (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
+    # (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
 ]
 
 
@@ -532,10 +535,10 @@ def main():
     now = now_kst()
     print(f"⏰ now KST: {now.isoformat()}")
 
-    # 캠페인 윈도우 외엔 skip (연장: 6/23 ~ 7/5 우승 발표)
+    # 캠페인 윈도우 외엔 skip (연장: 6/23 ~ 7/7 — 결승 발표 월요일 7/6 로 연기)
     if not (datetime(2026, 6, 23, tzinfo=KST) <= now <
-            datetime(2026, 7, 6, tzinfo=KST)):
-        print("⏭️  캠페인 윈도우(6/23 ~ 7/5) 외 — skip")
+            datetime(2026, 7, 8, tzinfo=KST)):
+        print("⏭️  캠페인 윈도우(6/23 ~ 7/7) 외 — skip")
         return 0
 
     slot = find_slot(now)
