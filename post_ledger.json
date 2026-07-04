@@ -385,6 +385,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-04T18:11:39.807922+09:00",
+      "topic_id": "worldcup_announce_r4",
+      "title": "걸그룹 월드컵 R4 결과",
+      "style": "worldcup_announce",
+      "seed": null,
+      "ig_media_id": "18024996698837027",
+      "youtube_id": "o6Zxt_ey-dg",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
     }
   ]
 }

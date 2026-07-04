@@ -2100,7 +2100,12 @@
             "member": "윈터",
             "score": 2361861
           },
-          "winner": null
+          "winner": {
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
+          }
         },
         {
           "quarter": 2,
@@ -2118,7 +2123,12 @@
             "member": "설윤",
             "score": 1778210
           },
-          "winner": null
+          "winner": {
+            "rank": 3,
+            "group": "에스파",
+            "member": "카리나",
+            "score": 4736626
+          }
         }
       ],
       "posts": [
@@ -2140,7 +2150,12 @@
               "member": "윈터",
               "score": 2361861
             },
-            "winner": null
+            "winner": {
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
+            }
           },
           "match2": {
             "quarter": 2,
@@ -2158,12 +2173,133 @@
               "member": "설윤",
               "score": 1778210
             },
-            "winner": null
+            "winner": {
+              "rank": 3,
+              "group": "에스파",
+              "member": "카리나",
+              "score": 4736626
+            }
           }
+        }
+      ]
+    },
+    "R2": {
+      "matches": [
+        {
+          "round": "R2",
+          "type": "third_place",
+          "a": {
+            "rank": 9,
+            "group": "에스파",
+            "member": "윈터",
+            "score": 2361861
+          },
+          "b": {
+            "rank": 12,
+            "group": "엔믹스",
+            "member": "설윤",
+            "score": 1778210
+          },
+          "winner": null
+        },
+        {
+          "round": "R2",
+          "type": "final",
+          "a": {
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
+          },
+          "b": {
+            "rank": 3,
+            "group": "에스파",
+            "member": "카리나",
+            "score": 4736626
+          },
+          "winner": null
+        }
+      ],
+      "posts": [
+        {
+          "post_idx": 0,
+          "match1": {
+            "round": "R2",
+            "type": "third_place",
+            "a": {
+              "rank": 9,
+              "group": "에스파",
+              "member": "윈터",
+              "score": 2361861
+            },
+            "b": {
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
+            },
+            "winner": null
+          },
+          "match2": {
+            "round": "R2",
+            "type": "third_place",
+            "a": {
+              "rank": 9,
+              "group": "에스파",
+              "member": "윈터",
+              "score": 2361861
+            },
+            "b": {
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
+            },
+            "winner": null
+          },
+          "type": "third_place_solo"
+        },
+        {
+          "post_idx": 1,
+          "match1": {
+            "round": "R2",
+            "type": "final",
+            "a": {
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
+            },
+            "b": {
+              "rank": 3,
+              "group": "에스파",
+              "member": "카리나",
+              "score": 4736626
+            },
+            "winner": null
+          },
+          "match2": {
+            "round": "R2",
+            "type": "final",
+            "a": {
+              "rank": 15,
+              "group": "에스파",
+              "member": "닝닝",
+              "score": 1596316
+            },
+            "b": {
+              "rank": 3,
+              "group": "에스파",
+              "member": "카리나",
+              "score": 4736626
+            },
+            "winner": null
+          },
+          "type": "final_solo"
         }
       ]
     }
   },
-  "current_round": "R4",
+  "current_round": "R2",
   "winner": null
 }
