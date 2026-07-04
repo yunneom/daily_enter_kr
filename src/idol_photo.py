@@ -467,28 +467,45 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
             _save_attr(attr)
             return None
 
-    # 다운로드 — upload.wikimedia.org 는 CI IP 에 429 rate-limit 을 자주 걸므로
-    # Retry-After 존중 백오프(최대 3회) + 성공 후 pacing 으로 연속 요청 간격 확보.
+    # 다운로드 — upload.wikimedia.org 는 GHA 공유 IP 에 429 를 강하게 걸어(재시도로도
+    # 못 뚫림) 다중 소스로 시도: ① 직접(빠름, 될 때) → ② wsrv.nl 이미지 CDN 프록시
+    # (서버측에서 위키미디어를 대신 가져와 캐시 → GHA IP 429 우회). 같은 CC/PD 바이트라
+    # 라이선스·크레딧 동일. 각 소스 3회 백오프.
+    from urllib.parse import quote  # noqa: PLC0415
     fname = f"{member_name}.jpg"
+    thumb = hit["thumb_url"]
+    proxied = "https://wsrv.nl/?url=" + quote(thumb, safe="") + "&output=jpg"
+    # (소스명, url, 시도횟수) — direct 는 GHA IP 429 가 상시라 1회만 찔러보고 즉시 프록시로.
+    sources = [("direct", thumb, 1), ("wsrv", proxied, 4)]
     ok = False
-    DL_TRIES = 5  # GHA 공유 IP 는 upload.wikimedia.org 에 자주 429 → 재시도 여유 확보
-    try:
-        for attempt in range(DL_TRIES):
-            r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=20)
+    for src_name, url, tries in sources:
+        for attempt in range(tries):
+            try:
+                r = requests.get(url, headers={"User-Agent": UA}, timeout=25)
+            except Exception as e:
+                print(f"  ⚠️ {src_name} 예외: {member_name} — {type(e).__name__}: {e}")
+                break
             if r.status_code == 429:
-                wait = min(int(r.headers.get("Retry-After") or 8) + attempt * 7, 60)
-                print(f"  ⏳ 다운로드 429: {member_name} — {wait}s 대기 후 재시도({attempt+1}/{DL_TRIES})")
+                if attempt + 1 >= tries:
+                    print(f"  ⏭️ {src_name} 429: {member_name} — 다음 소스로")
+                    break
+                wait = min(int(r.headers.get("Retry-After") or 6) + attempt * 5, 40)
+                print(f"  ⏳ {src_name} 429: {member_name} — {wait}s 대기 재시도({attempt+1}/{tries})")
                 time.sleep(wait)
                 continue
             if not r.ok:
-                print(f"  ⚠️ 사진 다운로드 실패: {member_name} — HTTP {r.status_code} ({hit['thumb_url'][:80]})")
+                print(f"  ⚠️ {src_name} 실패: {member_name} — HTTP {r.status_code}")
+                break
+            if len(r.content) < 2000:  # 프록시 에러 플레이스홀더 방지
+                print(f"  ⚠️ {src_name} 응답 과소({len(r.content)}B) — 다음 소스")
                 break
             (CACHE_DIR / fname).write_bytes(r.content)
             ok = True
-            time.sleep(2)  # pacing — 다음 멤버 요청과 간격
+            print(f"  ✅ 사진 확보: {member_name} ({src_name}, {len(r.content)//1024}KB)")
+            time.sleep(1)  # pacing
             break
-    except Exception as e:
-        print(f"  ⚠️ 사진 다운로드 예외: {member_name} — {type(e).__name__}: {e}")
+        if ok:
+            break
     if not ok:
         attr[member_name] = {"none": True, "reason": "download failed (429/HTTP)"}
         _save_attr(attr)
