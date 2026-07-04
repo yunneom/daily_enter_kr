@@ -174,6 +174,7 @@ def _resolve_override(member_name: str) -> Optional[Dict]:
     CC/PD 게이트 실패 또는 API 실패 시 None (호출부가 기존 검색으로 폴백)."""
     ov = _load_overrides().get(member_name)
     if not ov:
+        print(f"  ⚠️ 오버라이드 {member_name}: 등록 없음(로드 {len(_load_overrides())}건) → 레거시 검색")
         return None
     file_name = ov["file"]
     data = _api_get({
@@ -462,13 +463,15 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
     try:
         r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=15)
         if not r.ok:
-            attr[member_name] = {"none": True}
+            print(f"  ⚠️ 사진 다운로드 실패: {member_name} — HTTP {r.status_code} ({hit['thumb_url'][:80]})")
+            attr[member_name] = {"none": True, "reason": f"download HTTP {r.status_code}"}
             _save_attr(attr)
             return None
         fname = f"{member_name}.jpg"
         (CACHE_DIR / fname).write_bytes(r.content)
-    except Exception:
-        attr[member_name] = {"none": True}
+    except Exception as e:
+        print(f"  ⚠️ 사진 다운로드 예외: {member_name} — {type(e).__name__}: {e}")
+        attr[member_name] = {"none": True, "reason": f"download {type(e).__name__}"}
         _save_attr(attr)
         return None
 

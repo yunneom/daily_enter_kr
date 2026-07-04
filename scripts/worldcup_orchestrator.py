@@ -42,6 +42,8 @@ SCHEDULE = [
     (datetime(2026, 7,  3,  9,  0, tzinfo=KST), "photo_test", ""),
     # 7/4 09:10 — 오버라이드 파일명 정정(카리나·윈터·설윤) 후 재검증 (기존 미리보기 삭제로 already_done 리셋)
     (datetime(2026, 7,  4,  9, 10, tzinfo=KST), "photo_test", ""),
+    # 7/4 12:15 — 다운로드/오버라이드 경로 로깅 추가 후 진단 재실행
+    (datetime(2026, 7,  4, 12, 15, tzinfo=KST), "photo_test", ""),
     # === Day 9 (수 7/1) — R8 승자 정정(닝닝·윈터·카리나·설윤) + 4강 진출자 홍보 즉시 ===
     (datetime(2026, 7,  1, 11, 25, tzinfo=KST), "r4_entrants", ""),
     # === Day 9 (수 7/1) 17:00 — 4강(준결승) 경기 게시 (미발화: 창 지남) ===
