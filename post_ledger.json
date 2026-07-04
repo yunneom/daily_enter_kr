@@ -396,6 +396,28 @@
       "youtube_id": "LsVr0RpwdP0",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-07-04T23:46:59.760056+09:00",
+      "topic_id": "worldcup_r2_1",
+      "title": "걸그룹 월드컵 R2 #1",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18002655812770304",
+      "youtube_id": "vF744Iw_jfw",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-07-04T23:50:06.394427+09:00",
+      "topic_id": "worldcup_r2_2",
+      "title": "걸그룹 월드컵 R2 #2",
+      "style": "worldcup_match",
+      "seed": null,
+      "ig_media_id": "18136582918601760",
+      "youtube_id": "gfu-9q9v-J0",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
     }
   ]
 }
