@@ -1,0 +1,18 @@
+{
+  "닝닝": {
+    "none": true,
+    "reason": "download HTTP 429"
+  },
+  "윈터": {
+    "none": true,
+    "reason": "download HTTP 429"
+  },
+  "카리나": {
+    "none": true,
+    "reason": "download HTTP 429"
+  },
+  "설윤": {
+    "none": true,
+    "reason": "download HTTP 429"
+  }
+}
