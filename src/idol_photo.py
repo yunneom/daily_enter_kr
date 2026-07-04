@@ -30,6 +30,7 @@ GitHub Actions 런타임에선 정상 작동.
 import json
 import os
 import sys
+import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional, Dict, List
@@ -99,14 +100,21 @@ def _save_attr(d: dict):
 
 
 def _api_get(params: dict, api: str = WIKI_API) -> Optional[dict]:
-    try:
-        r = requests.get(api, params={**params, "format": "json"},
-                         headers={"User-Agent": UA}, timeout=12)
-        if not r.ok:
+    for attempt in range(3):
+        try:
+            r = requests.get(api, params={**params, "format": "json"},
+                             headers={"User-Agent": UA}, timeout=12)
+            if r.status_code == 429:
+                wait = min(int(r.headers.get("Retry-After") or 5) + attempt * 3, 30)
+                print(f"  ⏳ API 429 — {wait}s 대기 후 재시도({attempt+1}/3)")
+                time.sleep(wait)
+                continue
+            if not r.ok:
+                return None
+            return r.json()
+        except Exception:
             return None
-        return r.json()
-    except Exception:
-        return None
+    return None
 
 
 # ─── 검증 소스 오버라이드 + 성인 게이트 (리스크 리뷰 결정사항) ───────────────
@@ -459,19 +467,29 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
             _save_attr(attr)
             return None
 
-    # 다운로드
+    # 다운로드 — upload.wikimedia.org 는 CI IP 에 429 rate-limit 을 자주 걸므로
+    # Retry-After 존중 백오프(최대 3회) + 성공 후 pacing 으로 연속 요청 간격 확보.
+    fname = f"{member_name}.jpg"
+    ok = False
     try:
-        r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=15)
-        if not r.ok:
-            print(f"  ⚠️ 사진 다운로드 실패: {member_name} — HTTP {r.status_code} ({hit['thumb_url'][:80]})")
-            attr[member_name] = {"none": True, "reason": f"download HTTP {r.status_code}"}
-            _save_attr(attr)
-            return None
-        fname = f"{member_name}.jpg"
-        (CACHE_DIR / fname).write_bytes(r.content)
+        for attempt in range(3):
+            r = requests.get(hit["thumb_url"], headers={"User-Agent": UA}, timeout=15)
+            if r.status_code == 429:
+                wait = min(int(r.headers.get("Retry-After") or 8) + attempt * 5, 45)
+                print(f"  ⏳ 다운로드 429: {member_name} — {wait}s 대기 후 재시도({attempt+1}/3)")
+                time.sleep(wait)
+                continue
+            if not r.ok:
+                print(f"  ⚠️ 사진 다운로드 실패: {member_name} — HTTP {r.status_code} ({hit['thumb_url'][:80]})")
+                break
+            (CACHE_DIR / fname).write_bytes(r.content)
+            ok = True
+            time.sleep(2)  # pacing — 다음 멤버 요청과 간격
+            break
     except Exception as e:
         print(f"  ⚠️ 사진 다운로드 예외: {member_name} — {type(e).__name__}: {e}")
-        attr[member_name] = {"none": True, "reason": f"download {type(e).__name__}"}
+    if not ok:
+        attr[member_name] = {"none": True, "reason": "download failed (429/HTTP)"}
         _save_attr(attr)
         return None
 

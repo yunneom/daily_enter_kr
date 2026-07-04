@@ -101,9 +101,10 @@ SCHEDULE = [
     # === Day 12 (토 7/4) 14:00 — 4강 집계 → 결승 라인업 발표 → 결승 게시 연쇄 ===
     # 사용자 지정: 평일(목) 대신 토요일 오후에 몰아서 진행. 한 run 이 한 액션씩
     # 처리하므로 20분 간격 연쇄 배치 (실패 시 catch-up 이 순서대로 자동 복구).
-    (datetime(2026, 7,  4, 14,  0, tzinfo=KST), "tally",    "R4"),
-    (datetime(2026, 7,  4, 14, 20, tzinfo=KST), "announce", "R4"),
-    (datetime(2026, 7,  4, 14, 40, tzinfo=KST), "publish",  "R2"),
+    # 14:00 자동 시퀀스는 크론 3h 드롭으로 미발화 → 수동 확정 체인으로 대체 (17시대)
+    (datetime(2026, 7,  4, 17, 15, tzinfo=KST), "r4_finalize", ""),
+    (datetime(2026, 7,  4, 17, 55, tzinfo=KST), "publish",  "R2"),
+    (datetime(2026, 7,  4, 18, 35, tzinfo=KST), "r2_promo", ""),
     # === Day 13 (일 7/5) — 결승 집계 (주말 39h) + 🏆 우승 발표 ===
     (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
     (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
@@ -294,6 +295,28 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_r8_match_promo"
                    for e in ledger.get("entries", []))
+    elif action == "r4_finalize":
+        # R4 결과 발표(worldcup_announce_r4)가 ledger 에 있으면 완료
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_announce_r4"
+                   for e in ledger.get("entries", []))
+    elif action == "r2_promo":
+        # 결승 홍보(worldcup_r2_finals_promo)가 ledger 에 있으면 완료
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == "worldcup_r2_finals_promo"
+                   for e in ledger.get("entries", []))
     elif action == "r4_entrants":
         # worldcup_r4_entrants_promo 가 ledger 에 있으면 완료
         ledger_path = ROOT / "post_ledger.json"
@@ -394,6 +417,17 @@ def execute(action: str, round_key: str) -> int:
     elif action == "r8_promo":
         # R8 매치 홍보 릴스 (HP HTML → MP4)
         return run([sys.executable, "scripts/worldcup_post_r8_promo.py"])
+    elif action == "r4_finalize":
+        # 1) R4 승자 수동 확정(닝닝·카리나) + R2(결승/3·4위전) 생성
+        rc = run([sys.executable, "scripts/fix_bracket_r4_winners.py"])
+        if rc != 0:
+            print(f"❌ fix_bracket_r4_winners 실패 (rc={rc})")
+            return rc
+        # 2) R4 결과 발표 게시
+        return run([sys.executable, "scripts/worldcup_announce.py", "R4"])
+    elif action == "r2_promo":
+        # 결승 대진 홍보 릴스 (HP)
+        return run([sys.executable, "scripts/worldcup_post_r2_promo.py"])
     elif action == "r4_entrants":
         # 1) R8 승자 정정(닝닝·윈터·카리나·설윤) + R4 재구성
         rc = run([sys.executable, "scripts/fix_bracket_r8_winners.py"])
@@ -460,7 +494,7 @@ def main():
         print("   다시 Run workflow → action 입력란에 정확히 타이핑 필요.")
         return 1
     # bracket / promo_blast / render_test / chain_r16_r8 / hf_r8 는 round 불필요
-    if forced_action in ("bracket", "promo_blast", "render_test", "photo_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo", "r4_entrants"):
+    if forced_action in ("bracket", "promo_blast", "render_test", "photo_test", "chain_r16_r8", "hf_r8", "fix_republish_r8", "r8_promo", "r4_entrants", "r4_finalize", "r2_promo"):
         print(f"🔧 manual dispatch: {forced_action}")
         return execute(forced_action, "")
     if forced_action and forced_round:
@@ -487,6 +521,14 @@ def main():
         if already_done(action, rnd):
             print(f"✅ {action} {rnd} 이미 완료 — idempotent skip")
         else:
+            # ── 순서 보정 ── 매칭 슬롯보다 오래된 미완료 슬롯이 있으면 그것부터.
+            # (크론 장기 드롭 시 늦은 run 이 뒤 슬롯(publish R2)을 먼저 잡아
+            #  선행 의존(집계/확정) 없이 크래시하던 7/4 15:34 실패 재발 방지)
+            missed = find_missed(now)
+            if missed and missed[0][0] < sched and (missed[0][1], missed[0][2]) != (action, rnd):
+                m_sched, m_action, m_rnd = missed[0]
+                print(f"⏰ 순서 보정: {m_sched.isoformat()} {m_action} {m_rnd} 먼저 실행 (매칭 슬롯은 다음 run)")
+                return run_slot(m_action, m_rnd)
             return run_slot(action, rnd)
     else:
         print(f"⏭️  ±{TOLERANCE_MIN}분 안 일정 슬롯 없음")
