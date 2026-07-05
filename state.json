@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-04T08:59:49.529988+09:00",
+  "last_run_at": "2026-07-05T09:15:08.148272+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-04",
-      "title_hash": "b1ee498da2e7c96c",
-      "card_title": "박지훈, 내년 해병대 입대 확정...수색대 지원"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "04fc273319960ff8",
-      "card_title": "영화 '군체', 개봉 2주 만에 400만 관객 돌파"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "d0b1b1ab5bd168b4",
-      "card_title": "신예은, '닥터 섬보이' 첫 주부터 월화극 강자 등극"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "30ab377f0a7db860",
-      "card_title": "경수, 9세 연하와 혼전임신 결혼 '연애 한 달 만에'"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "220e5af0e2fed579",
-      "card_title": "경찰, 배우 김수현 명예훼손 혐의 김세의 구속송치"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "3fcfa99bca7eef98",
-      "card_title": "앤더블 리키, 아트 감성의 매력적 헤어스타일 공개"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "2691a538dece3ae3",
-      "card_title": "에스파, 한국외대 무대 장인으로 독보적 퍼포먼스"
-    },
-    {
-      "date": "2026-06-04",
-      "title_hash": "454e019b534804e5",
-      "card_title": "유병재 회사 채용공고 논란, 6개월 인턴 업무 범위 과다 지적"
-    },
     {
       "date": "2026-06-05",
       "title_hash": "857bae04553a9ac1",
@@ -1961,6 +1921,78 @@
       "card_title": "이훈, 배우로 복귀…근육 체형 유지하며 새 출발 준비",
       "caption_variant": "question_hook",
       "media_id": "18021649202845395",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "3cc46e7ce3a370d9",
+      "card_title": "박소영, 양세형과의 썸 종료 '이상형은 박명수'",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "ef3061d880b13ec4",
+      "card_title": "이상민, 지난해 15억 수입으로 69억 빚 청산 완료",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "43a3468c8bf179cd",
+      "card_title": "소지섭, '김부장'으로 '미사' 초월 — 금토극 역대 3위·시청률 21% 돌파",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "8b4b6516c91f5ae1",
+      "card_title": "성우 강희선씨 별세, 투병 중에도 극장판 짱구 녹음 완성",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "ac80dbc58b420248",
+      "card_title": "손현주, '신입사원 강회장' 클라이맥스 생환 연기 완성",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "83cc1bf1dd552a23",
+      "card_title": "도깨비 10주년, 김고은이 먼저 제안한 여행",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "45a77deb26f77272",
+      "card_title": "장동건·고소영, 근황 공개…'부부 일상' 화제",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "f1b05cdf6e953ed9",
+      "card_title": "남궁민 '결혼의 완성' 4일 첫방 — 소지섭과 로맨스",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-05",
+      "title_hash": "9116d63f5a1f7b9f",
+      "card_title": "배우 오윤아, 재혼 소식 알리며 가족의 사랑 나눔",
+      "caption_variant": "tease_one",
+      "media_id": "17954598087178130",
       "card_style": "minimal"
     }
   ]
