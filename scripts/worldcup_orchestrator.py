@@ -115,6 +115,13 @@ SCHEDULE = [
     # 월요일 발표 확정 시 (7,6,HH,MM,"tally","R2") + (7,6,HH,MM,"announce","R1") 재활성.
     # (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
     # (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
+    # === 웹앱(dailyenterkr.com/play) 홍보 5부작 — 주말 트래픽 우선 배치 ===
+    # wave: 1 티저 / 2 플레이방법 / 3 샘플플레이(실물사진, 히어로) / 4 실시간순위 / 5 IG결승 연결
+    (datetime(2026, 7,  5, 11,  0, tzinfo=KST), "web_promo", "1"),
+    (datetime(2026, 7,  5, 20,  0, tzinfo=KST), "web_promo", "3"),
+    (datetime(2026, 7,  6, 12,  0, tzinfo=KST), "web_promo", "2"),
+    (datetime(2026, 7,  6, 20,  0, tzinfo=KST), "web_promo", "4"),
+    (datetime(2026, 7,  7, 20,  0, tzinfo=KST), "web_promo", "5"),
 ]
 
 
@@ -324,6 +331,17 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == "worldcup_r2_finals_promo"
                    for e in ledger.get("entries", []))
+    elif action == "web_promo":
+        # worldcup_web_promo_{wave} 가 ledger 에 있으면 done (wave 별 1회)
+        ledger_path = ROOT / "post_ledger.json"
+        if not ledger_path.exists():
+            return False
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+        return any((e.get("topic_id") or "") == f"worldcup_web_promo_{round_key}"
+                   for e in ledger.get("entries", []))
     elif action == "r4_entrants":
         # worldcup_r4_entrants_promo 가 ledger 에 있으면 완료
         ledger_path = ROOT / "post_ledger.json"
@@ -449,6 +467,9 @@ def execute(action: str, round_key: str) -> int:
     elif action == "r2_promo":
         # 결승 대진 홍보 릴스 (HP)
         return run([sys.executable, "scripts/worldcup_post_r2_promo.py"])
+    elif action == "web_promo":
+        # 웹앱(dailyenterkr.com/play) 홍보 5부작 릴스 — round_key = wave 번호(1~5)
+        return run([sys.executable, "scripts/worldcup_web_promo.py", round_key or "auto"])
     elif action == "r4_entrants":
         # 1) R8 승자 정정(닝닝·윈터·카리나·설윤) + R4 재구성
         rc = run([sys.executable, "scripts/fix_bracket_r8_winners.py"])
