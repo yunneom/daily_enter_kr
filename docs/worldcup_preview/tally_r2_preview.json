@@ -1,0 +1,39 @@
+{
+  "round": "R2",
+  "posts": [
+    {
+      "type": "final_solo",
+      "label": "결승전",
+      "a": "닝닝",
+      "b": "카리나",
+      "raw_comments": 0,
+      "valid_votes": 0,
+      "by_source": {
+        "num": 0,
+        "name": 0
+      },
+      "a_people": 0,
+      "b_people": 0,
+      "a_weighted": 0,
+      "b_weighted": 0,
+      "provisional_winner": "카리나"
+    },
+    {
+      "type": "third_place_solo",
+      "label": "3·4위전",
+      "a": "윈터",
+      "b": "설윤",
+      "raw_comments": 0,
+      "valid_votes": 0,
+      "by_source": {
+        "num": 0,
+        "name": 0
+      },
+      "a_people": 0,
+      "b_people": 0,
+      "a_weighted": 0,
+      "b_weighted": 0,
+      "provisional_winner": "윈터"
+    }
+  ]
+}
