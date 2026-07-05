@@ -440,6 +440,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-05T20:49:14.558186+09:00",
+      "topic_id": "worldcup_web_promo_3",
+      "title": "웹 월드컵 홍보 3 (샘플 플레이)",
+      "style": "worldcup_web_promo",
+      "seed": null,
+      "ig_media_id": "17870033664652095",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
