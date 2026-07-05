@@ -115,6 +115,9 @@ SCHEDULE = [
     # 월요일 발표 확정 시 (7,6,HH,MM,"tally","R2") + (7,6,HH,MM,"announce","R1") 재활성.
     # (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
     # (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
+    # === Day 13 (일 7/5) 09:00 — 결승 자동 집계 미리보기 (카운트만, 발표 X) ===
+    # 숫자+이름(글자)+좋아요 가중 집계가 실제로 되는지 검증. 결과 JSON 커밋 → 운영자 대조.
+    (datetime(2026, 7,  5,  9,  0, tzinfo=KST), "tally_preview", "R2"),
     # === 웹앱(dailyenterkr.com/play) 홍보 5부작 — 주말 트래픽 우선 배치 ===
     # wave: 1 티저 / 2 플레이방법 / 3 샘플플레이(실물사진, 히어로) / 4 실시간순위 / 5 IG결승 연결
     (datetime(2026, 7,  5, 11,  0, tzinfo=KST), "web_promo", "1"),
@@ -342,6 +345,10 @@ def already_done(action: str, round_key: str) -> bool:
             return False
         return any((e.get("topic_id") or "") == f"worldcup_web_promo_{round_key}"
                    for e in ledger.get("entries", []))
+    elif action == "tally_preview":
+        # 미리보기 결과 파일이 있으면 done (1회만)
+        rk = (round_key or "R2").lower()
+        return (ROOT / "docs" / "worldcup_preview" / f"tally_{rk}_preview.json").exists()
     elif action == "r4_entrants":
         # worldcup_r4_entrants_promo 가 ledger 에 있으면 완료
         ledger_path = ROOT / "post_ledger.json"
@@ -470,6 +477,10 @@ def execute(action: str, round_key: str) -> int:
     elif action == "web_promo":
         # 웹앱(dailyenterkr.com/play) 홍보 5부작 릴스 — round_key = wave 번호(1~5)
         return run([sys.executable, "scripts/worldcup_web_promo.py", round_key or "auto"])
+    elif action == "tally_preview":
+        # 결승 자동 집계 미리보기 — 숫자+이름+좋아요 카운트만, 승자 확정/발표 X.
+        # 결과를 docs/worldcup_preview/tally_{round}_preview.json 로 커밋 → 운영자 대조용.
+        return run([sys.executable, "scripts/worldcup_tally.py", "--preview", round_key or "R2"])
     elif action == "r4_entrants":
         # 1) R8 승자 정정(닝닝·윈터·카리나·설윤) + R4 재구성
         rc = run([sys.executable, "scripts/fix_bracket_r8_winners.py"])

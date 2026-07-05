@@ -50,6 +50,7 @@ KST = timezone(timedelta(hours=9))
 
 # 1·2·3·4 또는 emoji 1️⃣~4️⃣ — 댓글 첫 등장 매칭
 EMOJI_TO_NUM = {"1️⃣": "1", "2️⃣": "2", "3️⃣": "3", "4️⃣": "4"}
+SOLO_LABEL = {"final_solo": "결승전", "third_place_solo": "3·4위전"}
 VOTE_RE = re.compile(r"(?:^|\s)([1-4])(?:번|픽|\D|$)")
 
 
@@ -73,6 +74,30 @@ def parse_vote(text: str) -> Optional[str]:
     if m:
         return m.group(1)
     return None
+
+
+def parse_vote_named(text: str, candidates: List[Tuple[str, str]]):
+    """숫자 + 이름(글자) 투표 파싱. candidates = [(번호, 멤버명), ...].
+    반환: (번호, source) — source ∈ {"num","name"} / 없으면 (None, None).
+
+    1) 숫자(1/2..) 우선 (기존 parse_vote)
+    2) 없으면 댓글에서 후보 멤버명 검색 → 해당 번호. 단, 두 후보가 다 언급되면
+       비교/애매로 보고 스킵(오탐 방지). 너무 긴 댓글(80자+)도 이름투표 제외."""
+    num = parse_vote(text)
+    if num:
+        return num, "num"
+    if not text:
+        return None, None
+    t = text.strip()
+    if not t or len(t) > 80:
+        return None, None
+    hits = []
+    for number, name in candidates:
+        if name and name in t:
+            hits.append((t.find(name), number))
+    if len(hits) == 1:
+        return hits[0][1], "name"
+    return None, None  # 0개(무효) 또는 2개+(애매) → 스킵
 
 
 def fetch_all_comments(media_id: str, token: str) -> List[Dict]:
@@ -100,20 +125,22 @@ def fetch_all_comments(media_id: str, token: str) -> List[Dict]:
     return out
 
 
-def tally_post(media_id: str, token: str) -> Dict:
+def tally_post(media_id: str, token: str,
+               candidates: Optional[List[Tuple[str, str]]] = None) -> Dict:
     """게시글 1개 → 1·2·3·4 집계.
 
     [집계 3요소 — 사용자 지정]
-    1. 댓글 숫자 : 1·2·3·4 파싱 = 어느 콤비를 골랐나
-    2. 이름      : username 으로 dedup (한 사람 1표, 마지막 댓글 채택)
-    3. 좋아요     : 그 댓글의 like_count → 표 가중치 = 1 + likes
-                   (좋아요 많은 댓글 = 그만큼 더 많은 사람이 동의 → 가중)
+    1. 댓글 숫자+이름 : 숫자(1·2..) 또는 멤버명(글자) 파싱. candidates 주면 이름도 집계.
+    2. 이름(사람)     : username 으로 dedup (한 사람 1표, 마지막 댓글 채택)
+    3. 좋아요         : 그 댓글의 like_count → 표 가중치 = 1 + likes
+                       (좋아요 많은 댓글 = 그만큼 더 많은 사람이 동의 → 가중)
 
-    반환: weighted(가중 집계, winner 결정용) + raw(순수 인원수, 투명성 표기용).
+    반환: weighted(가중 집계, winner 결정용) + raw(순수 인원수) + by_source(숫자/이름 비율).
     """
     comments = fetch_all_comments(media_id, token)
     user_vote = {}         # username → '1'·'2'·'3'·'4' (마지막 댓글)
     user_final_likes = {}  # username → 마지막 투표 댓글의 like_count
+    user_src = {}          # username → 'num' | 'name'
     raw_comments = len(comments)
 
     # timestamp 오름차순(오래된→최신) 순회 → 덮어쓰면 사용자별 '마지막' 표 + 그 댓글 likes
@@ -121,22 +148,31 @@ def tally_post(media_id: str, token: str) -> Dict:
         return c.get("timestamp", "")
     for c in sorted(comments, key=_ts):
         user = c.get("username", "anon")
-        v = parse_vote(c.get("text") or "")
+        text = c.get("text") or ""
+        if candidates:
+            v, src = parse_vote_named(text, candidates)
+        else:
+            v = parse_vote(text)
+            src = "num" if v else None
         if not v:
             continue
         user_vote[user] = v
         user_final_likes[user] = c.get("like_count") or 0
+        user_src[user] = src
 
     raw = {"1": 0, "2": 0, "3": 0, "4": 0}       # 순수 인원수
     weighted = {"1": 0, "2": 0, "3": 0, "4": 0}  # 1 + likes 가중
+    by_source = {"num": 0, "name": 0}
     for user, v in user_vote.items():
         raw[v] += 1
         weighted[v] += 1 + user_final_likes.get(user, 0)
+        by_source[user_src.get(user, "num")] += 1
     return {
         "raw_comments": raw_comments,
         "valid_votes": len(user_vote),
         "counts": raw,        # 하위호환 (raw)
         "weighted": weighted,
+        "by_source": by_source,  # 숫자 vs 이름 투표 수
     }
 
 
@@ -350,8 +386,11 @@ def _build_finals(bracket, cur_round, nxt_key, new_finals):
 
 
 def main():
-    if len(sys.argv) > 1:
-        round_key = sys.argv[1]
+    # --preview: 댓글 카운트만 집계·저장, 승자 확정/다음 라운드/저장 안 함 (발표 전 검증용)
+    preview = "--preview" in sys.argv
+    pos = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if pos:
+        round_key = pos[0]
     else:
         round_key = os.environ.get("ROUND", "R32")
 
@@ -375,7 +414,9 @@ def main():
     # (R32~R4 = quarter+slot, R2 = type — R2 매치엔 quarter/slot 없음)
     matches_idx = {_match_key(m): m for m in rnd.get("matches", [])}
 
-    print(f"=== {round_key} 댓글 집계 시작 ({len(posts)} 게시글, {len(matches)} 매치) ===")
+    mode = "미리보기(발표 X)" if preview else "확정"
+    print(f"=== {round_key} 댓글 집계 시작 [{mode}] ({len(posts)} 게시글, {len(matches)} 매치) ===")
+    preview_rows = []
     # 게시글 단위로 댓글 수집 + 매치 1·2 winner 결정
     for post in posts:
         idx = post["post_idx"]
@@ -385,7 +426,13 @@ def main():
         if not media_id:
             print(f"  ⚠️  post #{idx+1} ({tid}) ig_media_id 미상 — 스킵")
             continue
-        tally = tally_post(media_id, token)
+        # 솔로(2지선다)면 이름(글자) 투표도 집계 — 후보 = 1:a / 2:b
+        _ptype = post.get("type") or ""
+        cands = None
+        if _ptype.endswith("_solo"):
+            _mm = post["match1"]
+            cands = [("1", _mm["a"]["member"]), ("2", _mm["b"]["member"])]
+        tally = tally_post(media_id, token, cands)
         post["tally"] = {
             "raw_comments": tally["raw_comments"],
             "valid_votes": tally["valid_votes"],
@@ -405,12 +452,22 @@ def main():
                     continue
                 target["winner"] = winner
                 target["votes"] = votes
+            bs = tally.get("by_source", {"num": 0, "name": 0})
             print(f"  post #{idx+1} ({post['type']}): 댓글 {tally['raw_comments']} "
-                  f"(유효투표 {tally['valid_votes']}명)")
+                  f"(유효투표 {tally['valid_votes']}명 = 숫자 {bs.get('num',0)} + 이름 {bs.get('name',0)})")
             print(f"    인원: 1={c['1']} 2={c['2']}  가중(+좋아요): 1={w['1']} 2={w['2']}")
             print(f"    {m['a']['member']}(가중{votes['a']}/{votes['raw_a']}명) vs "
                   f"{m['b']['member']}(가중{votes['b']}/{votes['raw_b']}명) "
                   f"→ 승: {winner['member']}")
+            preview_rows.append({
+                "type": post["type"], "label": SOLO_LABEL.get(post["type"], post["type"]),
+                "a": m["a"]["member"], "b": m["b"]["member"],
+                "raw_comments": tally["raw_comments"], "valid_votes": tally["valid_votes"],
+                "by_source": bs,
+                "a_people": votes["raw_a"], "b_people": votes["raw_b"],
+                "a_weighted": votes["a"], "b_weighted": votes["b"],
+                "provisional_winner": winner["member"],
+            })
             continue
 
         m1 = post["match1"]; m2 = post["match2"]
@@ -433,6 +490,16 @@ def main():
               f"{m1['b']['member']}(가중{m1_v['b']}/{m1_v['raw_b']}명) → 승: {winners['m1']['member']}")
         print(f"    매치2: {m2['a']['member']}(가중{m2_v['a']}/{m2_v['raw_a']}명) vs "
               f"{m2['b']['member']}(가중{m2_v['b']}/{m2_v['raw_b']}명) → 승: {winners['m2']['member']}")
+
+    # ── 미리보기 모드 — 승자 확정/저장/발표 없이 카운트만 파일로 남기고 종료 ──
+    if preview:
+        out = ROOT / "docs" / "worldcup_preview" / f"tally_{round_key.lower()}_preview.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps({"round": round_key, "posts": preview_rows},
+                                  ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"\n📄 미리보기 저장(발표·확정 안 함): {out.relative_to(ROOT)}")
+        print("   → 이 숫자를 운영자 수동 집계와 대조 후 월요일 발표 결정")
+        return 0
 
     # 다음 라운드 자동 빌드
     print(f"\n=== 다음 라운드 페어링 생성 ===")
