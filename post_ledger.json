@@ -484,6 +484,17 @@
       "youtube_id": "ZA7q21bJt-Y",
       "threads_id": null,
       "bgm": "daily_enter_theme_c.mp3"
+    },
+    {
+      "posted_at": "2026-07-06T22:31:03.725542+09:00",
+      "topic_id": "worldcup_web_promo_4",
+      "title": "웹 월드컵 홍보 4 (실시간 순위)",
+      "style": "worldcup_web_promo",
+      "seed": null,
+      "ig_media_id": "18099820679082033",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
