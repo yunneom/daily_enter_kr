@@ -1,48 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-05T09:15:08.148272+09:00",
+  "last_run_at": "2026-07-06T09:15:20.796933+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-05",
-      "title_hash": "857bae04553a9ac1",
-      "card_title": "기은세, 평창동 새집 인테리어 공개"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "5a5e7758d4d6ca2e",
-      "card_title": "장원영 공항 태도 논란, 다각도 영상 공개로 해석 갈려"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "0909a0a34d5431f7",
-      "card_title": "방탄소년단 '아리랑', 빌보드 재팬 핫 앨범 1위 차지"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "c280c0d9b42c6800",
-      "card_title": "송백경, 21년 만에 원타임 탈퇴 선언"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "ac97c0eedd14754f",
-      "card_title": "강남, 디스크 수술로 입원 치료 중"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "5687edd0925d115a",
-      "card_title": "드라마 '허수아비', 제목 속 숨겨진 의미는?"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "5b380ea44d7536fa",
-      "card_title": "유병재 회사 채용 공고, 직급과 업무 불일치 논란"
-    },
-    {
-      "date": "2026-06-05",
-      "title_hash": "5169ee580ccb04c1",
-      "card_title": "유승준, 23년 입국 논란 언급하며 근황 전해"
-    },
     {
       "date": "2026-06-06",
       "title_hash": "b741168e6264046e",
@@ -1993,6 +1953,78 @@
       "card_title": "배우 오윤아, 재혼 소식 알리며 가족의 사랑 나눔",
       "caption_variant": "tease_one",
       "media_id": "17954598087178130",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "d1a98d584c7b7e95",
+      "card_title": "KCM, 10월 4일 정식 결혼식 올린다…14년만의 결혼 예식",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "cc09ae88d995e515",
+      "card_title": "이서안, '신입사원 강회장' 독살 사건 인터뷰 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "23abf612c8d3b513",
+      "card_title": "데이식스 도운, 콘서트서 심경 고백 '약속 못 지켜 죄송'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "992f749a67ac9e57",
+      "card_title": "린, 이혼 후 어려움 겪으며 친구 같은 존재 잃은 아픔 나눠",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "c23a7e91a2e50435",
+      "card_title": "JTBC 드라마 '아파트' 지성·문소리·하윤경 등 호화 캐스팅 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "753e0d9fed531c50",
+      "card_title": "랄랄, 담배 논란에 공식 사과...절친 증언으로 마무리",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "4fc83db3674321e6",
+      "card_title": "신동엽 아내 선혜윤 PD, '미우새' 깜짝 출연",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "2147c9467a423d92",
+      "card_title": "이준영, '신입사원 강회장' 해피엔딩으로 마무리…후속작 '아파트' 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-06",
+      "title_hash": "3800aeeb8bb126d3",
+      "card_title": "도깨비 방송 10주년, 출연진 재결합 여행 진행 중",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18109316675004414",
       "card_style": "minimal"
     }
   ]
