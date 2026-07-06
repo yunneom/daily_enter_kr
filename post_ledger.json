@@ -462,6 +462,17 @@
       "youtube_id": "I1Cy-RSnu_w",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-07-06T14:38:26.185547+09:00",
+      "topic_id": "worldcup_web_promo_2",
+      "title": "웹 월드컵 홍보 2 (플레이 방법)",
+      "style": "worldcup_web_promo",
+      "seed": null,
+      "ig_media_id": "18148877503446585",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
