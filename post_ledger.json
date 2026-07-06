@@ -451,6 +451,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-06T13:11:27.409817+09:00",
+      "topic_id": "soccer_nationalteam_1000eok",
+      "title": "1000억으로 국대 영입하기",
+      "style": "soccer_squad",
+      "seed": 2070,
+      "ig_media_id": "18095337605612913",
+      "youtube_id": "I1Cy-RSnu_w",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
