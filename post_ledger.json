@@ -517,6 +517,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-07T23:26:00.522719+09:00",
+      "topic_id": "spinner_idol_pick",
+      "title": "오늘의 최애 픽 챌린지",
+      "style": "spinner",
+      "seed": 2091,
+      "ig_media_id": "18397340080092335",
+      "youtube_id": "H63tPO4jJQM",
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
