@@ -1,64 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-07T09:08:44.864559+09:00",
+  "last_run_at": "2026-07-08T09:16:09.110213+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-07",
-      "title_hash": "4781def5ace860b9",
-      "card_title": "서인영, 소속사 떠나며 새로운 시작 준비",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "9f4564be30de8e1a",
-      "card_title": "개리·이광수·전소민, '런닝맨' 하차 후에도 팬들의 그리움 이어져",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "31a1e81fed7dd1a8",
-      "card_title": "이병헌, 딸과 함께한 쇼핑 데이트 포착",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "7975ab14df48c9de",
-      "card_title": "장나라, 누적 기부 200억 달성…유기동물 보호소에 2천만원 기부",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "09b24bd694d3e006",
-      "card_title": "박은영, 의사 남편과의 인연 공개 '소개팅 성공담'",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "7711fc1c50fec1c4",
-      "card_title": "아이유, 잠실 응원 메시지에 팬들 SNS 댓글 참여",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "998a253958b0da85",
-      "card_title": "이문정, 셋째 딸 출산…\"두 오빠 섞어 닮았어요\"",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
-    {
-      "date": "2026-06-07",
-      "title_hash": "a5f48a1f034275f6",
-      "card_title": "1세대 게임 BJ 난닝구, 향년 46세로 별세",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18102927965092931"
-    },
     {
       "date": "2026-06-08",
       "title_hash": "85352f857a80e801",
@@ -2041,6 +1985,78 @@
       "card_title": "박성광의 아내 이솔이, 항암 치료 중 건강 관리 이야기 전해",
       "caption_variant": "headlines_dotted",
       "media_id": "18206732380346593",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "37081a91090b9ca0",
+      "card_title": "이현, 방시혁과 19년 함께 — 빅히트 뮤직과 재계약 체결",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "e5ae63a98905e804",
+      "card_title": "스트레이 키즈, 초현실 세계로의 컴백 — 신곡 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "6b39cf3ae341d9b9",
+      "card_title": "박세미, 트로트 가수로 데뷔 — 김소유와 함께 새로운 무대 개척",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "2f37d75635e415ef",
+      "card_title": "정호연 영화 '호프' 개봉, 남궁민 KBS 신작 드라마 출연 확정",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "6a1ff26badf4eb86",
+      "card_title": "신예은, '닥터 섬보이' 촬영 중 하리와 90% 싱크로율 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "9e5639851c7332f3",
+      "card_title": "김기리, 고인 박지선을 추모하며 함께한 시간 되새기다",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "6e1c939f259e5ff3",
+      "card_title": "크리스토퍼 놀런 감독, 신작 '오디세이' 개봉 맞춰 첫 방한",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "9379b21f2ddef0d8",
+      "card_title": "아이들, 라틴 리듬 품은 신곡으로 데뷔 9년 차 컴백",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-08",
+      "title_hash": "46fb2e06bdff5793",
+      "card_title": "JTBC 예능 출연료 지급 지연 문제 제기",
+      "caption_variant": "question_hook",
+      "media_id": "18090971495625349",
       "card_style": "minimal"
     }
   ]
