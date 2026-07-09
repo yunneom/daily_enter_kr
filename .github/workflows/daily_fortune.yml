@@ -1,0 +1,73 @@
+name: 🔮 오늘의 띠별 연애운 (캐러셀)
+
+# 사주 연애운 캐러셀 — 매일 11:00 KST 게시. 스크립트 자체 멱등(오늘 게시했으면 skip).
+# push(paths) 트리거: 스크립트/워크플로우 변경 푸시 시 1회 즉시 게시(오늘 첫 게시).
+on:
+  schedule:
+    - cron: '0 2 * * *'   # UTC 02:00 = KST 11:00
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fortune_saju_carousel.py'
+      - '.github/workflows/daily_fortune.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-fortune
+  cancel-in-progress: false
+
+jobs:
+  fortune:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install fonts (Pretendard) + deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk unzip
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/*.otf /usr/share/fonts/opentype/pretendard/ || true
+          sudo fc-cache -f
+          python -m pip install --upgrade pip
+          pip install requests anthropic playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Post fortune carousel
+        env:
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/fortune_saju_carousel.py
+
+      - name: Commit ledger
+        run: |
+          changes=""
+          if [ -f post_ledger.json ] && [ -n "$(git status --porcelain post_ledger.json 2>/dev/null)" ]; then changes="$changes post_ledger.json"; fi
+          if [ -z "$changes" ]; then echo "변경 없음 — 커밋 스킵"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $changes
+          git commit -m "fortune: $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          BRANCH="${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "$BRANCH" || true
+          git push origin "HEAD:$BRANCH"

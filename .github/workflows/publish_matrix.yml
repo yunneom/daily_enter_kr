@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *'   # UTC 00:00 = KST 09:00 — 매트릭스
     - cron: '0 4 * * *'   # UTC 04:00 = KST 13:00 — 매트릭스
     - cron: '0 9 * * *'   # UTC 09:00 = KST 18:00 — 매트릭스
-    - cron: '0 12 * * 1,3,5'  # UTC 12:00 = KST 21:00 — 스피너 (월·수·금 주3회; 정적자산 3종 과다게시 방지)
+    # (스피너 슬롯 21:00 제거 — 운영자 지시. 하루 = 뉴스1 + 매트릭스3)
   workflow_dispatch:
     inputs:
       topic:
@@ -77,10 +77,8 @@ jobs:
           MUSIC_YT_URL: ${{ secrets.MUSIC_YT_URL }}
           MUSIC_TITLE: ${{ secrets.MUSIC_TITLE }}
           MUSIC_HANDLE: ${{ secrets.MUSIC_HANDLE }}
-          # 수동 dispatch 면 입력값, 스케줄이면 'auto' (요일 회전)
-          # 수동 dispatch 우선. cron 호출 시 21:00 KST(UTC 12:00) 슬롯은 스피너 전용,
-          # 나머지 cron 슬롯은 매트릭스 회전.
-          TOPIC: ${{ inputs.topic || (github.event.schedule == '0 12 * * *' && 'auto_spinner' || 'auto_matrix') }}
+          # 수동 dispatch 면 입력값, 스케줄(09/13/18시)이면 auto_matrix 회전. (스피너 제거됨)
+          TOPIC: ${{ inputs.topic || 'auto_matrix' }}
         run: python scripts/publish_matrix.py
 
       - name: Fetch IG insights (게시별 + 계정 단위 abc송 퍼널)

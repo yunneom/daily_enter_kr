@@ -693,8 +693,7 @@ def main() -> int:
     }
     topic_ids = [t for t in TOPICS.keys()
                  if t not in DISABLED_TOPICS]  # 등록 순서 = 회전 순서
-    spinner_ids = [t for t in topic_ids if TOPICS[t]["style"] == "spinner"]
-    matrix_ids = [t for t in topic_ids if TOPICS[t]["style"] != "spinner"]
+    matrix_ids = list(topic_ids)  # 스피너 제거됨 — 전체가 매트릭스 풀
 
     # 멤버/배경 회전 시드 — KST yday*7+hour. col_pools 라인업 + 배경이 매번 달라짐.
     from datetime import datetime, timezone, timedelta
@@ -703,42 +702,26 @@ def main() -> int:
 
     if target == "all":
         topics_to_post = list(TOPICS.items())
-    elif target in ("auto", "auto_matrix", "auto_spinner", ""):
-        # cron 호출 — 시간대별 다른 토픽 풀에서 회전
+    elif target in ("auto", "auto_matrix", ""):
+        # cron 호출 — 매트릭스 토픽 풀에서 3-1-2-1 균형 회전 (스피너 제거됨)
         from datetime import datetime, timezone, timedelta
         kst = timezone(timedelta(hours=9))
         now_kst = datetime.now(kst)
-        if target == "auto_spinner":
-            pool = spinner_ids
-            # 시드 = 슬롯 명목일 기준(-6h). 21시 슬롯이 GH 지연으로 자정 넘겨
-            # 실행돼도 전날로 귀속 → 이틀 연속 동일 토픽(=동일 영상) 뽑히던 버그 방지.
-            seed = (now_kst - timedelta(hours=6)).timetuple().tm_yday
-        elif target == "auto_matrix":
-            pool = matrix_ids
-            # 시드 = yday*11 + hour. 11은 22/33 외 모든 풀 크기와 코프라임 →
-            # 풀이 6~30 사이 어떤 값이든 모든 토픽이 cron 슬롯에 노출됨.
-            seed = now_kst.timetuple().tm_yday * 11 + now_kst.hour
-        else:  # 하위 호환 (기존 'auto')
-            pool = topic_ids
-            seed = now_kst.weekday()
+        pool = matrix_ids
+        # 시드 = yday*11 + hour. 11은 모든 풀 크기와 코프라임 → 모든 토픽이 슬롯에 노출.
+        seed = now_kst.timetuple().tm_yday * 11 + now_kst.hour
         if not pool:
             print(f"❌ {target} 풀이 비어있음")
             return 1
-        # 3-1-2-1 콘텐츠 믹스 — auto_matrix 는 카테고리 비율 균형 picker.
-        # 둘 다 최근 게시 토픽 쿨다운 적용(스피너 3일 / 매트릭스 8일) → 동일 자료 재게시 방지.
-        if target == "auto_matrix":
-            picked = _pick_balanced(pool, seed, cooldown_days=8)
-        elif target == "auto_spinner":
-            picked = _pick_with_cooldown(pool, seed, cooldown_days=3)
-        else:
-            picked = pool[seed % len(pool)]
+        # 카테고리 비율 균형 picker + 최근 8일 쿨다운(동일 자료 재게시 방지).
+        picked = _pick_balanced(pool, seed, cooldown_days=8)
         print(f"🤖 {target} 회전 — KST {now_kst.strftime('%a %H시')} → {picked} "
               f"[{_category_of(picked)}]")
         topics_to_post = [(picked, TOPICS[picked])]
     else:
         if target not in TOPICS:
             print(f"❌ 알 수 없는 토픽: {target}. "
-                  f"사용 가능: {topic_ids + ['all', 'auto', 'auto_matrix', 'auto_spinner']}")
+                  f"사용 가능: {topic_ids + ['all', 'auto', 'auto_matrix']}")
             return 1
         topics_to_post = [(target, TOPICS[target])]
 
