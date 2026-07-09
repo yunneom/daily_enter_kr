@@ -561,8 +561,9 @@ def _recent_categories(days: int = 7) -> list:
             if e.get("posted_at", "") < cutoff:
                 continue
             tid = e.get("topic_id") or ""
-            # 월드컵 등 매트릭스 외 게시는 카테고리 분석에서 제외 (auto_matrix 만)
-            if tid.startswith("worldcup"):
+            # 월드컵/스피너는 매트릭스 카테고리 분석에서 제외.
+            # (스피너를 inflow 로 세면 게임 매트릭스를 굶기고 텍스트 카드를 과선택함)
+            if tid.startswith("worldcup") or tid.startswith("spinner"):
                 continue
             cats.append(_category_of(tid))
     except Exception:
@@ -570,11 +571,45 @@ def _recent_categories(days: int = 7) -> list:
     return cats
 
 
-def _pick_balanced(pool: list, seed: int) -> str:
+def _recent_topic_ids(days: int) -> set:
+    """최근 days 일 안에 게시된 topic_id 집합 (중복 게시 쿨다운용)."""
+    from datetime import datetime, timezone, timedelta
+    kst = timezone(timedelta(hours=9))
+    cutoff = (datetime.now(kst) - timedelta(days=days)).isoformat()
+    out = set()
+    try:
+        led = post_ledger.load_ledger()
+        for e in led.get("entries", []):
+            if (e.get("posted_at") or "") >= cutoff:
+                out.add(e.get("topic_id") or "")
+    except Exception:
+        pass
+    return out
+
+
+def _pick_with_cooldown(pool: list, seed: int, cooldown_days: int) -> str:
+    """seed 회전 선택 + 최근 cooldown_days 내 게시 토픽 건너뛰기 (동일 자료 재게시 방지).
+    풀 전체가 최근 게시됐으면 seed 기본 픽 폴백."""
+    if not pool:
+        return ""
+    recent = _recent_topic_ids(cooldown_days)
+    n = len(pool)
+    for off in range(n):
+        cand = pool[(seed + off) % n]
+        if cand not in recent:
+            if off:
+                print(f"   ⏭️ 쿨다운: seed 픽이 최근 {cooldown_days}일 내 게시됨 → +{off} 회전 → {cand}")
+            return cand
+    print(f"   ⚠️ 풀 전체가 최근 {cooldown_days}일 내 게시됨 — 기본 픽 사용")
+    return pool[seed % n]
+
+
+def _pick_balanced(pool: list, seed: int, cooldown_days: int = 8) -> str:
     """3-1-2-1 콘텐츠 믹스 균형 picker.
 
     최근 7일 발행 카테고리 분포 vs 목표 비율(3:1:2:1) 비교 → 가장 부족한
-    카테고리의 토픽 풀에서 seed 회전 선택. 데이터 없으면 기본 회전.
+    카테고리의 토픽 풀에서 seed 회전 선택(+ 최근 cooldown_days 내 게시분 skip).
+    데이터 없으면 기본 회전.
     """
     from collections import Counter
     from topic_registry import CONTENT_RATIO, category_for
@@ -583,7 +618,7 @@ def _pick_balanced(pool: list, seed: int) -> str:
     for tid in pool:
         by_cat.setdefault(category_for(tid), []).append(tid)
     if not by_cat:
-        return pool[seed % len(pool)]
+        return _pick_with_cooldown(pool, seed, cooldown_days)
 
     recent = _recent_categories(7)
     total_recent = max(len(recent), 1)
@@ -599,11 +634,11 @@ def _pick_balanced(pool: list, seed: int) -> str:
         cur_frac = counts.get(cat, 0) / total_recent
         deficits.append((target_frac - cur_frac, cat))
     if not deficits:
-        return pool[seed % len(pool)]
+        return _pick_with_cooldown(pool, seed, cooldown_days)
     deficits.sort(reverse=True)         # 결핍 큰 순
     chosen_cat = deficits[0][1]
     cat_pool = by_cat[chosen_cat]
-    picked = cat_pool[seed % len(cat_pool)]
+    picked = _pick_with_cooldown(cat_pool, seed, cooldown_days)
     print(f"   🎯 3-1-2-1 균형: 최근7일 {dict(counts)} → 부족 '{chosen_cat}' 픽")
     return picked
 
@@ -634,7 +669,17 @@ def main() -> int:
         return 1
     print(f"✓ IG 토큰 OK: @{health.get('username')}")
 
-    topic_ids = list(TOPICS.keys())  # 등록 순서 = 회전 순서
+    # 비활성 토픽 — 고정 cells 라 재게시마다 동일 화면(중복) 또는 브랜드 세이프티 충돌.
+    # 회전판(tier/powerpick col_pools)·데이터 랭킹으로 대체돼 매트릭스 풀에서 제외.
+    DISABLED_TOPICS = {
+        "girlgroup_real_10k", "girlgroup_4gen_10k",   # ≒ girlgroup_4gen_tier1_10k(회전판)
+        "boygroup_4gen_10k",                          # ≒ boygroup_4gen_tier1_10k(회전판)
+        "idol_allstar_10k",                           # 걸그룹 토픽과 멤버 전면 중복
+        "power_budget_10k",                           # ≒ powerpick_* 시리즈(회전판)
+        "kpop_concept_love_hate",                     # '극혐' 어휘 — 브랜드 세이프티 충돌
+    }
+    topic_ids = [t for t in TOPICS.keys()
+                 if t not in DISABLED_TOPICS]  # 등록 순서 = 회전 순서
     spinner_ids = [t for t in topic_ids if TOPICS[t]["style"] == "spinner"]
     matrix_ids = [t for t in topic_ids if TOPICS[t]["style"] != "spinner"]
 
@@ -652,8 +697,9 @@ def main() -> int:
         now_kst = datetime.now(kst)
         if target == "auto_spinner":
             pool = spinner_ids
-            # 하루 1슬롯이라 day-of-year 만으로 충분 (2 토픽 격일)
-            seed = now_kst.timetuple().tm_yday
+            # 시드 = 슬롯 명목일 기준(-6h). 21시 슬롯이 GH 지연으로 자정 넘겨
+            # 실행돼도 전날로 귀속 → 이틀 연속 동일 토픽(=동일 영상) 뽑히던 버그 방지.
+            seed = (now_kst - timedelta(hours=6)).timetuple().tm_yday
         elif target == "auto_matrix":
             pool = matrix_ids
             # 시드 = yday*11 + hour. 11은 22/33 외 모든 풀 크기와 코프라임 →
@@ -666,8 +712,11 @@ def main() -> int:
             print(f"❌ {target} 풀이 비어있음")
             return 1
         # 3-1-2-1 콘텐츠 믹스 — auto_matrix 는 카테고리 비율 균형 picker.
+        # 둘 다 최근 게시 토픽 쿨다운 적용(스피너 3일 / 매트릭스 8일) → 동일 자료 재게시 방지.
         if target == "auto_matrix":
-            picked = _pick_balanced(pool, seed)
+            picked = _pick_balanced(pool, seed, cooldown_days=8)
+        elif target == "auto_spinner":
+            picked = _pick_with_cooldown(pool, seed, cooldown_days=3)
         else:
             picked = pool[seed % len(pool)]
         print(f"🤖 {target} 회전 — KST {now_kst.strftime('%a %H시')} → {picked} "

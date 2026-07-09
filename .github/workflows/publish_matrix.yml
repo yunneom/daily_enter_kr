@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *'   # UTC 00:00 = KST 09:00 — 매트릭스
     - cron: '0 4 * * *'   # UTC 04:00 = KST 13:00 — 매트릭스
     - cron: '0 9 * * *'   # UTC 09:00 = KST 18:00 — 매트릭스
-    - cron: '0 12 * * *'  # UTC 12:00 = KST 21:00 — 스피너 (전용)
+    - cron: '0 12 * * 1,3,5'  # UTC 12:00 = KST 21:00 — 스피너 (월·수·금 주3회; 정적자산 3종 과다게시 방지)
   workflow_dispatch:
     inputs:
       topic:
