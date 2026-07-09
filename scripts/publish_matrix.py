@@ -166,8 +166,21 @@ COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#�
                "#릴스", "#reels", "#korea"]
 
 
+def _title_of(topic: dict, topic_id: str) -> str:
+    """message 등 'title' 키 없는 토픽도 안전하게 대표 제목 반환.
+    (title 없는 message 토픽이 publish_one/build_caption 에서 KeyError 로
+     매트릭스 전체를 죽이던 버그 방지 — headline_pool[0] 등으로 폴백)"""
+    t = topic.get("title")
+    if t:
+        return t
+    hp = topic.get("headline_pool") or []
+    if hp:
+        return hp[0]
+    return topic.get("headline") or topic.get("subhead") or topic_id
+
+
 def build_caption(topic_id: str, topic: dict) -> str:
-    title = topic["title"]
+    title = _title_of(topic, topic_id)
     # spinner 는 rule_hint 대신 hint 필드 사용
     rule = topic.get("rule_hint") or topic.get("hint", "")
     niche = TOPIC_TAGS.get(topic_id, [])
@@ -449,7 +462,7 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
 
 def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
                 seed: int = 0) -> dict:
-    print(f"\n=== {topic_id}: {topic['title']} ({topic['style']}) [seed={seed}] ===")
+    print(f"\n=== {topic_id}: {_title_of(topic, topic_id)} ({topic['style']}) [seed={seed}] ===")
     try:
         video_url, cover_url = build_and_upload(topic_id, topic, seed=seed)
         print(f"  ✓ video: {video_url}")
@@ -471,7 +484,7 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
             hint = topic.get("rule_hint") or topic.get("hint", "")
             tags = TOPIC_TAGS.get(topic_id, []) + COMMON_TAGS
             yt_title, yt_desc = post_youtube.build_youtube_meta(
-                title=topic["title"], hint=hint, hashtags=tags,
+                title=_title_of(topic, topic_id), hint=hint, hashtags=tags,
                 disclosure=COUPANG_DISCLOSURE if get_topic_affiliate_url(topic_id) else "",
                 music_block=music_credit.youtube_music_block(),
             )
@@ -518,7 +531,7 @@ def publish_one(topic_id: str, topic: dict, publisher: InstagramPublisher,
         try:
             reel_link = f"https://www.instagram.com/reel/{media_id}/" if media_id else None
             threads_id = post_threads.post_thread(
-                top_titles=[topic["title"], topic.get("rule_hint", "")],
+                top_titles=[_title_of(topic, topic_id), topic.get("rule_hint", "")],
                 date_str="", label_short="밸런스게임", reel_link=reel_link)
         except Exception as e:
             print(f"  ⚠️  Threads 게시 실패 (비치명): {e}")
