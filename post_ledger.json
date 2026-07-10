@@ -561,6 +561,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-10T12:57:16.410210+09:00",
+      "topic_id": "community_weekly",
+      "title": "",
+      "style": "message",
+      "seed": 2113,
+      "ig_media_id": "18012004001867740",
+      "youtube_id": "wmsmTC3gAgo",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
