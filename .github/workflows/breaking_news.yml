@@ -1,0 +1,71 @@
+name: 📰 속보 뉴스 카드 (반응형)
+
+# data/breaking_news.json 을 수정해 push 하면 즉시 속보 카드 1건 게시.
+# 멱등: 스크립트가 같은 topic_id 이미 게시 시 skip → 재푸시해도 중복 게시 안 함.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/breaking_news.json'
+      - 'scripts/post_breaking.py'
+      - '.github/workflows/breaking_news.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: breaking-news
+  cancel-in-progress: false
+
+jobs:
+  breaking:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install fonts (Pretendard) + deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk unzip
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/*.otf /usr/share/fonts/opentype/pretendard/ || true
+          sudo fc-cache -f
+          python -m pip install --upgrade pip
+          pip install requests playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Post breaking card
+        env:
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+        run: python scripts/post_breaking.py
+
+      - name: Commit ledger
+        run: |
+          changes=""
+          if [ -f post_ledger.json ] && [ -n "$(git status --porcelain post_ledger.json 2>/dev/null)" ]; then changes="$changes post_ledger.json"; fi
+          if [ -z "$changes" ]; then echo "변경 없음 — 커밋 스킵"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $changes
+          git commit -m "breaking: $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          BRANCH="${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "$BRANCH" || true
+          git push origin "HEAD:$BRANCH"
