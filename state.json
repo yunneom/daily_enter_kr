@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-11T09:13:37.860810+09:00",
+  "last_run_at": "2026-07-12T08:48:43.605861+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-11",
-      "title_hash": "f769f70ce1b9bfd1",
-      "card_title": "오정세, '와일드 씽'으로 음원차트 1위 석권…'만년 2위' 극복",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "64ac9b1a7fa5b1e2",
-      "card_title": "이혜영, 폐암 투병기 공개하며 회복 여정 나눔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "6d33f47b3f8926fd",
-      "card_title": "전원주, 아들 친구들의 놀림을 성공의 발판으로 — 숙대 출신 배우의 악착같은 도전기",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "2d3a33cb7ece929a",
-      "card_title": "양정아, 결혼 2년만 이혼 선언..개인의 성장 과정 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "516de51cc59d9059",
-      "card_title": "허남준, 뿔테 안경으로 완성한 생일 인증샷",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "3aaa7561fc47ccce",
-      "card_title": "'나는 솔로' 32기, 직업·나이·자녀 유무 공개하며 자기소개 예고",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "a08e98120c49bcd5",
-      "card_title": "'참교육', 넷플릭스 비영어 쇼 1위 진입 — 교권 이슈 조명",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-11",
-      "title_hash": "8c1957c0b98684eb",
-      "card_title": "배용준, 28년 공백 끝내고 박수진과 재결합",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17869070598543365",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-12",
       "title_hash": "000af8107d0a9dab",
@@ -2081,6 +2017,78 @@
       "card_title": "'아파트' 드라마 시청률 주목—연기파 배우 총출동으로 화제",
       "caption_variant": "headlines_dotted",
       "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "8f2623ef6c1a4a05",
+      "card_title": "박정수, 거제 방문해 '리센느' 인기 실감",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "98a6d7706a5292a9",
+      "card_title": "탑, 10년 만에 팬들과 재회 — 일본 팬 1만 명 전석 무료 초대",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "33de1e2d19b49bf8",
+      "card_title": "프로미스나인, 올여름 신곡으로 행복 바이브 전달",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "4f0e764ed785c55b",
+      "card_title": "드라마 '아파트' 지성·하윤경, 스크린 속 부부에서 실제 부부로",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "e82c8974015f78e2",
+      "card_title": "소지섭X옥택연 '김부장', 코드네임 66의 비밀 풀린다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "7376fc00b3a1b88c",
+      "card_title": "BTS 티켓 매진, 글로벌 팬심의 위력",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "ddd53159a9399af8",
+      "card_title": "소녀시대 유리, 제주 혼자 살기로 찾은 용기와 변화",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "db164824f1f38a6a",
+      "card_title": "'놀면 뭐하니' 이선민의 고향 구미, 갓 튀긴 라면·김밥 맛집 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-12",
+      "title_hash": "2cf6c0301b540130",
+      "card_title": "도경완, '장윤정 친모 논란' 후 첫 심경 전한다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17984120739032510",
       "card_style": "minimal"
     }
   ]
