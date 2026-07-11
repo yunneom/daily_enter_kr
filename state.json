@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-10T09:08:00.014414+09:00",
+  "last_run_at": "2026-07-11T09:13:37.860810+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-10",
-      "title_hash": "bffd2b94cc33dac6",
-      "card_title": "수영·정경호 14년 연인관계 결별, 효연 과거 발언 재조명",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "b87b48c7256e6e6d",
-      "card_title": "서인영, 6살 연상 사업가와 재혼 — '응원해주길' 소감 전해",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "4bd528b46e41a73b",
-      "card_title": "넷플릭스 드라마 '참교육', 교권 붕괴 현실 조명하며 화제",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "f2cb1b1cfef2ced8",
-      "card_title": "김수현, 1년 만에 활동 재개 — 광고 촬영으로 복귀",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "08331e061e863bd4",
-      "card_title": "이승환, 윤서인 발언 관련 5000만원 손해배상소송 제기",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "0e2e2134701e4341",
-      "card_title": "배우들의 OST 보컬 무대, 영화 팬들 '고막 점령'",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "1b78a36e6ef0a649",
-      "card_title": "갸루, 유튜브 차트 석권···중소돌의 역주행 신화 계속된다",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-10",
-      "title_hash": "3dd0321771d4df94",
-      "card_title": "배용준·박수진, 박신혜·최태준과 싱가포르 동반 여행",
-      "caption_variant": "tease_one",
-      "media_id": "18072835145694693",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-06-11",
       "title_hash": "f769f70ce1b9bfd1",
@@ -2073,6 +2009,78 @@
       "card_title": "저스틴 비버·BTS, 월드컵 결승전 하프타임쇼 출연 확정",
       "caption_variant": "you_wont_believe",
       "media_id": "17946823431232290",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "19e84de3553891f0",
+      "card_title": "클릭비 유호석, 두 자녀 아버지임을 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "d383fa229f152130",
+      "card_title": "리센느, 새 숙소 공개 — 방 2개에서 5개로 확장, 멤버 취향 맞춰 꾸미다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "cb3ab97b48316f23",
+      "card_title": "혜은이, 공황장애 투병 경험 공개하며 회복 과정 나눠",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "410958f665c24e3a",
+      "card_title": "샤이니 민호, '나혼산' 출연 예고 '월드투어보다 힘들 것'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "d313a119edb23acd",
+      "card_title": "정명훈, 클래식부산 예술감독 2년 연임 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "d11c3ad9c5551d4f",
+      "card_title": "아이유·이종석, 4년 연애 후 결별…좋은 동료로 남기기로",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "86d58f9a9941c76f",
+      "card_title": "방탄소년단 지민, 런던 무대서 빛나는 카리스마 포착",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "06337a2c67b27acb",
+      "card_title": "BTS '스윔', 미국서 표절 의혹 제기…빅히트 강경 대응",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-11",
+      "title_hash": "6914c2628c85fdc9",
+      "card_title": "'아파트' 드라마 시청률 주목—연기파 배우 총출동으로 화제",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18086626172652483",
       "card_style": "minimal"
     }
   ]
