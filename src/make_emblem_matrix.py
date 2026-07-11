@@ -156,6 +156,40 @@ def _draw_money_bill(img: Image.Image, draw: ImageDraw.ImageDraw,
     img.alpha_composite(layer, (int(cx - lw / 2), int(cy - lh / 2)))
 
 
+_LAST_PHOTO_NAMES: List[str] = []  # 이번 렌더에서 실물사진 붙은 멤버 (크레딧용)
+
+
+def _idol_photo_circle(name: str, size: int):
+    """IDOL_PHOTOS=on 이고 검증된 커먼즈 사진이 있으면 원형 실물사진(RGBA) 반환, 없으면 None.
+    (idol_photo: 성인 게이트 + CC/PD + 오버라이드 allowlist + wsrv 프록시)"""
+    import os as _os
+    if _os.environ.get("IDOL_PHOTOS", "off").lower() != "on":
+        return None
+    try:
+        import idol_photo
+        rec = idol_photo.fetch_photo(name)
+        if not rec or not rec.get("path"):
+            return None
+        im = Image.open(rec["path"]).convert("RGBA")
+        w, h = im.size
+        s = min(w, h)
+        top = int((h - s) * 0.12)  # 얼굴 위쪽 우선 크롭
+        im = im.crop(((w - s) // 2, top, (w - s) // 2 + s, top + s)).resize((size, size), Image.LANCZOS)
+        mask = Image.new("L", (size, size), 0)
+        ImageDraw.Draw(mask).ellipse([0, 0, size - 1, size - 1], fill=255)
+        out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        out.paste(im, (0, 0), mask)
+        ring = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        ImageDraw.Draw(ring).ellipse([1, 1, size - 2, size - 2],
+                                     outline=(255, 255, 255, 240), width=max(3, size // 26))
+        out.alpha_composite(ring)
+        if name and name not in _LAST_PHOTO_NAMES:
+            _LAST_PHOTO_NAMES.append(name)
+        return out
+    except Exception:
+        return None
+
+
 def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
                       tier_style: dict, cell: dict,
                       font_paths: dict = None):
@@ -206,9 +240,14 @@ def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
                      bold_path=bold)
     else:
         emoji_size = int(ch * 0.40)
-        em_img = _get_emoji_image(cell.get("role_emoji", ""), emoji_size) if cell.get("role_emoji") else None
-        if em_img:
-            img.alpha_composite(em_img, (int(cx - emoji_size / 2), int(visual_top)))
+        # 실물사진 우선 (IDOL_PHOTOS=on + 검증 사진). 없으면 역할 이모지 폴백.
+        photo = _idol_photo_circle(cell.get("name", ""), emoji_size)
+        if photo:
+            img.alpha_composite(photo, (int(cx - emoji_size / 2), int(visual_top)))
+        else:
+            em_img = _get_emoji_image(cell.get("role_emoji", ""), emoji_size) if cell.get("role_emoji") else None
+            if em_img:
+                img.alpha_composite(em_img, (int(cx - emoji_size / 2), int(visual_top)))
 
     # 7) 실명 (Bold, 2줄 wrap 가능) — subtitle 있으면 자리 더 위로
     name = cell.get("name", "")
@@ -309,6 +348,7 @@ def make_emblem_matrix(
     assert len(cells) == n_rows and all(len(r) == n_cols for r in cells)
     assert n_rows == 3, "3 가격 티어 전용 (골드/실버/브론즈)"
 
+    _LAST_PHOTO_NAMES.clear()  # 이번 렌더 실물사진 크레딧 초기화
     img = _background(background_style).convert("RGBA")
 
     # 폰트
@@ -448,6 +488,14 @@ def make_emblem_matrix(
         sw = draw.textlength(source_note, font=f_src)
         draw.text(((CANVAS[0] - sw) / 2, cta_y + 78),
                   source_note, font=f_src, fill=src_color)
+
+    # ─── 실물사진 크레딧 (CC 라이선스 준수) — 사진 붙은 셀이 있을 때만 ───
+    if _LAST_PHOTO_NAMES:
+        f_cr = ImageFont.truetype(regular_path, 22)
+        cr_color = (140, 140, 150) if not dark_bg else (190, 190, 195)
+        cr = "사진 ⓒ Wikimedia Commons (CC BY/BY-SA) · 각 저작자 표기"
+        crw = draw.textlength(cr, font=f_cr)
+        draw.text(((CANVAS[0] - crw) / 2, CANVAS[1] - 40), cr, font=f_cr, fill=cr_color)
 
     # 브랜드 — 폭 넘치면 자동 축소
     if brand:

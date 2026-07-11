@@ -250,6 +250,31 @@ TOPICS = {
     # 7·8) 일시정지 챌린지(스피너) 3종 제거 — 운영자 지시(정적자산 과다게시).
     #      spinner_food_man / spinner_lazy_woman / spinner_idol_pick 삭제.
 
+    # 8c) 만원 걸그룹 올스타 — 실물사진판. 9명 전원 검증 커먼즈 CC 사진 보유(오버라이드)라
+    #     IDOL_PHOTOS=on 시 전 셀 실물사진(이모지 폴백 없음). 그룹 균형 라인업.
+    "girlgroup_allstar_photo_10k": {
+        "style": "emblem",
+        "background_style": "white",
+        "title": "만원으로 걸그룹 올스타 만들기",
+        "highlight": "올스타",
+        "rule_hint": "각 포지션 1명씩 골라 합 1만원 — 당신의 픽은?",
+        "col_headers": ["메인보컬", "메인댄서", "비주얼"],
+        "row_prices": ["5천원", "3천원", "2천원"],
+        "cells": [
+            [{"role_emoji": "🎤", "name": "태연", "subtitle": "소녀시대"},
+             {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
+             {"role_emoji": "✨", "name": "장원영", "subtitle": "아이브"}],
+            [{"role_emoji": "🎤", "name": "설윤", "subtitle": "엔믹스"},
+             {"role_emoji": "💃", "name": "슬기", "subtitle": "레드벨벳"},
+             {"role_emoji": "✨", "name": "카리나", "subtitle": "에스파"}],
+            [{"role_emoji": "🎤", "name": "김채원", "subtitle": "르세라핌"},
+             {"role_emoji": "💃", "name": "리사", "subtitle": "블랙핑크"},
+             {"role_emoji": "✨", "name": "지수", "subtitle": "블랙핑크"}],
+        ],
+        "source_note": "출처: 한국기업평판연구소 브랜드평판",
+        "auto_comment": "💘 내 만원 걸그룹 조합은? 댓글로 ⬇️ 최애 조합 자랑해요!",
+    },
+
     # 9) 4세대 걸그룹 올스타 — 다양한 그룹 + NMIXX 포함
     "girlgroup_4gen_10k": {
         "style": "emblem",

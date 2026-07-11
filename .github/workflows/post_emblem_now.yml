@@ -1,0 +1,77 @@
+name: 🖼️ 만원 걸그룹 조합 (실물사진) 즉시 게시
+
+# 큐레이션 올스타(9명 전원 커먼즈 CC 사진) 엠블럼을 IDOL_PHOTOS=on 으로 1회 게시.
+# push(이 워크플로우 파일 변경) 트리거 → 생성 시 1회 발화.
+# ⚠️ 특정토픽 모드는 멱등 체크 없음 — 재게시 원하면 이 파일 수정 push 시에만 재발화.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/post_emblem_now.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-emblem-now
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install fonts + Pretendard + ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk unzip ffmpeg
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f /usr/share/fonts/opentype/pretendard/
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Post emblem (real photos)
+        env:
+          IDOL_PHOTOS: "on"
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          MUSIC_YT_URL: ${{ secrets.MUSIC_YT_URL }}
+          MUSIC_TITLE: ${{ secrets.MUSIC_TITLE }}
+          MUSIC_HANDLE: ${{ secrets.MUSIC_HANDLE }}
+        run: python scripts/publish_matrix.py girlgroup_allstar_photo_10k
+
+      - name: Commit ledger
+        run: |
+          changes=""
+          if [ -f post_ledger.json ] && [ -n "$(git status --porcelain post_ledger.json 2>/dev/null)" ]; then changes="$changes post_ledger.json"; fi
+          if [ -z "$changes" ]; then echo "변경 없음 — 커밋 스킵"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $changes
+          git commit -m "emblem-photo: $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          BRANCH="${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "$BRANCH" || true
+          git push origin "HEAD:$BRANCH"
