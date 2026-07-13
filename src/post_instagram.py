@@ -208,15 +208,15 @@ class InstagramPublisher:
         return resp.json()["id"]
 
     def post_carousel(self, image_urls: list, caption: str) -> str:
-        """캐러셀(스와이프 다중 이미지) 피드 게시. 2-10장.
+        """캐러셀(스와이프 다중 이미지) 피드 게시. 2-20장 (IG 2024 확장).
 
         Args:
             image_urls: 공개 이미지 URL 리스트 (Cloudinary). 순서 = 스와이프 순서.
             caption: 캡션 (해시태그 포함)
         Returns: published media id
         """
-        if not (2 <= len(image_urls) <= 10):
-            raise ValueError(f"캐러셀은 2-10장 — 현재 {len(image_urls)}")
+        if not (2 <= len(image_urls) <= 20):
+            raise ValueError(f"캐러셀은 2-20장 — 현재 {len(image_urls)}")
         print(f"[1/4] 자식 이미지 {len(image_urls)}장 컨테이너 생성...")
         child_ids = []
         for i, u in enumerate(image_urls, 1):
