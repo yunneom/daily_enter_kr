@@ -704,6 +704,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-13T15:49:04.202887+09:00",
+      "topic_id": "kpop_authority_insight",
+      "title": "",
+      "style": "message",
+      "seed": 2149,
+      "ig_media_id": "18018660470911598",
+      "youtube_id": "zqiD3QzgVIQ",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
