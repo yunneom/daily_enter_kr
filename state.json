@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-13T09:11:37.478147+09:00",
+  "last_run_at": "2026-07-14T08:46:40.961142+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-13",
-      "title_hash": "6def5be39c8d7973",
-      "card_title": "배성재♥김다영, 14살 나이 차 '미끼' 러브스토리 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "6ed4740261b83177",
-      "card_title": "임지연, tvN '멋진 신세계'서 시간 역행 스토리 펼친다",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "5eb73f6ac8dcc61a",
-      "card_title": "조정석, 예능에서 궁합 테스트 결과 '모자관계' 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "27347d9f6c048a7a",
-      "card_title": "케데헌 이재, 개막식 무대서 한국어 가사 울려퍼뜨리다",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "4ae4df09fbb9a276",
-      "card_title": "한혜진, 홍천 별장 무단침입으로 불안감 호소",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "66070389695f6025",
-      "card_title": "고강용, 1억 2천 대출로 전셋집 이사 '월 105만원 상환 중'",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "d5bd8e7758c49e04",
-      "card_title": "슬리피, 자녀를 위해 문신 제거 — '어린이집 가기 부끄러워'",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-13",
-      "title_hash": "a0e61cce8429f5fd",
-      "card_title": "드라마 '참교육', 34년 교직 경험으로 본 학교 폭력의 현실",
-      "caption_variant": "question_hook",
-      "media_id": "18401716996156883",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-14",
       "title_hash": "c6944ce2f8e0a417",
@@ -2097,6 +2033,78 @@
       "card_title": "박준형, 건강 관리 중 신체 변화 겪었다",
       "caption_variant": "list_count",
       "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "edba995005f4ebf6",
+      "card_title": "선미, 신곡 '잔인해 이 여름날' 몽환적 빗속 실루엣 공개",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "c964a82e9005e609",
+      "card_title": "황인엽·이혜리, '그대에게 드림'서 15년 만에 첫사랑 재회",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "5f0aa9c488dc160f",
+      "card_title": "유아인, 법원 판결 후 일상 복귀…근황 포착",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "204747cc0abc3cf7",
+      "card_title": "차정원, 하정우와의 나이 차이 언급에 수줍은 반응",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "ecf8da93b788690b",
+      "card_title": "최강희, 금연 6개월 달성…'기적 같은 변화'",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "bbff00fe21f278ae",
+      "card_title": "영화 '오디세이', 런던·파리·뭄바이 글로벌 프리미어 성황",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "ad7f39f90dea9599",
+      "card_title": "나홍진 감독 '호프' 사전 예매 관객 수 올해 최다 기록",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "e49ea93c8d63d643",
+      "card_title": "디즈니 실사 애니 '모아나' 개봉 첫 주말 박스오피스 1위",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-14",
+      "title_hash": "4e634ccb509015b1",
+      "card_title": "서동주, 계류유산 후 가족과의 소중한 순간 공개",
+      "caption_variant": "list_count",
+      "media_id": "18625880422028407",
       "card_style": "minimal"
     }
   ]
