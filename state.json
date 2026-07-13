@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-12T08:48:43.605861+09:00",
+  "last_run_at": "2026-07-13T09:11:37.478147+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-12",
-      "title_hash": "000af8107d0a9dab",
-      "card_title": "K팝 걸그룹 콜라보 뮤직비디오, 천만 뷰 육박",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "a43a3a0a526d818c",
-      "card_title": "배성재·김다영 신혼 부부, '전현무계획3' 동반출연",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "ded1ae96c48522f6",
-      "card_title": "아이들 미연·우기, 각각의 매력으로 시선 집중",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "fbc9618f781c6d1b",
-      "card_title": "김무열·김남길, '참교육' 감독이 전한 현장 스토리",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "016733bb16da8ba0",
-      "card_title": "'군체', 하루 만에 1위 탈환…500만 관객 돌파 임박",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "462c39c5a4a157f4",
-      "card_title": "문채원, 6월 웨딩화보 공개 — 우아한 신부 무드",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "311548fbbbfc299f",
-      "card_title": "고레에다 히로카즈, 스필버그와 협업한 신작 '디스클로저 데이' 개봉",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-12",
-      "title_hash": "ca028dcab2c77aad",
-      "card_title": "이재, 월드컵 주제가 참여…개막식 무대 확정",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18597005923034666",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-06-13",
       "title_hash": "6def5be39c8d7973",
@@ -2089,6 +2025,78 @@
       "card_title": "도경완, '장윤정 친모 논란' 후 첫 심경 전한다",
       "caption_variant": "headlines_dotted",
       "media_id": "17984120739032510",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "037b3d243b034206",
+      "card_title": "신기루, 20년 절친 김영희도 놀란 솔직 고백",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "49145e57979b3479",
+      "card_title": "배기성, 청력 손실 공개..의학적 진단 및 치료 과정 진행 중",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "f0c97c8905ba8b32",
+      "card_title": "효린, 컴백 앨범 전곡 프로듀싱 — 타이틀곡 'ChecK' 포함 7곡",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "bc6016584f9ccd10",
+      "card_title": "송종호, 3년 반 공백 후 고깃집 사장으로 활동 재개",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "4da32b07191f76f8",
+      "card_title": "존박·성시경, 유튜브서 이달 중 컴백 예고",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "69243fe69e1807c9",
+      "card_title": "영화 '넘버 3', 경쟁 심화 시대를 풍자하다",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "42b3a07cbe42285a",
+      "card_title": "소지섭 신작 또 최고 시청률, 지성·김부장 드라마 경쟁 심화",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "ba927781eb9c03f6",
+      "card_title": "김고은, '도깨비' 촬영 후 탈모 겪으며 본드 피스로 3~4일간 관리",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-13",
+      "title_hash": "f11fcf8f99fd60e5",
+      "card_title": "박준형, 건강 관리 중 신체 변화 겪었다",
+      "caption_variant": "list_count",
+      "media_id": "17905861920450113",
       "card_style": "minimal"
     }
   ]
