@@ -25,7 +25,7 @@ ROOT = Path(__file__).parent.parent
 TOP100_PATH = ROOT / "data" / "girlgroup_brand_rep_top100.json"
 BRACKET_PATH = ROOT / "data" / "worldcup_bracket.json"
 
-SEED_RANDOM = 20260622  # 결정론적 — 같은 결과 재현
+SEED_RANDOM = 20260714  # 시즌2 — 이전과 다른 대진(결정론적 재현)
 
 
 def build_32_seeds():

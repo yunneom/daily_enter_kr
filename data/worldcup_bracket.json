@@ -2,7 +2,7 @@
   "tournament": "걸그룹 월드컵 (32강)",
   "source": "한국기업평판연구소 2026.6.21",
   "seed_method": "TOP1-4 분산 → 5-8 분산 → 9-16 분산 → 17-32 시드+랜덤",
-  "deterministic_seed": 20260622,
+  "deterministic_seed": 20260714,
   "quarters": [
     [
       {
@@ -11,39 +11,39 @@
         "member": "장원영"
       },
       {
-        "rank": 6,
-        "group": "아일릿",
-        "member": "원희"
-      },
-      {
-        "rank": 11,
+        "rank": 7,
         "group": "블랙핑크",
-        "member": "지수"
+        "member": "리사"
       },
       {
-        "rank": 15,
-        "group": "에스파",
-        "member": "닝닝"
+        "rank": 14,
+        "group": "레드벨벳",
+        "member": "조이"
       },
       {
-        "rank": 20,
-        "group": "시그니처",
-        "member": "지원"
+        "rank": 12,
+        "group": "엔믹스",
+        "member": "설윤"
       },
       {
-        "rank": 31,
-        "group": "아이브",
-        "member": "리즈"
+        "rank": 29,
+        "group": "레드벨벳",
+        "member": "아이린"
       },
       {
-        "rank": 22,
-        "group": "아일릿",
-        "member": "모카"
+        "rank": 32,
+        "group": "우주소녀",
+        "member": "여름"
       },
       {
-        "rank": 30,
-        "group": "에스파",
-        "member": "지젤"
+        "rank": 19,
+        "group": "트와이스",
+        "member": "정연"
+      },
+      {
+        "rank": 25,
+        "group": "소녀시대",
+        "member": "윤아"
       }
     ],
     [
@@ -53,24 +53,29 @@
         "member": "로제"
       },
       {
-        "rank": 8,
-        "group": "아이브",
-        "member": "안유진"
+        "rank": 6,
+        "group": "아일릿",
+        "member": "원희"
       },
       {
-        "rank": 9,
+        "rank": 15,
         "group": "에스파",
-        "member": "윈터"
+        "member": "닝닝"
       },
       {
-        "rank": 14,
+        "rank": 10,
+        "group": "르세라핌",
+        "member": "김채원"
+      },
+      {
+        "rank": 28,
         "group": "레드벨벳",
-        "member": "조이"
+        "member": "슬기"
       },
       {
-        "rank": 25,
-        "group": "소녀시대",
-        "member": "윤아"
+        "rank": 24,
+        "group": "르세라핌",
+        "member": "카즈하"
       },
       {
         "rank": 17,
@@ -78,14 +83,9 @@
         "member": "나연"
       },
       {
-        "rank": 19,
-        "group": "트와이스",
-        "member": "정연"
-      },
-      {
-        "rank": 28,
-        "group": "레드벨벳",
-        "member": "슬기"
+        "rank": 22,
+        "group": "아일릿",
+        "member": "모카"
       }
     ],
     [
@@ -95,39 +95,39 @@
         "member": "카리나"
       },
       {
-        "rank": 7,
+        "rank": 8,
+        "group": "아이브",
+        "member": "안유진"
+      },
+      {
+        "rank": 13,
+        "group": "다이아",
+        "member": "정채연"
+      },
+      {
+        "rank": 11,
         "group": "블랙핑크",
-        "member": "리사"
+        "member": "지수"
       },
       {
-        "rank": 10,
-        "group": "르세라핌",
-        "member": "김채원"
+        "rank": 21,
+        "group": "아이브",
+        "member": "레이"
       },
       {
-        "rank": 16,
-        "group": "소녀시대",
-        "member": "태연"
+        "rank": 23,
+        "group": "리센느",
+        "member": "미나미"
       },
       {
-        "rank": 29,
-        "group": "레드벨벳",
-        "member": "아이린"
-      },
-      {
-        "rank": 27,
-        "group": "프로미스나인",
-        "member": "이채영"
-      },
-      {
-        "rank": 32,
+        "rank": 18,
         "group": "우주소녀",
-        "member": "여름"
+        "member": "연정"
       },
       {
-        "rank": 24,
-        "group": "르세라핌",
-        "member": "카즈하"
+        "rank": 26,
+        "group": "위키미키",
+        "member": "최유정"
       }
     ],
     [
@@ -142,34 +142,34 @@
         "member": "원이"
       },
       {
-        "rank": 13,
-        "group": "다이아",
-        "member": "정채연"
+        "rank": 16,
+        "group": "소녀시대",
+        "member": "태연"
       },
       {
-        "rank": 12,
-        "group": "엔믹스",
-        "member": "설윤"
+        "rank": 9,
+        "group": "에스파",
+        "member": "윈터"
       },
       {
-        "rank": 26,
-        "group": "위키미키",
-        "member": "최유정"
+        "rank": 30,
+        "group": "에스파",
+        "member": "지젤"
       },
       {
-        "rank": 18,
-        "group": "우주소녀",
-        "member": "연정"
+        "rank": 27,
+        "group": "프로미스나인",
+        "member": "이채영"
       },
       {
-        "rank": 21,
+        "rank": 31,
         "group": "아이브",
-        "member": "레이"
+        "member": "리즈"
       },
       {
-        "rank": 23,
-        "group": "리센느",
-        "member": "미나미"
+        "rank": 20,
+        "group": "시그니처",
+        "member": "지원"
       }
     ]
   ],
@@ -187,149 +187,22 @@
             "score": 7538960
           },
           "b": {
-            "rank": 30,
-            "group": "에스파",
-            "member": "지젤",
-            "score": 1240932
+            "rank": 25,
+            "group": "소녀시대",
+            "member": "윤아",
+            "score": 1384459
           },
-          "winner": {
-            "rank": 1,
-            "group": "아이브",
-            "member": "장원영",
-            "score": 7538960
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         },
         {
           "quarter": 0,
           "slot": 1,
           "round": "R32",
           "a": {
-            "rank": 6,
-            "group": "아일릿",
-            "member": "원희",
-            "score": 4185876
-          },
-          "b": {
-            "rank": 22,
-            "group": "아일릿",
-            "member": "모카",
-            "score": 1449356
-          },
-          "winner": {
-            "rank": 6,
-            "group": "아일릿",
-            "member": "원희",
-            "score": 4185876
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 0,
-          "slot": 2,
-          "round": "R32",
-          "a": {
-            "rank": 11,
+            "rank": 7,
             "group": "블랙핑크",
-            "member": "지수",
-            "score": 2096499
-          },
-          "b": {
-            "rank": 31,
-            "group": "아이브",
-            "member": "리즈",
-            "score": 1223384
-          },
-          "winner": {
-            "rank": 11,
-            "group": "블랙핑크",
-            "member": "지수",
-            "score": 2096499
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 0,
-          "slot": 3,
-          "round": "R32",
-          "a": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "b": {
-            "rank": 20,
-            "group": "시그니처",
-            "member": "지원",
-            "score": 1486273
-          },
-          "winner": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 1,
-          "slot": 0,
-          "round": "R32",
-          "a": {
-            "rank": 4,
-            "group": "블랙핑크",
-            "member": "로제",
-            "score": 4267284
-          },
-          "b": {
-            "rank": 28,
-            "group": "레드벨벳",
-            "member": "슬기",
-            "score": 1308572
-          },
-          "winner": {
-            "rank": 4,
-            "group": "블랙핑크",
-            "member": "로제",
-            "score": 4267284
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 1,
-          "slot": 1,
-          "round": "R32",
-          "a": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
+            "member": "리사",
+            "score": 3941590
           },
           "b": {
             "rank": 19,
@@ -337,115 +210,17 @@
             "member": "정연",
             "score": 1540107
           },
-          "winner": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         },
         {
-          "quarter": 1,
+          "quarter": 0,
           "slot": 2,
           "round": "R32",
           "a": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "b": {
-            "rank": 17,
-            "group": "트와이스",
-            "member": "나연",
-            "score": 1557067
-          },
-          "winner": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 1,
-          "slot": 3,
-          "round": "R32",
-          "a": {
             "rank": 14,
             "group": "레드벨벳",
             "member": "조이",
             "score": 1652332
-          },
-          "b": {
-            "rank": 25,
-            "group": "소녀시대",
-            "member": "윤아",
-            "score": 1384459
-          },
-          "winner": {
-            "rank": 14,
-            "group": "레드벨벳",
-            "member": "조이",
-            "score": 1652332
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 2,
-          "slot": 0,
-          "round": "R32",
-          "a": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "b": {
-            "rank": 24,
-            "group": "르세라핌",
-            "member": "카즈하",
-            "score": 1388950
-          },
-          "winner": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 2,
-          "slot": 1,
-          "round": "R32",
-          "a": {
-            "rank": 7,
-            "group": "블랙핑크",
-            "member": "리사",
-            "score": 3941590
           },
           "b": {
             "rank": 32,
@@ -453,57 +228,17 @@
             "member": "여름",
             "score": 1216222
           },
-          "winner": {
-            "rank": 7,
-            "group": "블랙핑크",
-            "member": "리사",
-            "score": 3941590
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         },
         {
-          "quarter": 2,
-          "slot": 2,
-          "round": "R32",
-          "a": {
-            "rank": 10,
-            "group": "르세라핌",
-            "member": "김채원",
-            "score": 2199906
-          },
-          "b": {
-            "rank": 27,
-            "group": "프로미스나인",
-            "member": "이채영",
-            "score": 1340560
-          },
-          "winner": {
-            "rank": 10,
-            "group": "르세라핌",
-            "member": "김채원",
-            "score": 2199906
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 2,
+          "quarter": 0,
           "slot": 3,
           "round": "R32",
           "a": {
-            "rank": 16,
-            "group": "소녀시대",
-            "member": "태연",
-            "score": 1572474
+            "rank": 12,
+            "group": "엔믹스",
+            "member": "설윤",
+            "score": 1778210
           },
           "b": {
             "rank": 29,
@@ -511,18 +246,151 @@
             "member": "아이린",
             "score": 1296539
           },
-          "winner": {
-            "rank": 16,
-            "group": "소녀시대",
-            "member": "태연",
-            "score": 1572474
+          "winner": null
+        },
+        {
+          "quarter": 1,
+          "slot": 0,
+          "round": "R32",
+          "a": {
+            "rank": 4,
+            "group": "블랙핑크",
+            "member": "로제",
+            "score": 4267284
           },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "b": {
+            "rank": 22,
+            "group": "아일릿",
+            "member": "모카",
+            "score": 1449356
+          },
+          "winner": null
+        },
+        {
+          "quarter": 1,
+          "slot": 1,
+          "round": "R32",
+          "a": {
+            "rank": 6,
+            "group": "아일릿",
+            "member": "원희",
+            "score": 4185876
+          },
+          "b": {
+            "rank": 17,
+            "group": "트와이스",
+            "member": "나연",
+            "score": 1557067
+          },
+          "winner": null
+        },
+        {
+          "quarter": 1,
+          "slot": 2,
+          "round": "R32",
+          "a": {
+            "rank": 15,
+            "group": "에스파",
+            "member": "닝닝",
+            "score": 1596316
+          },
+          "b": {
+            "rank": 24,
+            "group": "르세라핌",
+            "member": "카즈하",
+            "score": 1388950
+          },
+          "winner": null
+        },
+        {
+          "quarter": 1,
+          "slot": 3,
+          "round": "R32",
+          "a": {
+            "rank": 10,
+            "group": "르세라핌",
+            "member": "김채원",
+            "score": 2199906
+          },
+          "b": {
+            "rank": 28,
+            "group": "레드벨벳",
+            "member": "슬기",
+            "score": 1308572
+          },
+          "winner": null
+        },
+        {
+          "quarter": 2,
+          "slot": 0,
+          "round": "R32",
+          "a": {
+            "rank": 3,
+            "group": "에스파",
+            "member": "카리나",
+            "score": 4736626
+          },
+          "b": {
+            "rank": 26,
+            "group": "위키미키",
+            "member": "최유정",
+            "score": 1347517
+          },
+          "winner": null
+        },
+        {
+          "quarter": 2,
+          "slot": 1,
+          "round": "R32",
+          "a": {
+            "rank": 8,
+            "group": "아이브",
+            "member": "안유진",
+            "score": 2696338
+          },
+          "b": {
+            "rank": 18,
+            "group": "우주소녀",
+            "member": "연정",
+            "score": 1547138
+          },
+          "winner": null
+        },
+        {
+          "quarter": 2,
+          "slot": 2,
+          "round": "R32",
+          "a": {
+            "rank": 13,
+            "group": "다이아",
+            "member": "정채연",
+            "score": 1678478
+          },
+          "b": {
+            "rank": 23,
+            "group": "리센느",
+            "member": "미나미",
+            "score": 1448065
+          },
+          "winner": null
+        },
+        {
+          "quarter": 2,
+          "slot": 3,
+          "round": "R32",
+          "a": {
+            "rank": 11,
+            "group": "블랙핑크",
+            "member": "지수",
+            "score": 2096499
+          },
+          "b": {
+            "rank": 21,
+            "group": "아이브",
+            "member": "레이",
+            "score": 1451017
+          },
+          "winner": null
         },
         {
           "quarter": 3,
@@ -535,23 +403,12 @@
             "score": 7166269
           },
           "b": {
-            "rank": 23,
-            "group": "리센느",
-            "member": "미나미",
-            "score": 1448065
+            "rank": 20,
+            "group": "시그니처",
+            "member": "지원",
+            "score": 1486273
           },
-          "winner": {
-            "rank": 2,
-            "group": "블랙핑크",
-            "member": "제니",
-            "score": 7166269
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         },
         {
           "quarter": 3,
@@ -564,81 +421,48 @@
             "score": 4194647
           },
           "b": {
-            "rank": 21,
+            "rank": 31,
             "group": "아이브",
-            "member": "레이",
-            "score": 1451017
+            "member": "리즈",
+            "score": 1223384
           },
-          "winner": {
-            "rank": 5,
-            "group": "리센느",
-            "member": "원이",
-            "score": 4194647
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         },
         {
           "quarter": 3,
           "slot": 2,
           "round": "R32",
           "a": {
-            "rank": 13,
-            "group": "다이아",
-            "member": "정채연",
-            "score": 1678478
+            "rank": 16,
+            "group": "소녀시대",
+            "member": "태연",
+            "score": 1572474
           },
           "b": {
-            "rank": 18,
-            "group": "우주소녀",
-            "member": "연정",
-            "score": 1547138
+            "rank": 27,
+            "group": "프로미스나인",
+            "member": "이채영",
+            "score": 1340560
           },
-          "winner": {
-            "rank": 13,
-            "group": "다이아",
-            "member": "정채연",
-            "score": 1678478
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         },
         {
           "quarter": 3,
           "slot": 3,
           "round": "R32",
           "a": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
+            "rank": 9,
+            "group": "에스파",
+            "member": "윈터",
+            "score": 2361861
           },
           "b": {
-            "rank": 26,
-            "group": "위키미키",
-            "member": "최유정",
-            "score": 1347517
+            "rank": 30,
+            "group": "에스파",
+            "member": "지젤",
+            "score": 1240932
           },
-          "winner": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
+          "winner": null
         }
       ],
       "posts": [
@@ -655,23 +479,12 @@
               "score": 7538960
             },
             "b": {
-              "rank": 30,
-              "group": "에스파",
-              "member": "지젤",
-              "score": 1240932
+              "rank": 25,
+              "group": "소녀시대",
+              "member": "윤아",
+              "score": 1384459
             },
-            "winner": {
-              "rank": 1,
-              "group": "아이브",
-              "member": "장원영",
-              "score": 7538960
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 2,
@@ -684,39 +497,12 @@
               "score": 4736626
             },
             "b": {
-              "rank": 24,
-              "group": "르세라핌",
-              "member": "카즈하",
-              "score": 1388950
+              "rank": 26,
+              "group": "위키미키",
+              "member": "최유정",
+              "score": 1347517
             },
-            "winner": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "winner": null
           }
         },
         {
@@ -732,23 +518,12 @@
               "score": 4267284
             },
             "b": {
-              "rank": 28,
-              "group": "레드벨벳",
-              "member": "슬기",
-              "score": 1308572
+              "rank": 22,
+              "group": "아일릿",
+              "member": "모카",
+              "score": 1449356
             },
-            "winner": {
-              "rank": 4,
-              "group": "블랙핑크",
-              "member": "로제",
-              "score": 4267284
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 3,
@@ -761,39 +536,12 @@
               "score": 7166269
             },
             "b": {
-              "rank": 23,
-              "group": "리센느",
-              "member": "미나미",
-              "score": 1448065
+              "rank": 20,
+              "group": "시그니처",
+              "member": "지원",
+              "score": 1486273
             },
-            "winner": {
-              "rank": 2,
-              "group": "블랙핑크",
-              "member": "제니",
-              "score": 7166269
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "winner": null
           }
         },
         {
@@ -803,74 +551,36 @@
             "slot": 1,
             "round": "R32",
             "a": {
-              "rank": 6,
-              "group": "아일릿",
-              "member": "원희",
-              "score": 4185876
+              "rank": 7,
+              "group": "블랙핑크",
+              "member": "리사",
+              "score": 3941590
             },
             "b": {
-              "rank": 22,
-              "group": "아일릿",
-              "member": "모카",
-              "score": 1449356
+              "rank": 19,
+              "group": "트와이스",
+              "member": "정연",
+              "score": 1540107
             },
-            "winner": {
-              "rank": 6,
-              "group": "아일릿",
-              "member": "원희",
-              "score": 4185876
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 2,
             "slot": 1,
             "round": "R32",
             "a": {
-              "rank": 7,
-              "group": "블랙핑크",
-              "member": "리사",
-              "score": 3941590
+              "rank": 8,
+              "group": "아이브",
+              "member": "안유진",
+              "score": 2696338
             },
             "b": {
-              "rank": 32,
+              "rank": 18,
               "group": "우주소녀",
-              "member": "여름",
-              "score": 1216222
+              "member": "연정",
+              "score": 1547138
             },
-            "winner": {
-              "rank": 7,
-              "group": "블랙핑크",
-              "member": "리사",
-              "score": 3941590
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "winner": null
           }
         },
         {
@@ -880,29 +590,18 @@
             "slot": 1,
             "round": "R32",
             "a": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
+              "rank": 6,
+              "group": "아일릿",
+              "member": "원희",
+              "score": 4185876
             },
             "b": {
-              "rank": 19,
+              "rank": 17,
               "group": "트와이스",
-              "member": "정연",
-              "score": 1540107
+              "member": "나연",
+              "score": 1557067
             },
-            "winner": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 3,
@@ -915,39 +614,12 @@
               "score": 4194647
             },
             "b": {
-              "rank": 21,
+              "rank": 31,
               "group": "아이브",
-              "member": "레이",
-              "score": 1451017
+              "member": "리즈",
+              "score": 1223384
             },
-            "winner": {
-              "rank": 5,
-              "group": "리센느",
-              "member": "원이",
-              "score": 4194647
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "winner": null
           }
         },
         {
@@ -957,74 +629,36 @@
             "slot": 2,
             "round": "R32",
             "a": {
-              "rank": 11,
-              "group": "블랙핑크",
-              "member": "지수",
-              "score": 2096499
+              "rank": 14,
+              "group": "레드벨벳",
+              "member": "조이",
+              "score": 1652332
             },
             "b": {
-              "rank": 31,
-              "group": "아이브",
-              "member": "리즈",
-              "score": 1223384
+              "rank": 32,
+              "group": "우주소녀",
+              "member": "여름",
+              "score": 1216222
             },
-            "winner": {
-              "rank": 11,
-              "group": "블랙핑크",
-              "member": "지수",
-              "score": 2096499
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 2,
             "slot": 2,
             "round": "R32",
             "a": {
-              "rank": 10,
-              "group": "르세라핌",
-              "member": "김채원",
-              "score": 2199906
+              "rank": 13,
+              "group": "다이아",
+              "member": "정채연",
+              "score": 1678478
             },
             "b": {
-              "rank": 27,
-              "group": "프로미스나인",
-              "member": "이채영",
-              "score": 1340560
+              "rank": 23,
+              "group": "리센느",
+              "member": "미나미",
+              "score": 1448065
             },
-            "winner": {
-              "rank": 10,
-              "group": "르세라핌",
-              "member": "김채원",
-              "score": 2199906
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "winner": null
           }
         },
         {
@@ -1034,74 +668,36 @@
             "slot": 2,
             "round": "R32",
             "a": {
-              "rank": 9,
+              "rank": 15,
               "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
+              "member": "닝닝",
+              "score": 1596316
             },
             "b": {
-              "rank": 17,
-              "group": "트와이스",
-              "member": "나연",
-              "score": 1557067
+              "rank": 24,
+              "group": "르세라핌",
+              "member": "카즈하",
+              "score": 1388950
             },
-            "winner": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 3,
             "slot": 2,
             "round": "R32",
             "a": {
-              "rank": 13,
-              "group": "다이아",
-              "member": "정채연",
-              "score": 1678478
+              "rank": 16,
+              "group": "소녀시대",
+              "member": "태연",
+              "score": 1572474
             },
             "b": {
-              "rank": 18,
-              "group": "우주소녀",
-              "member": "연정",
-              "score": 1547138
+              "rank": 27,
+              "group": "프로미스나인",
+              "member": "이채영",
+              "score": 1340560
             },
-            "winner": {
-              "rank": 13,
-              "group": "다이아",
-              "member": "정채연",
-              "score": 1678478
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "winner": null
           }
         },
         {
@@ -1111,39 +707,10 @@
             "slot": 3,
             "round": "R32",
             "a": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "b": {
-              "rank": 20,
-              "group": "시그니처",
-              "member": "지원",
-              "score": 1486273
-            },
-            "winner": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "match2": {
-            "quarter": 2,
-            "slot": 3,
-            "round": "R32",
-            "a": {
-              "rank": 16,
-              "group": "소녀시대",
-              "member": "태연",
-              "score": 1572474
+              "rank": 12,
+              "group": "엔믹스",
+              "member": "설윤",
+              "score": 1778210
             },
             "b": {
               "rank": 29,
@@ -1151,34 +718,25 @@
               "member": "아이린",
               "score": 1296539
             },
-            "winner": {
-              "rank": 16,
-              "group": "소녀시대",
-              "member": "태연",
-              "score": 1572474
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
+          "match2": {
+            "quarter": 2,
+            "slot": 3,
+            "round": "R32",
+            "a": {
+              "rank": 11,
+              "group": "블랙핑크",
+              "member": "지수",
+              "score": 2096499
             },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
+            "b": {
+              "rank": 21,
+              "group": "아이브",
+              "member": "레이",
+              "score": 1451017
+            },
+            "winner": null
           }
         },
         {
@@ -1188,1082 +746,23 @@
             "slot": 3,
             "round": "R32",
             "a": {
-              "rank": 14,
-              "group": "레드벨벳",
-              "member": "조이",
-              "score": 1652332
-            },
-            "b": {
-              "rank": 25,
-              "group": "소녀시대",
-              "member": "윤아",
-              "score": 1384459
-            },
-            "winner": {
-              "rank": 14,
-              "group": "레드벨벳",
-              "member": "조이",
-              "score": 1652332
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "match2": {
-            "quarter": 3,
-            "slot": 3,
-            "round": "R32",
-            "a": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "b": {
-              "rank": 26,
-              "group": "위키미키",
-              "member": "최유정",
-              "score": 1347517
-            },
-            "winner": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        }
-      ]
-    },
-    "R16": {
-      "matches": [
-        {
-          "quarter": 0,
-          "slot": 0,
-          "round": "R16",
-          "a": {
-            "rank": 1,
-            "group": "아이브",
-            "member": "장원영",
-            "score": 7538960
-          },
-          "b": {
-            "rank": 6,
-            "group": "아일릿",
-            "member": "원희",
-            "score": 4185876
-          },
-          "winner": {
-            "rank": 1,
-            "group": "아이브",
-            "member": "장원영",
-            "score": 7538960
-          },
-          "votes": {
-            "a": 1,
-            "b": 0,
-            "raw_a": 1,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 0,
-          "slot": 1,
-          "round": "R16",
-          "a": {
-            "rank": 11,
-            "group": "블랙핑크",
-            "member": "지수",
-            "score": 2096499
-          },
-          "b": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "winner": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "votes": {
-            "a": 0,
-            "b": 1,
-            "raw_a": 0,
-            "raw_b": 1
-          }
-        },
-        {
-          "quarter": 1,
-          "slot": 2,
-          "round": "R16",
-          "a": {
-            "rank": 4,
-            "group": "블랙핑크",
-            "member": "로제",
-            "score": 4267284
-          },
-          "b": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
-          },
-          "winner": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
-          },
-          "votes": {
-            "a": 0,
-            "b": 1,
-            "raw_a": 0,
-            "raw_b": 1
-          }
-        },
-        {
-          "quarter": 1,
-          "slot": 3,
-          "round": "R16",
-          "a": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "b": {
-            "rank": 14,
-            "group": "레드벨벳",
-            "member": "조이",
-            "score": 1652332
-          },
-          "winner": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "votes": {
-            "a": 1,
-            "b": 0,
-            "raw_a": 1,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 2,
-          "slot": 4,
-          "round": "R16",
-          "a": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "b": {
-            "rank": 7,
-            "group": "블랙핑크",
-            "member": "리사",
-            "score": 3941590
-          },
-          "winner": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "votes": {
-            "a": 1,
-            "b": 0,
-            "raw_a": 1,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 2,
-          "slot": 5,
-          "round": "R16",
-          "a": {
-            "rank": 10,
-            "group": "르세라핌",
-            "member": "김채원",
-            "score": 2199906
-          },
-          "b": {
-            "rank": 16,
-            "group": "소녀시대",
-            "member": "태연",
-            "score": 1572474
-          },
-          "winner": {
-            "rank": 16,
-            "group": "소녀시대",
-            "member": "태연",
-            "score": 1572474
-          },
-          "votes": {
-            "a": 0,
-            "b": 1,
-            "raw_a": 0,
-            "raw_b": 1
-          }
-        },
-        {
-          "quarter": 3,
-          "slot": 6,
-          "round": "R16",
-          "a": {
-            "rank": 2,
-            "group": "블랙핑크",
-            "member": "제니",
-            "score": 7166269
-          },
-          "b": {
-            "rank": 5,
-            "group": "리센느",
-            "member": "원이",
-            "score": 4194647
-          },
-          "winner": {
-            "rank": 2,
-            "group": "블랙핑크",
-            "member": "제니",
-            "score": 7166269
-          },
-          "votes": {
-            "a": 1,
-            "b": 0,
-            "raw_a": 1,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 3,
-          "slot": 7,
-          "round": "R16",
-          "a": {
-            "rank": 13,
-            "group": "다이아",
-            "member": "정채연",
-            "score": 1678478
-          },
-          "b": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "winner": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "votes": {
-            "a": 0,
-            "b": 1,
-            "raw_a": 0,
-            "raw_b": 1
-          }
-        }
-      ],
-      "posts": [
-        {
-          "post_idx": 0,
-          "match1": {
-            "quarter": 0,
-            "slot": 0,
-            "round": "R16",
-            "a": {
-              "rank": 1,
-              "group": "아이브",
-              "member": "장원영",
-              "score": 7538960
-            },
-            "b": {
-              "rank": 6,
-              "group": "아일릿",
-              "member": "원희",
-              "score": 4185876
-            },
-            "winner": {
-              "rank": 1,
-              "group": "아이브",
-              "member": "장원영",
-              "score": 7538960
-            },
-            "votes": {
-              "a": 1,
-              "b": 0,
-              "raw_a": 1,
-              "raw_b": 0
-            }
-          },
-          "match2": {
-            "quarter": 2,
-            "slot": 4,
-            "round": "R16",
-            "a": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "b": {
-              "rank": 7,
-              "group": "블랙핑크",
-              "member": "리사",
-              "score": 3941590
-            },
-            "winner": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "votes": {
-              "a": 1,
-              "b": 0,
-              "raw_a": 1,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        },
-        {
-          "post_idx": 1,
-          "match1": {
-            "quarter": 0,
-            "slot": 1,
-            "round": "R16",
-            "a": {
-              "rank": 11,
-              "group": "블랙핑크",
-              "member": "지수",
-              "score": 2096499
-            },
-            "b": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "winner": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "votes": {
-              "a": 0,
-              "b": 1,
-              "raw_a": 0,
-              "raw_b": 1
-            }
-          },
-          "match2": {
-            "quarter": 2,
-            "slot": 5,
-            "round": "R16",
-            "a": {
               "rank": 10,
               "group": "르세라핌",
               "member": "김채원",
               "score": 2199906
             },
             "b": {
-              "rank": 16,
-              "group": "소녀시대",
-              "member": "태연",
-              "score": 1572474
-            },
-            "winner": {
-              "rank": 16,
-              "group": "소녀시대",
-              "member": "태연",
-              "score": 1572474
-            },
-            "votes": {
-              "a": 0,
-              "b": 1,
-              "raw_a": 0,
-              "raw_b": 1
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        },
-        {
-          "post_idx": 2,
-          "match1": {
-            "quarter": 1,
-            "slot": 2,
-            "round": "R16",
-            "a": {
-              "rank": 4,
-              "group": "블랙핑크",
-              "member": "로제",
-              "score": 4267284
-            },
-            "b": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
-            },
-            "winner": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
-            },
-            "votes": {
-              "a": 0,
-              "b": 1,
-              "raw_a": 0,
-              "raw_b": 1
-            }
-          },
-          "match2": {
-            "quarter": 3,
-            "slot": 6,
-            "round": "R16",
-            "a": {
-              "rank": 2,
-              "group": "블랙핑크",
-              "member": "제니",
-              "score": 7166269
-            },
-            "b": {
-              "rank": 5,
-              "group": "리센느",
-              "member": "원이",
-              "score": 4194647
-            },
-            "winner": {
-              "rank": 2,
-              "group": "블랙핑크",
-              "member": "제니",
-              "score": 7166269
-            },
-            "votes": {
-              "a": 1,
-              "b": 0,
-              "raw_a": 1,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        },
-        {
-          "post_idx": 3,
-          "match1": {
-            "quarter": 1,
-            "slot": 3,
-            "round": "R16",
-            "a": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "b": {
-              "rank": 14,
+              "rank": 28,
               "group": "레드벨벳",
-              "member": "조이",
-              "score": 1652332
+              "member": "슬기",
+              "score": 1308572
             },
-            "winner": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "votes": {
-              "a": 1,
-              "b": 0,
-              "raw_a": 1,
-              "raw_b": 0
-            }
-          },
-          "match2": {
-            "quarter": 3,
-            "slot": 7,
-            "round": "R16",
-            "a": {
-              "rank": 13,
-              "group": "다이아",
-              "member": "정채연",
-              "score": 1678478
-            },
-            "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "winner": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "votes": {
-              "a": 0,
-              "b": 1,
-              "raw_a": 0,
-              "raw_b": 1
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        }
-      ]
-    },
-    "R8": {
-      "matches": [
-        {
-          "quarter": 0,
-          "slot": 0,
-          "round": "R8",
-          "a": {
-            "rank": 1,
-            "group": "아이브",
-            "member": "장원영",
-            "score": 7538960
-          },
-          "b": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "winner": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 1,
-          "slot": 1,
-          "round": "R8",
-          "a": {
-            "rank": 8,
-            "group": "아이브",
-            "member": "안유진",
-            "score": 2696338
-          },
-          "b": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "winner": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 2,
-          "slot": 2,
-          "round": "R8",
-          "a": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "b": {
-            "rank": 16,
-            "group": "소녀시대",
-            "member": "태연",
-            "score": 1572474
-          },
-          "winner": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        },
-        {
-          "quarter": 3,
-          "slot": 3,
-          "round": "R8",
-          "a": {
-            "rank": 2,
-            "group": "블랙핑크",
-            "member": "제니",
-            "score": 7166269
-          },
-          "b": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "winner": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "votes": {
-            "a": 0,
-            "b": 0,
-            "raw_a": 0,
-            "raw_b": 0
-          }
-        }
-      ],
-      "posts": [
-        {
-          "post_idx": 0,
-          "match1": {
-            "quarter": 0,
-            "slot": 0,
-            "round": "R8",
-            "a": {
-              "rank": 1,
-              "group": "아이브",
-              "member": "장원영",
-              "score": 7538960
-            },
-            "b": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "winner": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "match2": {
-            "quarter": 2,
-            "slot": 2,
-            "round": "R8",
-            "a": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "b": {
-              "rank": 16,
-              "group": "소녀시대",
-              "member": "태연",
-              "score": 1572474
-            },
-            "winner": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        },
-        {
-          "post_idx": 1,
-          "match1": {
-            "quarter": 1,
-            "slot": 1,
-            "round": "R8",
-            "a": {
-              "rank": 8,
-              "group": "아이브",
-              "member": "안유진",
-              "score": 2696338
-            },
-            "b": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "winner": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
+            "winner": null
           },
           "match2": {
             "quarter": 3,
             "slot": 3,
-            "round": "R8",
-            "a": {
-              "rank": 2,
-              "group": "블랙핑크",
-              "member": "제니",
-              "score": 7166269
-            },
-            "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "winner": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "votes": {
-              "a": 0,
-              "b": 0,
-              "raw_a": 0,
-              "raw_b": 0
-            }
-          },
-          "tally": {
-            "raw_comments": 0,
-            "valid_votes": 0,
-            "counts": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            },
-            "weighted": {
-              "1": 0,
-              "2": 0,
-              "3": 0,
-              "4": 0
-            }
-          }
-        }
-      ]
-    },
-    "R4": {
-      "matches": [
-        {
-          "quarter": 0,
-          "slot": 0,
-          "round": "R4",
-          "a": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "b": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "winner": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          }
-        },
-        {
-          "quarter": 2,
-          "slot": 1,
-          "round": "R4",
-          "a": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "b": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "winner": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          }
-        }
-      ],
-      "posts": [
-        {
-          "post_idx": 0,
-          "match1": {
-            "quarter": 0,
-            "slot": 0,
-            "round": "R4",
-            "a": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "b": {
-              "rank": 9,
-              "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "winner": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            }
-          },
-          "match2": {
-            "quarter": 2,
-            "slot": 1,
-            "round": "R4",
-            "a": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "winner": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            }
-          }
-        }
-      ]
-    },
-    "R2": {
-      "matches": [
-        {
-          "round": "R2",
-          "type": "final",
-          "a": {
-            "rank": 15,
-            "group": "에스파",
-            "member": "닝닝",
-            "score": 1596316
-          },
-          "b": {
-            "rank": 3,
-            "group": "에스파",
-            "member": "카리나",
-            "score": 4736626
-          },
-          "winner": null
-        },
-        {
-          "round": "R2",
-          "type": "third_place",
-          "a": {
-            "rank": 9,
-            "group": "에스파",
-            "member": "윈터",
-            "score": 2361861
-          },
-          "b": {
-            "rank": 12,
-            "group": "엔믹스",
-            "member": "설윤",
-            "score": 1778210
-          },
-          "winner": null
-        }
-      ],
-      "posts": [
-        {
-          "post_idx": 0,
-          "match1": {
-            "round": "R2",
-            "type": "final",
-            "a": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "b": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "winner": null
-          },
-          "match2": {
-            "round": "R2",
-            "type": "final",
-            "a": {
-              "rank": 15,
-              "group": "에스파",
-              "member": "닝닝",
-              "score": 1596316
-            },
-            "b": {
-              "rank": 3,
-              "group": "에스파",
-              "member": "카리나",
-              "score": 4736626
-            },
-            "winner": null
-          },
-          "type": "final_solo"
-        },
-        {
-          "post_idx": 1,
-          "match1": {
-            "round": "R2",
-            "type": "third_place",
+            "round": "R32",
             "a": {
               "rank": 9,
               "group": "에스파",
@@ -2271,35 +770,17 @@
               "score": 2361861
             },
             "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
-            },
-            "winner": null
-          },
-          "match2": {
-            "round": "R2",
-            "type": "third_place",
-            "a": {
-              "rank": 9,
+              "rank": 30,
               "group": "에스파",
-              "member": "윈터",
-              "score": 2361861
-            },
-            "b": {
-              "rank": 12,
-              "group": "엔믹스",
-              "member": "설윤",
-              "score": 1778210
+              "member": "지젤",
+              "score": 1240932
             },
             "winner": null
-          },
-          "type": "third_place_solo"
+          }
         }
       ]
     }
   },
-  "current_round": "R2",
+  "current_round": "R32",
   "winner": null
 }

@@ -35,94 +35,6 @@
       "bgm": null
     },
     {
-      "posted_at": "2026-06-23T13:18:30.479962+09:00",
-      "topic_id": "worldcup_r32_1",
-      "title": "걸그룹 월드컵 R32 #1",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "17887144185571055",
-      "youtube_id": "ShUrbA5cMfs",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:22:25.783661+09:00",
-      "topic_id": "worldcup_r32_5",
-      "title": "걸그룹 월드컵 R32 #5",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18085106771553042",
-      "youtube_id": "hLybM4BQk2E",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:26:57.746864+09:00",
-      "topic_id": "worldcup_r32_2",
-      "title": "걸그룹 월드컵 R32 #2",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18131204374617644",
-      "youtube_id": "NXUvp-r9-A8",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:31:04.762415+09:00",
-      "topic_id": "worldcup_r32_6",
-      "title": "걸그룹 월드컵 R32 #6",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18379731880200917",
-      "youtube_id": "6NsqQR_5biU",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:35:31.232943+09:00",
-      "topic_id": "worldcup_r32_3",
-      "title": "걸그룹 월드컵 R32 #3",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "17956229970140245",
-      "youtube_id": "fvF5Lq8MJdM",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:40:36.894783+09:00",
-      "topic_id": "worldcup_r32_7",
-      "title": "걸그룹 월드컵 R32 #7",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "17866902060572634",
-      "youtube_id": "nxvxXWELZ64",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:44:43.096109+09:00",
-      "topic_id": "worldcup_r32_4",
-      "title": "걸그룹 월드컵 R32 #4",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18049629119612473",
-      "youtube_id": "Wn0V7SmdD7k",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T13:48:49.030180+09:00",
-      "topic_id": "worldcup_r32_8",
-      "title": "걸그룹 월드컵 R32 #8",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18078375344658404",
-      "youtube_id": "b-3vkSe1ti4",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
       "posted_at": "2026-06-24T17:35:25.494877+09:00",
       "topic_id": "worldcup_bracket",
       "title": "걸그룹 월드컵 32강 대진표",
@@ -132,61 +44,6 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
-    },
-    {
-      "posted_at": "2026-06-25T16:58:32.113889+09:00",
-      "topic_id": "worldcup_announce_r32",
-      "title": "걸그룹 월드컵 R32 결과",
-      "style": "worldcup_announce",
-      "seed": null,
-      "ig_media_id": "18140950357558557",
-      "youtube_id": "iTvw97v2FiE",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-26T12:17:26.955332+09:00",
-      "topic_id": "worldcup_r16_1",
-      "title": "걸그룹 월드컵 R16 #1",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18116805187884838",
-      "youtube_id": "cyxB0cZAD3E",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-26T12:20:40.948469+09:00",
-      "topic_id": "worldcup_r16_2",
-      "title": "걸그룹 월드컵 R16 #2",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18123246373672395",
-      "youtube_id": "189krkHt1F8",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-26T12:23:57.655847+09:00",
-      "topic_id": "worldcup_r16_3",
-      "title": "걸그룹 월드컵 R16 #3",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18315899221263074",
-      "youtube_id": "pC5ftSm2tmg",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-26T12:26:53.086297+09:00",
-      "topic_id": "worldcup_r16_4",
-      "title": "걸그룹 월드컵 R16 #4",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18086472959112770",
-      "youtube_id": "63O5mNqo-8U",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
     },
     {
       "posted_at": "2026-06-27T06:48:04.834071+09:00",
@@ -277,28 +134,6 @@
       "bgm": null
     },
     {
-      "posted_at": "2026-06-29T17:58:55.438696+09:00",
-      "topic_id": "worldcup_r8_1",
-      "title": "걸그룹 월드컵 R8 #1",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18014237789857532",
-      "youtube_id": "VSblH2nSAwE",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-06-29T18:02:57.761088+09:00",
-      "topic_id": "worldcup_r8_2",
-      "title": "걸그룹 월드컵 R8 #2",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18105103847091459",
-      "youtube_id": "ELKKZryD0IE",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
       "posted_at": "2026-06-29T18:03:48.497952+09:00",
       "topic_id": "worldcup_hf_r8_bracket",
       "title": "걸그룹 월드컵 R8 HF 대진표",
@@ -321,17 +156,6 @@
       "bgm": null
     },
     {
-      "posted_at": "2026-06-30T10:28:38.511145+09:00",
-      "topic_id": "worldcup_announce_r16",
-      "title": "걸그룹 월드컵 R16 결과",
-      "style": "worldcup_announce",
-      "seed": null,
-      "ig_media_id": "17876780031655008",
-      "youtube_id": "xr5g3jg1Wpw",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
       "posted_at": "2026-06-30T10:29:31.224949+09:00",
       "topic_id": "worldcup_hf_r16",
       "title": "걸그룹 월드컵 R16 HF 릴스",
@@ -341,17 +165,6 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
-    },
-    {
-      "posted_at": "2026-06-30T21:21:08.378561+09:00",
-      "topic_id": "worldcup_announce_r8",
-      "title": "걸그룹 월드컵 R8 결과",
-      "style": "worldcup_announce",
-      "seed": null,
-      "ig_media_id": "18019730789899234",
-      "youtube_id": "Y_IZRBcmqpI",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
     },
     {
       "posted_at": "2026-07-01T11:14:01.730996+09:00",
@@ -365,17 +178,6 @@
       "bgm": null
     },
     {
-      "posted_at": "2026-07-02T10:18:03.756143+09:00",
-      "topic_id": "worldcup_r4_1",
-      "title": "걸그룹 월드컵 R4 #1",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18122790487708444",
-      "youtube_id": "Xe-kdVdziRk",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
       "posted_at": "2026-07-02T10:18:59.817245+09:00",
       "topic_id": "worldcup_hf_r4_bracket",
       "title": "걸그룹 월드컵 R4 HF 대진표",
@@ -385,39 +187,6 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
-    },
-    {
-      "posted_at": "2026-07-04T22:58:58.100749+09:00",
-      "topic_id": "worldcup_announce_r4",
-      "title": "걸그룹 월드컵 R4 결과",
-      "style": "worldcup_announce",
-      "seed": null,
-      "ig_media_id": "17941144920055613",
-      "youtube_id": "LsVr0RpwdP0",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-07-04T23:46:59.760056+09:00",
-      "topic_id": "worldcup_r2_1",
-      "title": "걸그룹 월드컵 R2 #1",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18002655812770304",
-      "youtube_id": "vF744Iw_jfw",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-07-04T23:50:06.394427+09:00",
-      "topic_id": "worldcup_r2_2",
-      "title": "걸그룹 월드컵 R2 #2",
-      "style": "worldcup_match",
-      "seed": null,
-      "ig_media_id": "18136582918601760",
-      "youtube_id": "gfu-9q9v-J0",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
     },
     {
       "posted_at": "2026-07-05T00:33:24.574226+09:00",

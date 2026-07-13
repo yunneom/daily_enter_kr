@@ -36,95 +36,23 @@ TOLERANCE_MIN = 60  # cron 매 30분 + 정시 부하 지연(실측 47분) 흡수
 # [일정 연장 — 도달 누적 우선] 첫 라운드 노출이 약해서 앞 라운드에 48~63h 몰아주고
 # 빅매치(16강)·클라이맥스(결승)를 주말에 배치. 뒤 라운드는 24h (모멘텀 구축 후).
 SCHEDULE = [
-    # === Day 11 (금 7/3) 09:00 — 실사 사진 테스트 렌더 (게시 X) ===
-    # IDOL_PHOTOS=on 으로 R4 카드만 빌드 → docs/worldcup_preview/photo_test/ 커밋
-    # → 오너가 repo 에서 눈으로 컨펌 후 7/4 결승 빌드에 사진 적용.
-    (datetime(2026, 7,  3,  9,  0, tzinfo=KST), "photo_test", ""),
-    # 7/4 09:10 — 오버라이드 파일명 정정(카리나·윈터·설윤) 후 재검증 (기존 미리보기 삭제로 already_done 리셋)
-    (datetime(2026, 7,  4,  9, 10, tzinfo=KST), "photo_test", ""),
-    # 7/4 12:15 — 다운로드/오버라이드 경로 로깅 추가 후 진단 재실행
-    (datetime(2026, 7,  4, 12, 15, tzinfo=KST), "photo_test", ""),
-    # === Day 9 (수 7/1) — R8 승자 정정(닝닝·윈터·카리나·설윤) + 4강 진출자 홍보 즉시 ===
-    (datetime(2026, 7,  1, 11, 25, tzinfo=KST), "r4_entrants", ""),
-    # === Day 9 (수 7/1) 17:00 — 4강(준결승) 경기 게시 (미발화: 창 지남) ===
-    (datetime(2026, 7,  1, 17,  0, tzinfo=KST), "publish",  "R4"),
-    # === Day 10 (목 7/2) 08:50 — 4강 경기 즉시 재게시 슬롯 (7/1 창 놓침) ===
-    (datetime(2026, 7,  2,  8, 50, tzinfo=KST), "publish",  "R4"),
-    # === Day 1 (화 6/23) — 32강 게시 (완료) ===
-    (datetime(2026, 6, 23, 12,  0, tzinfo=KST), "publish",  "R32"),
-    # === Day 2 (수 6/24) 07:00 — 32강 대진표 홍보 (한 장, 양사이드) ===
-    # 사용자 결정: 6/24는 월드컵 홍보 게시글만. 7시 = 출근/등교 시간대 노출.
-    (datetime(2026, 6, 24,  7,  0, tzinfo=KST), "bracket",  ""),
-    # === Day 5 (토 6/27) 07:00 — 16강 단독 대진표 홍보 (아침 출근 슬롯) ===
-    # v4: WIN 배지 제거 + 4강 헤더 + 결승 선 단순화. current_round=R16.
-    (datetime(2026, 6, 27,  7,  0, tzinfo=KST), "bracket",  ""),
-    # === Day 5 (토 6/27) 02:30 — 16강 홍보 블라스트 (missed) ===
-    # (datetime(2026, 6, 27,  2, 30, tzinfo=KST), "promo_blast", ""),  # 코드 푸시 전 슬롯
-    # === Day 7 (월 6/29) 09:15 — 16강 홍보 블라스트 1차 재시도 (cron 드롭) ===
-    # (datetime(2026, 6, 29,  9, 15, tzinfo=KST), "promo_blast", ""),  # cron 2h 드롭으로 미발화
-    # === Day 7 (월 6/29) 11:30 — 16강 홍보 블라스트 최종 즉시 실행 ===
-    (datetime(2026, 6, 29, 11, 30, tzinfo=KST), "promo_blast", ""),
-    # === Day 7 (월 6/29) 12:30 — HF 릴스 재시도 (playwright 수정 후) ===
-    (datetime(2026, 6, 29, 12, 30, tzinfo=KST), "hf_blast",   ""),
-    # === Day 7 (월 6/29) 13:25 — R16 집계·발표 + R8 빌드·게시 즉시 체인 ===
-    (datetime(2026, 6, 29, 13, 25, tzinfo=KST), "chain_r16_r8", ""),
-    # === Day 7 (월 6/29) 14:00 — R8 HF 대진표 릴스 (Playwright 수정 후 재시도) ===
-    (datetime(2026, 6, 29, 14,  0, tzinfo=KST), "hf_r8", ""),
-    # === Day 7 (월 6/29) 16:30 — R16 승자 수동 수정 + R8 HF 대진표 재게시 ===
-    (datetime(2026, 6, 29, 16, 30, tzinfo=KST), "fix_republish_r8", ""),
-    # === Day 7 (월 6/29) 17:05 — R8 HF 대진표 릴스 재게시 (올바른 R8 대진 반영, 폴백) ===
-    (datetime(2026, 6, 29, 17,  5, tzinfo=KST), "hf_r8", ""),
-    # === Day 7 (월 6/29) 17:15 — R16 결과 발표 즉시 재실행 슬롯 ===
-    (datetime(2026, 6, 29, 17, 15, tzinfo=KST), "announce", "R16"),
-    # === Day 7 (월 6/29) 17:20 — R8 게시 즉시 재실행 슬롯 ===
-    (datetime(2026, 6, 29, 17, 20, tzinfo=KST), "publish",  "R8"),
-    # === Day 7 (월 6/29) 18:20 — R16 결과 발표 폴백 슬롯 (18:00 publish R8 완료 후) ===
-    (datetime(2026, 6, 29, 18, 20, tzinfo=KST), "announce", "R16"),
-    # === Day 8 (화 6/30) — R8 매치 홍보 릴스 (HP) ===
-    (datetime(2026, 6, 30, 10,  0, tzinfo=KST), "r8_promo", ""),
-    # === Day 8 (화 6/30) 10:30 — R16 결과 발표 최종 폴백 슬롯 ===
-    (datetime(2026, 6, 30, 10, 30, tzinfo=KST), "announce", "R16"),
-    # === Day 3 (목 6/25) — 32강 집계 (48h) + 16강 진출 발표 ===
-    (datetime(2026, 6, 25, 12,  0, tzinfo=KST), "tally",    "R32"),
-    (datetime(2026, 6, 25, 12, 30, tzinfo=KST), "announce", "R32"),
-    # === Day 4 (금 6/26) 12:00 — 16강 게시 (점심 슬롯, 투표창 72h 주말 전체) ===
-    (datetime(2026, 6, 26, 12,  0, tzinfo=KST), "publish",  "R16"),
-    # === Day 7 (월 6/29) — 16강 집계 (주말 63h) 오후 5시 + 발표 + 오후 6시 8강 게시 ===
-    (datetime(2026, 6, 29, 17,  0, tzinfo=KST), "tally",    "R16"),
-    (datetime(2026, 6, 29, 17, 30, tzinfo=KST), "announce", "R16"),
-    (datetime(2026, 6, 29, 18,  0, tzinfo=KST), "publish",  "R8"),
-    # === Day 8 (화 6/30) — 8강 집계 (24h) + 4강 진출 발표 ===
-    (datetime(2026, 6, 30, 21,  0, tzinfo=KST), "tally",    "R8"),
-    (datetime(2026, 6, 30, 21, 30, tzinfo=KST), "announce", "R8"),
-    # === Day 9 (수 7/1) 21:00 — 4강 게시 ===
-    (datetime(2026, 7,  1, 21,  0, tzinfo=KST), "publish",  "R4"),
-    # === Day 12 (토 7/4) 14:00 — 4강 집계 → 결승 라인업 발표 → 결승 게시 연쇄 ===
-    # 사용자 지정: 평일(목) 대신 토요일 오후에 몰아서 진행. 한 run 이 한 액션씩
-    # 처리하므로 20분 간격 연쇄 배치 (실패 시 catch-up 이 순서대로 자동 복구).
-    # 14:00 자동 시퀀스는 크론 3h 드롭으로 미발화 → 수동 확정 체인으로 대체 (17시대)
-    (datetime(2026, 7,  4, 17, 15, tzinfo=KST), "r4_finalize", ""),
-    (datetime(2026, 7,  4, 17, 55, tzinfo=KST), "publish",  "R2"),
-    (datetime(2026, 7,  4, 18, 35, tzinfo=KST), "r2_promo", ""),
-    # === Day 12 (토 7/4) 21:30 — R2 솔로 오게시 정리 (콤보 렌더러로 잘못 게시) ===
-    # ledger 에서 worldcup_r2_1/2 + worldcup_announce_r4 제거 → catch-up 이
-    # r4_finalize(수정 발표) → publish R2(솔로 카드/캡션 수정판) 순서로 자동 재게시.
-    (datetime(2026, 7,  4, 21, 30, tzinfo=KST), "fix_republish_r2", ""),
-    # === Day 13 (일 7/5) — 결승 집계·발표 [보류] ===
-    # 사용자 지정(7/5): 주말 트래픽이 좋아 참여도 극대화 위해 투표를 월요일(7/6) 아침까지
-    # 열어둠. 우승 발표는 운영자 신호 시점에 게시 → 아래 두 슬롯 비활성화.
-    # 월요일 발표 확정 시 (7,6,HH,MM,"tally","R2") + (7,6,HH,MM,"announce","R1") 재활성.
-    # (datetime(2026, 7,  5, 12,  0, tzinfo=KST), "tally",    "R2"),
-    # (datetime(2026, 7,  5, 12, 30, tzinfo=KST), "announce", "R1"),
-    # === Day 13 (일 7/5) 09:00 — 결승 자동 집계 미리보기 (카운트만, 발표 X) ===
-    # 숫자+이름(글자)+좋아요 가중 집계가 실제로 되는지 검증. 결과 JSON 커밋 → 운영자 대조.
-    (datetime(2026, 7,  5,  9,  0, tzinfo=KST), "tally_preview", "R2"),
-    # === 웹앱(dailyenterkr.com/play) 홍보 5부작 — 주말 트래픽 우선 배치 ===
-    # wave: 1 티저 / 2 플레이방법 / 3 샘플플레이(실물사진, 히어로) / 4 실시간순위 / 5 IG결승 연결
-    (datetime(2026, 7,  5, 11,  0, tzinfo=KST), "web_promo", "1"),
-    (datetime(2026, 7,  5, 20,  0, tzinfo=KST), "web_promo", "3"),
-    (datetime(2026, 7,  6, 12,  0, tzinfo=KST), "web_promo", "2"),
-    (datetime(2026, 7,  6, 20,  0, tzinfo=KST), "web_promo", "4"),
-    (datetime(2026, 7,  7, 20,  0, tzinfo=KST), "web_promo", "5"),
+    # === 시즌2 — 새 대진(SEED 20260714), 라운드당 84h(3.5일) 투표, 2매치/게시 ===
+    # 2026-07-14 32강 ~ 08-01 우승발표. 체인 슬롯 30분 간격(순서보정+catch-up 안전).
+    (datetime(2026, 7, 14,  8,  0, tzinfo=KST), "publish",  "R32"),
+    (datetime(2026, 7, 17, 20,  0, tzinfo=KST), "tally",    "R32"),
+    (datetime(2026, 7, 17, 20, 30, tzinfo=KST), "announce", "R32"),
+    (datetime(2026, 7, 17, 21,  0, tzinfo=KST), "publish",  "R16"),
+    (datetime(2026, 7, 21,  9,  0, tzinfo=KST), "tally",    "R16"),
+    (datetime(2026, 7, 21,  9, 30, tzinfo=KST), "announce", "R16"),
+    (datetime(2026, 7, 21, 10,  0, tzinfo=KST), "publish",  "R8"),
+    (datetime(2026, 7, 24, 22,  0, tzinfo=KST), "tally",    "R8"),
+    (datetime(2026, 7, 24, 22, 30, tzinfo=KST), "announce", "R8"),
+    (datetime(2026, 7, 25,  8,  0, tzinfo=KST), "publish",  "R4"),
+    (datetime(2026, 7, 28, 20,  0, tzinfo=KST), "tally",    "R4"),
+    (datetime(2026, 7, 28, 20, 30, tzinfo=KST), "announce", "R4"),
+    (datetime(2026, 7, 28, 21,  0, tzinfo=KST), "publish",  "R2"),
+    (datetime(2026, 8,  1,  9,  0, tzinfo=KST), "tally",    "R2"),
+    (datetime(2026, 8,  1,  9, 30, tzinfo=KST), "announce", "R1"),
 ]
 
 
@@ -569,8 +497,8 @@ def main():
 
     # 캠페인 윈도우 외엔 skip (연장: 6/23 ~ 7/7 — 결승 발표 월요일 7/6 로 연기)
     if not (datetime(2026, 6, 23, tzinfo=KST) <= now <
-            datetime(2026, 7, 8, tzinfo=KST)):
-        print("⏭️  캠페인 윈도우(6/23 ~ 7/7) 외 — skip")
+            datetime(2026, 8, 2, tzinfo=KST)):
+        print("⏭️  캠페인 윈도우(7/14 ~ 8/1) 외 — skip")
         return 0
 
     slot = find_slot(now)
