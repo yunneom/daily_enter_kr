@@ -715,6 +715,17 @@
       "youtube_id": "zqiD3QzgVIQ",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-07-13T20:58:29.500422+09:00",
+      "topic_id": "brand_rep_girlgroup",
+      "title": "걸그룹 개인 브랜드평판 TOP30",
+      "style": "brand_chart",
+      "seed": 2154,
+      "ig_media_id": "18070971815701741",
+      "youtube_id": "ro1MWa8bRPk",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
     }
   ]
 }
