@@ -35,6 +35,11 @@ SOLO_LABELS = {"final_solo": "결승전", "third_place_solo": "3·4위전"}
 
 
 def main():
+    # ── 멤버 이름 무결성 게이트 — 브래킷 오타 시 카드 빌드 전 중단 ──
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from validate_member_names import gate as _names_gate
+    _names_gate()
+
     if len(sys.argv) < 2:
         round_key = "R32"
     else:

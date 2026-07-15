@@ -664,6 +664,10 @@ def main() -> int:
     if _date(2026, 6, 23) <= _today <= _date(2026, 7, 5):
         print("🏆 걸그룹 월드컵 캠페인 기간(6/23~7/5) — 매트릭스 자동 게시 일시정지")
         return 0
+    # ── 멤버 이름 무결성 게이트 — 오타(이채영→이재명 사고) 방송 원천 차단 ──
+    from validate_member_names import gate as _names_gate
+    _names_gate()
+
     target = os.environ.get("TOPIC", "all").strip().lower()
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")
