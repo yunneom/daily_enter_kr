@@ -99,24 +99,59 @@ def generate_fortunes(today: date) -> dict:
 _SHELL = """<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><style>
 * {{ margin:0; padding:0; box-sizing:border-box;
      font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; }}
-body {{ width:1080px; height:1350px; overflow:hidden; color:#f3ecff;
-  background:radial-gradient(125% 78% at 50% -6%,#4a1d7a 0%,#26123f 46%,#0f0720 100%);
+body {{ width:1080px; height:1350px; overflow:hidden; color:#f5f0ff; position:relative;
+  background:
+    radial-gradient(90% 55% at 82% -8%, rgba(255,183,77,.14) 0%, transparent 60%),
+    radial-gradient(120% 70% at 12% 108%, rgba(124,58,237,.32) 0%, transparent 62%),
+    radial-gradient(130% 82% at 50% -8%, #43206e 0%, #251243 44%, #0d0620 100%);
   display:flex; flex-direction:column; padding:{pad}; }}
+/* 별밤 — 3겹 점광 (움직이는 느낌의 반짝임 밀도차) */
+body::before {{ content:""; position:absolute; inset:0; pointer-events:none; background-image:
+  radial-gradient(2px 2px at 8% 12%, rgba(255,255,255,.9) 40%, transparent 60%),
+  radial-gradient(1.6px 1.6px at 78% 7%, rgba(255,255,255,.75) 40%, transparent 60%),
+  radial-gradient(1.4px 1.4px at 30% 26%, rgba(255,217,74,.8) 40%, transparent 60%),
+  radial-gradient(2px 2px at 92% 33%, rgba(255,255,255,.6) 40%, transparent 60%),
+  radial-gradient(1.3px 1.3px at 15% 55%, rgba(255,255,255,.5) 40%, transparent 60%),
+  radial-gradient(1.8px 1.8px at 62% 18%, rgba(196,181,253,.85) 40%, transparent 60%),
+  radial-gradient(1.2px 1.2px at 45% 8%, rgba(255,255,255,.65) 40%, transparent 60%),
+  radial-gradient(1.5px 1.5px at 85% 72%, rgba(255,217,74,.5) 40%, transparent 60%),
+  radial-gradient(1.2px 1.2px at 6% 84%, rgba(255,255,255,.45) 40%, transparent 60%),
+  radial-gradient(1.7px 1.7px at 55% 92%, rgba(196,181,253,.5) 40%, transparent 60%),
+  radial-gradient(1.1px 1.1px at 38% 68%, rgba(255,255,255,.4) 40%, transparent 60%),
+  radial-gradient(1.4px 1.4px at 70% 48%, rgba(255,255,255,.35) 40%, transparent 60%); }}
+/* 하단 지평 광 */
+body::after {{ content:""; position:absolute; left:-10%; right:-10%; bottom:-24%; height:44%;
+  background:radial-gradient(50% 60% at 50% 100%, rgba(255,183,77,.16) 0%, transparent 70%);
+  pointer-events:none; }}
 {extra}
 </style></head><body>{body}</body></html>"""
 
 
 def cover_html(date_str: str) -> str:
     body = f"""
-    <div style="margin:auto; text-align:center;">
-      <div style="display:inline-block; background:#ffd94a; color:#2a0f47; font-size:32px;
-        font-weight:800; letter-spacing:2px; padding:12px 34px; border-radius:40px;">재미로 보는</div>
-      <div style="font-size:104px; font-weight:900; line-height:1.08; margin-top:30px;
-        background:linear-gradient(90deg,#fff,#ffd94a); -webkit-background-clip:text;
-        -webkit-text-fill-color:transparent;">오늘의<br>띠별 운세</div>
-      <div style="font-size:38px; color:rgba(243,236,255,.72); font-weight:600; margin-top:26px;">
-        {date_str} · 연애·재물·건강·총운</div>
-      <div style="font-size:30px; color:rgba(243,236,255,.5); margin-top:44px;">← 좌우로 넘겨서 내 띠 찾기</div>
+    <div style="position:absolute; inset:34px; border:1.5px solid rgba(255,217,74,.28);
+      border-radius:30px; pointer-events:none;"></div>
+    <div style="position:absolute; inset:46px; border:1px solid rgba(255,217,74,.14);
+      border-radius:24px; pointer-events:none;"></div>
+    <div style="margin:auto; text-align:center; position:relative;">
+      <div style="font-size:40px; letter-spacing:14px; color:rgba(255,217,74,.85);">✦ ✦ ✦</div>
+      <div style="display:inline-block; margin-top:26px; background:linear-gradient(90deg,#ffd94a,#ffb74d);
+        color:#2a0f47; font-size:31px; font-weight:800; letter-spacing:3px; padding:13px 38px;
+        border-radius:40px; box-shadow:0 8px 30px -6px rgba(255,183,77,.55);">재미로 보는</div>
+      <div style="font-size:110px; font-weight:900; line-height:1.06; margin-top:34px;
+        background:linear-gradient(180deg,#fff 20%,#ffd94a 90%); -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent; text-shadow:0 10px 60px rgba(255,217,74,.25);">오늘의<br>띠별 운세</div>
+      <div style="display:flex; align-items:center; justify-content:center; gap:18px; margin-top:30px;">
+        <span style="height:1px; width:90px; background:linear-gradient(90deg,transparent,#ffd94a);"></span>
+        <span style="font-size:36px; color:rgba(245,240,255,.85); font-weight:700;">{date_str}</span>
+        <span style="height:1px; width:90px; background:linear-gradient(270deg,transparent,#ffd94a);"></span>
+      </div>
+      <div style="font-size:29px; color:rgba(245,240,255,.6); font-weight:600; margin-top:14px;
+        letter-spacing:2px;">연애 · 재물 · 건강 · 총운</div>
+      <div style="margin-top:52px; display:inline-flex; align-items:center; gap:12px;
+        background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16);
+        padding:14px 32px; border-radius:40px; font-size:28px; color:rgba(245,240,255,.75);">
+        ← 넘겨서 내 띠 찾기</div>
     </div>"""
     return _SHELL.format(pad="80px 60px", extra="", body=body)
 
@@ -126,24 +161,41 @@ def tti_html(animal: str, cats: dict, years: list) -> str:
     rows = ""
     for name, ico, color in CATEGORIES:
         rows += f"""
-      <div style="display:flex; align-items:flex-start; gap:20px; background:rgba(255,255,255,.05);
-        border:1px solid rgba(255,255,255,.09); border-radius:20px; padding:26px 30px;">
-        <span style="font-size:44px; line-height:1;">{ico}</span>
-        <div style="display:flex; flex-direction:column; gap:6px;">
-          <span style="font-size:26px; font-weight:800; color:{color}; letter-spacing:1px;">{name}</span>
-          <span style="font-size:38px; font-weight:700; line-height:1.25;">{cats.get(name,'')}</span>
+      <div style="display:flex; align-items:center; gap:22px; position:relative;
+        background:linear-gradient(135deg, rgba(255,255,255,.085), rgba(255,255,255,.035));
+        border:1px solid rgba(255,255,255,.13); border-left:5px solid {color};
+        border-radius:22px; padding:26px 30px; box-shadow:0 10px 34px -14px rgba(0,0,0,.55);">
+        <span style="font-size:46px; line-height:1; filter:drop-shadow(0 4px 12px {color}66);">{ico}</span>
+        <div style="display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:25px; font-weight:800; color:{color}; letter-spacing:3px;">{name}</span>
+          <span style="font-size:39px; font-weight:700; line-height:1.28;">{cats.get(name,'')}</span>
         </div>
       </div>"""
     body = f"""
-    <div style="text-align:center; margin-bottom:26px;">
-      <div style="font-size:96px; line-height:1;">{EMOJI[animal]}</div>
-      <div style="font-size:60px; font-weight:900; margin-top:8px;">{animal}띠</div>
-      <div style="font-size:26px; color:rgba(243,236,255,.6); font-weight:600; margin-top:4px;">{yrs}</div>
+    <div style="position:absolute; inset:30px; border:1px solid rgba(255,217,74,.16);
+      border-radius:28px; pointer-events:none;"></div>
+    <div style="text-align:center; margin-bottom:24px; position:relative;">
+      <div style="width:190px; height:190px; margin:0 auto; border-radius:50%; position:relative;
+        background:radial-gradient(circle at 38% 30%, rgba(255,255,255,.16), rgba(255,255,255,.04));
+        border:2px solid rgba(255,217,74,.55);
+        box-shadow:0 0 60px -8px rgba(255,217,74,.35), inset 0 0 30px rgba(255,217,74,.08);
+        display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:104px; line-height:1;">{EMOJI[animal]}</span>
+        <span style="position:absolute; inset:-13px; border:1px dashed rgba(255,217,74,.3);
+          border-radius:50%;"></span>
+      </div>
+      <div style="font-size:62px; font-weight:900; margin-top:18px; letter-spacing:1px;
+        background:linear-gradient(180deg,#fff 30%,#ffd94a); -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;">{animal}띠</div>
+      <div style="display:inline-block; margin-top:8px; font-size:25px; color:rgba(245,240,255,.72);
+        font-weight:600; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
+        padding:7px 22px; border-radius:30px;">{yrs}</div>
     </div>
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:18px;">{rows}</div>
-    <div style="text-align:center; font-size:26px; color:rgba(243,236,255,.5); margin-top:20px;">
-      @daily_enter_kr · 재미로 보는 오늘의 운세</div>"""
-    return _SHELL.format(pad="64px 56px", extra="", body=body)
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:17px;
+      position:relative;">{rows}</div>
+    <div style="text-align:center; font-size:25px; color:rgba(245,240,255,.5); margin-top:18px;
+      position:relative;">@daily_enter_kr · 재미로 보는 오늘의 운세</div>"""
+    return _SHELL.format(pad="60px 56px", extra="", body=body)
 
 
 def build_slides_html(fortunes: dict, date_str: str) -> list:
