@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-14T08:46:40.961142+09:00",
+  "last_run_at": "2026-07-15T09:08:31.888888+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-14",
-      "title_hash": "c6944ce2f8e0a417",
-      "card_title": "아이오아이 김도연, 10년간 활발한 단톡방…매년 크리스마스마다 만난다",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "f3bc955aba0a49b0",
-      "card_title": "추성훈, 졸업한 딸 추사랑에 아버지의 마음 전하다",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "aa9b5e0d81da7763",
-      "card_title": "BTS, 부산서 팬들과 13주년 자축 '아미가 최고의 선물'",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "954736dc00c658ac",
-      "card_title": "블랙핑크 리사, LA 개막식 무대 선다 — K-컬처의 위상",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "4f8aaf82f44f59d5",
-      "card_title": "허남준, 임지연 향한 '예뻐용' 애드리브 공개",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "9f02149bda59ec29",
-      "card_title": "좀비 영화 '군체' 500만 관객 돌파, 올해 두 번째 대작",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "4482ad72508fbeca",
-      "card_title": "살림남 이민우, 아내의 분가 요구에 당황…스튜디오 떠나",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-14",
-      "title_hash": "154cff4e2d2ea2c3",
-      "card_title": "이준영, '신입사원 강회장'으로 역전 드라마 연기",
-      "caption_variant": "list_count",
-      "media_id": "18094879346246338",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-06-15",
       "title_hash": "d9acbef96d2ff3c1",
@@ -2105,6 +2041,78 @@
       "card_title": "서동주, 계류유산 후 가족과의 소중한 순간 공개",
       "caption_variant": "list_count",
       "media_id": "18625880422028407",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "f875e411ed692a03",
+      "card_title": "故 현철 2주기, 트로트 4대 천왕의 유산을 기억하며",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "776d5ff80caadca8",
+      "card_title": "이솔이, 암 투병 중 검사 결과 대기 '일상이 힘들 때도'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "5f3c57ca0c3f44b6",
+      "card_title": "이지아, 영화 '호프' VIP 시사회 참석...우아한 매력 발산",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "bb4a57e1bd27d7a1",
+      "card_title": "재벌형사2 캐스팅 확정, 초호화 출연진 라인업 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "ae07130bf13a7992",
+      "card_title": "나홍진 감독 '호프' 오늘 개봉, 예매량 60만장 올해 최다 기록",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "6d5c209a3a4893e0",
+      "card_title": "남주혁·노윤서, '살롱드립2'서 훈훈한 케미 선보여",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "9e9b6275743333fe",
+      "card_title": "이진아, 안테나 떠난 후 근황 공개…딸 있는 것으로 알려져",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "e8978763680788f2",
+      "card_title": "김수현, 1년 4개월 만에 활동 재개 — 오늘 광고 촬영",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-15",
+      "title_hash": "f8fc23a5071a39a2",
+      "card_title": "중소돌 리센느, 음악 앞서 국민 호감 얻은 생존 전략",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18115764982921191",
       "card_style": "minimal"
     }
   ]
