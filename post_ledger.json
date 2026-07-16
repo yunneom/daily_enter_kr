@@ -682,6 +682,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-16T15:13:29.747833+09:00",
+      "topic_id": "spot_diff_bear",
+      "title": "다른 곰은 하나!",
+      "style": "spot_difference",
+      "seed": 2182,
+      "ig_media_id": "17888331699418504",
+      "youtube_id": "nudPuWTQFJE",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
