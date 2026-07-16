@@ -696,6 +696,8 @@ def main() -> int:
         "kpop_concept_love_hate",                     # '극혐' 어휘 — 브랜드 세이프티 충돌
         "brand_rep_girlgroup",                        # 브랜드평판 TOP30 — 너무 자주 노출(운영자 중단)
         "join_conversion",                            # 홍보/CTA 카드 — 운영자 중단
+        "community_weekly",                           # 홍보성 텍스트 카드 — 과다노출(운영자 중단)
+        "kpop_authority_insight",                     # 동. 1토픽 카테고리라 쿨다운 폴백 뚫림
     }
     topic_ids = [t for t in TOPICS.keys()
                  if t not in DISABLED_TOPICS]  # 등록 순서 = 회전 순서

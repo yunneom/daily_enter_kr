@@ -156,53 +156,64 @@ def cover_html(date_str: str) -> str:
     return _SHELL.format(pad="80px 60px", extra="", body=body)
 
 
-def tti_html(animal: str, cats: dict, years: list) -> str:
+def _tti_block(animal: str, cats: dict, years: list) -> str:
+    """한 띠 블록 — 골드 미니 엠블럼 + 카테고리 4줄 (2띠/페이지 컴팩트)."""
     yrs = "·".join(years) + "년생"
     rows = ""
     for name, ico, color in CATEGORIES:
         rows += f"""
-      <div style="display:flex; align-items:center; gap:22px; position:relative;
-        background:linear-gradient(135deg, rgba(255,255,255,.085), rgba(255,255,255,.035));
-        border:1px solid rgba(255,255,255,.13); border-left:5px solid {color};
-        border-radius:22px; padding:26px 30px; box-shadow:0 10px 34px -14px rgba(0,0,0,.55);">
-        <span style="font-size:46px; line-height:1; filter:drop-shadow(0 4px 12px {color}66);">{ico}</span>
-        <div style="display:flex; flex-direction:column; gap:7px;">
-          <span style="font-size:25px; font-weight:800; color:{color}; letter-spacing:3px;">{name}</span>
-          <span style="font-size:39px; font-weight:700; line-height:1.28;">{cats.get(name,'')}</span>
+        <div style="display:flex; align-items:center; gap:16px;
+          background:linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.03));
+          border:1px solid rgba(255,255,255,.11); border-left:4px solid {color};
+          border-radius:16px; padding:13px 20px;">
+          <span style="font-size:30px; line-height:1; filter:drop-shadow(0 3px 8px {color}55);">{ico}</span>
+          <span style="font-size:21px; font-weight:800; color:{color}; letter-spacing:2px;
+            min-width:74px;">{name}</span>
+          <span style="font-size:29px; font-weight:700; line-height:1.2;">{cats.get(name,'')}</span>
+        </div>"""
+    return f"""
+    <div style="background:rgba(255,255,255,.035); border:1px solid rgba(255,217,74,.18);
+      border-radius:26px; padding:26px 28px;">
+      <div style="display:flex; align-items:center; gap:20px; margin-bottom:16px;">
+        <div style="width:86px; height:86px; border-radius:50%; flex-shrink:0;
+          background:radial-gradient(circle at 38% 30%, rgba(255,255,255,.16), rgba(255,255,255,.04));
+          border:2px solid rgba(255,217,74,.55); box-shadow:0 0 30px -6px rgba(255,217,74,.35);
+          display:flex; align-items:center; justify-content:center;">
+          <span style="font-size:48px; line-height:1;">{EMOJI[animal]}</span>
         </div>
-      </div>"""
-    body = f"""
-    <div style="position:absolute; inset:30px; border:1px solid rgba(255,217,74,.16);
-      border-radius:28px; pointer-events:none;"></div>
-    <div style="text-align:center; margin-bottom:24px; position:relative;">
-      <div style="width:190px; height:190px; margin:0 auto; border-radius:50%; position:relative;
-        background:radial-gradient(circle at 38% 30%, rgba(255,255,255,.16), rgba(255,255,255,.04));
-        border:2px solid rgba(255,217,74,.55);
-        box-shadow:0 0 60px -8px rgba(255,217,74,.35), inset 0 0 30px rgba(255,217,74,.08);
-        display:flex; align-items:center; justify-content:center;">
-        <span style="font-size:104px; line-height:1;">{EMOJI[animal]}</span>
-        <span style="position:absolute; inset:-13px; border:1px dashed rgba(255,217,74,.3);
-          border-radius:50%;"></span>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <span style="font-size:44px; font-weight:900; line-height:1;
+            background:linear-gradient(180deg,#fff 30%,#ffd94a); -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;">{animal}띠</span>
+          <span style="font-size:22px; color:rgba(245,240,255,.65); font-weight:600;">{yrs}</span>
+        </div>
       </div>
-      <div style="font-size:62px; font-weight:900; margin-top:18px; letter-spacing:1px;
-        background:linear-gradient(180deg,#fff 30%,#ffd94a); -webkit-background-clip:text;
-        -webkit-text-fill-color:transparent;">{animal}띠</div>
-      <div style="display:inline-block; margin-top:8px; font-size:25px; color:rgba(245,240,255,.72);
-        font-weight:600; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
-        padding:7px 22px; border-radius:30px;">{yrs}</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">{rows}</div>
+    </div>"""
+
+
+def tti_html(pair, fortunes: dict, years: dict) -> str:
+    """2띠/페이지 — IG 캐러셀 부모 컨테이너 10장 한도 대응 (표지1+6=7장)."""
+    blocks = "\n".join(_tti_block(a, fortunes[a], years[a]) for a in pair)
+    body = f"""
+    <div style="position:absolute; inset:28px; border:1px solid rgba(255,217,74,.16);
+      border-radius:26px; pointer-events:none;"></div>
+    <div style="text-align:center; margin-bottom:20px; position:relative;">
+      <span style="font-size:26px; font-weight:800; color:#ffd94a; letter-spacing:4px;">오늘의 띠별 운세</span>
     </div>
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:17px;
-      position:relative;">{rows}</div>
-    <div style="text-align:center; font-size:25px; color:rgba(245,240,255,.5); margin-top:18px;
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:24px;
+      position:relative;">{blocks}</div>
+    <div style="text-align:center; font-size:23px; color:rgba(245,240,255,.5); margin-top:16px;
       position:relative;">@daily_enter_kr · 재미로 보는 오늘의 운세</div>"""
-    return _SHELL.format(pad="60px 56px", extra="", body=body)
+    return _SHELL.format(pad="54px 52px", extra="", body=body)
 
 
 def build_slides_html(fortunes: dict, date_str: str) -> list:
     years = zodiac_years()
+    pairs = [ANIMALS[i:i + 2] for i in range(0, 12, 2)]  # 6쌍 (2띠/페이지)
     html = [cover_html(date_str)]
-    html += [tti_html(a, fortunes[a], years[a]) for a in ANIMALS]  # 12띠
-    return html  # 13장
+    html += [tti_html(p, fortunes, years) for p in pairs]
+    return html  # 7장 (IG 캐러셀 10장 한도 안)
 
 
 def render_jpgs(html_list, out_dir: Path) -> list:
