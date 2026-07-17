@@ -748,6 +748,17 @@
       "youtube_id": "tuXzQ-y8o7A",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-07-17T23:04:31.785894+09:00",
+      "topic_id": "worldcup_announce_r32",
+      "title": "걸그룹 월드컵 R32 결과",
+      "style": "worldcup_announce",
+      "seed": null,
+      "ig_media_id": "17908871271261658",
+      "youtube_id": "1ZE6nxViV-Q",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_c.mp3"
     }
   ]
 }
