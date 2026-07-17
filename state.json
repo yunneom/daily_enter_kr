@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-16T09:00:05.322553+09:00",
+  "last_run_at": "2026-07-17T09:11:30.372151+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-16",
-      "title_hash": "a8ea5270b36534ed",
-      "card_title": "신민아·김남희 '눈동자', 괴이한 로맨스 스릴러로 돌아온다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "0ef6fefa906c9b37",
-      "card_title": "고준희, '귀한 가족' 결정사 출연 — 이상형 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "3ab15591ebc180b7",
-      "card_title": "천만 배우들의 케미 × 코미디 내공, 영화 '남편들' 관객 마음 사로잡다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "2bba30f6dff8a5cd",
-      "card_title": "안재욱, 과거 급성 뇌출혈 투병 경험 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "7ebcda0ff0f390ee",
-      "card_title": "영화 '군체' 521만 관객 돌파, 주말 극장가 1위 차지",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "95a4bbcaa7655382",
-      "card_title": "이재, 월드컵 개막식서 드레스와 운동화로 배려의 메시지 전하다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "ab8147d1b2b8fe61",
-      "card_title": "김승수·최대철, 드라마 '사랑을 처방해 드립니다'에서 김창완과 극적 상봉",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-16",
-      "title_hash": "e52a12b81efb2ad3",
-      "card_title": "강예원, 고인 부채 11억 원 짊어지고 직원 월급까지 챙기다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17879004381669097",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-06-17",
       "title_hash": "b029bd68d0d964e3",
@@ -2121,6 +2057,78 @@
       "card_title": "이소라, 건강 회복 여정 공개…'유퀴즈'에서 과거 시절 회상",
       "caption_variant": "you_wont_believe",
       "media_id": "18128364184627475",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "22c4c2c6bd8b2593",
+      "card_title": "배나라♥한재아, 공개 열애 6개월만 결혼 약속",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "da050c1e7c765477",
+      "card_title": "산다라박, 연애와 스캔들 예방법 언급…비대면 관계 제안",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "fe2a2e5b5cfd8827",
+      "card_title": "홍인규, 김준호의 결혼에 '개그맨끼리 사귀지 말라더니' 반응",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "b6510bd353d10cf8",
+      "card_title": "한강, 노벨문학상 수상 후 母校 논란에 대해 입장 표현",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "34f4421ea5afd481",
+      "card_title": "나홍진 감독 '호프', 개봉 첫날 33만 — 올해 최고 오프닝",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "75f94cf9bc9660d6",
+      "card_title": "배우 김수현, 글로벌 OTT·지상파 텐트폴 중 차기작 선택 임박",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "2a5350bd40cf92e6",
+      "card_title": "BTS·샤키라·마돈나, 아하 월드컵 결승전 하프타임 무대 예정",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "aa2145f33057d2c0",
+      "card_title": "쯔위 부모, 대만에 엔터테인먼트 기획사 설립",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-17",
+      "title_hash": "d9a6078d5a26a3d7",
+      "card_title": "'김부장' 드라마 속 부녀 재회, 감동의 순간 포착",
+      "caption_variant": "question_hook",
+      "media_id": "17986644096009834",
       "card_style": "minimal"
     }
   ]
