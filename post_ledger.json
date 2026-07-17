@@ -726,6 +726,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-17T15:11:52.705950+09:00",
+      "topic_id": "girlgroup_4gen_tier1_10k",
+      "title": "만원으로 4세대 걸그룹 1티어편",
+      "style": "emblem",
+      "seed": 2193,
+      "ig_media_id": "18087756791126173",
+      "youtube_id": "r1I1X580yWs",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
