@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-17T09:11:30.372151+09:00",
+  "last_run_at": "2026-07-18T08:43:33.423426+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-17",
-      "title_hash": "b029bd68d0d964e3",
-      "card_title": "방탄소년단 'SWIM', 미국 빌보드 핫 100 12주 연속 차트인",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "ffc1ec6517c56a45",
-      "card_title": "최여진♥김재욱, 결혼 1년 만에 행복한 소식 전해",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "e768e6d068d2fd31",
-      "card_title": "적재, SNS 활동 일시 중단 선언 '정신적 안정 위해'",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "4bbb886ad1885e4e",
-      "card_title": "엄정화, 수영복 자태로 건강미 과시",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "d0c55a8a7fcb879f",
-      "card_title": "영화 '충충충', 10대의 감정 충돌을 그리다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "e92a1dd5378298f6",
-      "card_title": "남궁민, '결혼의 완성' 7월 4일 공개 — 신작 드라마 공식 확정",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "cba2e8e06e8d04d5",
-      "card_title": "신민아, 영화 '눈동자' 촬영 후 김우빈과의 결혼생활 안정감 언급",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-17",
-      "title_hash": "66b82972e61b5742",
-      "card_title": "임영웅, 생일 맞아 나눔 실천…팬들도 함께 기부",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18106801759979138",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-18",
       "title_hash": "4f97e9661b1f11b3",
@@ -2129,6 +2065,78 @@
       "card_title": "'김부장' 드라마 속 부녀 재회, 감동의 순간 포착",
       "caption_variant": "question_hook",
       "media_id": "17986644096009834",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "bdb0123215ac47a8",
+      "card_title": "이혼 전문 양나래 변호사, 초혼으로 결혼 예정",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "ed5df40f3c7f33d4",
+      "card_title": "조정석, 뮤지컬에서 드라마로 전향 시 발성 지적 받아",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "cf1d34700b3e39e9",
+      "card_title": "영화 '호프' 개봉 3일 만에 100만 관객 돌파",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "c6571321486930e3",
+      "card_title": "노윤서, 드라마 '동궁'서 한복으로 펼치는 궁중 오컬트 매력",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "8ce75a1d1e8f4834",
+      "card_title": "정해인 활동 재개, 김수현이 묵묵히 응원",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "c105c54c69bb2162",
+      "card_title": "한강, 배재고 사태 언급하며 혐오 극복의 필요성 강조",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "c945f7458d5418bd",
+      "card_title": "소지섭 vs 주상욱, '김부장'에서 극과 극 부성애 맞붙는다",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "9bc9d13a33dca3e0",
+      "card_title": "리센느, 1위 후 달라진 일상 고백 '어디 가도 축하 인사'",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-18",
+      "title_hash": "f74e31cb9b502a48",
+      "card_title": "야노 시호, '편스토랑'서 눈물의 가족 고백 — '내 롤모델은 엄마'",
+      "caption_variant": "question_hook",
+      "media_id": "17979100548105159",
       "card_style": "minimal"
     }
   ]
