@@ -18,7 +18,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_TITLE,
   description: SITE_DESC,
-  alternates: { canonical: "/" },
+  // 전역 canonical 선언 금지: 각 라우트가 자기 자신의 canonical 을 명시해야 한다
+  // (app/page.tsx, app/play/page.tsx 등). 여기서 "/" 를 전역 기본값으로 두면
+  // metadata 를 override 하지 않는 새 페이지가 조용히 홈의 canonical 을 상속해
+  // GSC 에 "중복 페이지(표준 없음/캐노니컬 불일치)" 로 잡힌다 — 실제 2026-07 사고
+  // 원인. scripts/check-canonical.mjs 가 이 규칙 재도입을 배포 시 차단한다.
   ...(ADS_CLIENT ? { other: { "google-adsense-account": ADS_CLIENT } } : {}),
   openGraph: {
     title: SITE_TITLE,

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import AdSlot from "@/components/AdSlot";
@@ -7,6 +8,12 @@ import { groupColor } from "@/lib/colors";
 import LiveStats from "./LiveStats";
 
 export const dynamic = "force-dynamic";
+
+// 홈의 canonical 은 layout.tsx 전역 기본값에 더 이상 기대지 않고 여기서 직접
+// 선언한다 (root layout 의 title/description/openGraph/twitter 는 그대로 상속).
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   const roster = loadRoster();

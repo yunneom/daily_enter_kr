@@ -35,6 +35,7 @@ K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분
 | `insights.json` | 게시물 인사이트 시계열 — 매 실행 끝에 워크플로우가 commit |
 | `.github/workflows/daily.yml` | 매일 실행 + state/insights commit-back + Discord 알림(선택) |
 | `.github/workflows/refresh_token.yml` | 수동 트리거 — IGAA 장기 토큰 refresh (60일 만료 임박 시) |
+| `web/scripts/check-canonical.mjs` | GSC 재발 방지 게이트 — 사이트맵 라우트별 자기참조 canonical 강제 + redirect 페이지 사이트맵 제외 확인 + 전역 canonical 재도입 차단. `web/vercel.json` buildCommand + `.github/workflows/web_seo_check.yml` 양쪽에서 실행 (`web/DEPLOY.md` 6절) |
 
 생성된 이미지는 `output/YYYYMMDD/` 폴더에 저장 (gitignore).
 

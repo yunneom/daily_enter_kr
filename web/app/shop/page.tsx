@@ -5,6 +5,7 @@ import { SHOP_LINKS, COUPANG_DISCLOSURE } from "@/lib/shopLinks";
 export const metadata: Metadata = {
   title: "쇼핑 · daily_enter_kr",
   description: "K-POP 굿즈부터 야식까지 — daily_enter_kr 카테고리별 추천템.",
+  alternates: { canonical: "/shop" },
 };
 
 // 이 페이지를 '리뷰 있는 상품(Product)'이 아니라 '제휴 카테고리 링크 모음(CollectionPage)'으로

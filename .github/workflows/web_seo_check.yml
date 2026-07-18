@@ -1,0 +1,31 @@
+name: 🔎 웹 SEO canonical 검사
+
+# GSC 재발 방지 게이트의 CI 미러. web/scripts/check-canonical.mjs 는 Vercel
+# buildCommand 에도 물려 있어 이 워크플로 없이도 배포는 막히지만, PR 단계에서
+# 미리 잡기 위해 push/PR 에서 초경량으로 한 번 더 돈다. 의존성 0(순수 node) 라
+# npm install 이 필요 없다 — 체크아웃 + node 실행만으로 수십 초 안에 끝난다.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+  pull_request:
+    paths:
+      - 'web/**'
+
+jobs:
+  check-canonical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: canonical 자기참조 검사 (node scripts/check-canonical.mjs)
+        run: node scripts/check-canonical.mjs
