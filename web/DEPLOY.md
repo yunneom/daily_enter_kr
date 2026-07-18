@@ -38,3 +38,27 @@ npm run build && npm start     # http://localhost:3000
 - 라운드를 운영자가 개설하지 않는다. 32강 대진은 `data/worldcup_bracket.json` 의 32명·R32 대진으로 **전원 고정**.
 - 결과 발표: `/results` 실시간 반영이 기본. 필요 시 어드민에서 집계 확인·초기화(`/api/admin/reset`).
 - 기존 IG 자동 캠페인(`worldcup_campaign.yml` 등)과는 독립. bracket.json 은 후보 명단 소스로만 사용.
+
+## 6) GSC 색인 재발 방지 (2026-07)
+
+**사고 원인**: `app/layout.tsx` 의 전역 `metadata.alternates.canonical="/"` 을 `/play`,
+`/shop` 이 override 하지 않아 두 페이지가 홈의 중복으로 선언됨 → GSC 에 "표준 없는
+중복 페이지" / "중복 페이지(Google이 사용자가 지정한 표준 페이지와 다른 페이지 선택함)"
+오류로 발생. 근본 수정으로 layout.tsx 의 전역 canonical 자체를 제거했다(더 이상
+새 페이지가 canonical 을 조용히 상속할 수 없음).
+
+운영 규칙:
+1. **모든 신규 페이지는 자기참조 canonical 필수** — `export const metadata` 에
+   `alternates: { canonical: "/자기라우트" }` 를 반드시 선언한다. `web/scripts/check-canonical.mjs`
+   가 `app/sitemap.ts` 에 등재된 모든 라우트에 대해 이를 강제하며, Vercel `buildCommand`
+   (`web/vercel.json`)와 `.github/workflows/web_seo_check.yml` 양쪽에서 위반 시 실패한다.
+2. **리디렉션 URL은 사이트맵 금지** — `app/vote/page.tsx` 같은 `redirect(...)` 페이지는
+   `app/sitemap.ts` 에 절대 추가하지 않는다(check-canonical 이 검사).
+3. **운영자 액션(수정 배포 후)**:
+   - Vercel → Settings → Domains 에서 apex(`dailyenterkr.com`)가 Primary 로 지정되어
+     있고 `www` 서브도메인은 apex 로 301 리다이렉트되는지 확인.
+   - GSC 색인 → 페이지 리포트에서 이번에 고친 각 오류 항목을 열고 "수정 검증" 클릭.
+     재크롤·재평가에는 수 일 걸릴 수 있다.
+4. **GSC 의 "리디렉션 포함 페이지" 알림은 구 링크가 외부에 남아 있으면 뜨는 정보성
+   항목**이다 — 그 URL 이 `sitemap.ts` 에 없으면 크롤 예산 측면에서 무해하니 별도
+   조치 불필요.
