@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-18T08:43:33.423426+09:00",
+  "last_run_at": "2026-07-19T08:45:20.081148+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-18",
-      "title_hash": "4f97e9661b1f11b3",
-      "card_title": "이즈나, 미니 3집 글로벌 프로모션 시작 — 미국 한정반부터 중국 옥외광고까지",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "a051f2e01dc328a5",
-      "card_title": "한상진, 아내와의 재정 관리법 공개…'20만원 기준'",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "e0024e17e1a78e72",
-      "card_title": "故 이서이 배우, 모교 한국외대에 장학금 2억원 기부",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "c0827b344e805ade",
-      "card_title": "송가인, 가족돌봄아동 지원 2천만원 기부",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "653430e54d30abd5",
-      "card_title": "전현무, '전현무계획3' 임우일 근황에 \"소소하네\"라 평가",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "a9f91750f8035994",
-      "card_title": "BTS 부산 공연 이틀간 11만 명 방문, 관광 파급 효과 주목",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "96884a7ad6145eb8",
-      "card_title": "장원영, 공항 신분확인 논란 후 절차안내 강화",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-18",
-      "title_hash": "f9389b3cf16456ba",
-      "card_title": "파크뮤직페스티벌, 올림픽공원 시위로 무대 변경 운영",
-      "caption_variant": "question_hook",
-      "media_id": "18104625179092935",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-06-19",
       "title_hash": "b1c742da99cf3f8c",
@@ -2137,6 +2073,78 @@
       "card_title": "야노 시호, '편스토랑'서 눈물의 가족 고백 — '내 롤모델은 엄마'",
       "caption_variant": "question_hook",
       "media_id": "17979100548105159",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "961fee78fe026b05",
+      "card_title": "강성연♥장민욱, 드라마 '동치미'서 진료실 첫만남 포착",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "93199d3607364b90",
+      "card_title": "윤주모, 서울예대 출신 힙합 뮤지션 꿈 — 축제무대서 자작 랩 공연",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "d8e4ef1d2667d0a6",
+      "card_title": "유노윤호, 날씨 불문 매일 공복 유산소 — 폭설·폭우도 멈추지 않는 열정",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "d4215fd47d90ba1c",
+      "card_title": "소지섭 주연 드라마 '김부장', 반전 스토리로 화제",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "fc9b43d2c98094f7",
+      "card_title": "지성, 이보영과 공연 출연 제안에 '연기 못하면 혼날 듯' 솔직 반응",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "6a50832a3edf8ec2",
+      "card_title": "나홍진 '호프', 흥행 신기록 vs 평점 엇갈림",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "37a267e39d64b367",
+      "card_title": "BTS 파리 스타디움 공연, 9만 관객 동원 — 마크롱 대통령 부부 관람",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "8f9b70f7e40ad051",
+      "card_title": "남주혁, 전역 후 복귀작 '동궁' 넷플릭스 한국시리즈 1위",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-19",
+      "title_hash": "eabb9295e2f61f1b",
+      "card_title": "김수현·유아인, 연이은 복귀 앞 남은 과제들",
+      "caption_variant": "list_count",
+      "media_id": "18059564426744118",
       "card_style": "minimal"
     }
   ]
