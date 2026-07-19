@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-19T08:45:20.081148+09:00",
+  "last_run_at": "2026-07-20T08:52:10.647028+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-19",
-      "title_hash": "b1c742da99cf3f8c",
-      "card_title": "이민호·심은경·조정석·최수영·정해인, 부산국제영화제 특별심사위원 위촉",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "2bce23f045285bd6",
-      "card_title": "리센느, '러브 어택' 역주행 후 갸루 콘셉트 음악방송 무대 공개",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "30a00ba28c8894e1",
-      "card_title": "임우일, 예능에서 공개한 일상의 소소한 즐거움",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "993298a7fc3edde2",
-      "card_title": "아빠 어디가 성빈, 어린이 출연자에서 청소년으로 폭풍성장",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "082da3c4024b331e",
-      "card_title": "쯔양, 홍콩 2박 3일간 25끼·215개 메뉴 정복",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "f2cd3a071b2a5986",
-      "card_title": "홍진경, 48세 나이 잊고 파리 런웨이 점령···쇼 2개 착장 3개 성공",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "3a91aefb511ccf1b",
-      "card_title": "장윤정, 프라이빗 사우나 오픈 — 대중탕 사생활 보호 위해",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-19",
-      "title_hash": "01d92474261710ae",
-      "card_title": "이재, 11월 결혼 확정 — 예비신랑과 월드컵 현장 인증",
-      "caption_variant": "list_count",
-      "media_id": "17919712293384128",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-20",
       "title_hash": "bbf4498f2e96a0b9",
@@ -2145,6 +2081,78 @@
       "card_title": "김수현·유아인, 연이은 복귀 앞 남은 과제들",
       "caption_variant": "list_count",
       "media_id": "18059564426744118",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "8420d7bc516e61b5",
+      "card_title": "나홍진 감독 '호프', 연속 기록 경신 — 관객 평가는?",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "f70a74d732b7fb6d",
+      "card_title": "임지연·이도현, 4년 열애 중 골프장 데이트 목격",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "a41af726eff3cec4",
+      "card_title": "김정은, '파리의 연인' 결말 논쟁 회상 — 지금도 사과 중",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "0e379b1e706ad082",
+      "card_title": "허영지, 7년간의 스토킹 피해 사실 공개",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "8d62bea4101f52e6",
+      "card_title": "싱어송라이터 강승식 별세, 향년 74세",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "1707059fa8de88e3",
+      "card_title": "지성, 이보영과 같은 작품 출연 환영 '연기 못하면 혼날 듯'",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "220a6df79a6232a0",
+      "card_title": "마크롱 부부, 파리 공연서 BTS 팬심 드러내며 '아미밤' 흔들어",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "2af859de1493044d",
+      "card_title": "드라마 '동궁', K-오컬트 사극의 결말과 출연진은?",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-20",
+      "title_hash": "31e6f2647b6c9bc3",
+      "card_title": "김지유, 폴란드 국적 남편과 결혼 — 이민 계획 공개",
+      "caption_variant": "tease_one",
+      "media_id": "17902503090522487",
       "card_style": "minimal"
     }
   ]
