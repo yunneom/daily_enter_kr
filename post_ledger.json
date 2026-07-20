@@ -902,6 +902,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-20T15:42:56.120285+09:00",
+      "topic_id": "powerpick_neet",
+      "title": "단 하나의 초능력만 고를 수 있다면?",
+      "style": "powerpick",
+      "seed": 2226,
+      "ig_media_id": "18604142977036490",
+      "youtube_id": "LbsVXfxeS8U",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
