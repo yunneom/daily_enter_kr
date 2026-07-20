@@ -1,0 +1,92 @@
+name: 🏆 걸그룹 월드컵 8강 (운영자 지정) 즉시 게시
+
+# 운영자가 8강 진출자 8명을 직접 확정:
+#   카리나 · 장원영 · 설윤 · 지수 · 원희 · 원이 · 닝닝 · 윈터
+# data/worldcup_bracket.json 은 이미 set_r8_participants.py 로 R8 대진이 구성됨.
+# 이 워크플로우: build R8 카드/영상(IDOL_PHOTOS=on) → IG Reels 2게시 → ledger 커밋.
+# push(이 파일 변경) 트리거 → 생성 시 1회 발화. worldcup_publish 는 ledger 멱등이 아니므로
+# 재게시 원하면 이 파일 수정 push 시에만 재발화.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/post_worldcup_r8_now.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-worldcup-r8-now
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install fonts (Pretendard) + ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk unzip ffmpeg
+          mkdir -p /tmp/pretendard
+          curl -fsSL -o /tmp/pretendard.zip \
+            https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip
+          unzip -q -o /tmp/pretendard.zip -d /tmp/pretendard
+          sudo mkdir -p /usr/share/fonts/opentype/pretendard
+          sudo cp /tmp/pretendard/public/static/Pretendard-{Bold,SemiBold,Medium,Regular}.otf \
+            /usr/share/fonts/opentype/pretendard/
+          sudo fc-cache -f /usr/share/fonts/opentype/pretendard/
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build R8 cards (real photos)
+        env:
+          IDOL_PHOTOS: "on"
+        run: python scripts/build_worldcup_round.py R8
+
+      - name: Publish R8 (IG Reels + YT Shorts)
+        env:
+          IDOL_PHOTOS: "on"
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MUSIC_YT_URL: ${{ secrets.MUSIC_YT_URL }}
+          MUSIC_TITLE: ${{ secrets.MUSIC_TITLE }}
+          MUSIC_HANDLE: ${{ secrets.MUSIC_HANDLE }}
+        run: python scripts/worldcup_publish.py R8
+
+      - name: Commit bracket + ledger
+        if: always()
+        run: |
+          changes=""
+          if [ -n "$(git status --porcelain data/worldcup_bracket.json 2>/dev/null)" ]; then changes="$changes data/worldcup_bracket.json"; fi
+          if [ -n "$(git status --porcelain post_ledger.json 2>/dev/null)" ]; then changes="$changes post_ledger.json"; fi
+          if [ -z "$changes" ]; then echo "변경 없음 — 커밋 스킵"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $changes
+          git commit -m "worldcup R8 게시: $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          BRANCH="${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "$BRANCH" || true
+          git push origin "HEAD:$BRANCH"

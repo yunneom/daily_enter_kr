@@ -36,23 +36,21 @@ TOLERANCE_MIN = 60  # cron 매 30분 + 정시 부하 지연(실측 47분) 흡수
 # [일정 연장 — 도달 누적 우선] 첫 라운드 노출이 약해서 앞 라운드에 48~63h 몰아주고
 # 빅매치(16강)·클라이맥스(결승)를 주말에 배치. 뒤 라운드는 24h (모멘텀 구축 후).
 SCHEDULE = [
-    # === 시즌2 — 새 대진(SEED 20260714), 라운드당 84h(3.5일) 투표, 2매치/게시 ===
-    # 2026-07-14 32강 ~ 08-01 우승발표. 체인 슬롯 30분 간격(순서보정+catch-up 안전).
-    (datetime(2026, 7, 14,  8,  0, tzinfo=KST), "publish",  "R32"),
-    (datetime(2026, 7, 17, 20,  0, tzinfo=KST), "tally",    "R32"),
-    (datetime(2026, 7, 17, 20, 30, tzinfo=KST), "announce", "R32"),
-    (datetime(2026, 7, 17, 21,  0, tzinfo=KST), "publish",  "R16"),
-    (datetime(2026, 7, 21,  9,  0, tzinfo=KST), "tally",    "R16"),
-    (datetime(2026, 7, 21,  9, 30, tzinfo=KST), "announce", "R16"),
-    (datetime(2026, 7, 21, 10,  0, tzinfo=KST), "publish",  "R8"),
-    (datetime(2026, 7, 24, 22,  0, tzinfo=KST), "tally",    "R8"),
-    (datetime(2026, 7, 24, 22, 30, tzinfo=KST), "announce", "R8"),
-    (datetime(2026, 7, 25,  8,  0, tzinfo=KST), "publish",  "R4"),
-    (datetime(2026, 7, 28, 20,  0, tzinfo=KST), "tally",    "R4"),
-    (datetime(2026, 7, 28, 20, 30, tzinfo=KST), "announce", "R4"),
-    (datetime(2026, 7, 28, 21,  0, tzinfo=KST), "publish",  "R2"),
-    (datetime(2026, 8,  1,  9,  0, tzinfo=KST), "tally",    "R2"),
-    (datetime(2026, 8,  1,  9, 30, tzinfo=KST), "announce", "R1"),
+    # === 시즌2 — 8강부터 운영자 지정으로 재편 ===
+    # R32 실투표 완료 + R16 게시됨. 2026-07-20 운영자가 8강 진출자 8명을 직접 확정
+    # (카리나·장원영·설윤·지수·원희·원이·닝닝·윈터 = R16 각 매치 승자)해
+    # post_worldcup_r8_now.yml 로 즉시 게시. 폐기: R16 집계/발표/예정 R8 슬롯.
+    # 이후 라운드당 3.5일(84h) 투표, 2매치/게시 유지. 캠페인 윈도우 ~08-02.
+    (datetime(2026, 7, 14,  8,  0, tzinfo=KST), "publish",  "R32"),  # 완료(멱등)
+    # ↓ R8 게시(7/20)는 one-off 워크플로우가 처리 — 스케줄엔 넣지 않음(중복 방지, 멱등)
+    (datetime(2026, 7, 24,  8,  0, tzinfo=KST), "tally",    "R8"),
+    (datetime(2026, 7, 24,  8, 30, tzinfo=KST), "announce", "R8"),
+    (datetime(2026, 7, 24,  9,  0, tzinfo=KST), "publish",  "R4"),
+    (datetime(2026, 7, 27, 20,  0, tzinfo=KST), "tally",    "R4"),
+    (datetime(2026, 7, 27, 20, 30, tzinfo=KST), "announce", "R4"),
+    (datetime(2026, 7, 27, 21,  0, tzinfo=KST), "publish",  "R2"),
+    (datetime(2026, 7, 31,  9,  0, tzinfo=KST), "tally",    "R2"),
+    (datetime(2026, 7, 31,  9, 30, tzinfo=KST), "announce", "R1"),
 ]
 
 
