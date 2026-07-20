@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-20T08:52:10.647028+09:00",
+  "last_run_at": "2026-07-21T08:59:54.006082+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-20",
-      "title_hash": "bbf4498f2e96a0b9",
-      "card_title": "임지연·허남준·장승조, SBS '멋진 신세계' K-로코 명장면 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "05620d1d90d1b646",
-      "card_title": "故이서이, 벌써 1주기 맞이 — 팬들의 추모 이어져",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "7e8af88a8859da09",
-      "card_title": "신민아, 김우빈과 10년 열애 중 결혼관 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "faa0386fccf6b2bd",
-      "card_title": "이용진, '1박 2일'에서 인생 최대 위기 맞닥뜨려",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "e79b89eed7ae2396",
-      "card_title": "트와이스 사나, 의상 피팅 차이에 대해 직접 해명",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "d64aff46baa7b5ca",
-      "card_title": "임우일, 궁상 레전드 사연 공개 '형편한 시절의 생생한 추억'",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "b0c8a6183604d94b",
-      "card_title": "배우 박중훈, 아들과 함께 월드컵 멕시코전 직관 성공",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-20",
-      "title_hash": "02a47dc2a0c5ab7a",
-      "card_title": "마마무 화사, 엔비디아 CEO 젠슨 황의 '샤라웃'에 반응",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18156120448476136",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-06-21",
       "title_hash": "632be6356329c825",
@@ -2153,6 +2089,78 @@
       "card_title": "김지유, 폴란드 국적 남편과 결혼 — 이민 계획 공개",
       "caption_variant": "tease_one",
       "media_id": "17902503090522487",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "e21c029af970af6c",
+      "card_title": "유이, 5년 전 마지막 연애 이후 공개연애 소망 밝혀",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "f31865d18ac3c72a",
+      "card_title": "하이브 신인 튜이드, 8월 데뷔 앞두고 앨범 전곡 무대 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "614f2a98b1bf7884",
+      "card_title": "홍경표 촬영감독이 본 영화 '호프'의 현장 — '어디서도 본 적 없는 광기'",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "1eb31195ff42c877",
+      "card_title": "장원영, 현장 스태프가 증명한 따뜻한 영향력",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "21e52488db9d18f5",
+      "card_title": "이동건, 박신양과의 첫 만남 뒷이야기 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "d055e45e5808bd1e",
+      "card_title": "AI, K-콘텐츠 제작 현장으로 확산 중",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "4e34c8a6fa7fcd81",
+      "card_title": "아이유, 귀 건강 회복 위해 콘서트·앨범 연기",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "e577109e49379a96",
+      "card_title": "'동궁', 넷플릭스 한국 TOP10 1위로 출발",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-21",
+      "title_hash": "51bbaef0a28a7c1a",
+      "card_title": "코르티스, 단독 콘서트서 같은 곡 5번 반복 무대 논란",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17867720043633226",
       "card_style": "minimal"
     }
   ]
