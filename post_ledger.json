@@ -968,6 +968,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-21T15:25:12.380480+09:00",
+      "topic_id": "girlgroup_allstar_photo_10k",
+      "title": "만원으로 걸그룹 올스타 만들기",
+      "style": "emblem",
+      "seed": 2237,
+      "ig_media_id": "18087311663640548",
+      "youtube_id": "RGOFexUUgOs",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
