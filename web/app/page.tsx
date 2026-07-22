@@ -53,12 +53,35 @@ export default function HomePage() {
         <h2 className="section-title">참가 32팀</h2>
         <div className="roster-grid">
           {roster.candidates.map((c) => (
-            <div key={c.rank} className="roster-chip" style={{ borderColor: groupColor(c.group) }}>
+            <Link
+              key={c.rank}
+              href={`/idols/${c.rank}`}
+              className="roster-chip"
+              style={{ borderColor: groupColor(c.group) }}
+            >
               <span className="roster-dot" style={{ background: groupColor(c.group) }} />
               <span className="roster-name">{c.member}</span>
               <span className="roster-group">{c.group}</span>
-            </div>
+            </Link>
           ))}
+        </div>
+      </section>
+
+      <section className="explore">
+        <h2 className="section-title">더 알아보기</h2>
+        <div className="explore-links">
+          <Link href="/idols" className="explore-card">
+            <span className="explore-card-title">멤버 프로필</span>
+            <span className="explore-card-sub">참가 32인의 소개</span>
+          </Link>
+          <Link href="/groups" className="explore-card">
+            <span className="explore-card-title">그룹 소개</span>
+            <span className="explore-card-sub">그룹별 참가 멤버</span>
+          </Link>
+          <Link href="/guide" className="explore-card">
+            <span className="explore-card-title">가이드</span>
+            <span className="explore-card-sub">규칙 · 시드 · FAQ</span>
+          </Link>
         </div>
       </section>
 

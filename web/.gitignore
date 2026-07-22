@@ -5,9 +5,12 @@ out
 next-env.d.ts
 
 # /data holds a build-time bracket snapshot + a local run store, but the
-# owner-editable member_images.json must ship. Ignore data/* contents, then
-# re-include the file that has to be tracked.
+# owner-editable member_images.json + the editorial content file must ship.
+# Ignore data/* contents, then re-include the files that have to be tracked.
 /data/*
 !/data/member_images.json
 .vercel
 !/data/moment.json
+# idol_content.json — hand-authored group/member editorial prose (profiles,
+# guide). Required at build time (imported by lib/idolContent.ts).
+!/data/idol_content.json
