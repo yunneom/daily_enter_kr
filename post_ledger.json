@@ -1001,6 +1001,17 @@
       "youtube_id": "E8E5A_jvnqI",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-07-22T14:24:03.623048+09:00",
+      "topic_id": "fortune_saju_2026-07-22",
+      "title": "오늘의 띠별 운세 2026년 7월 22일",
+      "style": "fortune_carousel",
+      "seed": null,
+      "ig_media_id": "18096916640343338",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
