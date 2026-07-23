@@ -1664,7 +1664,18 @@
             "member": "설윤",
             "score": 1778210
           },
-          "winner": null
+          "winner": {
+            "rank": 1,
+            "group": "아이브",
+            "member": "장원영",
+            "score": 7538960
+          },
+          "votes": {
+            "a": 0,
+            "b": 0,
+            "raw_a": 0,
+            "raw_b": 0
+          }
         },
         {
           "quarter": 1,
@@ -1682,7 +1693,18 @@
             "member": "닝닝",
             "score": 1596316
           },
-          "winner": null
+          "winner": {
+            "rank": 6,
+            "group": "아일릿",
+            "member": "원희",
+            "score": 4185876
+          },
+          "votes": {
+            "a": 0,
+            "b": 0,
+            "raw_a": 0,
+            "raw_b": 0
+          }
         },
         {
           "quarter": 2,
@@ -1700,7 +1722,18 @@
             "member": "지수",
             "score": 2096499
           },
-          "winner": null
+          "winner": {
+            "rank": 3,
+            "group": "에스파",
+            "member": "카리나",
+            "score": 4736626
+          },
+          "votes": {
+            "a": 0,
+            "b": 0,
+            "raw_a": 0,
+            "raw_b": 0
+          }
         },
         {
           "quarter": 3,
@@ -1718,7 +1751,18 @@
             "member": "윈터",
             "score": 2361861
           },
-          "winner": null
+          "winner": {
+            "rank": 5,
+            "group": "리센느",
+            "member": "원이",
+            "score": 4194647
+          },
+          "votes": {
+            "a": 0,
+            "b": 0,
+            "raw_a": 0,
+            "raw_b": 0
+          }
         }
       ],
       "posts": [
@@ -1740,7 +1784,18 @@
               "member": "설윤",
               "score": 1778210
             },
-            "winner": null
+            "winner": {
+              "rank": 1,
+              "group": "아이브",
+              "member": "장원영",
+              "score": 7538960
+            },
+            "votes": {
+              "a": 0,
+              "b": 0,
+              "raw_a": 0,
+              "raw_b": 0
+            }
           },
           "match2": {
             "quarter": 2,
@@ -1758,7 +1813,34 @@
               "member": "지수",
               "score": 2096499
             },
-            "winner": null
+            "winner": {
+              "rank": 3,
+              "group": "에스파",
+              "member": "카리나",
+              "score": 4736626
+            },
+            "votes": {
+              "a": 0,
+              "b": 0,
+              "raw_a": 0,
+              "raw_b": 0
+            }
+          },
+          "tally": {
+            "raw_comments": 0,
+            "valid_votes": 0,
+            "counts": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0
+            },
+            "weighted": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0
+            }
           }
         },
         {
@@ -1779,7 +1861,18 @@
               "member": "닝닝",
               "score": 1596316
             },
-            "winner": null
+            "winner": {
+              "rank": 6,
+              "group": "아일릿",
+              "member": "원희",
+              "score": 4185876
+            },
+            "votes": {
+              "a": 0,
+              "b": 0,
+              "raw_a": 0,
+              "raw_b": 0
+            }
           },
           "match2": {
             "quarter": 3,
@@ -1797,11 +1890,119 @@
               "member": "윈터",
               "score": 2361861
             },
+            "winner": {
+              "rank": 5,
+              "group": "리센느",
+              "member": "원이",
+              "score": 4194647
+            },
+            "votes": {
+              "a": 0,
+              "b": 0,
+              "raw_a": 0,
+              "raw_b": 0
+            }
+          },
+          "tally": {
+            "raw_comments": 0,
+            "valid_votes": 0,
+            "counts": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0
+            },
+            "weighted": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0
+            }
+          }
+        }
+      ]
+    },
+    "R4": {
+      "matches": [
+        {
+          "quarter": 0,
+          "slot": 0,
+          "round": "R4",
+          "a": {
+            "rank": 1,
+            "group": "아이브",
+            "member": "장원영",
+            "score": 7538960
+          },
+          "b": {
+            "rank": 6,
+            "group": "아일릿",
+            "member": "원희",
+            "score": 4185876
+          },
+          "winner": null
+        },
+        {
+          "quarter": 2,
+          "slot": 1,
+          "round": "R4",
+          "a": {
+            "rank": 3,
+            "group": "에스파",
+            "member": "카리나",
+            "score": 4736626
+          },
+          "b": {
+            "rank": 5,
+            "group": "리센느",
+            "member": "원이",
+            "score": 4194647
+          },
+          "winner": null
+        }
+      ],
+      "posts": [
+        {
+          "post_idx": 0,
+          "match1": {
+            "quarter": 0,
+            "slot": 0,
+            "round": "R4",
+            "a": {
+              "rank": 1,
+              "group": "아이브",
+              "member": "장원영",
+              "score": 7538960
+            },
+            "b": {
+              "rank": 6,
+              "group": "아일릿",
+              "member": "원희",
+              "score": 4185876
+            },
+            "winner": null
+          },
+          "match2": {
+            "quarter": 2,
+            "slot": 1,
+            "round": "R4",
+            "a": {
+              "rank": 3,
+              "group": "에스파",
+              "member": "카리나",
+              "score": 4736626
+            },
+            "b": {
+              "rank": 5,
+              "group": "리센느",
+              "member": "원이",
+              "score": 4194647
+            },
             "winner": null
           }
         }
       ]
     }
   },
-  "current_round": "R8"
+  "current_round": "R4"
 }
