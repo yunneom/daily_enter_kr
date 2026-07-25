@@ -89,10 +89,20 @@
     "group": "트와이스",
     "file": "170304_여의도_트와이스_팬싸_(20).jpg"
   },
+  "20": {
+    "member": "지원",
+    "group": "시그니처",
+    "file": "Jeewon of Latency, 2026.jpg"
+  },
   "21": {
     "member": "레이",
     "group": "아이브",
     "file": "Rei_of_Ive_at_the_Valentino_event,_March_20,_2026_(1).png"
+  },
+  "22": {
+    "member": "모카",
+    "group": "아일릿",
+    "file": "ILLIT Moka at Canada Goose Photo Call.png"
   },
   "24": {
     "member": "카즈하",
@@ -133,5 +143,10 @@
     "member": "리즈",
     "group": "아이브",
     "file": "Liz_of_Ive_at_K-SWISS_Flagship_Store_Open_Event,_May_7,_2026_(1).png"
+  },
+  "32": {
+    "member": "여름",
+    "group": "우주소녀",
+    "file": "190324 우주소녀 여름 (2).jpg"
   }
 }
