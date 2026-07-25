@@ -1230,11 +1230,18 @@ h3 {
   margin: 0 auto;
   padding: 18px 20px calc(var(--nav-h) + 18px);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 8px;
   font-size: 12px;
   color: var(--sub);
+}
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 8px;
 }
 .site-footer-link {
   color: var(--ink-2);
@@ -1808,4 +1815,28 @@ h3 {
   font-size: 14px;
   line-height: 1.7;
   color: var(--ink-2);
+}
+
+/* ── Credits (image attribution) list ───────────────────────────────────── */
+.credits-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px;
+}
+.credits-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.credits-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.credits-list li a {
+  font-size: 12px;
+  color: var(--sub);
+  word-break: break-all;
 }

@@ -53,7 +53,6 @@ export const viewport: Viewport = {
 const IMAGE_HOSTS = [
   "https://commons.wikimedia.org",
   "https://upload.wikimedia.org",
-  "https://encrypted-tbn0.gstatic.com",
 ];
 
 const WEBSITE_JSONLD = {
@@ -90,10 +89,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <UtmCapture />
         {children}
         <footer className="site-footer">
-          <Link href="/privacy" className="site-footer-link">
-            개인정보처리방침
-          </Link>
-          <span className="site-footer-sep">·</span>
+          <nav className="site-footer-links">
+            <Link href="/about" className="site-footer-link">소개</Link>
+            <span className="site-footer-sep">·</span>
+            <Link href="/guide" className="site-footer-link">가이드</Link>
+            <span className="site-footer-sep">·</span>
+            <Link href="/contact" className="site-footer-link">문의</Link>
+            <span className="site-footer-sep">·</span>
+            <Link href="/credits" className="site-footer-link">이미지 출처</Link>
+            <span className="site-footer-sep">·</span>
+            <Link href="/privacy" className="site-footer-link">개인정보처리방침</Link>
+            <span className="site-footer-sep">·</span>
+            <Link href="/terms" className="site-footer-link">이용약관</Link>
+          </nav>
           <span className="site-footer-handle">@daily_enter_kr</span>
         </footer>
         {adsClient ? (
