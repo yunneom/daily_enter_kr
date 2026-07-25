@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "쇼핑 · daily_enter_kr",
   description: "K-POP 굿즈부터 야식까지 — daily_enter_kr 카테고리별 추천템.",
   alternates: { canonical: "/shop" },
+  // 제휴 링크 모음(thin affiliate) 페이지는 검색/광고 심사 대상에서 제외한다.
+  // 사이트의 가치는 프로필·가이드 등 오리지널 콘텐츠로 평가받도록 noindex.
+  robots: { index: false, follow: true },
 };
 
 // 이 페이지를 '리뷰 있는 상품(Product)'이 아니라 '제휴 카테고리 링크 모음(CollectionPage)'으로
