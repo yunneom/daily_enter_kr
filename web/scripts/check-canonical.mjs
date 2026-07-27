@@ -42,12 +42,83 @@ function escapeRegExp(s) {
 // app/sitemap.ts 의 `${SITE_URL}/route` 형태 템플릿 리터럴에서 경로만 추출.
 function parseSitemapRoutes(src) {
   const routes = [];
-  const re = /\$\{SITE_URL\}([a-zA-Z0-9/_-]*)/g;
+  // 정적 라우트(`${SITE_URL}/play`) 와 동적 라우트(`${SITE_URL}/idols/${m.rank}`)
+  // 를 모두 인식한다. 경로 안에 다시 `${...}` 가 들어가면 동적으로 분류.
+  const re = /\$\{SITE_URL\}((?:[a-zA-Z0-9/_-]|\$\{[^}]*\})*)/g;
   let m;
   while ((m = re.exec(src)) !== null) {
-    routes.push(m[1] === "" ? "/" : m[1]);
+    const raw = m[1];
+    const dynIdx = raw.indexOf("${");
+    if (dynIdx === -1) {
+      routes.push({ kind: "static", route: raw === "" ? "/" : raw });
+    } else {
+      // "/idols/${m.rank}" → base "/idols"
+      const base = raw.slice(0, dynIdx).replace(/\/+$/, "");
+      if (base) routes.push({ kind: "dynamic", route: base });
+    }
   }
-  return routes;
+  // 동일 라우트 중복 제거 (동적은 map 한 번에 하나만 잡히지만 방어적으로)
+  const seen = new Set();
+  return routes.filter((r) => {
+    const k = `${r.kind}:${r.route}`;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
+
+// 동적 라우트 검증: app/<base>/[param]/page.tsx 가 존재하고, 각 항목이
+// 자기 URL 을 canonical 로 만들어 쓰는지(템플릿 리터럴) 확인한다.
+// 정적 라우트처럼 리터럴 일치로는 볼 수 없어 별도 규칙을 쓴다.
+function checkDynamicRoute(base) {
+  const baseDir = path.join(appDir, ...base.replace(/^\//, "").split("/").filter(Boolean));
+  if (!fs.existsSync(baseDir)) {
+    return `사이트맵 동적 라우트 "${base}/..." 의 디렉토리가 없습니다: ${path.relative(webRoot, baseDir)}`;
+  }
+  const paramDirs = fs
+    .readdirSync(baseDir, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && /^\[.+\]$/.test(e.name));
+  if (paramDirs.length === 0) {
+    return `사이트맵 동적 라우트 "${base}/..." 에 대응하는 [param] 디렉토리가 없습니다: ${path.relative(webRoot, baseDir)}`;
+  }
+  for (const d of paramDirs) {
+    const pageFile = path.join(baseDir, d.name, "page.tsx");
+    if (!fs.existsSync(pageFile)) {
+      return `동적 라우트 페이지가 없습니다: ${path.relative(webRoot, pageFile)}`;
+    }
+    const content = stripComments(readFile(pageFile));
+    const rel = path.relative(webRoot, pageFile);
+    const m = /alternates\s*:\s*\{\s*canonical\s*:\s*([^,}]+)/.exec(content);
+    if (!m) {
+      return `동적 라우트 "${base}/${d.name}" 가 alternates.canonical 을 선언하지 않았습니다: ${rel}`;
+    }
+    // canonical 에 실제로 대입된 "값" 을 본다. 파일 어딘가에 자기참조 URL 문자열이
+    // 존재하는지만 보면, canonical 을 "/" 로 바꿔놔도 통과하는 가짜 검증이 된다.
+    const value = m[1].trim();
+    const selfTemplate = new RegExp("`" + escapeRegExp(base) + "/\\$\\{");
+
+    if (/^["'`]/.test(value)) {
+      // 리터럴 — 동적 라우트는 항목마다 URL 이 달라야 하므로 템플릿만 허용.
+      if (!(value.startsWith("`") && selfTemplate.test(value))) {
+        return (
+          `동적 라우트 "${base}/${d.name}" 의 canonical 이 고정 문자열 ${value} 입니다 — ` +
+          `항목마다 자기 URL(\`${base}/\${...}\`)을 canonical 로 선언하세요: ${rel}`
+        );
+      }
+      continue;
+    }
+    // 식별자 → 그 변수가 자기 경로 템플릿으로 만들어졌는지 확인.
+    const assigned = new RegExp(
+      "(?:const|let|var)\\s+" + escapeRegExp(value) + "\\s*=\\s*`" + escapeRegExp(base) + "/\\$\\{",
+    );
+    if (!assigned.test(content)) {
+      return (
+        `동적 라우트 "${base}/${d.name}" 의 canonical 값 "${value}" 이 ` +
+        `\`${base}/\${...}\` 로 생성되지 않습니다 — 자기참조 URL 을 대입하세요: ${rel}`
+      );
+    }
+  }
+  return null;
 }
 
 // 라우트 문자열 → 기대되는 page.tsx 절대경로. 홈("/")은 app/page.tsx.
@@ -99,7 +170,13 @@ if (sitemapRoutes.length === 0) {
 }
 
 // --- (b) 사이트맵 라우트 ↔ 자기참조 canonical ---
-for (const route of sitemapRoutes) {
+for (const entry of sitemapRoutes) {
+  const route = entry.route;
+  if (entry.kind === "dynamic") {
+    const err = checkDynamicRoute(route);
+    if (err) errors.push(err);
+    continue;
+  }
   const pageFile = routeToPageFile(route);
   if (!fs.existsSync(pageFile)) {
     errors.push(`사이트맵 라우트 "${route}" 에 대응하는 페이지가 없습니다: ${path.relative(webRoot, pageFile)}`);
@@ -121,7 +198,9 @@ for (const route of sitemapRoutes) {
 }
 
 // --- (c) redirect() 페이지가 사이트맵에 없는지 ---
-const sitemapRouteSet = new Set(sitemapRoutes);
+const sitemapRouteSet = new Set(
+  sitemapRoutes.filter((r) => r.kind === "static").map((r) => r.route),
+);
 for (const pageFile of findAllPageFiles(appDir)) {
   const content = stripComments(readFile(pageFile));
   if (/\bredirect\s*\(/.test(content)) {
