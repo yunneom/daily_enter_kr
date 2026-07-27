@@ -102,6 +102,10 @@ def record_results(results: List[Dict], bgm: Optional[str] = None) -> int:
             "threads_id": r.get("threads_id"),
             "bgm": r.get("bgm") or bgm,  # 게시별 bgm 우선, 없으면 배치 폴백
         }
+        # 포맷별 부가 데이터 passthrough (engagement 투표 라벨/문항 인덱스 등).
+        # 키가 없으면 엔트리 형태는 기존과 동일 — 하위 호환.
+        if r.get("meta"):
+            entry["meta"] = r["meta"]
         data["entries"].append(entry)
         added += 1
     save_ledger(data)
