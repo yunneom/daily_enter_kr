@@ -58,9 +58,21 @@ def _seed_for(date, salt: str) -> random.Random:
 
 
 def _load_pool():
-    """검증된 사진 멤버 풀 [(rank, member, group)] — overrides 기준."""
+    """실사 사용 가능한 멤버 풀 [(rank, member, group)].
+
+    overrides(사람이 검증한 커먼즈 파일) ∩ 저장소에 실제로 커밋된 사진.
+    커밋 캐시에 없는 멤버는 애초에 뽑지 않는다 — 폴백 카드가 섞이는 것을 사전에
+    막고, 캐시가 아직 다 안 찼어도 확보분만으로 정상 게시가 이어지게 한다.
+    (런타임 실패에 대비한 최종 방어선은 _require_all_photos.)
+    """
+    from idol_photo import repo_cached_photo
     ov = json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
-    return [(int(r), v["member"], v["group"]) for r, v in ov.items()]
+    pool = [(int(r), v["member"], v["group"]) for r, v in ov.items()
+            if repo_cached_photo(v["member"])]
+    if not pool:
+        raise PhotoCoverageError(
+            "실사 캐시가 비어 있습니다 — warm_photo_cache 워크플로우를 먼저 실행하세요.")
+    return pool
 
 
 class PhotoCoverageError(Exception):
@@ -457,8 +469,7 @@ def run_brandrep(date, dry):
     # 자유 라이선스 실사가 검증된 멤버만 카운트다운에 올린다. 검증 사진이 없는
     # 멤버(예: 커먼즈에 개인 식별 가능한 파일이 없는 경우)를 넣으면 폴백 카드가
     # 섞여 나가므로 제외하고, 제외 사실은 캡션에 명시해 오해가 없게 한다.
-    ov_names = {v["member"] for v in json.loads(
-        OVERRIDES_PATH.read_text(encoding="utf-8")).values()}
+    ov_names = {name for _, name, _ in _load_pool()}
     ordered = sorted(data["rankings"], key=lambda r: r["rank"])
     top10 = [r for r in ordered if r["member"] in ov_names][:10]
     if len(top10) < 10:

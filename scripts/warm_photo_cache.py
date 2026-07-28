@@ -26,6 +26,7 @@ import json
 import os
 import shutil
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
@@ -34,6 +35,22 @@ sys.path.insert(0, str(ROOT / "src"))
 import idol_photo  # noqa: E402
 
 OVERRIDES_PATH = ROOT / "data" / "idol_photo_overrides.json"
+
+
+def _purge_negative_cache():
+    """런타임 negative 캐시 제거.
+
+    idol_photo.fetch_photo() 는 다운로드 실패도 캐시한다("none": True). 그대로 두면
+    같은 실행 안에서의 재시도가 네트워크를 타지 않고 즉시 None 을 반환해 버린다
+    (2026-07: 15초 간격으로도 9명이 429 로 남은 뒤 재시도가 무의미했던 원인).
+    실패 항목만 지우고 성공 항목은 보존한다.
+    """
+    attr = idol_photo._load_attr()
+    kept = {k: v for k, v in attr.items() if not v.get("none")}
+    if len(kept) != len(attr):
+        idol_photo._save_attr(kept)
+        return len(attr) - len(kept)
+    return 0
 DEST_DIR = idol_photo.REPO_CACHE_DIR
 DEST_ATTR = idol_photo.REPO_ATTR_PATH
 
@@ -48,6 +65,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true", help="기존 캐시 무시하고 전체 재수집")
     ap.add_argument("--check", action="store_true", help="수집 없이 커버리지만 점검")
+    ap.add_argument("--passes", type=int, default=3,
+                    help="실패분 재시도 패스 수 (패스마다 간격을 늘림)")
     args = ap.parse_args()
 
     all_targets = targets()
@@ -80,25 +99,41 @@ def main() -> int:
     gap = os.environ.get("IDOL_PHOTO_GAP_SEC", "(기본 4)")
     print(f"⏬ 수집 시작 (멤버 간 간격: {gap}초)\n")
 
-    ok, fail = [], []
-    for rank, name, group in need:
-        rec = idol_photo.fetch_photo(name)
-        if not rec or not rec.get("path"):
-            print(f"  ❌ {group} {name} — 획득 실패")
-            fail.append((rank, name, group))
-            continue
-        src = Path(rec["path"])
-        dest_name = f"{rank:02d}_{name}{src.suffix or '.jpg'}"
-        shutil.copyfile(src, DEST_DIR / dest_name)
-        attr[name] = {
-            "path": dest_name,
-            "artist": rec.get("artist", ""),
-            "license": rec.get("license", ""),
-            "title": rec.get("title", ""),
-            "descurl": rec.get("descurl", ""),
-        }
-        print(f"  ✅ {group} {name} → {dest_name}")
-        ok.append(name)
+    ok, pending = [], list(need)
+    base_gap = float(os.environ.get("IDOL_PHOTO_GAP_SEC") or 4.0)
+    for p in range(1, max(1, args.passes) + 1):
+        if not pending:
+            break
+        if p > 1:
+            # 위키미디어 429 는 시간이 지나면 풀린다 — 패스마다 간격을 키우고
+            # negative 캐시를 지워 실제로 네트워크를 다시 타게 한다.
+            purged = _purge_negative_cache()
+            os.environ["IDOL_PHOTO_GAP_SEC"] = str(base_gap * (p + 1))
+            cool = 60 * p
+            print(f"\n🔁 패스 {p}/{args.passes} — 남은 {len(pending)}명 "
+                  f"(negative 캐시 {purged}건 제거, 간격 {base_gap * (p + 1):.0f}s, {cool}s 대기)")
+            time.sleep(cool)
+        fail = []
+        for rank, name, group in pending:
+            rec = idol_photo.fetch_photo(name)
+            if not rec or not rec.get("path"):
+                print(f"  ❌ {group} {name} — 획득 실패")
+                fail.append((rank, name, group))
+                continue
+            src = Path(rec["path"])
+            dest_name = f"{rank:02d}_{name}{src.suffix or '.jpg'}"
+            shutil.copyfile(src, DEST_DIR / dest_name)
+            attr[name] = {
+                "path": dest_name,
+                "artist": rec.get("artist", ""),
+                "license": rec.get("license", ""),
+                "title": rec.get("title", ""),
+                "descurl": rec.get("descurl", ""),
+            }
+            print(f"  ✅ {group} {name} → {dest_name}")
+            ok.append(name)
+        pending = fail
+    fail = pending
 
     DEST_ATTR.write_text(json.dumps(attr, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                          encoding="utf-8")
