@@ -1045,6 +1045,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-28T12:16:01.202559+09:00",
+      "topic_id": "slot_girlgroup_5x3",
+      "title": "🎰 슬롯머신 걸그룹 조합",
+      "style": "slot_machine",
+      "seed": 2311,
+      "ig_media_id": "17988306668843027",
+      "youtube_id": "NVSNRqw9iuA",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
