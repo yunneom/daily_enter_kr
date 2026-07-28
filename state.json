@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-28T09:17:55.018788+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-07-29T08:52:22.089011+09:00",
+  "last_run_status": "failed: HTTPError: IG carousel_child HTTP 400 — code=9004 subcode=2207052 type=OAuthException msg=Only photo or video can be accepted as media type.",
   "posted_history": [
-    {
-      "date": "2026-06-28",
-      "title_hash": "138526f9eb02e3bd",
-      "card_title": "전현무, '전참시'에서 원진아에 호감 표현",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "04711151fe9c8ade",
-      "card_title": "티파니 영♥변요한, 신혼 생활 근황 공개 '든든한 내 편'",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "3d788019f7d53a80",
-      "card_title": "린, 백지영·윤종신·김범수와의 모임에서 이수와 이혼 발표",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "27c8d6b7a7157ae7",
-      "card_title": "윤정수·원진서, 결혼 1주년 기념일 병원서 함께 수액",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "edff9526ea42df77",
-      "card_title": "재난 영화 '그린랜드 2', 인류의 생존을 그리다",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "686aab5838877558",
-      "card_title": "차인표, 60세 맞이해 '관계의 다이어트' 단행",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "96b79a5145648d16",
-      "card_title": "박서진, 영월 산골로 내려가 농촌 생활 선언 (살림남2)",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-28",
-      "title_hash": "4370671e46c1224f",
-      "card_title": "천록담, 신장암 1기 투병 중 '불후의 명곡' 출연",
-      "caption_variant": "question_hook",
-      "media_id": "17953865403187544",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-29",
       "title_hash": "95fe3ab527b5e61c",
