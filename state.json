@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-27T09:05:20.559632+09:00",
-  "last_run_status": "failed_token_invalid",
+  "last_run_at": "2026-07-28T09:17:55.018788+09:00",
+  "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-27",
-      "title_hash": "a69531e1462b8477",
-      "card_title": "가수 장기하·배우 윤가이 열애 공개, 18살 나이 차 극복",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "299f43c94b2c2760",
-      "card_title": "故 이주희 별세, 1세대 인플루언서의 열정 기억하며",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "948438b6e1af9135",
-      "card_title": "홍석천, 전 연인과의 헤어짐 인터뷰 공개 '고마움 전했다'",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "f160f68f5aff625d",
-      "card_title": "SBS드라마 '김부장', 거제에서 촬영 진행 중",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "a01f43c6958b87cc",
-      "card_title": "신민아, 김우빈도 반한 입담 '나 진짜 웃기대요'",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "f1171dc735e4a032",
-      "card_title": "레이디제인♥임현태, 가족 사진 공개 — 동료들 '다 예쁘네' 호평",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "99188ebad055403b",
-      "card_title": "방탄소년단 '아리랑', 14주 연속 글로벌 차트 최상위권 점령",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-27",
-      "title_hash": "8260bbaa26abf8d5",
-      "card_title": "KBS '기쁜우리좋은날' 시청률 10.2% 달성, 지상파 1위 기록",
-      "caption_variant": "question_hook",
-      "media_id": "18010744562877089",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-28",
       "title_hash": "138526f9eb02e3bd",
@@ -1849,6 +1785,78 @@
       "card_title": "제니, 2002년생 대만 모델 카이와 함께 포착",
       "caption_variant": "list_count",
       "media_id": "18104899598039132",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "e456fdf5d1c76c75",
+      "card_title": "나홍진 감독 '호프', BTS 정국 OST 힘입어 천만 관객 돌파",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "6bb28aadecbea4db",
+      "card_title": "2026 워터밤, 올해 최고 화제 아티스트들 무대 확정",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "2dd4162b2a2dbcd3",
+      "card_title": "송하예, 웨딩드레스 입고 결혼 발표",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "44b27547b2b87c69",
+      "card_title": "소지섭, '김부장' 제작진에 금 선물 '힘들 땐 팔아서 쓰라'",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "212a6345db55fbdd",
+      "card_title": "리센느, '음중' '인가' 연속 1위 — 팬들 사랑에 눈물",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "df18da02b3b5d52d",
+      "card_title": "MC몽 단독콘서트 티켓, 오픈 1분 만에 전석 매진",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "5ddd015712b45e08",
+      "card_title": "싸이 '흠뻑쇼' 1100만 뷰, 즉석 캐스팅 여학생은 아이돌 연습생",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "9bfb3dc3221251cb",
+      "card_title": "차현승, 백혈병 완치 후 워터밤 무대 복귀 — 선미와 함께",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-28",
+      "title_hash": "0d56b8593e37de22",
+      "card_title": "소지섭 딸 서수민, '김부장' 23% 시청률 기록 후 타코야끼 알바 중",
+      "caption_variant": "tease_one",
+      "media_id": "18069517583706163",
       "card_style": "minimal"
     }
   ]
