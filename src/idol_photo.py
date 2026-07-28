@@ -86,6 +86,36 @@ WIKI_TITLE_OVERRIDES: Dict[str, List[str]] = {
 }
 
 
+# ── 저장소 커밋 캐시 ──────────────────────────────────────────────────────
+# upload.wikimedia.org 는 GitHub Actions 공유 IP 에 429 를 강하게 걸어, 실행마다
+# 30장을 새로 받으면 일부가 반드시 실패한다 (2026-07: 12명 중 2명 전 소스 실패 →
+# 폴백 카드로 게시되는 사고). 검증된 사진을 저장소에 커밋해 두고 CI 는 그것만
+# 읽게 하면 런타임 네트워크 의존이 0 이 된다.
+# 채우기: scripts/warm_photo_cache.py (수동/월간 워크플로우에서 느린 throttle 로 수집).
+REPO_CACHE_DIR = ROOT / "assets" / "idol_photos"
+REPO_ATTR_PATH = REPO_CACHE_DIR / "_attribution.json"
+
+
+def load_repo_cache() -> dict:
+    if REPO_ATTR_PATH.exists():
+        try:
+            return json.loads(REPO_ATTR_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+
+def repo_cached_photo(member_name: str) -> Optional[Dict]:
+    """저장소에 커밋된 사진 — 네트워크 0. 없으면 None."""
+    rec = load_repo_cache().get(member_name)
+    if not rec or not rec.get("path"):
+        return None
+    p = REPO_CACHE_DIR / rec["path"]
+    if not p.exists():
+        return None
+    return {**rec, "path": str(p)}
+
+
 def _load_attr() -> dict:
     if ATTR_PATH.exists():
         try:
@@ -417,6 +447,11 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
         print(f"  🚫 사진 게이트: {member_name} — 검증된 커먼즈 소스 없음 → 이모지 폴백")
         return None
 
+    # ── 0단계: 저장소 커밋 캐시 우선 (네트워크 0 → CI 429 원천 차단) ──
+    repo_hit = repo_cached_photo(member_name)
+    if repo_hit:
+        return repo_hit
+
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     attr = _load_attr()
     if member_name in attr:
@@ -484,8 +519,13 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
                         f"https://res.cloudinary.com/{cloud}/image/fetch/w_600,c_limit,f_jpg/{enc}", 3))
     sources.append(("wsrv", f"https://wsrv.nl/?url={enc}&output=jpg", 4))
 
-    # 멤버 간 최소 간격 확보 — 첫 멤버는 대기 없음 (프록시 연속요청 rate-limit 완화)
-    _gap = 4.0 - (time.monotonic() - _LAST_DL_TS[0])
+    # 멤버 간 최소 간격 확보 — 첫 멤버는 대기 없음 (프록시 연속요청 rate-limit 완화).
+    # warm_photo_cache.py 는 IDOL_PHOTO_GAP_SEC 로 간격을 크게 늘려 429 를 회피한다.
+    try:
+        _gap_target = float(os.environ.get("IDOL_PHOTO_GAP_SEC") or 4.0)
+    except ValueError:
+        _gap_target = 4.0
+    _gap = _gap_target - (time.monotonic() - _LAST_DL_TS[0])
     if _gap > 0:
         time.sleep(_gap)
 

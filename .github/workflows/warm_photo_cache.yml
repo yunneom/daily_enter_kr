@@ -1,0 +1,101 @@
+name: 📸 실사 사진 캐시 워밍
+
+# 검증된 커먼즈 실사를 assets/idol_photos/ 에 수집해 저장소에 커밋한다.
+# 게시 파이프라인은 이 커밋된 캐시만 읽으므로 런타임 위키미디어 접근이 0 이 되고,
+# GitHub Actions 공유 IP 의 429 로 일부 멤버가 폴백 카드로 나가는 사고가 사라진다.
+#
+# 느린 throttle(기본 15초/명)로 돌기 때문에 30명 수집에 10분 안팎 걸린다.
+# 평소엔 월 1회 자동 + 필요 시 수동 실행.
+on:
+  schedule:
+    - cron: '0 18 1 * *'   # 매월 1일 UTC 18:00 (KST 2일 03:00) — 트래픽 적은 시간
+  # 사진 수집 로직 변경 시 자동 1회 실행 — 게시가 아니라 캐시 채우기라 안전.
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/warm_photo_cache.py'
+      - 'src/idol_photo.py'
+      - '.github/workflows/warm_photo_cache.yml'
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: '전체 재수집 (기존 캐시 무시)'
+        required: false
+        type: boolean
+        default: false
+      gap_seconds:
+        description: '멤버 간 간격(초) — 429 나면 늘리세요'
+        required: false
+        type: string
+        default: '15'
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: warm-photo-cache
+  cancel-in-progress: false
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pillow
+
+      - name: Warm photo cache
+        env:
+          IDOL_PHOTO_GAP_SEC: ${{ inputs.gap_seconds || '15' }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.refresh }}" = "true" ]; then ARGS="--refresh"; fi
+          python scripts/warm_photo_cache.py $ARGS
+
+      - name: Commit photo cache
+        run: |
+          if git diff --quiet assets/idol_photos 2>/dev/null && \
+             [ -z "$(git ls-files --others --exclude-standard assets/idol_photos)" ]; then
+            echo "캐시 변경 없음"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/idol_photos
+          git commit -m "photos: 실사 캐시 워밍 $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Coverage check
+        id: coverage
+        run: python scripts/warm_photo_cache.py --check
+
+      # 커버리지 미달(일부 멤버 실사 미확보)이면 이슈로 알림 — 게시가 조용히
+      # 폴백으로 나가는 것을 막기 위해 운영자가 즉시 알아야 한다.
+      - name: Alert on incomplete coverage
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="📸 실사 사진 캐시 미완성"
+          BODY="일부 멤버의 실사를 확보하지 못했습니다. [실행 로그](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})에서 미보유 멤버를 확인하세요. 이 상태에서는 해당 멤버가 포함된 참여형 게시가 중단됩니다(폴백 카드 방지). 조치: 워크플로우를 gap_seconds 를 늘려 재실행하거나, 커먼즈에 사용 가능한 파일이 없다면 data/idol_photo_overrides.json 에서 해당 멤버를 제외하세요."
+          EXISTING=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number' || echo "")
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo "${{ github.repository }}" --body "$(date -u '+%Y-%m-%d %H:%M UTC') 재발 — $BODY"
+          else
+            gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body "$BODY"
+          fi

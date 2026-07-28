@@ -63,6 +63,10 @@ def _load_pool():
     return [(int(r), v["member"], v["group"]) for r, v in ov.items()]
 
 
+class PhotoCoverageError(Exception):
+    """실사 사진을 확보하지 못한 멤버가 있어 게시를 중단한다."""
+
+
 def _fetch_photos(members):
     """[(rank, member, group)] → [{rank, name, group, photo_path}] (게이트 통과분만 path)."""
     from idol_photo import fetch_photo
@@ -72,6 +76,19 @@ def _fetch_photos(members):
         out.append({"rank": rank, "name": name, "group": group,
                     "photo_path": (rec or {}).get("path")})
     return out
+
+
+def _require_all_photos(fetched, fmt: str):
+    """실사 전원 확보 강제 — 한 명이라도 없으면 게시하지 않고 중단한다.
+
+    운영자 요구(2026-07): 그라디언트 폴백이 섞인 카드는 올리지 말고 알릴 것.
+    여기서 예외를 던지면 main() 이 exit 1 → 워크플로우 실패 → GitHub 이슈 자동 생성.
+    """
+    missing = [f"{m['group']} {m['name']}(#{m['rank']})" for m in fetched if not m.get("photo_path")]
+    if missing:
+        raise PhotoCoverageError(
+            f"[{fmt}] 실사 미확보 {len(missing)}/{len(fetched)}명: " + ", ".join(missing)
+        )
 
 
 def _already_posted(topic_id: str) -> bool:
@@ -240,10 +257,7 @@ def run_pause(date, dry):
     rng = _seed_for(date, "pause")
     members = rng.sample(pool, min(12, len(pool)))
     cards_meta = _fetch_photos(members)
-    # 사진 있는 멤버 우선 정렬 (없으면 그라디언트 카드 — 그래도 게임은 성립)
-    with_photo = [m for m in cards_meta if m["photo_path"]]
-    if len(with_photo) >= 8:
-        cards_meta = with_photo
+    _require_all_photos(cards_meta, "pause")
 
     out = OUT / f"pause_{date.isoformat()}"
     intro = make_text_cover(["화면을 멈춰서", "오늘의 최애 뽑기"], "지금 스크린샷 준비!",
@@ -286,6 +300,7 @@ def run_unit(date, dry):
     # 12명 — 같은 그룹이 한 행에 겹치지 않게 그리디 배치
     members = rng.sample(pool, min(12, len(pool)))
     cards_meta = _fetch_photos(members)
+    _require_all_photos(cards_meta, "unit")
     rng.shuffle(cards_meta)
     rows = []
     remaining = list(cards_meta)
@@ -356,6 +371,7 @@ def run_chemi(date, dry):
     duo_names = []
     for i, duo in enumerate(duos, 1):
         fetched = _fetch_photos([(m["rank"], m["name"], duo["group"]) for m in duo["members"]])
+        _require_all_photos(fetched, "chemi")
         duo_names += [m["name"] for m in fetched]
         jpgs.append(make_duo_card(
             i, duo["group"],
@@ -438,7 +454,19 @@ def run_brandrep(date, dry):
     from make_video import make_slideshow_video
     from idol_photo import fetch_photo
 
-    top10 = sorted(data["rankings"], key=lambda r: r["rank"])[:10]
+    # 자유 라이선스 실사가 검증된 멤버만 카운트다운에 올린다. 검증 사진이 없는
+    # 멤버(예: 커먼즈에 개인 식별 가능한 파일이 없는 경우)를 넣으면 폴백 카드가
+    # 섞여 나가므로 제외하고, 제외 사실은 캡션에 명시해 오해가 없게 한다.
+    ov_names = {v["member"] for v in json.loads(
+        OVERRIDES_PATH.read_text(encoding="utf-8")).values()}
+    ordered = sorted(data["rankings"], key=lambda r: r["rank"])
+    top10 = [r for r in ordered if r["member"] in ov_names][:10]
+    if len(top10) < 10:
+        raise PhotoCoverageError(
+            f"[brandrep] 실사 검증 멤버가 {len(top10)}명뿐이라 TOP10 구성 불가")
+    skipped = [r["member"] for r in ordered[: top10[-1]["rank"]] if r["member"] not in ov_names]
+    _require_all_photos(
+        _fetch_photos([(r["rank"], r["member"], r["group"]) for r in top10]), "brandrep")
     out = OUT / f"brandrep_{period}"
     cover = make_text_cover([period.replace("년", "년 "), "걸그룹 브랜드평판", "TOP 10"],
                             "내 최애는 몇 위? 끝까지 확인!",
@@ -459,9 +487,11 @@ def run_brandrep(date, dry):
     mp4 = make_slideshow_video(frames, out / "brandrep.mp4", durations=durations,
                                crossfade=0.25, bgm_path=_bgm(date), bgm_volume=0.35)
     attribution = _attribution(names)
+    skip_note = (f"\n(사진 사용이 가능한 멤버 기준 — {', '.join(skipped)} 제외)"
+                 if skipped else "")
     caption = (f"{period} 걸그룹 개인 브랜드평판 TOP10 📊\n"
                "10위부터 1위까지 — 내 최애는 몇 위일까요?\n"
-               f"출처: 한국기업평판연구소 ({data.get('source_date','')})\n\n"
+               f"출처: 한국기업평판연구소 ({data.get('source_date','')}){skip_note}\n\n"
                f"{HASHTAGS}"
                + (f"\n\n{attribution}" if attribution else ""))
     return _post_reel(mp4, caption, "최애 순위 맞히셨나요? 댓글로!",
@@ -487,12 +517,23 @@ def main() -> int:
     date = _today()
     fmt = args.format or ROTATION[date.weekday()]
     print(f"📅 {date} ({['월','화','수','목','금','토','일'][date.weekday()]}) → 포맷: {fmt}")
-    rc = FORMATS[fmt](date, args.dry_run)
+    try:
+        rc = FORMATS[fmt](date, args.dry_run)
+    except PhotoCoverageError as e:
+        # 실사가 하나라도 빠지면 폴백 카드로 나가지 않게 게시를 중단하고 실패로 끝낸다.
+        # 워크플로우가 실패를 감지해 GitHub 이슈로 알린다.
+        print(f"\n🛑 실사 미확보로 게시 중단\n   {e}")
+        print("   조치: python scripts/warm_photo_cache.py 로 캐시를 채운 뒤 재실행하세요.")
+        return 1
 
     # 매월 15일: 브랜드평판 추가 게시 (그 달 데이터 미게시분만)
     if args.format is None and date.day == 15:
         print("\n📊 15일 — 브랜드평판 카운트다운 추가 시도")
-        rc = max(rc, run_brandrep(date, args.dry_run))
+        try:
+            rc = max(rc, run_brandrep(date, args.dry_run))
+        except PhotoCoverageError as e:
+            print(f"🛑 브랜드평판 실사 미확보로 중단: {e}")
+            rc = 1
     return rc
 
 

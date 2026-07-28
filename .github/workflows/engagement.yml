@@ -6,14 +6,6 @@ name: 🎯 참여형 데일리 (요일 로테이션)
 on:
   schedule:
     - cron: '30 2 * * *'   # UTC 02:30 = KST 11:30
-  # 스크립트/워크플로우 변경 푸시 시 1회 즉시 실행 (daily_fortune.yml 과 동일 패턴).
-  # engagement_daily.py 는 topic_id 단위로 멱등이라 같은 날 중복 게시되지 않는다.
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/engagement_daily.py'
-      - 'src/make_engagement_cards.py'
-      - '.github/workflows/engagement.yml'
   workflow_dispatch:
     inputs:
       format:
