@@ -79,7 +79,10 @@ jobs:
           MUSIC_HANDLE: ${{ secrets.MUSIC_HANDLE }}
           # 수동 dispatch 면 입력값, 스케줄(09/13/18시)이면 auto_matrix 회전. (스피너 제거됨)
           TOPIC: ${{ inputs.topic || 'auto_matrix' }}
-        run: python scripts/publish_matrix.py
+        run: |
+          # 실사/이모지 혼합 방지 게이트 — photos=True 토픽은 전원 실사 필수.
+          python scripts/check_topic_photos.py
+          python scripts/publish_matrix.py
 
       - name: Fetch IG insights (게시별 + 계정 단위 abc송 퍼널)
         if: success()

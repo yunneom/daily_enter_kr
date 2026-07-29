@@ -424,6 +424,25 @@ def build_and_upload(topic_id: str, topic: dict, seed: int = 0) -> tuple:
     # col_pools 있으면 seed 로 멤버 라인업 회전, 없으면 고정 cells.
     cells = resolve_topic_cells(topic, seed=seed)
 
+    # ── 실사/이모지 분리 (토픽 단위 고정) ────────────────────────────────
+    # 운영 원칙(2026-07): 한 카드 안에 실물사진과 이모지가 섞이지 않는다.
+    # topic["photos"]=True 인 토픽만 실사판이고, 그 경우 등장 멤버 "전원"의
+    # 검증 사진이 있어야 한다. 한 명이라도 없으면 게시하지 않고 중단한다.
+    # 나머지 토픽은 이모지/엠블럼 스타일로 고정 (혼합 방지).
+    use_photos = bool(topic.get("photos"))
+    if use_photos:
+        import idol_photo as _ip
+        names = [c.get("name", "") for row in cells for c in row if c.get("name")]
+        missing = [n for n in names if not _ip.repo_cached_photo(n)]
+        if missing:
+            raise SystemExit(
+                f"🛑 [{topic_id}] 실사 미확보로 게시 중단 — {len(missing)}/{len(names)}명: "
+                + ", ".join(missing)
+                + "\n   조치: warm_photo_cache 워크플로우로 사진을 채우거나 "
+                  "토픽의 photos 플래그를 내리세요."
+            )
+    os.environ["IDOL_PHOTOS"] = "on" if use_photos else "off"
+
     # ─── 매트릭스 계열: 정적 jpg → mp4 (단일 프레임 × REEL_SECONDS + BGM) ───
     args = dict(
         title=topic["title"], highlight=topic["highlight"],

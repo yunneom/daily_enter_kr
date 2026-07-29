@@ -254,6 +254,9 @@ TOPICS = {
     #     IDOL_PHOTOS=on 시 전 셀 실물사진(이모지 폴백 없음). 그룹 균형 라인업.
     "girlgroup_allstar_photo_10k": {
         "style": "emblem",
+        # 실사판 — 9명 전원 검증 커먼즈 사진 보유. publish_matrix 가 전원 확보를
+        # 강제하며, 한 명이라도 없으면 게시를 중단한다(이모지 혼합 방지).
+        "photos": True,
         "background_style": "white",
         "title": "만원으로 걸그룹 올스타 만들기",
         "highlight": "올스타",
