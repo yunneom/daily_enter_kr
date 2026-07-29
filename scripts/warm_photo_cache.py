@@ -67,12 +67,18 @@ def main() -> int:
     ap.add_argument("--check", action="store_true", help="수집 없이 커버리지만 점검")
     ap.add_argument("--passes", type=int, default=3,
                     help="실패분 재시도 패스 수 (패스마다 간격을 늘림)")
+    ap.add_argument("--only", default="",
+                    help="쉼표로 구분한 멤버명만 수집 (미확보분 집중 재시도용)")
     args = ap.parse_args()
+    only = {n.strip() for n in args.only.split(",") if n.strip()}
 
     all_targets = targets()
     DEST_DIR.mkdir(parents=True, exist_ok=True)
     attr = {} if args.refresh else idol_photo.load_repo_cache()
 
+    if only:
+        all_targets = [t for t in all_targets if t[1] in only]
+        print(f"🎯 지정 수집 대상: {', '.join(t[1] for t in all_targets)}")
     have, need = [], []
     for rank, name, group in all_targets:
         rec = attr.get(name)

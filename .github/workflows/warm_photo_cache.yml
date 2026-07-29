@@ -28,6 +28,11 @@ on:
         required: false
         type: string
         default: '15'
+      only:
+        description: '특정 멤버만 (쉼표 구분). 비우면 미확보 전체'
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -65,7 +70,8 @@ jobs:
         run: |
           ARGS=""
           if [ "${{ inputs.refresh }}" = "true" ]; then ARGS="--refresh"; fi
-          python scripts/warm_photo_cache.py $ARGS
+          if [ -n "${{ inputs.only }}" ]; then ARGS="$ARGS --only '${{ inputs.only }}'"; fi
+          eval python scripts/warm_photo_cache.py $ARGS
 
       - name: Commit photo cache
         run: |
