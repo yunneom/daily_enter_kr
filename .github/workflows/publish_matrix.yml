@@ -80,6 +80,8 @@ jobs:
           # 수동 dispatch 면 입력값, 스케줄(09/13/18시)이면 auto_matrix 회전. (스피너 제거됨)
           TOPIC: ${{ inputs.topic || 'auto_matrix' }}
         run: |
+          # 실존 인물 오표기 방지 게이트 — 탈퇴/미존재/중복 이름 차단.
+          python scripts/check_topic_names.py
           # 실사/이모지 혼합 방지 게이트 — photos=True 토픽은 전원 실사 필수.
           python scripts/check_topic_photos.py
           python scripts/publish_matrix.py

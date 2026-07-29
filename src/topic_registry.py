@@ -170,7 +170,7 @@ TOPICS = {
             ],
             # 3천원
             [
-                {"role_emoji": "🎤", "name": "유진", "subtitle": "IVE"},
+                {"role_emoji": "🎤", "name": "가을", "subtitle": "IVE"},
                 {"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
                 {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
             ],
@@ -330,7 +330,7 @@ TOPICS = {
             [
                 {"role_emoji": "🎤", "name": "태현", "subtitle": "TXT"},
                 {"role_emoji": "💃", "name": "앤톤", "subtitle": "RIIZE"},
-                {"role_emoji": "✨", "name": "박원빈", "subtitle": "RIIZE"},
+                {"role_emoji": "✨", "name": "은석", "subtitle": "RIIZE"},
             ],
             # 2천원
             [
@@ -628,13 +628,13 @@ TOPICS = {
                 {"role_emoji": "💃", "name": "재이", "subtitle": "STAYC"},
                 {"role_emoji": "💃", "name": "샤오팅", "subtitle": "Kep1er"},
                 {"role_emoji": "💃", "name": "츠키", "subtitle": "Billlie"},
-                {"role_emoji": "💃", "name": "시연", "subtitle": "fromis_9"},
+                {"role_emoji": "💃", "name": "송하영", "subtitle": "fromis_9"},
             ],
             [
                 {"role_emoji": "✨", "name": "수민", "subtitle": "STAYC"},
                 {"role_emoji": "✨", "name": "아이사", "subtitle": "STAYC"},
                 {"role_emoji": "✨", "name": "바히에", "subtitle": "Kep1er"},
-                {"role_emoji": "✨", "name": "이새롬", "subtitle": "fromis_9"},
+                {"role_emoji": "✨", "name": "이나경", "subtitle": "fromis_9"},
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
@@ -660,7 +660,7 @@ TOPICS = {
                 {"role_emoji": "🎤", "name": "필릭스", "subtitle": "스트레이키즈"},
                 {"role_emoji": "🎤", "name": "정원", "subtitle": "엔하이픈"},
                 {"role_emoji": "🎤", "name": "태현", "subtitle": "TXT"},
-                {"role_emoji": "🎤", "name": "승한", "subtitle": "RIIZE"},
+                {"role_emoji": "🎤", "name": "소희", "subtitle": "RIIZE"},
                 {"role_emoji": "🎤", "name": "종호", "subtitle": "ATEEZ"},
                 {"role_emoji": "🎤", "name": "성한빈", "subtitle": "제로베이스원"},
             ],
@@ -1056,7 +1056,7 @@ TOPICS = {
             [{"role_emoji": "🎤", "name": "필릭스", "subtitle": "스키즈"},
              {"role_emoji": "🎤", "name": "정원", "subtitle": "엔하이픈"},
              {"role_emoji": "🎤", "name": "태현", "subtitle": "TXT"},
-             {"role_emoji": "🎤", "name": "승한", "subtitle": "RIIZE"},
+             {"role_emoji": "🎤", "name": "소희", "subtitle": "RIIZE"},
              {"role_emoji": "🎤", "name": "성한빈", "subtitle": "제로베이스원"}],
             [{"role_emoji": "💃", "name": "현진", "subtitle": "스키즈"},
              {"role_emoji": "💃", "name": "니키", "subtitle": "엔하이픈"},
