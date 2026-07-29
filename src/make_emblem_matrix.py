@@ -159,7 +159,7 @@ def _draw_money_bill(img: Image.Image, draw: ImageDraw.ImageDraw,
 _LAST_PHOTO_NAMES: List[str] = []  # 이번 렌더에서 실물사진 붙은 멤버 (크레딧용)
 
 
-def _idol_photo_circle(name: str, size: int):
+def _idol_photo_circle(name: str, size: int, group: str = ""):
     """IDOL_PHOTOS=on 이고 검증된 커먼즈 사진이 있으면 원형 실물사진(RGBA) 반환, 없으면 None.
     (idol_photo: 성인 게이트 + CC/PD + 오버라이드 allowlist + wsrv 프록시)"""
     import os as _os
@@ -167,7 +167,9 @@ def _idol_photo_circle(name: str, size: int):
         return None
     try:
         import idol_photo
-        rec = idol_photo.fetch_photo(name)
+        # 동명이인(소녀시대 윤아 vs ILLIT 윤아 등) 오표기 차단 — 소속까지 대조.
+        rec = idol_photo.repo_cached_photo(name, group) or (
+            idol_photo.fetch_photo(name) if not group else None)
         if not rec or not rec.get("path"):
             return None
         im = Image.open(rec["path"]).convert("RGBA")
@@ -241,7 +243,8 @@ def _draw_emblem_card(img: Image.Image, rect: Tuple[int, int, int, int],
     else:
         emoji_size = int(ch * 0.40)
         # 실물사진 우선 (IDOL_PHOTOS=on + 검증 사진). 없으면 역할 이모지 폴백.
-        photo = _idol_photo_circle(cell.get("name", ""), emoji_size)
+        photo = _idol_photo_circle(cell.get("name", ""), emoji_size,
+                                   cell.get("subtitle", ""))
         if photo:
             img.alpha_composite(photo, (int(cx - emoji_size / 2), int(visual_top)))
         else:

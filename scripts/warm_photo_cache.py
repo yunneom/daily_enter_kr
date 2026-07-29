@@ -131,6 +131,7 @@ def main() -> int:
             shutil.copyfile(src, DEST_DIR / dest_name)
             attr[name] = {
                 "path": dest_name,
+                "group": group,   # 동명이인 차단 판정에 사용 (repo_cached_photo)
                 "artist": rec.get("artist", ""),
                 "license": rec.get("license", ""),
                 "title": rec.get("title", ""),

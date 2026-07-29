@@ -96,6 +96,46 @@ REPO_CACHE_DIR = ROOT / "assets" / "idol_photos"
 REPO_ATTR_PATH = REPO_CACHE_DIR / "_attribution.json"
 
 
+# 그룹명 표기 흔들림 흡수 — topic_registry 는 IVE/ILLIT/fromis_9 처럼 영문을,
+# overrides 는 한글을 쓴다. 동명이인 판정을 표기 차이로 놓치면 안 되므로 정규화한다.
+_GROUP_ALIASES = [
+    {"아이브", "ive"},
+    {"엔믹스", "nmixx"},
+    {"아일릿", "illit"},
+    {"프로미스나인", "fromis_9", "fromis9"},
+    {"소녀시대", "snsd", "girlsgeneration"},
+    {"블랙핑크", "blackpink"},
+    {"에스파", "aespa"},
+    {"르세라핌", "lesserafim", "le sserafim"},
+    {"레드벨벳", "redvelvet"},
+    {"트와이스", "twice"},
+    {"우주소녀", "wjsn", "cosmicgirls"},
+    {"시그니처", "cignature"},
+    {"위키미키", "wekimeki"},
+    {"다이아", "dia"},
+    {"리센느", "rescene"},
+    {"스트레이키즈", "스키즈", "straykids"},
+]
+
+
+def _norm_group(g: str) -> str:
+    return "".join((g or "").lower().split()).replace("(", "").replace(")", "").replace("-", "").replace("_", "")
+
+
+def _same_group(a: str, b: str) -> bool:
+    """두 그룹 표기가 같은 그룹을 가리키는지."""
+    na, nb = _norm_group(a), _norm_group(b)
+    if not na or not nb:
+        return True          # 한쪽이 비면 판정 불가 → 통과 (기존 동작 보존)
+    if na == nb:
+        return True
+    for alias in _GROUP_ALIASES:
+        an = {_norm_group(x) for x in alias}
+        if na in an and nb in an:
+            return True
+    return False
+
+
 def load_repo_cache() -> dict:
     if REPO_ATTR_PATH.exists():
         try:
@@ -105,10 +145,19 @@ def load_repo_cache() -> dict:
     return {}
 
 
-def repo_cached_photo(member_name: str) -> Optional[Dict]:
-    """저장소에 커밋된 사진 — 네트워크 0. 없으면 None."""
+def repo_cached_photo(member_name: str, group: str = "") -> Optional[Dict]:
+    """저장소에 커밋된 사진 — 네트워크 0. 없으면 None.
+
+    group 을 주면 캐시에 기록된 소속과 대조한다. 캐시는 이름만으로 키가 잡혀 있어
+    동명이인(소녀시대 윤아 vs ILLIT 윤아, 블랙핑크 지수 등)이 서로의 사진을
+    가져가는 오표기가 발생할 수 있다. 불일치면 사진을 주지 않는다 —
+    엉뚱한 인물 사진을 내보내느니 폴백/중단이 안전하다.
+    """
     rec = load_repo_cache().get(member_name)
     if not rec or not rec.get("path"):
+        return None
+    if group and not _same_group(group, rec.get("group", "")):
+        print(f"  🚫 동명이인 차단: '{member_name}' 요청 소속={group} / 캐시 소속={rec.get('group','?')}")
         return None
     p = REPO_CACHE_DIR / rec["path"]
     if not p.exists():

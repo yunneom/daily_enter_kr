@@ -68,7 +68,7 @@ def _load_pool():
     from idol_photo import repo_cached_photo
     ov = json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
     pool = [(int(r), v["member"], v["group"]) for r, v in ov.items()
-            if repo_cached_photo(v["member"])]
+            if repo_cached_photo(v["member"], v["group"])]
     if not pool:
         raise PhotoCoverageError(
             "실사 캐시가 비어 있습니다 — warm_photo_cache 워크플로우를 먼저 실행하세요.")
@@ -81,10 +81,11 @@ class PhotoCoverageError(Exception):
 
 def _fetch_photos(members):
     """[(rank, member, group)] → [{rank, name, group, photo_path}] (게이트 통과분만 path)."""
-    from idol_photo import fetch_photo
+    from idol_photo import fetch_photo, repo_cached_photo
     out = []
     for rank, name, group in members:
-        rec = fetch_photo(name)
+        # 소속까지 대조해 동명이인 오표기를 차단한다.
+        rec = repo_cached_photo(name, group) or fetch_photo(name)
         out.append({"rank": rank, "name": name, "group": group,
                     "photo_path": (rec or {}).get("path")})
     return out
