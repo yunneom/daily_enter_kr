@@ -41,6 +41,13 @@
     "path": "07_리사.jpg",
     "title": "File:20240314 Lisa Manoban 12 (cropped).jpg"
   },
+  "리즈": {
+    "artist": "K-POPIT 케이팝잇",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Liz_of_Ive_at_K-SWISS_Flagship_Store_Open_Event,_May_7,_2026_(1).png",
+    "license": "CC BY 4.0",
+    "path": "31_리즈.jpg",
+    "title": "File:Liz of Ive at K-SWISS Flagship Store Open Event, May 7, 2026 (1).png"
+  },
   "모카": {
     "artist": "K-POPIT 케이팝잇",
     "descurl": "https://commons.wikimedia.org/wiki/File:ILLIT_Moka_at_Canada_Goose_Photo_Call.png",
@@ -166,6 +173,13 @@
     "license": "CC BY 3.0",
     "path": "03_카리나.jpg",
     "title": "File:Aespa Karina 2024 MMA.jpg"
+  },
+  "카즈하": {
+    "artist": "K-POPIT 케이팝잇",
+    "descurl": "https://commons.wikimedia.org/wiki/File:221127_Kazuha_(LE_SSERAFIM).jpg",
+    "license": "CC BY 3.0",
+    "path": "24_카즈하.jpg",
+    "title": "File:221127 Kazuha (LE SSERAFIM).jpg"
   },
   "태연": {
     "artist": "Spes Sublimitas",
