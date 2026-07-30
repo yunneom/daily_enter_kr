@@ -5,29 +5,908 @@
     "fromis_9": {
       "verified_at": "2026-07-29",
       "source": "kpopping/공식 프로필",
-      "aliases_of_group": ["프로미스나인"],
-      "members": ["송하영", "박지원", "이채영", "이나경", "백지헌"],
+      "aliases_of_group": [
+        "프로미스나인"
+      ],
+      "members": [
+        "송하영",
+        "박지원",
+        "이채영",
+        "이나경",
+        "백지헌"
+      ],
       "aliases": {},
-      "former": ["이새롬", "장규리", "노지선", "이서연"],
+      "former": [
+        "이새롬",
+        "장규리",
+        "노지선",
+        "이서연"
+      ],
       "note": "5인 재편. '시연'은 이 그룹에 존재하지 않는 이름."
     },
     "IVE": {
       "verified_at": "2026-07-29",
       "source": "나무위키/공식 프로필",
-      "aliases_of_group": ["아이브"],
-      "members": ["안유진", "가을", "레이", "장원영", "리즈", "이서"],
-      "aliases": { "유진": "안유진" },
+      "aliases_of_group": [
+        "아이브"
+      ],
+      "members": [
+        "안유진",
+        "가을",
+        "레이",
+        "장원영",
+        "리즈",
+        "이서"
+      ],
+      "aliases": {
+        "유진": "안유진"
+      },
       "former": [],
       "note": "'유진'은 안유진의 활동명 — 별도 인물이 아니므로 중복 등재 금지."
     },
     "RIIZE": {
       "verified_at": "2026-07-29",
       "source": "나무위키/공식 프로필",
-      "aliases_of_group": ["라이즈"],
-      "members": ["쇼타로", "은석", "성찬", "원빈", "소희", "앤톤"],
-      "aliases": { "박원빈": "원빈" },
-      "former": ["승한"],
+      "aliases_of_group": [
+        "라이즈"
+      ],
+      "members": [
+        "쇼타로",
+        "은석",
+        "성찬",
+        "원빈",
+        "소희",
+        "앤톤"
+      ],
+      "aliases": {
+        "박원빈": "원빈"
+      },
+      "former": [
+        "승한"
+      ],
       "note": "승한은 2026년 기준 former. '박원빈'은 원빈의 본명 표기."
+    },
+    "(여자)아이들": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/i-dle; https://ko.wikipedia.org/wiki/(%EC%97%AC%EC%9E%90)%EC%95%84%EC%9D%B4%EB%93%A4",
+      "aliases_of_group": [
+        "아이들",
+        "i-dle",
+        "(G)I-DLE"
+      ],
+      "members": [
+        "미연",
+        "민니",
+        "소연",
+        "우기",
+        "슈화"
+      ],
+      "aliases": {
+        "전소연": "소연",
+        "조미연": "미연",
+        "송우기": "우기",
+        "예슈화": "슈화",
+        "Minnie": "민니",
+        "Miyeon": "미연",
+        "Soyeon": "소연",
+        "Yuqi": "우기",
+        "Shuhua": "슈화"
+      },
+      "former": [
+        "수진"
+      ]
+    },
+    "ATEEZ": {
+      "verified_at": "2026-07-29",
+      "source": "https://kprofiles.com/ateez-members-profile/; https://www.allkpop.com/article/2025/07/all-eight-members-of-ateez-to-stay-one-team-for-another-7-years-after-successful-contract-renewal",
+      "aliases_of_group": [],
+      "members": [
+        "홍중",
+        "성화",
+        "윤호",
+        "여상",
+        "산",
+        "민기",
+        "우영",
+        "종호"
+      ],
+      "aliases": {
+        "김홍중": "홍중",
+        "박성화": "성화",
+        "정윤호": "윤호",
+        "강여상": "여상",
+        "최산": "산",
+        "송민기": "민기",
+        "정우영": "우영",
+        "최종호": "종호"
+      },
+      "former": []
+    },
+    "BABYMONSTER": {
+      "verified_at": "2026-07-29",
+      "source": "https://ko.wikipedia.org/wiki/%EB%B2%A0%EC%9D%B4%EB%B9%84%EB%AA%AC%EC%8A%A4%ED%84%B0; https://namu.wiki/w/BABYMONSTER",
+      "aliases_of_group": [],
+      "members": [
+        "루카",
+        "파리타",
+        "아사",
+        "아현",
+        "라미",
+        "로라",
+        "치키타"
+      ],
+      "aliases": {
+        "Ruka": "루카",
+        "Ahyeon": "아현",
+        "Chiquita": "치키타",
+        "하람": "라미"
+      },
+      "former": [],
+      "note": "라미: 2025-05부터 건강상 장기 활동중단(탈퇴 아님) — '완전체' 표현 주의. 표준 표기 '치키타'(차퀴타 X)"
+    },
+    "Billlie": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/Billlie; https://www.allkpop.com/article/2026/04/billlie-joins-may-comeback-lineup-to-return-with-full-album",
+      "aliases_of_group": [],
+      "members": [
+        "문수아",
+        "수현",
+        "하람",
+        "츠키",
+        "션",
+        "시윤",
+        "하루나"
+      ],
+      "aliases": {
+        "김수현": "수현",
+        "후쿠토미 츠키": "츠키",
+        "Moon Sua": "문수아",
+        "Tsuki": "츠키",
+        "Suhyeon": "수현",
+        "Sheon": "션"
+      },
+      "former": []
+    },
+    "CORTIS": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/Cortis; https://namu.wiki/w/CORTIS",
+      "aliases_of_group": [],
+      "members": [
+        "마틴",
+        "제임스",
+        "주훈",
+        "성현",
+        "건호"
+      ],
+      "aliases": {
+        "Martin": "마틴",
+        "James": "제임스",
+        "Juhoon": "주훈",
+        "Joohoon": "주훈",
+        "Seonghyeon": "성현",
+        "Keonho": "건호"
+      },
+      "former": []
+    },
+    "Hearts2Hearts": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/Hearts2Hearts; https://namu.wiki/w/Hearts2Hearts",
+      "aliases_of_group": [],
+      "members": [
+        "지우",
+        "카르멘",
+        "유하",
+        "스텔라",
+        "주은",
+        "에이나",
+        "이안",
+        "예온"
+      ],
+      "aliases": {
+        "Jiwoo": "지우",
+        "Carmen": "카르멘",
+        "Yuha": "유하",
+        "Stella": "스텔라",
+        "Juun": "주은",
+        "A-na": "에이나",
+        "아나": "에이나",
+        "Ian": "이안",
+        "Ye-on": "예온"
+      },
+      "former": []
+    },
+    "ILLIT": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/ILLIT; https://en.wikipedia.org/wiki/Illit",
+      "aliases_of_group": [
+        "아일릿"
+      ],
+      "members": [
+        "윤아",
+        "민주",
+        "모카",
+        "원희",
+        "이로하"
+      ],
+      "aliases": {
+        "Yunah": "윤아",
+        "Minju": "민주",
+        "Moka": "모카",
+        "사카모토 모카": "모카",
+        "Wonhee": "원희",
+        "Iroha": "이로하"
+      },
+      "former": [
+        "영서"
+      ]
+    },
+    "ITZY": {
+      "verified_at": "2026-07-29",
+      "source": "https://www.soompi.com/article/1785809wpp/all-5-itzy-members-renew-contracts-with-jyp-entertainment; https://www.koreatimes.co.kr/entertainment/k-pop/20250921/itzy-secures-full-group-contract-renewal-strengthens-global-ambitions",
+      "aliases_of_group": [],
+      "members": [
+        "예지",
+        "리아",
+        "류진",
+        "채령",
+        "유나"
+      ],
+      "aliases": {
+        "황예지": "예지",
+        "최지수": "리아",
+        "신류진": "류진",
+        "이채령": "채령",
+        "신유나": "유나",
+        "Yeji": "예지",
+        "Lia": "리아",
+        "Ryujin": "류진",
+        "Chaeryeong": "채령",
+        "Yuna": "유나"
+      },
+      "former": []
+    },
+    "KIIIKIII": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/KiiiKiii; https://kprofiles.com/kiiikiii-members-profile/",
+      "aliases_of_group": [],
+      "members": [
+        "이솔",
+        "수이",
+        "지유",
+        "하음",
+        "키야"
+      ],
+      "aliases": {
+        "이수민": "이솔",
+        "이수빈": "수이",
+        "서지유": "지유",
+        "곽하음": "하음",
+        "박지우": "키야",
+        "Leesol": "이솔",
+        "Sui": "수이",
+        "Jiyu": "지유",
+        "Haum": "하음",
+        "Kya": "키야"
+      },
+      "former": []
+    },
+    "KISS OF LIFE": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/KISS%20OF%20LIFE; https://ko.wikipedia.org/wiki/KISS_OF_LIFE_(%EC%9D%8C%EC%95%85_%EA%B7%B8%EB%A3%B9)",
+      "aliases_of_group": [],
+      "members": [
+        "쥴리",
+        "나띠",
+        "벨",
+        "하늘"
+      ],
+      "aliases": {
+        "줄리": "쥴리",
+        "Julie": "쥴리",
+        "Natty": "나띠",
+        "Belle": "벨",
+        "Haneul": "하늘"
+      },
+      "former": []
+    },
+    "Kep1er": {
+      "verified_at": "2026-07-29",
+      "source": "https://www.newsis.com/view/NISX20260306_0003537816; https://www.soompi.com/article/1823330wpp/kep1er-announces-youngeuns-departure-from-group",
+      "aliases_of_group": [],
+      "members": [
+        "유진",
+        "샤오팅",
+        "채현",
+        "다연",
+        "히카루",
+        "휴닝바히에"
+      ],
+      "aliases": {
+        "최유진": "유진",
+        "김채현": "채현",
+        "김다연": "다연",
+        "선샤오팅": "샤오팅",
+        "에자키 히카루": "히카루",
+        "바히에": "휴닝바히에",
+        "Huening Bahiyyih": "휴닝바히에",
+        "Shen Xiaoting": "샤오팅"
+      },
+      "former": [
+        "마시로",
+        "강예서",
+        "서영은"
+      ],
+      "note": "표준 표기 '다연'(다영 X — 다영은 우주소녀). 서영은 2026-03 탈퇴로 6인 체제"
+    },
+    "KickFlip": {
+      "verified_at": "2026-07-29",
+      "source": "https://sports.khan.co.kr/article/202501150428003; https://sports.khan.co.kr/article/202509171422023",
+      "aliases_of_group": [],
+      "members": [
+        "계훈",
+        "아마루",
+        "동화",
+        "주왕",
+        "민제",
+        "케이주",
+        "동현"
+      ],
+      "aliases": {
+        "민재": "민제",
+        "Minje": "민제",
+        "Donghyeon": "동현",
+        "Keiju": "케이주",
+        "Amaru": "아마루"
+      },
+      "former": [],
+      "note": "표준 표기 '민제'(민재 X). 아마루 2025-09부터 활동중단. '휘찬'은 오메가엑스 멤버로 이 그룹 아님"
+    },
+    "MEOVV": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/Meovv; https://namu.wiki/w/MEOVV",
+      "aliases_of_group": [],
+      "members": [
+        "가원",
+        "수인",
+        "안나",
+        "나린",
+        "엘라"
+      ],
+      "aliases": {
+        "Gawon": "가원",
+        "Sooin": "수인",
+        "Suin": "수인",
+        "Anna": "안나",
+        "Narin": "나린",
+        "Ella": "엘라"
+      },
+      "former": []
+    },
+    "NCT": {
+      "verified_at": "2026-07-29",
+      "source": "https://tvreport.co.kr/music/article/1061340/; https://www.newsis.com/view/NISX20260708_0003701294",
+      "aliases_of_group": [],
+      "members": [
+        "태용",
+        "쟈니",
+        "유타",
+        "도영",
+        "재현",
+        "정우",
+        "해찬",
+        "런쥔",
+        "제노",
+        "재민",
+        "천러",
+        "지성",
+        "쿤",
+        "텐",
+        "샤오쥔",
+        "헨드리",
+        "양양",
+        "시온",
+        "리쿠",
+        "유우시",
+        "재희",
+        "료",
+        "사쿠야"
+      ],
+      "aliases": {
+        "Doyoung": "도영",
+        "김동영": "도영",
+        "Jaehyun": "재현",
+        "정윤오": "재현",
+        "Jungwoo": "정우",
+        "김정우": "정우",
+        "Taeyong": "태용",
+        "Haechan": "해찬",
+        "이동혁": "해찬"
+      },
+      "former": [
+        "마크",
+        "윈윈",
+        "태일",
+        "쇼타로",
+        "성찬",
+        "루카스"
+      ]
+    },
+    "NMIXX": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/Nmixx; https://namu.wiki/w/NMIXX",
+      "aliases_of_group": [
+        "엔믹스"
+      ],
+      "members": [
+        "릴리",
+        "해원",
+        "설윤",
+        "배이",
+        "지우",
+        "규진"
+      ],
+      "aliases": {
+        "베이": "배이",
+        "배진솔": "배이",
+        "BAE": "배이",
+        "Lily": "릴리",
+        "Haewon": "해원",
+        "Sullyoon": "설윤",
+        "Jiwoo": "지우",
+        "Kyujin": "규진"
+      },
+      "former": [
+        "지니"
+      ],
+      "note": "표준 표기 '배이'(베이 X)"
+    },
+    "P1Harmony": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/P1Harmony; https://namu.wiki/w/%ED%85%8C%EC%98%A4(P1Harmony)",
+      "aliases_of_group": [],
+      "members": [
+        "기호",
+        "테오",
+        "지웅",
+        "인탁",
+        "소울",
+        "종섭"
+      ],
+      "aliases": {
+        "윤기호": "기호",
+        "최태양": "테오",
+        "최지웅": "지웅",
+        "황인탁": "인탁",
+        "김종섭": "종섭",
+        "Keeho": "기호",
+        "Theo": "테오",
+        "Jiung": "지웅",
+        "Intak": "인탁",
+        "Soul": "소울",
+        "Jongseob": "종섭"
+      },
+      "former": []
+    },
+    "STAYC": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/STAYC; https://namu.wiki/w/STAYC",
+      "aliases_of_group": [],
+      "members": [
+        "수민",
+        "시은",
+        "아이사",
+        "세은",
+        "윤",
+        "재이"
+      ],
+      "aliases": {
+        "Sumin": "수민",
+        "Sieun": "시은",
+        "Isa": "아이사",
+        "Seeun": "세은",
+        "Yoon": "윤",
+        "J": "재이",
+        "배수민": "수민",
+        "박시은": "시은"
+      },
+      "former": []
+    },
+    "TWS": {
+      "verified_at": "2026-07-29",
+      "source": "https://ko.wikipedia.org/wiki/TWS_(%EC%9D%8C%EC%95%85_%EA%B7%B8%EB%A3%B9); https://en.wikipedia.org/wiki/TWS_(group)",
+      "aliases_of_group": [],
+      "members": [
+        "신유",
+        "도훈",
+        "영재",
+        "한진",
+        "지훈",
+        "경민"
+      ],
+      "aliases": {
+        "Shinyu": "신유",
+        "Dohoon": "도훈",
+        "Youngjae": "영재",
+        "Hanjin": "한진",
+        "Jihoon": "지훈",
+        "Kyungmin": "경민"
+      },
+      "former": []
+    },
+    "TXT": {
+      "verified_at": "2026-07-29",
+      "source": "https://ko.wikipedia.org/wiki/%ED%88%AC%EB%AA%A8%EB%A1%9C%EC%9A%B0%EB%B0%94%EC%9D%B4%ED%88%AC%EA%B2%8C%EB%8D%94; https://namu.wiki/w/%ED%88%AC%EB%AA%A8%EB%A1%9C%EC%9A%B0%EB%B0%94%EC%9D%B4%ED%88%AC%EA%B2%8C%EB%8D%94",
+      "aliases_of_group": [],
+      "members": [
+        "수빈",
+        "연준",
+        "범규",
+        "태현",
+        "휴닝카이"
+      ],
+      "aliases": {
+        "최수빈": "수빈",
+        "최연준": "연준",
+        "최범규": "범규",
+        "강태현": "태현",
+        "카이 카밀 휴닝": "휴닝카이",
+        "정카이": "휴닝카이",
+        "Soobin": "수빈",
+        "Yeonjun": "연준",
+        "Beomgyu": "범규",
+        "Taehyun": "태현",
+        "Huening Kai": "휴닝카이",
+        "Hueningkai": "휴닝카이"
+      },
+      "former": []
+    },
+    "뉴진스": {
+      "verified_at": "2026-07-29",
+      "source": "https://www.forbes.com/sites/hannahabraham/2026/07/21/newjeans-releases-first-teasers-as-four-member-group-without-danielle/; https://www.koreaherald.com/article/10645178",
+      "aliases_of_group": [
+        "NewJeans"
+      ],
+      "members": [
+        "민지",
+        "하니",
+        "해린",
+        "혜인"
+      ],
+      "aliases": {
+        "김민지": "민지",
+        "팜하니": "하니",
+        "Hanni": "하니",
+        "강해린": "해린",
+        "이혜인": "혜인"
+      },
+      "former": [
+        "다니엘"
+      ],
+      "note": "다니엘: 2026-07 어도어 전속계약 해지 — 4인 체제. 파이프라인 자체 아카이브로 교차 확인"
+    },
+    "더보이즈": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/The_Boyz_(South_Korean_band); https://namu.wiki/w/%EB%8D%94%EB%B3%B4%EC%9D%B4%EC%A6%88",
+      "aliases_of_group": [
+        "THE BOYZ"
+      ],
+      "members": [
+        "상연",
+        "제이콥",
+        "영훈",
+        "현재",
+        "주연",
+        "케빈",
+        "뉴",
+        "큐",
+        "선우",
+        "에릭"
+      ],
+      "aliases": {
+        "Sunwoo": "선우",
+        "김선우": "선우",
+        "Juyeon": "주연",
+        "이주연": "주연",
+        "Q": "큐",
+        "지창민": "큐",
+        "New": "뉴",
+        "최찬형": "뉴"
+      },
+      "former": [
+        "활",
+        "주학년"
+      ]
+    },
+    "레드벨벳": {
+      "verified_at": "2026-07-29",
+      "source": "https://v.daum.net/v/20250404152802853; https://www.soompi.com/article/1847116wpp/red-velvet-confirmed-to-make-august-full-group-comeback",
+      "aliases_of_group": [
+        "Red Velvet"
+      ],
+      "members": [
+        "아이린",
+        "슬기",
+        "웬디",
+        "조이",
+        "예리"
+      ],
+      "aliases": {
+        "Seulgi": "슬기",
+        "강슬기": "슬기",
+        "Irene": "아이린",
+        "배주현": "아이린",
+        "Wendy": "웬디",
+        "손승완": "웬디",
+        "Joy": "조이",
+        "박수영": "조이",
+        "Yeri": "예리",
+        "김예림": "예리"
+      },
+      "former": []
+    },
+    "르세라핌": {
+      "verified_at": "2026-07-29",
+      "source": "https://en.wikipedia.org/wiki/Le_Sserafim; https://www.tenasia.co.kr/article/2026071079174",
+      "aliases_of_group": [
+        "LE SSERAFIM"
+      ],
+      "members": [
+        "사쿠라",
+        "김채원",
+        "허윤진",
+        "카즈하",
+        "홍은채"
+      ],
+      "aliases": {
+        "미야와키 사쿠라": "사쿠라",
+        "SAKURA": "사쿠라",
+        "나카무라 카즈하": "카즈하",
+        "KAZUHA": "카즈하",
+        "허예지": "허윤진",
+        "HUH YUNJIN": "허윤진"
+      },
+      "former": [
+        "김가람"
+      ]
+    },
+    "보이넥스트도어": {
+      "verified_at": "2026-07-29",
+      "source": "https://ko.wikipedia.org/wiki/%EB%B3%B4%EC%9D%B4%EB%84%A5%EC%8A%A4%ED%8A%B8%EB%8F%84%EC%96%B4; https://en.wikipedia.org/wiki/BoyNextDoor",
+      "aliases_of_group": [
+        "BOYNEXTDOOR"
+      ],
+      "members": [
+        "성호",
+        "리우",
+        "명재현",
+        "태산",
+        "이한",
+        "운학"
+      ],
+      "aliases": {
+        "박성호": "성호",
+        "이상혁": "리우",
+        "재현": "명재현",
+        "한동민": "태산",
+        "김동현": "이한",
+        "김운학": "운학",
+        "Sungho": "성호",
+        "Riwoo": "리우",
+        "Jaehyun": "명재현",
+        "Taesan": "태산",
+        "Leehan": "이한",
+        "Woonhak": "운학"
+      },
+      "former": []
+    },
+    "블랙핑크": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/BLACKPINK; https://en.wikipedia.org/wiki/Deadline_(EP)",
+      "aliases_of_group": [
+        "BLACKPINK"
+      ],
+      "members": [
+        "지수",
+        "제니",
+        "로제",
+        "리사"
+      ],
+      "aliases": {
+        "Jisoo": "지수",
+        "김지수": "지수",
+        "Jennie": "제니",
+        "김제니": "제니",
+        "Rosé": "로제",
+        "박채영": "로제",
+        "Lisa": "리사",
+        "라리사 마노반": "리사",
+        "Lalisa Manobal": "리사"
+      },
+      "former": []
+    },
+    "소녀시대": {
+      "verified_at": "2026-07-29",
+      "source": "https://kprofiles.com/girls-generation-snsd-members-profile/; https://kpopping.com/profiles/group/Girls-Generation",
+      "aliases_of_group": [
+        "SNSD",
+        "Girls Generation"
+      ],
+      "members": [
+        "태연",
+        "써니",
+        "티파니",
+        "효연",
+        "유리",
+        "수영",
+        "윤아",
+        "서현"
+      ],
+      "aliases": {
+        "김태연": "태연",
+        "이순규": "써니",
+        "티파니 영": "티파니",
+        "스테파니 황": "티파니",
+        "김효연": "효연",
+        "권유리": "유리",
+        "최수영": "수영",
+        "임윤아": "윤아",
+        "서주현": "서현"
+      },
+      "former": [
+        "제시카"
+      ]
+    },
+    "스트레이키즈": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/Stray%20Kids; https://www.munhwa.com/article/11442179",
+      "aliases_of_group": [
+        "스키즈",
+        "Stray Kids"
+      ],
+      "members": [
+        "방찬",
+        "리노",
+        "창빈",
+        "현진",
+        "한",
+        "필릭스",
+        "승민",
+        "아이엔"
+      ],
+      "aliases": {
+        "Felix": "필릭스",
+        "Han": "한",
+        "한지성": "한",
+        "Hyunjin": "현진",
+        "황현진": "현진",
+        "Bang Chan": "방찬",
+        "크리스토퍼 방": "방찬",
+        "Lee Know": "리노",
+        "이민호": "리노",
+        "I.N": "아이엔",
+        "양정인": "아이엔",
+        "서창빈": "창빈",
+        "김승민": "승민"
+      },
+      "former": [
+        "우진"
+      ]
+    },
+    "에스파": {
+      "verified_at": "2026-07-29",
+      "source": "https://namu.wiki/w/aespa; https://kprofiles.com/aespa-members-profile/",
+      "aliases_of_group": [
+        "aespa"
+      ],
+      "members": [
+        "카리나",
+        "윈터",
+        "지젤",
+        "닝닝"
+      ],
+      "aliases": {
+        "유지민": "카리나",
+        "김민정": "윈터",
+        "우치나가 에리": "지젤",
+        "닝이줘": "닝닝",
+        "Karina": "카리나",
+        "Winter": "윈터",
+        "Giselle": "지젤",
+        "Ningning": "닝닝"
+      },
+      "former": []
+    },
+    "엔하이픈": {
+      "verified_at": "2026-07-29",
+      "source": "https://www.news1.kr/entertain/celebrity-topic/6096562; https://www.koreatimes.co.kr/entertainment/k-pop/20260618/enhypen-returns-as-6-member-group-after-major-lineup-change",
+      "aliases_of_group": [
+        "ENHYPEN"
+      ],
+      "members": [
+        "정원",
+        "제이",
+        "제이크",
+        "성훈",
+        "선우",
+        "니키"
+      ],
+      "aliases": {
+        "Jungwon": "정원",
+        "양정원": "정원",
+        "Jay": "제이",
+        "박제이": "제이",
+        "Jake": "제이크",
+        "심재윤": "제이크",
+        "Sunghoon": "성훈",
+        "박성훈": "성훈",
+        "Sunoo": "선우",
+        "김선우": "선우",
+        "Ni-ki": "니키",
+        "니시무라 리키": "니키"
+      },
+      "former": [
+        "희승"
+      ]
+    },
+    "제로베이스원": {
+      "verified_at": "2026-07-29",
+      "source": "https://news.nate.com/view/20260212n09968; https://www.wikitree.co.kr/articles/1117800",
+      "aliases_of_group": [
+        "ZEROBASEONE",
+        "ZB1"
+      ],
+      "members": [
+        "성한빈",
+        "김지웅",
+        "석매튜",
+        "김태래",
+        "박건욱"
+      ],
+      "aliases": {
+        "Sung Hanbin": "성한빈",
+        "Seok Matthew": "석매튜",
+        "매튜": "석매튜"
+      },
+      "former": [
+        "장하오",
+        "리키",
+        "김규빈",
+        "한유진"
+      ],
+      "note": "2026 초 프로젝트 종료로 리키·장하오·김규빈·한유진 이탈(1차 웹 리서치 high, 적대적 재검증은 웹 차단으로 미완). 5인 표기는 재확인 후 사용 권장"
+    },
+    "트레저": {
+      "verified_at": "2026-07-29",
+      "source": "https://ko.wikipedia.org/wiki/%ED%8A%B8%EB%A0%88%EC%A0%80_(%EC%9D%8C%EC%95%85_%EA%B7%B8%EB%A3%B9); https://www.newsis.com/view/NISX20221108_0002078191",
+      "aliases_of_group": [
+        "TREASURE"
+      ],
+      "members": [
+        "최현석",
+        "지훈",
+        "요시",
+        "준규",
+        "윤재혁",
+        "아사히",
+        "도영",
+        "하루토",
+        "박정우",
+        "소정환"
+      ],
+      "aliases": {
+        "박지훈": "지훈",
+        "김준규": "준규",
+        "재혁": "윤재혁",
+        "하마다 아사히": "아사히",
+        "김도영": "도영",
+        "와타나베 하루토": "하루토",
+        "정환": "소정환"
+      },
+      "former": [
+        "방예담",
+        "마시호"
+      ],
+      "note": "마시호 2022-11 탈퇴(10인 체제). '현재'는 더보이즈 멤버로 이 그룹 아님. 적대적 재검증 미완(rate limit)"
     }
   }
 }

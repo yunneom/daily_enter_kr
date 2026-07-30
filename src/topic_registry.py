@@ -176,7 +176,7 @@ TOPICS = {
             ],
             # 2천원
             [
-                {"role_emoji": "🎤", "name": "다니엘", "subtitle": "뉴진스"},
+                {"role_emoji": "🎤", "name": "하니", "subtitle": "뉴진스"},
                 {"role_emoji": "💃", "name": "리아", "subtitle": "ITZY"},
                 {"role_emoji": "✨", "name": "레이", "subtitle": "IVE"},
             ],
@@ -519,7 +519,7 @@ TOPICS = {
             # 비주얼 풀
             [
                 {"role_emoji": "✨", "name": "원희", "subtitle": "ILLIT"},
-                {"role_emoji": "✨", "name": "차퀴타", "subtitle": "BABYMONSTER"},
+                {"role_emoji": "✨", "name": "치키타", "subtitle": "BABYMONSTER"},
                 {"role_emoji": "✨", "name": "키야", "subtitle": "KIIIKIII"},
                 {"role_emoji": "✨", "name": "줄리", "subtitle": "KISS OF LIFE"},
                 {"role_emoji": "✨", "name": "스텔라", "subtitle": "Hearts2Hearts"},
@@ -545,7 +545,7 @@ TOPICS = {
                 {"role_emoji": "🎤", "name": "카리나", "subtitle": "에스파"},
                 {"role_emoji": "🎤", "name": "민지", "subtitle": "뉴진스"},
                 {"role_emoji": "🎤", "name": "닝닝", "subtitle": "에스파"},
-                {"role_emoji": "🎤", "name": "다니엘", "subtitle": "뉴진스"},
+                {"role_emoji": "🎤", "name": "이서", "subtitle": "IVE"},
                 {"role_emoji": "🎤", "name": "김채원", "subtitle": "르세라핌"},
                 {"role_emoji": "🎤", "name": "안유진", "subtitle": "IVE"},
             ],
@@ -592,7 +592,7 @@ TOPICS = {
             [
                 {"role_emoji": "💃", "name": "채령", "subtitle": "ITZY"},
                 {"role_emoji": "💃", "name": "소연", "subtitle": "(여자)아이들"},
-                {"role_emoji": "💃", "name": "베이", "subtitle": "NMIXX"},
+                {"role_emoji": "💃", "name": "배이", "subtitle": "NMIXX"},
                 {"role_emoji": "💃", "name": "리아", "subtitle": "ITZY"},
                 {"role_emoji": "💃", "name": "우기", "subtitle": "(여자)아이들"},
             ],
@@ -620,7 +620,7 @@ TOPICS = {
         "col_pools": [
             [
                 {"role_emoji": "🎤", "name": "시은", "subtitle": "STAYC"},
-                {"role_emoji": "🎤", "name": "다영", "subtitle": "Kep1er"},
+                {"role_emoji": "🎤", "name": "다연", "subtitle": "Kep1er"},
                 {"role_emoji": "🎤", "name": "백지헌", "subtitle": "fromis_9"},
                 {"role_emoji": "🎤", "name": "수현", "subtitle": "Billlie"},
             ],
@@ -670,7 +670,7 @@ TOPICS = {
                 {"role_emoji": "💃", "name": "휴닝카이", "subtitle": "TXT"},
                 {"role_emoji": "💃", "name": "앤톤", "subtitle": "RIIZE"},
                 {"role_emoji": "💃", "name": "산", "subtitle": "ATEEZ"},
-                {"role_emoji": "💃", "name": "리키", "subtitle": "제로베이스원"},
+                {"role_emoji": "💃", "name": "김태래", "subtitle": "제로베이스원"},
             ],
             [
                 {"role_emoji": "✨", "name": "성훈", "subtitle": "엔하이픈"},
@@ -678,7 +678,7 @@ TOPICS = {
                 {"role_emoji": "✨", "name": "연준", "subtitle": "TXT"},
                 {"role_emoji": "✨", "name": "원빈", "subtitle": "RIIZE"},
                 {"role_emoji": "✨", "name": "윤호", "subtitle": "ATEEZ"},
-                {"role_emoji": "✨", "name": "장하오", "subtitle": "제로베이스원"},
+                {"role_emoji": "✨", "name": "석매튜", "subtitle": "제로베이스원"},
             ],
         ],
         "source_note": BR_SOURCE_NOTE,
@@ -702,14 +702,14 @@ TOPICS = {
             ],
             [
                 {"role_emoji": "💃", "name": "재현", "subtitle": "NCT"},
-                {"role_emoji": "💃", "name": "현재", "subtitle": "트레저"},
+                {"role_emoji": "💃", "name": "박정우", "subtitle": "트레저"},
                 {"role_emoji": "💃", "name": "큐", "subtitle": "더보이즈"},
                 {"role_emoji": "💃", "name": "인탁", "subtitle": "P1Harmony"},
             ],
             [
                 {"role_emoji": "✨", "name": "선우", "subtitle": "더보이즈"},
                 {"role_emoji": "✨", "name": "정우", "subtitle": "NCT"},
-                {"role_emoji": "✨", "name": "마시호", "subtitle": "트레저"},
+                {"role_emoji": "✨", "name": "준규", "subtitle": "트레저"},
                 {"role_emoji": "✨", "name": "테오", "subtitle": "P1Harmony"},
             ],
         ],
@@ -730,13 +730,13 @@ TOPICS = {
                 {"role_emoji": "🎤", "name": "마틴", "subtitle": "CORTIS"},
                 {"role_emoji": "🎤", "name": "신유", "subtitle": "TWS"},
                 {"role_emoji": "🎤", "name": "성호", "subtitle": "보이넥스트도어"},
-                {"role_emoji": "🎤", "name": "민재", "subtitle": "KickFlip"},
+                {"role_emoji": "🎤", "name": "민제", "subtitle": "KickFlip"},
             ],
             [
                 {"role_emoji": "💃", "name": "제임스", "subtitle": "CORTIS"},
                 {"role_emoji": "💃", "name": "도훈", "subtitle": "TWS"},
                 {"role_emoji": "💃", "name": "태산", "subtitle": "보이넥스트도어"},
-                {"role_emoji": "💃", "name": "휘찬", "subtitle": "KickFlip"},
+                {"role_emoji": "💃", "name": "주왕", "subtitle": "KickFlip"},
             ],
             [
                 {"role_emoji": "✨", "name": "주훈", "subtitle": "CORTIS"},
@@ -1071,7 +1071,7 @@ TOPICS = {
              {"role_emoji": "✨", "name": "연준", "subtitle": "TXT"},
              {"role_emoji": "✨", "name": "원빈", "subtitle": "RIIZE"},
              {"role_emoji": "✨", "name": "윤호", "subtitle": "ATEEZ"},
-             {"role_emoji": "✨", "name": "장하오", "subtitle": "제로베이스원"}],
+             {"role_emoji": "✨", "name": "석매튜", "subtitle": "제로베이스원"}],
         ],
         "auto_comment": "🎰 본인 조합 댓글 ⬇️ 기회 3번 안에 만들었어요?",
     },
