@@ -60,18 +60,53 @@ def _font(weight: str, size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(p, size)
 
 
+def _photo_circle(name: str, group: str, size: int):
+    """IDOL_PHOTOS=on 이고 커밋된 검증 사진(이름+소속 일치)이 있으면 원형 실사.
+    없으면 None → 이모지 폴백. (photos=True 토픽은 publish_matrix 게이트가
+    전원 확보를 보장하므로 실전에서 폴백이 섞일 일은 없다.)"""
+    import os as _os
+    if _os.environ.get("IDOL_PHOTOS", "off").lower() != "on":
+        return None
+    try:
+        import idol_photo
+        rec = idol_photo.repo_cached_photo(name, group)
+        if not rec:
+            return None
+        im = Image.open(rec["path"]).convert("RGBA")
+        w, h = im.size
+        sq = min(w, h)
+        top = int((h - sq) * 0.12)  # 얼굴 위쪽 우선 크롭
+        im = im.crop(((w - sq) // 2, top, (w - sq) // 2 + sq, top + sq)).resize(
+            (size, size), Image.LANCZOS)
+        mask = Image.new("L", (size, size), 0)
+        ImageDraw.Draw(mask).ellipse([0, 0, size - 1, size - 1], fill=255)
+        out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        out.paste(im, (0, 0), mask)
+        ring = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        ImageDraw.Draw(ring).ellipse([1, 1, size - 2, size - 2],
+                                     outline=(30, 30, 30, 255), width=3)
+        out.alpha_composite(ring)
+        return out
+    except Exception:
+        return None
+
+
 def _render_cell(member: dict) -> Image.Image:
-    """엠블럼-스타일 셀 — 흰 카드 + 역할 이모지 + 멤버명 + 그룹."""
+    """엠블럼-스타일 셀 — 흰 카드 + 실사(있으면)/역할 이모지 + 멤버명 + 그룹."""
     w, h = CELL_W, CELL_H
     img = Image.new("RGBA", (w, h), (255, 255, 255, 255))
     d = ImageDraw.Draw(img)
     # 외곽
     d.rounded_rectangle([6, 6, w - 6, h - 6], radius=22,
                         outline=INK, width=3)
-    # 역할 이모지
-    em = _get_emoji_image(member.get("role_emoji", ""), 110)
-    if em:
-        img.alpha_composite(em, ((w - 110) // 2, 28))
+    # 실사 우선 (IDOL_PHOTOS=on + 검증 사진), 없으면 역할 이모지
+    photo = _photo_circle(member.get("name", ""), member.get("subtitle", ""), 110)
+    if photo:
+        img.alpha_composite(photo, ((w - 110) // 2, 28))
+    else:
+        em = _get_emoji_image(member.get("role_emoji", ""), 110)
+        if em:
+            img.alpha_composite(em, ((w - 110) // 2, 28))
     # 멤버명
     name = member.get("name", "")
     fnt = _font("Bold", 54)

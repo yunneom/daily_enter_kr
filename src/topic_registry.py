@@ -1022,26 +1022,30 @@ TOPICS = {
     # ════════════════════════════════════════════════════════════
     "slot_girlgroup_5x3": {
         "style": "slot_machine",
+        # 실사판 — 15명 전원 검증 커먼즈 사진 보유(이름+소속 대조). 사진이 없는
+        # 멤버(뉴진스 등)는 라인업에서 제외하고 검증 보유 멤버로 대체 (2026-07
+        # 운영 결정: 실사/이모지 토픽 단위 분리, 혼합 금지).
+        "photos": True,
         "title": "🎰 슬롯머신 걸그룹 조합",
         "rule_hint": "멈춰서 본인 픽 만들기!",
         "chances_text": "🎰 기회 3번 — 일시정지로 멈춰!",
         "col_headers": ["메인보컬", "메인댄서", "비주얼"],
         "col_pools": [
             [{"role_emoji": "🎤", "name": "카리나", "subtitle": "에스파"},
-             {"role_emoji": "🎤", "name": "민지", "subtitle": "뉴진스"},
+             {"role_emoji": "🎤", "name": "태연", "subtitle": "소녀시대"},
              {"role_emoji": "🎤", "name": "안유진", "subtitle": "IVE"},
              {"role_emoji": "🎤", "name": "김채원", "subtitle": "르세라핌"},
              {"role_emoji": "🎤", "name": "닝닝", "subtitle": "에스파"}],
             [{"role_emoji": "💃", "name": "카즈하", "subtitle": "르세라핌"},
-             {"role_emoji": "💃", "name": "하니", "subtitle": "뉴진스"},
+             {"role_emoji": "💃", "name": "슬기", "subtitle": "레드벨벳"},
              {"role_emoji": "💃", "name": "지젤", "subtitle": "에스파"},
-             {"role_emoji": "💃", "name": "사쿠라", "subtitle": "르세라핌"},
-             {"role_emoji": "💃", "name": "해린", "subtitle": "뉴진스"}],
+             {"role_emoji": "💃", "name": "리사", "subtitle": "블랙핑크"},
+             {"role_emoji": "💃", "name": "모카", "subtitle": "아일릿"}],
             [{"role_emoji": "✨", "name": "장원영", "subtitle": "IVE"},
              {"role_emoji": "✨", "name": "윈터", "subtitle": "에스파"},
              {"role_emoji": "✨", "name": "리즈", "subtitle": "IVE"},
-             {"role_emoji": "✨", "name": "허윤진", "subtitle": "르세라핌"},
-             {"role_emoji": "✨", "name": "다니엘", "subtitle": "뉴진스"}],
+             {"role_emoji": "✨", "name": "지수", "subtitle": "블랙핑크"},
+             {"role_emoji": "✨", "name": "원희", "subtitle": "아일릿"}],
         ],
         "auto_comment": "🎰 본인 조합 댓글 ⬇️ 기회 3번 안에 만들었어요? 친구한테도 시켜봐!",
     },
