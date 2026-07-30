@@ -291,6 +291,9 @@ def _resolve_override(member_name: str) -> Optional[Dict]:
             return None
         return {
             "thumb_url": thumb,
+            # 원본 파일 URL — 썸네일 생성기(thumbor)가 429 로 막혀도 원본 경로는
+            # 별도 캐시 계층이라 살아있는 경우가 많다. 다운로드 폴백에 사용.
+            "orig_url": ii.get("url") or "",
             "title": p.get("title", f"File:{file_name}"),
             "file": file_name,
             "_license": {
@@ -560,13 +563,21 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
     from urllib.parse import quote  # noqa: PLC0415
     fname = f"{member_name}.jpg"
     thumb = hit["thumb_url"]
+    orig = hit.get("orig_url") or ""
     enc = quote(thumb, safe="")
     sources = [("direct", thumb, 1)]
+    # wsrv 는 서버사이드로 커먼즈에서 받아 리사이즈해 준다. 썸네일 URL 이
+    # thumbor 429 로 죽어도 "원본 URL + &w=600" 경로는 살아있는 경우가 많아
+    # (2026-07: 원희/윈터/조이 3명이 thumb 계열 전 소스 실패) 둘 다 시도한다.
+    sources.append(("wsrv", f"https://wsrv.nl/?url={enc}&output=jpg", 4))
+    if orig and orig != thumb:
+        enc_o = quote(orig, safe="")
+        sources.append(("wsrv-orig", f"https://wsrv.nl/?url={enc_o}&w=600&output=jpg", 4))
+        sources.append(("direct-orig", orig, 1))
     cloud = os.environ.get("CLOUDINARY_CLOUD_NAME")
     if cloud:
         sources.append(("cloudinary",
-                        f"https://res.cloudinary.com/{cloud}/image/fetch/w_600,c_limit,f_jpg/{enc}", 3))
-    sources.append(("wsrv", f"https://wsrv.nl/?url={enc}&output=jpg", 4))
+                        f"https://res.cloudinary.com/{cloud}/image/fetch/w_600,c_limit,f_jpg/{enc}", 2))
 
     # 멤버 간 최소 간격 확보 — 첫 멤버는 대기 없음 (프록시 연속요청 rate-limit 완화).
     # warm_photo_cache.py 는 IDOL_PHOTO_GAP_SEC 로 간격을 크게 늘려 429 를 회피한다.
@@ -586,12 +597,15 @@ def fetch_photo(member_name: str) -> Optional[Dict]:
             except Exception as e:
                 print(f"  ⚠️ {src_name} 예외: {member_name} — {type(e).__name__}: {e}")
                 break
-            if r.status_code == 429:
+            retryable = r.status_code == 429 or (
+                # 프록시 소스는 상류 429 가 404/5xx 로 전파됨 — 재시도 가치 있음
+                src_name.startswith("wsrv") and r.status_code in (404, 500, 502, 503))
+            if retryable:
                 if attempt + 1 >= tries:
-                    print(f"  ⏭️ {src_name} 429: {member_name} — 다음 소스로")
+                    print(f"  ⏭️ {src_name} {r.status_code}: {member_name} — 다음 소스로")
                     break
                 wait = min(int(r.headers.get("Retry-After") or 6) + attempt * 6, 45)
-                print(f"  ⏳ {src_name} 429: {member_name} — {wait}s 대기 재시도({attempt+1}/{tries})")
+                print(f"  ⏳ {src_name} {r.status_code}: {member_name} — {wait}s 대기 재시도({attempt+1}/{tries})")
                 time.sleep(wait)
                 continue
             if not r.ok:
