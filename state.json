@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-29T08:52:22.089011+09:00",
-  "last_run_status": "failed: HTTPError: IG carousel_child HTTP 400 — code=9004 subcode=2207052 type=OAuthException msg=Only photo or video can be accepted as media type.",
+  "last_run_at": "2026-07-30T09:20:58.146103+09:00",
+  "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-29",
-      "title_hash": "95fe3ab527b5e61c",
-      "card_title": "진구, '신입사원 강회장'으로 반전 매력 입증 — 분당 최고 12.1%",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "d6e79bf2c6f1188e",
-      "card_title": "전미선, 오늘 7주기…배우로서의 따뜻한 유산 기억하다",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "4185cbbcdddf4f60",
-      "card_title": "세븐틴 V8, 도전과 성장으로 물든 청춘",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "46925f82cf9a1efc",
-      "card_title": "장기하·윤가이, 나이 차 극복하고 열애 공개",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "b747e27f10c29ce3",
-      "card_title": "린·이수 이혼 발표, 윤종신이 남긴 한 마디",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "6abd944a39af181c",
-      "card_title": "이본, 27년만의 컴백 '블랙 콩'으로 음악 무대 복귀",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "0f6ae422d14da1b1",
-      "card_title": "서인국·박지현, 퇴근 후 마트 장보기 포착",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-06-29",
-      "title_hash": "c39caffca20282fd",
-      "card_title": "윤은혜, 29살 이후 연애 없이 술도 끊었다",
-      "caption_variant": "tease_one",
-      "media_id": "18109432226064551",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-06-30",
       "title_hash": "d2916535db8db894",
@@ -1793,6 +1729,78 @@
       "card_title": "소지섭 딸 서수민, '김부장' 23% 시청률 기록 후 타코야끼 알바 중",
       "caption_variant": "tease_one",
       "media_id": "18069517583706163",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "b232570917e4e1ed",
+      "card_title": "리센느·돈선태, 썸네일 긴급 수정 — '무섭노' 표현 재검토",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "883464069fa26059",
+      "card_title": "이관희♥유시은, '솔로지옥3'에서 만나 열애 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "9f00c56958ef01ea",
+      "card_title": "문근영, 배우 정평과 결혼 발표…7세 연상 신랑",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "6febac332c8da814",
+      "card_title": "선미, 워터밤 무대로 입소문 — 음원·공연 관심도 상승",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "7a4e6b4c04093170",
+      "card_title": "BTS, 내년 그래미 출품 결정 — '음악에 국경 없다'",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "9d0ac95e5ea6d0dd",
+      "card_title": "김수현, '고 김새론 교제 의혹' 아동복지법 위반 무혐의 처분",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "6b23fc612c67fcec",
+      "card_title": "영화 '원스' 글렌 핸사드, 별세",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "c0e0b40e0e844825",
+      "card_title": "한국 영화 시장, 코로나 이전 수준 회복 — 극장 매출 전년 대비 50% 증가",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-30",
+      "title_hash": "4565a82da9c24803",
+      "card_title": "고지용, 의사 허양임과 2년 전 이혼 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18127185937646225",
       "card_style": "minimal"
     }
   ]
