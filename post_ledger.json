@@ -1172,6 +1172,25 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-07-30T14:23:35.952329+09:00",
+      "topic_id": "eng_chemi_w202631",
+      "title": "케미 듀오 투표 2026-W31",
+      "style": "eng_chemi",
+      "seed": null,
+      "ig_media_id": "18124830145703400",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "duos": [
+          "1. 르세라핌 김채원·카즈하",
+          "2. 아이브 안유진·리즈",
+          "3. 트와이스 나연·정연",
+          "4. 우주소녀 연정·여름"
+        ]
+      }
     }
   ]
 }
