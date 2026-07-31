@@ -130,6 +130,21 @@ def _safe(v, default=0):
     return v if isinstance(v, (int, float)) else default
 
 
+def _follower_series(snapshots: List[Dict]) -> List[tuple]:
+    """스냅샷별 (시각, followers_count) — 2026-07-31 이후 수집분부터 존재."""
+    out = []
+    for s in snapshots:
+        fc = (s.get("account") or {}).get("followers_count")
+        if fc is not None:
+            out.append((s.get("snapshot_at", ""), fc))
+    return out
+
+
+def _follow_signal(p: Dict) -> int:
+    """'팔로우할 이유' 프록시 — 저장+공유 (좋아요는 순간 반응, 저장·공유가 전환 신호)."""
+    return _safe(p.get("saved")) + _safe(p.get("shares"))
+
+
 def _summary_stats(posts: List[Dict]) -> Dict:
     """평균 / 중앙 / max / sum."""
     fields = ["plays", "reach", "saved", "shares", "total_interactions",
@@ -347,12 +362,24 @@ def main() -> int:
 
     # state.json 의 card_style / caption_variant 를 media_id 키로 머지
     state_idx = _load_state_index()
+    try:
+        sys.path.insert(0, str(Path(__file__).parent / "src"))
+        import post_ledger
+        ledger_idx = post_ledger.index_by_ig_media()
+    except Exception:
+        ledger_idx = {}
     for p in posts:
         meta = state_idx.get(p.get("media_id"), {})
         if meta.get("card_style"):
             p["card_style"] = meta["card_style"]
         if meta.get("caption_variant"):
             p["caption_variant"] = meta["caption_variant"]
+        # 뉴스 외 포맷(engagement/매트릭스/슬롯)은 원장에서 style 을 가져온다 —
+        # 포맷별 "팔로우 신호" 비교가 이 다이제스트의 핵심 용도.
+        if not p.get("card_style"):
+            led = ledger_idx.get(p.get("media_id")) or {}
+            if led.get("style"):
+                p["card_style"] = led["style"]
 
     stats = _summary_stats(posts)
     by_style = _aggregate_by(posts, "card_style")
@@ -369,12 +396,25 @@ def main() -> int:
 
     # Discord 알림 — 핵심 지표만 요약
     s = stats
+    # 팔로워 성장 — "이번 주에 팔로우할 이유를 만들었나"의 최종 답
+    fseries = _follower_series(snapshots)
+    week_f = [x for x in fseries if x[0][:10] >= (now - timedelta(days=WEEK_DAYS)).date().isoformat()]
+    if len(week_f) >= 2:
+        f_line = f"• 팔로워: **{week_f[-1][1]:,}** (주간 {week_f[-1][1]-week_f[0][1]:+,})\n"
+    elif fseries:
+        f_line = f"• 팔로워: **{fseries[-1][1]:,}** (추적 시작 — 다음 주부터 델타)\n"
+    else:
+        f_line = ""
+    top_follow = max(posts, key=_follow_signal)
+    tf_title = (top_follow.get("caption_excerpt") or "").split("\n")[0][:40]
+    tf_sig = _follow_signal(top_follow)
     msg = (
         f"📊 **{week_label} 주간 다이제스트**\n"
         f"게시 {len(posts)}건 분석 (최근 7일)\n"
-        f"• 평균 plays: **{s['plays']['avg']}** · reach: **{s['reach']['avg']}**\n"
-        f"• 평균 shares: **{s['shares']['avg']}** (알고리즘 최상위 신호)\n"
-        f"• 평균 saved: **{s['saved']['avg']}** · likes: **{s['like_count']['avg']}**\n"
+        + f_line +
+        f"• 평균 views: **{s['plays']['avg']}** · reach: **{s['reach']['avg']}**\n"
+        f"• 평균 shares: **{s['shares']['avg']}** · saved: **{s['saved']['avg']}** (팔로우 신호) · likes: **{s['like_count']['avg']}**\n"
+        f"• 팔로우 신호 1위: {tf_title} (저장+공유 {tf_sig})\n"
         f"📄 보고서: `docs/digests/{week_label}.html`"
     )
     sent = notify_discord(msg, username="daily_enter_kr digest")

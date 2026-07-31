@@ -103,7 +103,9 @@ def fetch_recent_media(ig_user_id: str, token: str, limit: int = MEDIA_FETCH_LIM
 
 # Reels (media_type=VIDEO) 만 대상으로 하는 추가 메트릭.
 # 캐러셀/이미지는 다른 메트릭 셋이라 별도 처리 — 우리는 Reels-only 운영이라 VIDEO 만 다룸.
-REELS_INSIGHT_METRICS = ["plays", "reach", "saved", "shares", "total_interactions"]
+# v22 마이그레이션(2026-07): 'plays' 폐기 → 'views'. 옛 이름이 하나라도 끼면
+# 호출 "전체"가 실패해 saved/shares 까지 통째로 유실됐다 (전 게시물 0으로 보인 원인).
+REELS_INSIGHT_METRICS = ["views", "reach", "saved", "shares", "total_interactions"]
 
 
 # ─── 계정 단위 인사이트 (abc 송 퍼널 프록시) ───
@@ -161,6 +163,19 @@ def fetch_account_insights(ig_user_id: str, token: str) -> dict:
     except Exception:
         pass
 
+    # 3) 총 팔로워 수 — insights 메트릭이 아니라 계정 필드라 항상 동작.
+    #    주간 델타가 곧 "팔로우할 이유를 만들었나"의 최종 지표.
+    try:
+        resp = requests.get(f"{GRAPH_BASE}/{ig_user_id}",
+                            params={"fields": "followers_count",
+                                    "access_token": token}, timeout=15)
+        if resp.ok:
+            fc = resp.json().get("followers_count")
+            if fc is not None:
+                out["followers_count"] = fc
+    except Exception:
+        pass
+
     return out
 
 
@@ -169,20 +184,39 @@ def fetch_reels_insights(media_id: str, token: str) -> dict:
     실패해도 빈 dict 반환 — 일부 메트릭만 막혀있는 경우도 있어서 게시별 grace.
     """
     url = f"{GRAPH_BASE}/{media_id}/insights"
-    params = {"metric": ",".join(REELS_INSIGHT_METRICS), "access_token": token}
-    try:
-        resp = requests.get(url, params=params, timeout=15)
+
+    def _call(metrics):
+        resp = requests.get(url, params={"metric": ",".join(metrics),
+                                         "access_token": token}, timeout=15)
         if not resp.ok:
-            return {}
-        data = resp.json().get("data", [])
+            return None, resp.text[:200]
         out = {}
-        for item in data:
+        for item in resp.json().get("data", []):
             name = item.get("name")
             vals = item.get("values", [])
             if name and vals:
                 out[name] = vals[0].get("value")
+        return out, None
+
+    try:
+        out, err = _call(REELS_INSIGHT_METRICS)
+        if out is None:
+            # 한 메트릭이 폐기/차단돼도 나머지는 살린다 — 메트릭별 재시도.
+            # (조용한 전체 유실 재발 방지: 실패는 반드시 로그로 남긴다.)
+            print(f"  ⚠️ reels insights 일괄 호출 실패({media_id}): {err} → 메트릭별 재시도")
+            out = {}
+            for metric in REELS_INSIGHT_METRICS:
+                single, e2 = _call([metric])
+                if single:
+                    out.update(single)
+                elif e2:
+                    print(f"     ✗ {metric}: {e2[:120]}")
+        # 하위 호환 별칭 — 기존 분석/다이제스트 코드는 'plays' 키를 읽는다.
+        if "views" in out and "plays" not in out:
+            out["plays"] = out["views"]
         return out
-    except Exception:
+    except Exception as e:
+        print(f"  ⚠️ reels insights 예외({media_id}): {e}")
         return {}
 
 
