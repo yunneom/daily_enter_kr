@@ -42,10 +42,18 @@ def fetch_google_news_korea(topic: str = "entertainment", limit: int = 10) -> Li
         "sports":        "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=ko&gl=KR&ceid=KR:ko",
         "technology":    "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=ko&gl=KR&ceid=KR:ko",
         "business":      "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=ko&gl=KR&ceid=KR:ko",
+        # 걸그룹 전문 채널(2026-07 전환) — 카테고리 피드 대신 검색 피드로 소재를
+        # 걸그룹/여성 아이돌 중심으로 좁힌다. 최종 필터는 summarize 의 스코프 skip.
+        "girlgroup":     "https://news.google.com/rss/search?q=%EA%B1%B8%EA%B7%B8%EB%A3%B9%20OR%20%EC%97%AC%EC%9E%90%EC%95%84%EC%9D%B4%EB%8F%8C&hl=ko&gl=KR&ceid=KR:ko",
     }
     url = TOPIC_URLS.get(topic, TOPIC_URLS["entertainment"])
 
     feed = feedparser.parse(url)
+    # 걸그룹 검색 피드가 일시적으로 비면 연예 카테고리 피드로 폴백 —
+    # 걸그룹 스코프 필터링은 summarize 의 skip 규칙이 최종 담당하므로 안전.
+    if topic == "girlgroup" and not feed.entries:
+        print("  ⚠️ girlgroup 검색 피드 0건 → entertainment 피드 폴백")
+        feed = feedparser.parse(TOPIC_URLS["entertainment"])
     items = []
 
     for entry in feed.entries[:limit]:

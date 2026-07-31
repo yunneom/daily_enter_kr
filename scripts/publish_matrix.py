@@ -710,8 +710,25 @@ def main() -> int:
         return 1
     print(f"✓ IG 토큰 OK: @{health.get('username')}")
 
-    # 비활성 토픽 — 고정 cells 라 재게시마다 동일 화면(중복) 또는 브랜드 세이프티 충돌.
-    # 회전판(tier/powerpick col_pools)·데이터 랭킹으로 대체돼 매트릭스 풀에서 제외.
+    # ── 걸그룹 전문 채널 화이트리스트 (2026-07 운영 결정) ─────────────────────
+    # 인사이트 데이터: 걸그룹 콘텐츠만 유의미한 반응(티어편 34♥) — 트로트/여행/
+    # 직장/초능력 등 비걸그룹 버티컬은 전부 1♥ 수준으로 계정 정체성만 희석.
+    # 화이트리스트 방식이라 새 비걸그룹 토픽이 실수로 로테이션에 들어갈 수 없다.
+    # 되돌리기: 이 집합에 토픽 id 를 추가하면 됨.
+    CHANNEL_TOPICS = {
+        "girlgroup_allstar_photo_10k",   # 실사 올스타 (photos=True)
+        "girlgroup_5gen_tier1_10k",
+        "girlgroup_4gen_tier1_10k",
+        "girlgroup_4gen_tier2_10k",
+        "girlgroup_4gen_tier3_10k",
+        "slot_girlgroup_5x3",            # 실사 슬롯 (photos=True)
+        "brand_rep_girlgroup",           # 브랜드평판 차트 (authority)
+        "community_weekly",              # 필러: nurture
+        "kpop_authority_insight",        # 필러: authority
+        "join_conversion",               # 필러: conversion
+    }
+
+    # (구) 비활성 블랙리스트 — 화이트리스트 도입으로 참고용만 남김.
     DISABLED_TOPICS = {
         "girlgroup_real_10k", "girlgroup_4gen_10k",   # ≒ girlgroup_4gen_tier1_10k(회전판)
         "boygroup_4gen_10k",                          # ≒ boygroup_4gen_tier1_10k(회전판)
@@ -724,7 +741,7 @@ def main() -> int:
         "kpop_authority_insight",                     # 동. 1토픽 카테고리라 쿨다운 폴백 뚫림
     }
     topic_ids = [t for t in TOPICS.keys()
-                 if t not in DISABLED_TOPICS]  # 등록 순서 = 회전 순서
+                 if t in CHANNEL_TOPICS and t not in DISABLED_TOPICS]  # 등록 순서 = 회전 순서
     matrix_ids = list(topic_ids)  # 스피너 제거됨 — 전체가 매트릭스 풀
 
     # 멤버/배경 회전 시드 — KST yday*7+hour. col_pools 라인업 + 배경이 매번 달라짐.

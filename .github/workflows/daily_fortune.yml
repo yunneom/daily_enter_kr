@@ -2,15 +2,13 @@ name: 🔮 오늘의 띠별 연애운 (캐러셀)
 
 # 사주 연애운 캐러셀 — 매일 11:00 KST 게시. 스크립트 자체 멱등(오늘 게시했으면 skip).
 # push(paths) 트리거: 스크립트/워크플로우 변경 푸시 시 1회 즉시 게시(오늘 첫 게시).
+# 2026-07 걸그룹 전문 채널 전환 — 운세는 채널 정체성과 무관해 자동 게시 중단
+# (인사이트: 운세 게시물 1♥ 수준). 코드는 보존 — 별도 채널 분리 시 재활용.
+# 재개하려면 아래 schedule 블록의 주석을 해제.
 on:
-  schedule:
-    - cron: '0 2 * * *'   # UTC 02:00 = KST 11:00
+  # schedule:
+  #   - cron: '0 2 * * *'   # UTC 02:00 = KST 11:00
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/fortune_saju_carousel.py'
-      - '.github/workflows/daily_fortune.yml'
 
 permissions:
   contents: write

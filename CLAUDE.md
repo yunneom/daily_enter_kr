@@ -4,7 +4,9 @@
 
 ## 프로젝트 개요
 
-K-연예 뉴스 핫토픽 10건을 매일 자동 수집 → Claude로 안전 분류·SEO 카피 생성 → PIL로 9:16 미니멀 카드 생성 (흰 배경 + 검정 제목) → FFmpeg 슬라이드쇼 mp4 → Cloudinary 호스팅 → Instagram **Reels** 자동 게시.
+**걸그룹 전문 채널** (2026-07 전환 — 인사이트 데이터 근거: 걸그룹 콘텐츠만 유의미한 반응). 걸그룹/여성 아이돌 뉴스 핫토픽을 매일 자동 수집 → Claude로 안전 분류·SEO 카피 생성 → PIL로 9:16 미니멀 카드 생성 (흰 배경 + 검정 제목) → FFmpeg 슬라이드쇼 mp4 → Cloudinary 호스팅 → Instagram **Reels** 자동 게시.
+
+> **2026-07 전환**: 걸그룹 전문 채널. 비걸그룹 버티컬(운세·트로트·여행·직장 만원 시리즈 등) 자동 게시 중단 — publish_matrix 의 CHANNEL_TOPICS 화이트리스트(걸그룹 6토픽) + daily_fortune.yml 스케줄 주석 처리. 뉴스는 girlgroup 검색 피드 + summarize 스코프 skip(배우/드라마/예능/트로트/보이그룹 단독 소식 제외). 참여형(engagement)·월드컵은 원래 걸그룹 전용.
 
 > **2026-05 전환**: 캐러셀 → Reels. IG 알고리즘이 캐러셀 도달을 거의 안 줘서 (insights.json 4번 스냅샷 21시간 추적, 8건 모두 like/comment 0) 카드 디자인을 9:16 으로 재설계하고 mp4 슬라이드쇼로 합쳐 Reels API 로 게시한다.
 

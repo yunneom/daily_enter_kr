@@ -36,12 +36,14 @@ from state import (
 # 카드 디자인은 단일 미니멀 스타일 (흰 배경 + 검정 제목) 고정.
 CHANNELS = {
     "daily_enter_kr": {
-        "topic": "entertainment",         # fetch_news.py의 TOPIC_URLS 키
-        "label_short": "K-연예",          # 캡션/요약 프롬프트 라벨
-        "cover_label": "연예",            # 표지 한 줄 라벨 — '{cover_label} TOP N' 식으로 표시
+        # 2026-07 걸그룹 전문 채널 전환 — 인사이트 데이터 근거(걸그룹 콘텐츠만
+        # 유의미한 반응, 나머지 버티컬 전부 1♥). 뉴스도 걸그룹/여성 아이돌 스코프.
+        "topic": "girlgroup",             # fetch_news.py의 TOPIC_URLS 키 (검색 피드)
+        "label_short": "K-팝 걸그룹",      # 캡션/요약 프롬프트 라벨 — 스코프 skip 의 기준
+        "cover_label": "걸그룹",           # 표지 한 줄 라벨 — '{cover_label} TOP N' 식으로 표시
         "state_path": "state.json",
-        "default_hashtags": ["#K연예", "#연예뉴스", "#오늘의연예", "#연예소식",
-                             "#카드뉴스", "#kpop", "#kdrama", "#한국연예"],
+        "default_hashtags": ["#걸그룹", "#여자아이돌", "#kpop", "#케이팝",
+                             "#아이돌뉴스", "#걸그룹뉴스", "#카드뉴스", "#오늘의아이돌"],
     },
     "daily_sports_kr": {
         "topic": "sports",
