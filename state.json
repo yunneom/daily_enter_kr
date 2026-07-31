@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-30T09:20:58.146103+09:00",
+  "last_run_at": "2026-07-31T09:05:59.270584+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-06-30",
-      "title_hash": "d2916535db8db894",
-      "card_title": "배우 김규선, 결혼 9년 만에 임신 소식 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "9b38b7ce40fea4e1",
-      "card_title": "BTS, K팝 팬 아닌 층도 사로잡은 글로벌 앨범 파워",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "5509096c51c65e7f",
-      "card_title": "지민, 브랜드평판 1위 석권 — 아이돌·보이그룹 개인 동시 달성",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "7123b21049f6bb07",
-      "card_title": "윤은혜, 13년 솔로 마감 희망 '기독교 신앙 가진 남자 만나고 싶어'",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "9b1735b1d7ad0fdd",
-      "card_title": "류화영, 9월 결혼식 앞두고 웨딩 화보 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "27ad2196b0e0e5b4",
-      "card_title": "박용하, 16년 전 그날로 멈춘 시간",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "307725ad74805c1c",
-      "card_title": "김세의, 서울구치소 독방 수감…신변 위협 사유로 요청",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "6fd251ad0f63be6b",
-      "card_title": "드웨인 존슨, '모아나' 출연 위해 18kg 특수 분장과 곱슬머리 가발 변신",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
-    {
-      "date": "2026-06-30",
-      "title_hash": "bab0a90f402eabb3",
-      "card_title": "김나영·마이큐, 결혼 7개월 만에 혼인신고 완료",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18092155571354592",
-      "card_style": "manhwa"
-    },
     {
       "date": "2026-07-01",
       "title_hash": "1a84b3e87096a941",
@@ -1801,6 +1729,78 @@
       "card_title": "고지용, 의사 허양임과 2년 전 이혼 공개",
       "caption_variant": "question_hook",
       "media_id": "18127185937646225",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "3967d1b9eea45556",
+      "card_title": "스파이더맨 부부 복귀, '산양들' 신작 개봉 예정",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "95932e28d100267a",
+      "card_title": "소지섭, '김부장'으로 인생 캐릭터 경신 — '아직도 꿈 같다'",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "ce5825674ee164a6",
+      "card_title": "에릭남, 올마이애닉도츠와 신곡 협력…8월 7일 싱글 발매",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "f91bb3292a5281e0",
+      "card_title": "문근영, 결혼 소식에 '많은 축하 받으며 감동'",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "9be61f43dafd3f62",
+      "card_title": "김선태, 리센느 원이 질문 논란에 즉각 사과 '제 잘못'",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "11c1e6d8d6c7745e",
+      "card_title": "제5회 청룡시리즈어워즈, 7월 31일 인천 개최",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "7d65801cf1ed82c9",
+      "card_title": "BTS 그래미 보이콧에 팬덤 화답, 할리우드도 응원",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "55e743efc9db7ecc",
+      "card_title": "BTS 지민 셔츠, 메시·마돈나 유물 넘어 억대 낙찰가 기록",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-07-31",
+      "title_hash": "29a34af8318d91f9",
+      "card_title": "박진영, 청와대 방문해 글로벌 K-뮤직 페스티벌 추진 계획 공개",
+      "caption_variant": "list_count",
+      "media_id": "18433756972124341",
       "card_style": "minimal"
     }
   ]
