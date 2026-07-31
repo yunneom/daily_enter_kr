@@ -44,6 +44,28 @@ OVERRIDES_PATH = ROOT / "data" / "idol_photo_overrides.json"
 BRANDREP_PATH = ROOT / "data" / "girlgroup_brand_rep_top100.json"
 
 HASHTAGS = "#걸그룹 #이상형월드컵 #케이팝 #kpop #아이돌 #밸런스게임"
+
+# "팔로우할 이유 = 다음 걸 볼 이유" — 요일 로테이션을 예고로 노출해 시리즈성을 만든다.
+# (좋아요는 순간 반응으로 끝난다. 다음 편이 궁금해야 팔로우한다.)
+_NEXT_TEASER = {
+    0: "내일 11:30 밸런스게임",            # 월(유닛) → 화
+    1: "내일 11:30 멈춰라 챌린지",          # 화(밸런스) → 수
+    2: "내일 11:30 케미 듀오 투표",         # 수(퍼즈) → 목
+    3: "내일 11:30 밸런스게임 · 결과는 일요일",  # 목(케미) → 금
+    4: "내일 11:30 멈춰라 챌린지",          # 금(밸런스) → 토
+    5: "내일 11:30 케미 투표 결과 발표",      # 토(퍼즈) → 일
+    6: "내일 11:30 드림 유닛 빌더",         # 일(결과) → 월
+}
+
+
+def _follow_loop(date) -> str:
+    """캡션 말미 공통 팔로우 루프 — 예고 + 저장 프레임."""
+    teaser = _NEXT_TEASER.get(date.weekday(), "")
+    lines = ["🔔 매일 11:30, 새로운 걸그룹 게임"]
+    if teaser:
+        lines.append(f"⏭ {teaser}")
+    lines.append("🔖 저장해두면 내일 결과 비교할 때 편해요")
+    return "\n".join(lines)
 WEB_URL = "https://dailyenterkr.com"
 
 
@@ -293,7 +315,7 @@ def run_pause(date, dry):
     caption = ("멈춰서 뽑는 오늘의 최애 ✋\n"
                "영상을 아무 때나 멈춰보세요 — 멈춘 화면의 멤버가 오늘 당신을 응원합니다.\n"
                "누가 나왔는지 댓글로 인증!\n\n"
-               f"{HASHTAGS}"
+               f"{_follow_loop(date)}\n\n{HASHTAGS}"
                + (f"\n\n{attribution}" if attribution else ""))
     return _post_reel(mp4, caption, "몇 번 만에 최애가 나왔나요? 댓글로!",
                       topic_id, f"퍼즈 챌린지 {date.isoformat()}", "eng_pause", dry,
@@ -345,7 +367,7 @@ def run_unit(date, dry):
     caption = ("나만의 드림 유닛 만들기 🎤\n"
                "각 줄(1~4)에서 한 명씩 골라 4인조를 완성하세요.\n"
                "조합을 댓글로! 예: 1-3-2-1\n\n"
-               f"{HASHTAGS}"
+               f"{_follow_loop(date)}\n\n{HASHTAGS}"
                + (f"\n\n{attribution}" if attribution else ""))
     return _post_carousel([grid, rule, cta], caption,
                           "당신의 유닛 조합은? 예: 1-3-2-1",
@@ -398,7 +420,7 @@ def run_chemi(date, dry):
     caption = ("이 주의 케미 듀오 4팀 💜 어떤 듀오 무대가 가장 보고 싶나요?\n"
                + "\n".join(labels)
                + "\n\n번호를 댓글로! 결과는 일요일에 공개됩니다.\n\n"
-               f"{HASHTAGS}"
+               f"{_follow_loop(date)}\n\n{HASHTAGS}"
                + (f"\n\n{attribution}" if attribution else ""))
     return _post_carousel(jpgs, caption, "1~4 번호로 투표! 결과는 일요일에",
                           topic_id, f"케미 듀오 투표 {iso[0]}-W{iso[1]}", "eng_chemi", dry,
@@ -504,7 +526,7 @@ def run_brandrep(date, dry):
     caption = (f"{period} 걸그룹 개인 브랜드평판 TOP10 📊\n"
                "10위부터 1위까지 — 내 최애는 몇 위일까요?\n"
                f"출처: 한국기업평판연구소 ({data.get('source_date','')}){skip_note}\n\n"
-               f"{HASHTAGS}"
+               f"{_follow_loop(date)}\n\n{HASHTAGS}"
                + (f"\n\n{attribution}" if attribution else ""))
     return _post_reel(mp4, caption, "최애 순위 맞히셨나요? 댓글로!",
                       topic_id, f"브랜드평판 TOP10 {period}", "eng_brandrep", dry,
