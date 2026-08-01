@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-07-31T09:05:59.270584+09:00",
+  "last_run_at": "2026-08-01T09:14:17.811569+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-01",
-      "title_hash": "1a84b3e87096a941",
-      "card_title": "여에스더, 홍혜걸과 합가 후 변화 고백 '당신 없으면 허전해'",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "70396a052e5343e0",
-      "card_title": "서인국·박지현, 드라마 '내일도출근' 최고 시청률 6.8% 기록",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "8eff81176edefc59",
-      "card_title": "던, '살롱드립2'에서 연예계 은퇴 생각 솔직 고백",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "9f987696afc29949",
-      "card_title": "박규리, 투병 경험 공개하며 건강검진 중요성 강조",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "378c2812a65435c5",
-      "card_title": "이솔이·박성광, 이혼설 부인…\"후회 없이 잘 지내고 있어\"",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "c5bfc250e0b163d6",
-      "card_title": "무명전설 TOP7 스핀오프 '전설의 사내' 15일 첫 방송",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "ceaf65f70cae9bfe",
-      "card_title": "방탄소년단 '아리랑', 38억 스트리밍·3000억 매출 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "2bab9f874b5f9b12",
-      "card_title": "최진혁, 이국주와 첫만남에 먼저 연락처 요청 '호감으로 오해받아 당황'",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-01",
-      "title_hash": "f93ed3162b82421f",
-      "card_title": "코르티스, 비행기 지연 탑승 논란에 공식 사과",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17888556879576354",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-02",
       "title_hash": "870b354e2c930041",
@@ -1801,6 +1729,78 @@
       "card_title": "박진영, 청와대 방문해 글로벌 K-뮤직 페스티벌 추진 계획 공개",
       "caption_variant": "list_count",
       "media_id": "18433756972124341",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "4ddfba8e05234358",
+      "card_title": "쌍둥이 자매 걸그룹 어라이즈, 내달 코리안 페스티벌 무대 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "267d1d76aaaec082",
+      "card_title": "이즈나, 롯데백화점 잠실점 베이커리 팝업 협업 오픈",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "00431e3112c9b0e6",
+      "card_title": "걸그룹 리센느, 티오더 광고 선택 — 엔터 분야 3배 성장",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "194e1b867802f8cc",
+      "card_title": "JYP 신인 걸그룹 '아워버스데이', 7인조 확정…정식 데뷔 임박",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "d67276c5fc476591",
+      "card_title": "JYP의 새 걸그룹 OURBIRTHDAY, 7인 멤버 공개 완료",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "b34fd3d1052232af",
+      "card_title": "아워벌스데이, JYP 신곡과 함께 7인 멤버 공식 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "d9d4ac2127a18007",
+      "card_title": "리센느, 서든어택 게임과 콜라보 — 대세 걸그룹의 새로운 도전",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "06d70d3366d96496",
+      "card_title": "A2O MAY, 이수만 프로듀싱 걸그룹 한국 음악방송 무대 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-01",
+      "title_hash": "44a3fa67b1ed248e",
+      "card_title": "아이브 장원영, 메이저리그 경기 초청…시구 무대 선다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17925580080384485",
       "card_style": "minimal"
     }
   ]
