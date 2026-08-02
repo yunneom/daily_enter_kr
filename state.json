@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-01T09:14:17.811569+09:00",
+  "last_run_at": "2026-08-02T09:14:39.602341+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-02",
-      "title_hash": "870b354e2c930041",
-      "card_title": "김무열, '유퀴즈'에서 어머니의 헌신 공개 — 신춘문예 소설가 모친의 응원",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "b2769cf18b273866",
-      "card_title": "36세 고아라, 증명사진도 빛나는 미모 화제",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "e36aa8159bbfd6b4",
-      "card_title": "조민아, 이혼 후 6살 아들과 새출발 '행복한 일상'",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "d16e3be3905101d2",
-      "card_title": "김혜수·조여정 '지금 불륜이 문제가 아닙니다', 31일 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "c543917d54e34a2f",
-      "card_title": "배윤정, I.O.I 콘서트 중 욕설 논란 700만뷰..반성 의사 전달",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "7ca13364cbb6dae7",
-      "card_title": "김호중, 가석방 후 '뉘우침으로 잔여 형기 채우겠다' 입장 표명",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "6905aeebfe4490fc",
-      "card_title": "방탄소년단 뷔, 사생활 존중 당부..호텔 앞 방문 금지",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "5ced62d9cf2f26eb",
-      "card_title": "배우 최상엽, 이봉원·박미선 아들 공개 — 성씨 변경으로 화제",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-02",
-      "title_hash": "f8dcc5934117b201",
-      "card_title": "소지섭 '김부장', 선한 적자를 흥행 흑자로 바꾸다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18027765029831962",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-03",
       "title_hash": "bbc62b21fb8e1771",
@@ -1801,6 +1729,62 @@
       "card_title": "아이브 장원영, 메이저리그 경기 초청…시구 무대 선다",
       "caption_variant": "headlines_dotted",
       "media_id": "17925580080384485",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "01cea005755c8fb7",
+      "card_title": "캣츠아이 '애니멀' 영국 싱글 차트 16위 진입",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "0a6c3018004c0563",
+      "card_title": "존박, 걸그룹 커버곡에 집중하는 이유 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "72602f76c2c2502e",
+      "card_title": "아워벌스데이, 4인 유닛 '엠카'로 새로운 활동 시작",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "35ba36e7739a35d1",
+      "card_title": "아워벌스데이, 7인 멤버 공개…JYP 신인 걸그룹 데뷔 임박",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "ab190466122b28b7",
+      "card_title": "아이오아이, '갑자기'로 금영노래방 여자 아이돌 차트 1위 차지",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "3581eec9d450c1af",
+      "card_title": "OURBIRTHDAY, 4개 유닛 프리 데뷔 시작…퍼포먼스 영상 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-02",
+      "title_hash": "f1c9c3d271505744",
+      "card_title": "하이브, 하반기 새 걸그룹 '튜이드' 7인조로 공식 데뷔",
+      "caption_variant": "question_hook",
+      "media_id": "18110624036080022",
       "card_style": "minimal"
     }
   ]
