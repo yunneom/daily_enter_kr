@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-05T09:33:46.772485+09:00",
+  "last_run_at": "2026-08-06T08:58:08.028120+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-06",
-      "title_hash": "d1a98d584c7b7e95",
-      "card_title": "KCM, 10월 4일 정식 결혼식 올린다…14년만의 결혼 예식",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "cc09ae88d995e515",
-      "card_title": "이서안, '신입사원 강회장' 독살 사건 인터뷰 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "23abf612c8d3b513",
-      "card_title": "데이식스 도운, 콘서트서 심경 고백 '약속 못 지켜 죄송'",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "992f749a67ac9e57",
-      "card_title": "린, 이혼 후 어려움 겪으며 친구 같은 존재 잃은 아픔 나눠",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "c23a7e91a2e50435",
-      "card_title": "JTBC 드라마 '아파트' 지성·문소리·하윤경 등 호화 캐스팅 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "753e0d9fed531c50",
-      "card_title": "랄랄, 담배 논란에 공식 사과...절친 증언으로 마무리",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "4fc83db3674321e6",
-      "card_title": "신동엽 아내 선혜윤 PD, '미우새' 깜짝 출연",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "2147c9467a423d92",
-      "card_title": "이준영, '신입사원 강회장' 해피엔딩으로 마무리…후속작 '아파트' 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-06",
-      "title_hash": "3800aeeb8bb126d3",
-      "card_title": "도깨비 방송 10주년, 출연진 재결합 여행 진행 중",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18109316675004414",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-07",
       "title_hash": "fbe4999d64ea7ab8",
@@ -1785,6 +1713,78 @@
       "card_title": "리센느, 신라공주로 변신…천년고도 경주 알린다",
       "caption_variant": "you_wont_believe",
       "media_id": "18130135999679822",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "594cdc1132f732da",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선 키스'로 공식 활동 시작",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "7d5acd0ec7f48915",
+      "card_title": "하이브 걸그룹 튜이드, 타이틀곡 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "4b3a8946bf1730ff",
+      "card_title": "하이브 신인 걸그룹 튜이드, 24일 'SUN KISS'로 데뷔",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "ee932c98ec428651",
+      "card_title": "하이브 새 걸그룹 튜이드, 타이틀곡 '선 키스'로 데뷔",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "53444bb59b25df5e",
+      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, 19일 정식 데뷔",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "b0a76f66139f1683",
+      "card_title": "하이브 신인 튜이드, 7인 구성으로 데뷔 — 신곡 '선 키스' 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "0640a28209e00841",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "a5508882d385c4ae",
+      "card_title": "하이브 신인 걸그룹 튜이드, '선 키스'로 데뷔 무대 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-06",
+      "title_hash": "ed11bb124a20d4db",
+      "card_title": "JYP 4년 만의 신인 걸그룹 아워벌스데이, 완전체 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18438026860122006",
       "card_style": "minimal"
     }
   ]
