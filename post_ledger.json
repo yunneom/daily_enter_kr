@@ -1500,6 +1500,25 @@
       "youtube_id": "tC1UOgIqs7s",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-08-06T14:32:04.235754+09:00",
+      "topic_id": "eng_chemi_w202632",
+      "title": "케미 듀오 투표 2026-W32",
+      "style": "eng_chemi",
+      "seed": null,
+      "ig_media_id": "17911120761446166",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "duos": [
+          "1. 우주소녀 연정·여름",
+          "2. 블랙핑크 제니·로제",
+          "3. 에스파 지젤·닝닝",
+          "4. 르세라핌 카즈하·김채원"
+        ]
+      }
     }
   ]
 }
