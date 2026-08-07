@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-07T10:50:47.759162+09:00",
-  "last_run_status": "failed: HTTPError: IG carousel_child HTTP 400 — code=9004 subcode=2207052 type=OAuthException msg=Only photo or video can be accepted as media type.",
+  "last_run_at": "2026-08-08T08:39:14.237259+09:00",
+  "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-08",
-      "title_hash": "37081a91090b9ca0",
-      "card_title": "이현, 방시혁과 19년 함께 — 빅히트 뮤직과 재계약 체결",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "e5ae63a98905e804",
-      "card_title": "스트레이 키즈, 초현실 세계로의 컴백 — 신곡 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "6b39cf3ae341d9b9",
-      "card_title": "박세미, 트로트 가수로 데뷔 — 김소유와 함께 새로운 무대 개척",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "2f37d75635e415ef",
-      "card_title": "정호연 영화 '호프' 개봉, 남궁민 KBS 신작 드라마 출연 확정",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "6a1ff26badf4eb86",
-      "card_title": "신예은, '닥터 섬보이' 촬영 중 하리와 90% 싱크로율 달성",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "9e5639851c7332f3",
-      "card_title": "김기리, 고인 박지선을 추모하며 함께한 시간 되새기다",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "6e1c939f259e5ff3",
-      "card_title": "크리스토퍼 놀런 감독, 신작 '오디세이' 개봉 맞춰 첫 방한",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "9379b21f2ddef0d8",
-      "card_title": "아이들, 라틴 리듬 품은 신곡으로 데뷔 9년 차 컴백",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-08",
-      "title_hash": "46fb2e06bdff5793",
-      "card_title": "JTBC 예능 출연료 지급 지연 문제 제기",
-      "caption_variant": "question_hook",
-      "media_id": "18090971495625349",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-09",
       "title_hash": "5ace8b5661ebb4f7",
@@ -1713,6 +1641,70 @@
       "card_title": "JYP 4년 만의 신인 걸그룹 아워벌스데이, 완전체 공개",
       "caption_variant": "you_wont_believe",
       "media_id": "18438026860122006",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "4ea632bafca110cf",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선 키스' 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "d18927a83930860a",
+      "card_title": "블랙핑크, 팝 시장 장악한 K팝 걸그룹의 글로벌 영향력",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "a140e6fa263d0827",
+      "card_title": "블랙핑크, 데뷔 10주년 — K팝 글로벌 아이콘의 여정",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "c0e2e3569d09a42c",
+      "card_title": "걸셋, 미국 빌보드 '21 언더 21' 선정 — JYP 글로벌 걸그룹의 위상",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "ded8de1dc19e6395",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선키스' 공개 — 일정표 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "8610973d2055155a",
+      "card_title": "하이브 신인 걸그룹 튜이드, 'SUN KISS'로 데뷔",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "246df404570331eb",
+      "card_title": "해이, 육촌동생이 폴킴 — 걸그룹 출신 음악 집안",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-08",
+      "title_hash": "8d80c579261c534a",
+      "card_title": "해이의 육촌동생은 폴킴, 동생도 걸그룹 출신 '음악 집안'",
+      "caption_variant": "question_hook",
+      "media_id": "18616638220045552",
       "card_style": "minimal"
     }
   ]
