@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-06T08:58:08.028120+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-08-07T10:50:47.759162+09:00",
+  "last_run_status": "failed: HTTPError: IG carousel_child HTTP 400 — code=9004 subcode=2207052 type=OAuthException msg=Only photo or video can be accepted as media type.",
   "posted_history": [
-    {
-      "date": "2026-07-07",
-      "title_hash": "fbe4999d64ea7ab8",
-      "card_title": "에이티즈, 빌보드 200 3번째 정상 — K팝 글로벌 영향력 확산",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "df4232bbfcbd97e9",
-      "card_title": "나홍진 감독 '호프', 국내 첫 시사회 개최 — 칸 상영본과 다른 버전",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "a2b0b21b67907f24",
-      "card_title": "고두심, 33세 연하 배우와 키스신 촬영 \"나이 차이 전혀 부담 없어\"",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "c118cdd5e28b1b3f",
-      "card_title": "신민아 '눈동자', 박스오피스 1위 탈환…'토이 스토리5' 2위",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "3cf4a26927cada99",
-      "card_title": "권진아, 파격 금발 이미지 변신 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "871c73bddcb871c2",
-      "card_title": "박미선, 항암 치료 전 찾은 특별한 장소…이봉원의 진심 담은 순간",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "303f344f223dac61",
-      "card_title": "태진아·이루, 아내를 위한 특별한 무대 — 감동의 부자 열창",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "a61542e1a883b2f0",
-      "card_title": "이찬원, 해병대 입대한 정동원과 면회 통화 근황 전했다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-07",
-      "title_hash": "5497f489537187ba",
-      "card_title": "박성광의 아내 이솔이, 항암 치료 중 건강 관리 이야기 전해",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18206732380346593",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-08",
       "title_hash": "37081a91090b9ca0",
