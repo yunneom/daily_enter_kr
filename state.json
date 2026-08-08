@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-08T08:39:14.237259+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-08-09T08:33:38.043452+09:00",
+  "last_run_status": "skipped_too_few_cards",
   "posted_history": [
-    {
-      "date": "2026-07-09",
-      "title_hash": "5ace8b5661ebb4f7",
-      "card_title": "이즈나, 9월 2일 일본 정식 데뷔 확정",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "5a255445b10d4f49",
-      "card_title": "박명수, 과거 정선희 짝사랑 고백..\"차 트렁크 풍선 고백 준비\"",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "423b41de0fb6c22d",
-      "card_title": "송중기·박지현, 4년 만 재회…'러브 클라우드' 내년 KBS 편성",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "4422002e4bd83cc7",
-      "card_title": "홍석천, SNS 사칭 계정 적발 — 팬 주의 당부",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "a436b3fbfbad5bf1",
-      "card_title": "한경일, 부모님 건강 투병 공개 '미스트롯 포유'",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "a534a55375f69609",
-      "card_title": "'나솔' 32기 상철, 광수와의 관계 어려움 토로",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "42a8b0671a1b9605",
-      "card_title": "딘딘, 하하 모친께 과거 용돈 빌렸던 사연 공개",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "bdbb53e9a9dba81e",
-      "card_title": "JTBC '냉부' '아는 형님' 출연료 미지급 → 당일 완료",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-09",
-      "title_hash": "1279ea5c5ef1538a",
-      "card_title": "'김부장', 시청률 20% 돌파 — '참교육' 제치고 화제작 등극",
-      "caption_variant": "list_count",
-      "media_id": "18103541605946153",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-10",
       "title_hash": "abcf4d50a25a1410",
