@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-09T08:33:38.043452+09:00",
+  "last_run_at": "2026-08-10T08:20:51.016718+09:00",
   "last_run_status": "skipped_too_few_cards",
   "posted_history": [
-    {
-      "date": "2026-07-10",
-      "title_hash": "abcf4d50a25a1410",
-      "card_title": "황영웅, OST 예정대로 공개 — '꿀보이스' 기대",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "af03e849480a5783",
-      "card_title": "장윤정, 모르는 나이트클럽에 명의 도용 피해",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "282ed8e3d1004a43",
-      "card_title": "홍상수·김민희 신작 '눈 둘 데가 없네', 로카르노영화제 경쟁 부문 초청",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "6aa7601be8043417",
-      "card_title": "야노 시호, 편스토랑에서 눈물 흘린 사연은",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "205294a07b5ff37a",
-      "card_title": "리센느 '러브 어택', 멜론 1위 역주행 성공",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "fa3413e7d82324fb",
-      "card_title": "드라마 '아파트' 6인 주연배우들 '간헐적 가족' 콘셉트 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "77ddfe6f90881db0",
-      "card_title": "BTS 런던 공연, 토트넘 스타디움 최다 관객 13만명 동원",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "0fe44f0e2c37e9d3",
-      "card_title": "'김부장' 시청률 신화, AI 영상 제작 기술로 완성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-10",
-      "title_hash": "433b409c37ca3843",
-      "card_title": "저스틴 비버·BTS, 월드컵 결승전 하프타임쇼 출연 확정",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17946823431232290",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-11",
       "title_hash": "19e84de3553891f0",
