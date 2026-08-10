@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-10T08:20:51.016718+09:00",
-  "last_run_status": "skipped_too_few_cards",
+  "last_run_at": "2026-08-11T08:33:12.473666+09:00",
+  "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-11",
-      "title_hash": "19e84de3553891f0",
-      "card_title": "클릭비 유호석, 두 자녀 아버지임을 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "d383fa229f152130",
-      "card_title": "리센느, 새 숙소 공개 — 방 2개에서 5개로 확장, 멤버 취향 맞춰 꾸미다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "cb3ab97b48316f23",
-      "card_title": "혜은이, 공황장애 투병 경험 공개하며 회복 과정 나눠",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "410958f665c24e3a",
-      "card_title": "샤이니 민호, '나혼산' 출연 예고 '월드투어보다 힘들 것'",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "d313a119edb23acd",
-      "card_title": "정명훈, 클래식부산 예술감독 2년 연임 확정",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "d11c3ad9c5551d4f",
-      "card_title": "아이유·이종석, 4년 연애 후 결별…좋은 동료로 남기기로",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "86d58f9a9941c76f",
-      "card_title": "방탄소년단 지민, 런던 무대서 빛나는 카리스마 포착",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "06337a2c67b27acb",
-      "card_title": "BTS '스윔', 미국서 표절 의혹 제기…빅히트 강경 대응",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-11",
-      "title_hash": "6914c2628c85fdc9",
-      "card_title": "'아파트' 드라마 시청률 주목—연기파 배우 총출동으로 화제",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18086626172652483",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-12",
       "title_hash": "8f2623ef6c1a4a05",
@@ -1561,6 +1489,78 @@
       "card_title": "해이의 육촌동생은 폴킴, 동생도 걸그룹 출신 '음악 집안'",
       "caption_variant": "question_hook",
       "media_id": "18616638220045552",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "d5d2ed7e8398eb6e",
+      "card_title": "하이브 신인 튜이드, '사전 노출 최소화' 전략으로 데뷔 준비 중",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "1d9476e0dcd71a8b",
+      "card_title": "걸그룹 리더, 바레강사로 변신 — '긍정적인 에너지' 전하며 새로운 활동 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "9e97ed742d31d02d",
+      "card_title": "S2it, 팬미팅서 5인 5색 매력 선보여… 팬심 사로잡다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "1ce3a3bf7bbd1c7b",
+      "card_title": "하이브 신인 튜이드, 데뷔 전 틱톡 100만 돌파…24일 타이틀곡 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "c3f62435388c2acd",
+      "card_title": "리센느 8월 걸그룹 브랜드평판 1위, 아이브·레드벨벳 뒤따라",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "53d973fa1d91b3a1",
+      "card_title": "걸그룹 리더, 사업가로 변신…'정신과 육체 건강' 선언",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "09d2ab169e3021ef",
+      "card_title": "걸그룹 브랜드평판 1위, 새로운 대세 아이돌의 정체",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "92152d107ce05e05",
+      "card_title": "아워벌스데이, 7인 개성 살린 신선한 비주얼 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-11",
+      "title_hash": "197bf321be842e20",
+      "card_title": "걸그룹 에스투잇, 12일 고척 마운드 첫 무대 도전",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18118233136927691",
       "card_style": "minimal"
     }
   ]
