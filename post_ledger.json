@@ -1729,6 +1729,17 @@
           36
         ]
       }
+    },
+    {
+      "posted_at": "2026-08-11T14:01:51.886426+09:00",
+      "topic_id": "girlgroup_5gen_tier1_10k",
+      "title": "만원으로 5세대 걸그룹 1티어편",
+      "style": "emblem",
+      "seed": 2467,
+      "ig_media_id": "18044364884807249",
+      "youtube_id": "HHEGivAdbVM",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
