@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-11T08:33:12.473666+09:00",
+  "last_run_at": "2026-08-12T08:46:30.809890+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-12",
-      "title_hash": "8f2623ef6c1a4a05",
-      "card_title": "박정수, 거제 방문해 '리센느' 인기 실감",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "98a6d7706a5292a9",
-      "card_title": "탑, 10년 만에 팬들과 재회 — 일본 팬 1만 명 전석 무료 초대",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "33de1e2d19b49bf8",
-      "card_title": "프로미스나인, 올여름 신곡으로 행복 바이브 전달",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "4f0e764ed785c55b",
-      "card_title": "드라마 '아파트' 지성·하윤경, 스크린 속 부부에서 실제 부부로",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "e82c8974015f78e2",
-      "card_title": "소지섭X옥택연 '김부장', 코드네임 66의 비밀 풀린다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "7376fc00b3a1b88c",
-      "card_title": "BTS 티켓 매진, 글로벌 팬심의 위력",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "ddd53159a9399af8",
-      "card_title": "소녀시대 유리, 제주 혼자 살기로 찾은 용기와 변화",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "db164824f1f38a6a",
-      "card_title": "'놀면 뭐하니' 이선민의 고향 구미, 갓 튀긴 라면·김밥 맛집 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-12",
-      "title_hash": "2cf6c0301b540130",
-      "card_title": "도경완, '장윤정 친모 논란' 후 첫 심경 전한다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17984120739032510",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-13",
       "title_hash": "037b3d243b034206",
@@ -1561,6 +1489,78 @@
       "card_title": "걸그룹 에스투잇, 12일 고척 마운드 첫 무대 도전",
       "caption_variant": "headlines_dotted",
       "media_id": "18118233136927691",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "9b79dec8f0d348ba",
+      "card_title": "하이브 튜이드-JYP 아워버스데이, 7인조 걸그룹 8월 데뷔",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "a9eeeec3780806ac",
+      "card_title": "아이들 민니, 야구장 시구 무대 '시구하러 왔어요'",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "bb617778070f0214",
+      "card_title": "아워벌스데이, 파리바게뜨와 콜라보 한정판 케이크 출시",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "19fe0c5c961f1eb7",
+      "card_title": "하이브 신인 걸그룹 튜이드, 24일 데뷔 무대 공개",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "e291f09df6ecc3fc",
+      "card_title": "윤보미, 결혼 후 근황 공개 — 행복한 변화 주목",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "9c6df5e1ea417ca5",
+      "card_title": "포미닛 남지현, 걸그룹 리더에서 바레 강사로 새로운 길 걷다",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "b6301694ceb2b8cb",
+      "card_title": "신인 걸그룹 '아워벌스데이', 독특한 케이크 콘셉트로 데뷔",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "7200c793d02a44d6",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선 키스' 공개",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-12",
+      "title_hash": "a67b44700e161e47",
+      "card_title": "아워벌스데이, 파리바게뜨 한정판 콜라보 케이크 공개",
+      "caption_variant": "question_hook",
+      "media_id": "17969832786068690",
       "card_style": "minimal"
     }
   ]
