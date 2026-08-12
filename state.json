@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-12T08:46:30.809890+09:00",
+  "last_run_at": "2026-08-13T08:34:58.684390+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-13",
-      "title_hash": "037b3d243b034206",
-      "card_title": "신기루, 20년 절친 김영희도 놀란 솔직 고백",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "49145e57979b3479",
-      "card_title": "배기성, 청력 손실 공개..의학적 진단 및 치료 과정 진행 중",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "f0c97c8905ba8b32",
-      "card_title": "효린, 컴백 앨범 전곡 프로듀싱 — 타이틀곡 'ChecK' 포함 7곡",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "bc6016584f9ccd10",
-      "card_title": "송종호, 3년 반 공백 후 고깃집 사장으로 활동 재개",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "4da32b07191f76f8",
-      "card_title": "존박·성시경, 유튜브서 이달 중 컴백 예고",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "69243fe69e1807c9",
-      "card_title": "영화 '넘버 3', 경쟁 심화 시대를 풍자하다",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "42b3a07cbe42285a",
-      "card_title": "소지섭 신작 또 최고 시청률, 지성·김부장 드라마 경쟁 심화",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "ba927781eb9c03f6",
-      "card_title": "김고은, '도깨비' 촬영 후 탈모 겪으며 본드 피스로 3~4일간 관리",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-13",
-      "title_hash": "f11fcf8f99fd60e5",
-      "card_title": "박준형, 건강 관리 중 신체 변화 겪었다",
-      "caption_variant": "list_count",
-      "media_id": "17905861920450113",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-14",
       "title_hash": "edba995005f4ebf6",
@@ -1561,6 +1489,70 @@
       "card_title": "아워벌스데이, 파리바게뜨 한정판 콜라보 케이크 공개",
       "caption_variant": "question_hook",
       "media_id": "17969832786068690",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "98a73dcb9b22e64d",
+      "card_title": "아워벌스데이, 7명의 개성이 빚어내는 JYP의 새로운 시너지",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "8294d8a14296960b",
+      "card_title": "에이페, 걸그룹 리센느와 헤어 케어 캠페인 시작",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "55f8eb365716a2ce",
+      "card_title": "리센느, 맨체스터 시티와 예능 콜라보 — 글로벌 스타들의 만남",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "0e0311b0b373abb1",
+      "card_title": "아워벌스데이, 하이틴·키치 콘셉트 단체 사진 공개",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "8fbacf5335d53c9f",
+      "card_title": "JYP 신인 걸그룹 아워벌스데이, 상큼+키치 매력으로 데뷔 임박",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "3e45a11956443819",
+      "card_title": "혜리, 동료 걸그룹 콘서트 무대서 따뜻한 응원",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "19a370652f3f6fe8",
+      "card_title": "아워벌스데이, 7명의 개성으로 완성하는 시너지",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-13",
+      "title_hash": "c8bb05cebc072db5",
+      "card_title": "아워벌스데이, 개성 넘치는 단체 콘셉트 포토 공개",
+      "caption_variant": "list_count",
+      "media_id": "17979657612116934",
       "card_style": "minimal"
     }
   ]
