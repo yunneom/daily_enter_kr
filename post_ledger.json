@@ -1762,6 +1762,17 @@
       "youtube_id": "Q6URECMDJbY",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-08-12T13:22:23.937391+09:00",
+      "topic_id": "eng_pause_2026-08-12",
+      "title": "퍼즈 챌린지 2026-08-12",
+      "style": "eng_pause",
+      "seed": null,
+      "ig_media_id": "18001134263993242",
+      "youtube_id": "JGmBqKMfHyo",
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
