@@ -1806,6 +1806,25 @@
       "youtube_id": "f4suh7y2G24",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-08-13T13:25:55.532252+09:00",
+      "topic_id": "eng_chemi_w202633",
+      "title": "케미 듀오 투표 2026-W33",
+      "style": "eng_chemi",
+      "seed": null,
+      "ig_media_id": "18611498839050916",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "duos": [
+          "1. 에스파 윈터·카리나",
+          "2. 레드벨벳 조이·아이린",
+          "3. 르세라핌 김채원·카즈하",
+          "4. 트와이스 정연·나연"
+        ]
+      }
     }
   ]
 }
