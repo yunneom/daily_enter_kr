@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-15T08:27:44.125816+09:00",
+  "last_run_at": "2026-08-16T08:26:52.193785+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-16",
-      "title_hash": "c2e26a579404f86f",
-      "card_title": "영화 '호프', 개봉 당일 33만명 관람하며 올해 최고 오프닝 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "88d705163b6c8cd8",
-      "card_title": "이수지, 유튜브 조롱 논란에 공식 사과",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "cf4bf6c169d8dca9",
-      "card_title": "임영웅, 9월 고양 스타디움 콘서트 피켓팅 오늘 시작",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "8f53abd433434085",
-      "card_title": "박지훈, 9월 앙코르 콘서트 개최 — 팬콘 여운 이어간다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "6ae089ec2ae52705",
-      "card_title": "고현정, 아이오케이이엔엠과 재계약 확정 — 파트너십 지속",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "885cbe3567ab2ae4",
-      "card_title": "방탄소년단 '노멀' MV, 17일 스포티파이서 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "3e02cab99ee9d221",
-      "card_title": "와이스토리 임영호 별세, 향년 29세",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "9a501b6772937437",
-      "card_title": "트와이스 쯔위, 본명 저우쯔위로 이달 초 솔로 활동 시작",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-16",
-      "title_hash": "c8b13493385daf6b",
-      "card_title": "이소라, 건강 회복 여정 공개…'유퀴즈'에서 과거 시절 회상",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18128364184627475",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-17",
       "title_hash": "22c4c2c6bd8b2593",
@@ -1529,6 +1457,70 @@
       "card_title": "JYP 신인 걸그룹 아워벌스데이, 글로벌 데뷔쇼 개최",
       "caption_variant": "you_wont_believe",
       "media_id": "18612870118008820",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "8a1f4a314deac949",
+      "card_title": "튜이드, 하이브 5번째 걸그룹으로 데뷔 임박",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "dfd13f012654024f",
+      "card_title": "리센느, 역주행을 넘어 정주행까지…완벽한 '대세' 걸그룹으로 우뚝",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "b30475d0ef7b4949",
+      "card_title": "하이브 튜이드 vs JYP 아워벌스데이, 신인 걸그룹 경쟁 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "cda349b9496f5de4",
+      "card_title": "하이브·JYP 신인 걸그룹 동시 데뷔 선언",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "4a63c88d278a52f8",
+      "card_title": "걸그룹 흡연 루머, 멤버들의 솔직한 해명으로 마무리",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "70761af3b128f1ea",
+      "card_title": "리센느, '놀라운 토요일' 무대서 예능 본능 폭발",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "ddbb5a3fe718c147",
+      "card_title": "레드벨벳 vs 블랙핑크, 8월 아티스트탑텐 K팝 걸 브랜드 투표 개최",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-16",
+      "title_hash": "74e73c8efe89db69",
+      "card_title": "대형 엔터 신인 걸그룹들, 리센느 돌풍 속 자존심 경쟁 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "17903273088481067",
       "card_style": "minimal"
     }
   ]
