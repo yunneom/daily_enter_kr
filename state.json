@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-16T08:26:52.193785+09:00",
+  "last_run_at": "2026-08-17T08:13:11.020575+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-17",
-      "title_hash": "22c4c2c6bd8b2593",
-      "card_title": "배나라♥한재아, 공개 열애 6개월만 결혼 약속",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "da050c1e7c765477",
-      "card_title": "산다라박, 연애와 스캔들 예방법 언급…비대면 관계 제안",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "fe2a2e5b5cfd8827",
-      "card_title": "홍인규, 김준호의 결혼에 '개그맨끼리 사귀지 말라더니' 반응",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "b6510bd353d10cf8",
-      "card_title": "한강, 노벨문학상 수상 후 母校 논란에 대해 입장 표현",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "34f4421ea5afd481",
-      "card_title": "나홍진 감독 '호프', 개봉 첫날 33만 — 올해 최고 오프닝",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "75f94cf9bc9660d6",
-      "card_title": "배우 김수현, 글로벌 OTT·지상파 텐트폴 중 차기작 선택 임박",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "2a5350bd40cf92e6",
-      "card_title": "BTS·샤키라·마돈나, 아하 월드컵 결승전 하프타임 무대 예정",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "aa2145f33057d2c0",
-      "card_title": "쯔위 부모, 대만에 엔터테인먼트 기획사 설립",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-17",
-      "title_hash": "d9a6078d5a26a3d7",
-      "card_title": "'김부장' 드라마 속 부녀 재회, 감동의 순간 포착",
-      "caption_variant": "question_hook",
-      "media_id": "17986644096009834",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-18",
       "title_hash": "bdb0123215ac47a8",
@@ -1521,6 +1449,78 @@
       "card_title": "대형 엔터 신인 걸그룹들, 리센느 돌풍 속 자존심 경쟁 시작",
       "caption_variant": "headlines_dotted",
       "media_id": "17903273088481067",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "ca7c19bd219b1867",
+      "card_title": "아일릿, 'I Got Your Back' 한국어 버전 발매 — 한·일 걸그룹 시너지",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "8c62084a92a5435e",
+      "card_title": "10년 차 걸그룹, 결혼·출산 계획 솔직 공개 '현실적 고민 나눠'",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "756c47d6662fe0ba",
+      "card_title": "리센느 원이, 8월 걸그룹 개인 브랜드평판 1위 차지",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "b7bfc34a73554ba5",
+      "card_title": "리센느, 출연 없이도 인기가요 1위 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "bdceeb1fcebb7042",
+      "card_title": "걸그룹 리센느, 음악방송 4관왕 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "7c5328e0aa4c48a9",
+      "card_title": "리센느, 'Pretty Girl' 음방 4관왕 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "639dde585627ccf4",
+      "card_title": "올여름 차 안에서 가장 많이 들린 곡, 깜짝 재결합 걸그룹 노래",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "94b87fa523e2fbfd",
+      "card_title": "리센느 원이X소녀시대 태연, '프리티걸' 챌린지 콜라보",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-17",
+      "title_hash": "2e0da210203d17d7",
+      "card_title": "구구단 소이, 오늘 변호사와 결혼식 올려",
+      "caption_variant": "question_hook",
+      "media_id": "18191728507351793",
       "card_style": "minimal"
     }
   ]
