@@ -2007,6 +2007,17 @@
       "youtube_id": null,
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-08-17T13:36:27.394061+09:00",
+      "topic_id": "girlgroup_allstar_photo_10k",
+      "title": "만원으로 걸그룹 올스타 만들기",
+      "style": "emblem",
+      "seed": 2532,
+      "ig_media_id": "17896215801595733",
+      "youtube_id": "H0EQWA8as0c",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
