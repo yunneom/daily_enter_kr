@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-17T08:13:11.020575+09:00",
+  "last_run_at": "2026-08-18T08:29:33.451664+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-18",
-      "title_hash": "bdb0123215ac47a8",
-      "card_title": "이혼 전문 양나래 변호사, 초혼으로 결혼 예정",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "ed5df40f3c7f33d4",
-      "card_title": "조정석, 뮤지컬에서 드라마로 전향 시 발성 지적 받아",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "cf1d34700b3e39e9",
-      "card_title": "영화 '호프' 개봉 3일 만에 100만 관객 돌파",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "c6571321486930e3",
-      "card_title": "노윤서, 드라마 '동궁'서 한복으로 펼치는 궁중 오컬트 매력",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "8ce75a1d1e8f4834",
-      "card_title": "정해인 활동 재개, 김수현이 묵묵히 응원",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "c105c54c69bb2162",
-      "card_title": "한강, 배재고 사태 언급하며 혐오 극복의 필요성 강조",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "c945f7458d5418bd",
-      "card_title": "소지섭 vs 주상욱, '김부장'에서 극과 극 부성애 맞붙는다",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "9bc9d13a33dca3e0",
-      "card_title": "리센느, 1위 후 달라진 일상 고백 '어디 가도 축하 인사'",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-18",
-      "title_hash": "f74e31cb9b502a48",
-      "card_title": "야노 시호, '편스토랑'서 눈물의 가족 고백 — '내 롤모델은 엄마'",
-      "caption_variant": "question_hook",
-      "media_id": "17979100548105159",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-19",
       "title_hash": "961fee78fe026b05",
@@ -1521,6 +1449,70 @@
       "card_title": "구구단 소이, 오늘 변호사와 결혼식 올려",
       "caption_variant": "question_hook",
       "media_id": "18191728507351793",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "6fd6e79de565bfdc",
+      "card_title": "튜이드, 하이브 신설 레이블 첫 걸그룹으로 'TUNE & PLAY' 발표",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "b32959727f4306f9",
+      "card_title": "리센느 원이 8월 걸그룹 브랜드평판 1위 차지",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "57f2d8bd5ab8b8f0",
+      "card_title": "엔믹스, 11월 인천서 월드투어 앙코르 공연 개최",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "5b9953e622c22018",
+      "card_title": "에이투오 메이, 이수만 비경업 약정 종료 후 한국 활동 재개",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "0028392179f147a9",
+      "card_title": "에이페, 라이징 걸그룹 리센느와 손잡다",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "a516726d149098b3",
+      "card_title": "에이투오메이(A2O MAY), 이수만 프로듀싱 걸그룹 한국 음악방송 활동 위해 입국",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "92a57a8e6bc34f05",
+      "card_title": "걸그룹 출신 신부, 변호사 남편 앞에서 축가 무대",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-18",
+      "title_hash": "df2afe038de923fb",
+      "card_title": "이수만 걸그룹 A2O MAY, 한국 음악방송 출격",
+      "caption_variant": "list_count",
+      "media_id": "18219791455332450",
       "card_style": "minimal"
     }
   ]
