@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-18T08:29:33.451664+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-08-19T08:28:16.318529+09:00",
+  "last_run_status": "failed: HTTPError: IG carousel_child HTTP 400 — code=9004 subcode=2207052 type=OAuthException msg=Only photo or video can be accepted as media type.",
   "posted_history": [
-    {
-      "date": "2026-07-19",
-      "title_hash": "961fee78fe026b05",
-      "card_title": "강성연♥장민욱, 드라마 '동치미'서 진료실 첫만남 포착",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "93199d3607364b90",
-      "card_title": "윤주모, 서울예대 출신 힙합 뮤지션 꿈 — 축제무대서 자작 랩 공연",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "d8e4ef1d2667d0a6",
-      "card_title": "유노윤호, 날씨 불문 매일 공복 유산소 — 폭설·폭우도 멈추지 않는 열정",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "d4215fd47d90ba1c",
-      "card_title": "소지섭 주연 드라마 '김부장', 반전 스토리로 화제",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "fc9b43d2c98094f7",
-      "card_title": "지성, 이보영과 공연 출연 제안에 '연기 못하면 혼날 듯' 솔직 반응",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "6a50832a3edf8ec2",
-      "card_title": "나홍진 '호프', 흥행 신기록 vs 평점 엇갈림",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "37a267e39d64b367",
-      "card_title": "BTS 파리 스타디움 공연, 9만 관객 동원 — 마크롱 대통령 부부 관람",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "8f9b70f7e40ad051",
-      "card_title": "남주혁, 전역 후 복귀작 '동궁' 넷플릭스 한국시리즈 1위",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-19",
-      "title_hash": "eabb9295e2f61f1b",
-      "card_title": "김수현·유아인, 연이은 복귀 앞 남은 과제들",
-      "caption_variant": "list_count",
-      "media_id": "18059564426744118",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-20",
       "title_hash": "8420d7bc516e61b5",
