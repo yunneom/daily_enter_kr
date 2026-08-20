@@ -197,15 +197,48 @@ class InstagramPublisher:
         return media_id
 
     def _create_carousel_child(self, image_url: str) -> str:
-        """캐러셀 자식 이미지 컨테이너 (is_carousel_item=true)."""
+        """캐러셀 자식 이미지 컨테이너 (is_carousel_item=true).
+
+        재시도 이유(2026-08 사고): Cloudinary 업로드 직후 IG 가 이미지를 fetch 할 때
+        CDN 전파가 덜 끝났으면 code=9004(subcode 2207052/2207003/2207020,
+        "Only photo or video can be accepted...") 를 던진다 — 이미지 문제가 아니라
+        일시 fetch 실패라 몇 초 뒤 같은 URL 로 성공한다 (3주간 간헐 3회 실패의 원인).
+        컨테이너 생성은 게시가 아니므로 재시도해도 중복 게시 위험이 없다
+        (publish 되지 않은 컨테이너는 그냥 소멸).
+        """
         url = f"{GRAPH_API_BASE}/{self.ig_user_id}/media"
         params = {
             "image_url": image_url,
             "is_carousel_item": "true",
             "access_token": self.access_token,
         }
-        resp = self._post_ig(url, params, step="carousel_child")
-        return resp.json()["id"]
+        last_err = None
+        for attempt in range(4):
+            if attempt:
+                wait = 8 * attempt  # 8s, 16s, 24s — CDN 전파 대기
+                print(f"    ⏳ child 생성 재시도 {attempt}/3 ({wait}s 대기): {last_err}")
+                time.sleep(wait)
+            try:
+                resp = self._post_ig(url, params, step="carousel_child")
+                return resp.json()["id"]
+            except requests.HTTPError as e:
+                body = getattr(e, "response", None)
+                status = getattr(body, "status_code", 0)
+                code = None
+                try:
+                    code = (body.json().get("error") or {}).get("code")
+                except Exception:
+                    pass
+                # 일시 오류만 재시도: 미디어 fetch 실패(9004)·서버 오류(1,2)·5xx.
+                # 그 외(토큰 무효 190, 권한 등)는 즉시 전파.
+                if code in (9004, 1, 2) or status >= 500:
+                    last_err = str(e)[:140]
+                    continue
+                raise
+            except requests.RequestException as e:  # 타임아웃/커넥션 — 일시 오류
+                last_err = f"{type(e).__name__}: {e}"
+                continue
+        raise requests.HTTPError(f"IG carousel_child 재시도 3회 실패 — {last_err}")
 
     def post_carousel(self, image_urls: list, caption: str) -> str:
         """캐러셀(스와이프 다중 이미지) 피드 게시. 2-20장 (IG 2024 확장).
