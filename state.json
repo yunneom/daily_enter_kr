@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-20T08:27:03.167176+09:00",
+  "last_run_at": "2026-08-21T08:42:27.553483+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-21",
-      "title_hash": "e21c029af970af6c",
-      "card_title": "유이, 5년 전 마지막 연애 이후 공개연애 소망 밝혀",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "f31865d18ac3c72a",
-      "card_title": "하이브 신인 튜이드, 8월 데뷔 앞두고 앨범 전곡 무대 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "614f2a98b1bf7884",
-      "card_title": "홍경표 촬영감독이 본 영화 '호프'의 현장 — '어디서도 본 적 없는 광기'",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "1eb31195ff42c877",
-      "card_title": "장원영, 현장 스태프가 증명한 따뜻한 영향력",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "21e52488db9d18f5",
-      "card_title": "이동건, 박신양과의 첫 만남 뒷이야기 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "d055e45e5808bd1e",
-      "card_title": "AI, K-콘텐츠 제작 현장으로 확산 중",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "4e34c8a6fa7fcd81",
-      "card_title": "아이유, 귀 건강 회복 위해 콘서트·앨범 연기",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "e577109e49379a96",
-      "card_title": "'동궁', 넷플릭스 한국 TOP10 1위로 출발",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-21",
-      "title_hash": "51bbaef0a28a7c1a",
-      "card_title": "코르티스, 단독 콘서트서 같은 곡 5번 반복 무대 논란",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17867720043633226",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-22",
       "title_hash": "6b997bed570476c6",
@@ -1441,6 +1369,78 @@
       "card_title": "아워벌스데이, JYP 신입 걸그룹으로 공식 데뷔",
       "caption_variant": "you_wont_believe",
       "media_id": "17981931936076190",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "a3293ce09e2fc78e",
+      "card_title": "걸그룹 리센느 메이, 생일 축하 고양시 응원 콘텐츠 화제",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "30eab3eaa22bbc84",
+      "card_title": "JYP 신인 걸그룹 아워버스데이, 데뷔 준비 박차 — 신인상 목표",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "7cf80e8b872ac14e",
+      "card_title": "키비츠, 잠실구장 응원단상 무대 선점 — 5인조 걸그룹의 라이브 퍼포먼스",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "df81aa0e4c55a95f",
+      "card_title": "키비츠, 잠실구장 응원단상서 무대 — 5인조 걸그룹의 특별한 순간",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "69e7fc74418f3a2d",
+      "card_title": "신인 아워벌스데이, JYP 걸그룹 계보 잇다 — 강렬 퍼포먼스로 데뷔",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "d2aa1a97bf566b79",
+      "card_title": "신예 걸그룹 튜이드, 음악과 퍼포먼스로 존재감 드러내다",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "5b1ea3b8827dc9a2",
+      "card_title": "에스파, 신라면 2차 글로벌 광고 캠페인 출연",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "5cd74b66071e9510",
+      "card_title": "아워벌스데이, JYP 신인 걸그룹 데뷔 앞두고 첫 싱글 콘셉트 포토 공개",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-21",
+      "title_hash": "a8688a01c2f8ed7d",
+      "card_title": "리센느, 할리스 창립 28년 만의 첫 광고모델 발탁",
+      "caption_variant": "question_hook",
+      "media_id": "17926147203403880",
       "card_style": "minimal"
     }
   ]
