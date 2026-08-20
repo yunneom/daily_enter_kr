@@ -2134,6 +2134,25 @@
       "youtube_id": "v5GiyywCh9I",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-08-20T12:24:35.904344+09:00",
+      "topic_id": "eng_chemi_w202634",
+      "title": "케미 듀오 투표 2026-W34",
+      "style": "eng_chemi",
+      "seed": null,
+      "ig_media_id": "18066683573750879",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "duos": [
+          "1. 우주소녀 연정·여름",
+          "2. 아일릿 모카·원희",
+          "3. 블랙핑크 로제·지수",
+          "4. 에스파 지젤·카리나"
+        ]
+      }
     }
   ]
 }
