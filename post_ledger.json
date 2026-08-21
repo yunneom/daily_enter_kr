@@ -2186,6 +2186,23 @@
       "youtube_id": "X4bT2Row2bI",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-08-21T12:29:57.516643+09:00",
+      "topic_id": "eng_balance_2026-08-21",
+      "title": "밸런스게임 2026-08-21",
+      "style": "eng_balance",
+      "seed": null,
+      "ig_media_id": "17997181562797360",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q_idx": [
+          22,
+          20
+        ]
+      }
     }
   ]
 }
