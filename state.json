@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-21T08:42:27.553483+09:00",
+  "last_run_at": "2026-08-22T08:29:30.475119+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-22",
-      "title_hash": "6b997bed570476c6",
-      "card_title": "뉴진스, 데뷔 4주년 맞아 민지 포함 4인 영상 공개",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "2129d16ad01b3586",
-      "card_title": "장윤정 친어머니 투자사기 혐의로 구속송치",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "5b5418af59cd9b3a",
-      "card_title": "故유채영 남편, 12주기 추도글 남겨 '회복의 시간'",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "d865d147d03992ef",
-      "card_title": "우도환, 현 소속사와 재계약 체결 — 의리 있는 선택",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "a789419059d03cb8",
-      "card_title": "'핑계고' 스핀오프 '풍향중' 론칭 — 시즌제 확장",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "5f995dbf00a83cb8",
-      "card_title": "방탄소년단 '다이너마이트', 월드컵 하프타임 쇼 후 스트리밍 13% 상승",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "3f80efd99812a7fc",
-      "card_title": "로맨틱 코미디, 최고 3.7% 기록하며 매회 시청률 경신 중",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "4447ae9e8658cec5",
-      "card_title": "효린, 4년 만의 신앙 앨범 완성 '설렘으로 준비'",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-22",
-      "title_hash": "7d2d27dcf56ec8b7",
-      "card_title": "제니, 2002년생 대만 모델 카이와 함께 포착",
-      "caption_variant": "list_count",
-      "media_id": "18104899598039132",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-28",
       "title_hash": "e456fdf5d1c76c75",
@@ -1441,6 +1369,78 @@
       "card_title": "리센느, 할리스 창립 28년 만의 첫 광고모델 발탁",
       "caption_variant": "question_hook",
       "media_id": "17926147203403880",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "b2fa865230f35504",
+      "card_title": "아일릿, 일본 인기 걸그룹과 뮤직뱅크 무대 공개",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "ae36c1bc4e450a96",
+      "card_title": "JYP 4년 만의 신인 걸그룹, 정식 데뷔 무대 공개",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "8107cfe590f13022",
+      "card_title": "하이브 신인 튜이드, '걸스' 퍼포먼스 공개…경쾌한 매력",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "f77ad0579a3191cc",
+      "card_title": "아일릿, 일본 인기 걸그룹과 뮤직뱅크 무대 공개",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "858884817a3c5e99",
+      "card_title": "뉴진스, 하이브 첫 걸그룹 데뷔 약속 — 민희진 측 공식 입장",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "52a4dc60e2994ee5",
+      "card_title": "JYP, 4년 만에 신규 걸그룹 아워벌스데이 출격",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "c35fd238dcd8cf48",
+      "card_title": "베이비몬스터, 공식 채널 1300만 구독자 돌파 — K팝 걸그룹 TOP3 등극",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "0416bb052e791973",
+      "card_title": "르세라핌, 4세대 걸그룹 중 유일 2026 MTV VMA 노미네이트",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-22",
+      "title_hash": "b0bd411506284015",
+      "card_title": "걸그룹 리센느, 거제 수해 복구에 5천만원 기부",
+      "caption_variant": "list_count",
+      "media_id": "18095014880080698",
       "card_style": "minimal"
     }
   ]
