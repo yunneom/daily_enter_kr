@@ -6,7 +6,7 @@
   화: balance   밸런스게임 2문항 (텍스트 카드, 1/2 댓글 투표)
   수: pause     멈춰라 챌린지 (실물사진 고속 순환 릴스)
   목: chemi     케미 듀오 4팀 투표 (같은 그룹 2인 조합, 1~4 댓글 투표)
-  금: balance
+  금: quiz      걸그룹 상식 등급전 (5문항 퀴즈 릴스, 0~5 댓글)
   토: pause
   일: chemi_result  목요일 투표 집계 → 결과 카드
   + 매월 15일: brandrep  브랜드평판 TOP10 카운트다운 릴스 (해당 월 데이터 1회)
@@ -51,8 +51,8 @@ _NEXT_TEASER = {
     0: "내일 11:30 밸런스게임",            # 월(유닛) → 화
     1: "내일 11:30 멈춰라 챌린지",          # 화(밸런스) → 수
     2: "내일 11:30 케미 듀오 투표",         # 수(퍼즈) → 목
-    3: "내일 11:30 밸런스게임 · 결과는 일요일",  # 목(케미) → 금
-    4: "내일 11:30 멈춰라 챌린지",          # 금(밸런스) → 토
+    3: "내일 11:30 상식 등급전 · 케미 결과는 일요일",  # 목(케미) → 금
+    4: "내일 11:30 멈춰라 챌린지",          # 금(퀴즈) → 토
     5: "내일 11:30 케미 투표 결과 발표",      # 토(퍼즈) → 일
     6: "내일 11:30 드림 유닛 빌더",         # 일(결과) → 월
 }
@@ -533,13 +533,146 @@ def run_brandrep(date, dry):
                       yt_title=f"{period} 걸그룹 브랜드평판 TOP10 카운트다운")
 
 
+# ─────────────────────────────── 6) 컴백 캘린더 (저장형 자산) ──
+# 2026-W34 트렌드 스카우트 채택안 1번 — "저장 0을 깨라". 데이터는
+# data/comeback_calendar.json (2개 이상 출처 교차 확인된 확정 일정만, 수기 갱신).
+CAL_PATH = ROOT / "data" / "comeback_calendar.json"
+
+
+def run_calendar(date, dry):
+    data = json.loads(CAL_PATH.read_text(encoding="utf-8"))
+    # 지난 일정은 자동 제외 — 오늘 이후만
+    entries = [e for e in data["entries"] if e["date"] >= date.isoformat()]
+    topic_id = f"eng_calendar_{data['updated']}"
+    if not dry and _already_posted(topic_id):
+        print("✅ 이 버전 캘린더 이미 게시 — skip (데이터 갱신 시 updated 날짜 변경)")
+        return 0
+    if len(entries) < 2:
+        print(f"⚠️ 남은 확정 일정 {len(entries)}건 — 캘린더 게시 생략 (데이터 갱신 필요)")
+        return 0
+    from make_engagement_cards import make_text_cover, make_calendar_card, make_cta_card
+    out = OUT / f"calendar_{data['updated']}"
+    cover = make_text_cover(["다가오는", "걸그룹 컴백"], f"{data['period']} · 확정 {len(entries)}건",
+                            out / "00_cover.jpg", kicker="저장해두고 챙기세요")
+    cal = make_calendar_card(data["period"], entries, out / "01_cal.jpg",
+                             disclaimer=data.get("disclaimer", ""))
+    cta = make_cta_card(["빠진 일정이 있다면", "댓글로 제보해주세요", "",
+                         "제보 반영해서 갱신본으로 올립니다"],
+                        out / "02_cta.jpg", emphasis="🔖 저장 필수")
+    listing = " · ".join(f"{int(e['date'][5:7])}/{int(e['date'][8:10])} {e['name']}"
+                         for e in entries)
+    caption = (f"걸그룹 컴백 캘린더 📅 {data['period']}\n"
+               f"{listing}\n\n"
+               f"저장해두면 놓칠 일 없어요. 빠진 일정은 댓글로 제보 — 갱신본에 반영합니다.\n"
+               f"({data.get('disclaimer','')})\n\n"
+               f"{_follow_loop(date)}\n\n{HASHTAGS}")
+    return _post_carousel([cover, cal, cta], caption,
+                          "빠진 컴백 일정 제보 받아요 ⬇️ 갱신본에 반영!",
+                          topic_id, f"컴백 캘린더 {data['period']}", "eng_calendar", dry)
+
+
+# ─────────────────────────────── 7) 걸그룹 상식 등급전 (퀴즈 릴스) ──
+# 스카우트 채택안 3번. 문항은 저장소에서 이미 검증된 데이터(group_rosters·
+# 브랜드평판)에서만 프로그램으로 생성 — 날조 위험 0. 분쟁/활동중단 이슈가 있는
+# 그룹(뉴진스·베이비몬스터)과 보이그룹은 문항에서 제외.
+QUIZ_EXCLUDE_GROUPS = {"뉴진스", "BABYMONSTER", "RIIZE", "ATEEZ", "CORTIS",
+                       "KickFlip", "NCT", "P1Harmony", "TWS", "TXT", "더보이즈",
+                       "보이넥스트도어", "스트레이키즈", "엔하이픈", "제로베이스원", "트레저"}
+
+
+def _quiz_pool():
+    rosters = json.loads((ROOT / "data" / "group_rosters.json").read_text(encoding="utf-8"))["groups"]
+    return {g: r for g, r in rosters.items()
+            if g not in QUIZ_EXCLUDE_GROUPS and len(r.get("members", [])) >= 4}
+
+
+def _build_quiz(date, n=5):
+    """검증 데이터 기반 5문항 — (질문, 보기4, 정답 인덱스)."""
+    rng = _seed_for(date, "quiz")
+    pool = _quiz_pool()
+    groups = sorted(pool)
+    qs = []
+
+    def member_of(g):
+        return rng.choice(pool[g]["members"])
+
+    # 유형1·2: "다음 중 ○○ 멤버는?" x2 — 정답 1 + 타 그룹 멤버 3
+    for g in rng.sample(groups, 2):
+        others = [x for x in groups if x != g]
+        opts = [member_of(g)] + [member_of(o) for o in rng.sample(others, 3)]
+        ans = opts[0]; rng.shuffle(opts)
+        qs.append((f"다음 중 {g} 멤버는?", opts, opts.index(ans)))
+    # 유형3: 역매칭 "'○○'가 속한 그룹은?"
+    g = rng.choice(groups)
+    m = member_of(g)
+    opts = [g] + rng.sample([x for x in groups if x != g], 3)
+    ans = opts[0]; rng.shuffle(opts)
+    qs.append((f"'{m}' — 소속 그룹은?", opts, opts.index(ans)))
+    # 유형4: 멤버 수
+    g = rng.choice([x for x in groups if x not in ("소녀시대",)])  # 활동 형태 논쟁 여지 그룹 제외
+    correct = len(pool[g]["members"])
+    opts_n = sorted({correct, correct + 1, max(2, correct - 1), correct + 2})[:4]
+    while len(opts_n) < 4:
+        opts_n.append(max(opts_n) + 1)
+    rng.shuffle(opts_n)
+    qs.append((f"{g} — 현재 몇 인조? (2026년 기준)",
+               [f"{x}인조" for x in opts_n], opts_n.index(correct)))
+    # 유형5: 브랜드평판 (자체 데이터)
+    br = json.loads(BRANDREP_PATH.read_text(encoding="utf-8"))
+    top = sorted(br["rankings"], key=lambda r: r["rank"])
+    first = top[0]
+    distract = [r["member"] for r in top[1:4]]
+    opts = [first["member"]] + distract
+    ans = opts[0]; rng.shuffle(opts)
+    qs.append((f"{br['period']} 걸그룹 개인 브랜드평판 1위는?", opts, opts.index(ans)))
+
+    rng.shuffle(qs)
+    return qs[:n]
+
+
+def run_quiz(date, dry):
+    topic_id = f"eng_quiz_{date.isoformat()}"
+    if not dry and _already_posted(topic_id):
+        print("✅ 오늘 상식 등급전 이미 게시 — skip")
+        return 0
+    from make_engagement_cards import make_text_cover, make_quiz_card, make_grade_card
+    from make_video import make_slideshow_video
+
+    qs = _build_quiz(date)
+    out = OUT / f"quiz_{date.isoformat()}"
+    cover = make_text_cover(["걸그룹 상식", "등급전"], "5문항 · 3초 안에 답하기",
+                            out / "00_cover.jpg", kicker="너 얼마나 아는데?")
+    paths, durations = [cover], [1.8]
+    for i, (q, opts, ans) in enumerate(qs, 1):
+        paths.append(make_quiz_card(i, len(qs), q, opts, out / f"q{i}_q.jpg",
+                                    countdown="3초"))
+        durations.append(3.5)
+        paths.append(make_quiz_card(i, len(qs), q, opts, out / f"q{i}_a.jpg",
+                                    answer_idx=ans))
+        durations.append(1.2)
+    paths.append(make_grade_card(out / "99_grade.jpg"))
+    durations.append(3.0)
+
+    mp4 = make_slideshow_video(paths, out / "quiz.mp4", durations=durations,
+                               crossfade=0.0, bgm_path=_bgm(date), bgm_volume=0.35)
+    caption = ("걸그룹 상식 등급전 🎓 5문항, 문항당 3초!\n"
+               "몇 개 맞혔는지 댓글로 (0~5) — 5개면 고인물 인정 👑\n"
+               "출처: 공식 프로필 · 한국기업평판연구소\n\n"
+               f"{_follow_loop(date)}\n\n{HASHTAGS}")
+    return _post_reel(mp4, caption, "몇 개 맞혔어요? 0~5 댓글로!",
+                      topic_id, f"상식 등급전 {date.isoformat()}", "eng_quiz", dry,
+                      yt_title=f"걸그룹 상식 등급전 — 너 얼마나 아는데? #{date.strftime('%m%d')}")
+
+
 # ──────────────────────────────────────────────────────────── main ──
 FORMATS = {
     "balance": run_balance, "pause": run_pause, "unit": run_unit,
     "chemi": run_chemi, "chemi_result": run_chemi_result, "brandrep": run_brandrep,
+    "quiz": run_quiz, "calendar": run_calendar,
 }
+# 금: balance → quiz (스카우트 채택 — 취향 일변도에 '정답 있는' 축 추가)
 ROTATION = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
-            4: "balance", 5: "pause", 6: "chemi_result"}
+            4: "quiz", 5: "pause", 6: "chemi_result"}
 
 
 def main() -> int:
@@ -561,6 +694,12 @@ def main() -> int:
         return 1
 
     # 매월 15일: 브랜드평판 추가 게시 (그 달 데이터 미게시분만)
+    if args.format is None and date.day == 1:
+        print("\n📅 1일 — 월간 컴백 캘린더 추가 시도")
+        try:
+            rc = max(rc, run_calendar(date, args.dry_run))
+        except Exception as e:
+            print(f"⚠️ 캘린더 게시 실패(비치명): {e}")
     if args.format is None and date.day == 15:
         print("\n📊 15일 — 브랜드평판 카운트다운 추가 시도")
         try:

@@ -374,3 +374,113 @@ def make_cta_card(lines: List[str], out: Path, emphasis: str = "") -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
     img.save(out, quality=92)
     return out
+
+
+def make_calendar_card(period: str, entries: list, out: Path,
+                       disclaimer: str = "공식 발표 기준 · 일정은 변동될 수 있음") -> Path:
+    """컴백 캘린더 리스트 카드 — 저장형 자산 (2026-W34 트렌드 스카우트 채택안 1번).
+    entries[i] = {date:'YYYY-MM-DD', name, detail, kind}. 최대 8건/장."""
+    img = _base()
+    draw = ImageDraw.Draw(img)
+    f_title = _font("Bold", 92)
+    f_sub = _font("Medium", 40)
+    f_date = _font("Bold", 46)
+    f_name = _font("Bold", 56)
+    f_detail = _font("Medium", 36)
+    f_kind = _font("SemiBold", 30)
+    f_disc = _font("Medium", 30)
+
+    _center(draw, 140, "걸그룹 컴백 캘린더", f_title)
+    _center(draw, 265, period, f_sub, fill=GOLD)
+
+    y = 420
+    row_h = 170
+    for e in entries[:8]:
+        mm, dd = e["date"][5:7], e["date"][8:10]
+        # 날짜 배지
+        draw.rounded_rectangle([70, y, 250, y + 110], radius=20,
+                               fill=(30, 28, 44), outline=ACCENT, width=3)
+        ds = f"{int(mm)}/{int(dd)}"
+        w = draw.textlength(ds, font=f_date)
+        draw.text((160 - w / 2, y + 30), ds, font=f_date, fill=INK)
+        # 이름 + 상세
+        draw.text((290, y), e["name"], font=f_name, fill=INK)
+        draw.text((290, y + 70), e.get("detail", ""), font=f_detail, fill=MUTED)
+        # 종류 태그 (데뷔/컴백/발매)
+        kind = e.get("kind", "")
+        if kind:
+            kw = draw.textlength(kind, font=f_kind)
+            kx = CANVAS[0] - 80 - kw
+            color = ACCENT2 if kind == "데뷔" else ACCENT
+            draw.rounded_rectangle([kx - 20, y + 8, kx + kw + 20, y + 62],
+                                   radius=16, outline=color, width=3)
+            draw.text((kx, y + 18), kind, font=f_kind, fill=INK)
+        y += row_h
+
+    _center(draw, CANVAS[1] - 210, disclaimer, f_disc, fill=MUTED)
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
+def make_quiz_card(q_num: int, q_total: int, question: str, options: list,
+                   out: Path, answer_idx: int = -1, countdown: str = "") -> Path:
+    """상식 등급전 문항 카드 (스카우트 채택안 3번). answer_idx>=0 면 정답 리빌 버전
+    (정답 옵션만 골드 하이라이트). options 는 4개."""
+    img = _base()
+    draw = ImageDraw.Draw(img)
+    f_tag = _font("Medium", 40)
+    f_q = _font("Bold", 62)
+    f_opt = _font("SemiBold", 48)
+    f_num = _font("Bold", 44)
+
+    _center(draw, 150, f"Q{q_num}/{q_total}" + (f"  ·  {countdown}" if countdown else ""),
+            f_tag, fill=MUTED)
+    qy = 260
+    for line in _wrap(draw, question, f_q, CANVAS[0] - 140)[:3]:
+        qy = _center(draw, qy, line, f_q)
+
+    y = max(qy + 60, 640)
+    for i, opt in enumerate(options[:4]):
+        is_answer = (i == answer_idx)
+        color = GOLD if is_answer else (BAR_BG if answer_idx >= 0 else ACCENT)
+        fill = (60, 52, 20) if is_answer else (26, 24, 38)
+        draw.rounded_rectangle([90, y, CANVAS[0] - 90, y + 150], radius=26,
+                               fill=fill, outline=color, width=4 if is_answer else 3)
+        draw.ellipse([120, y + 45, 180, y + 105], fill=color)
+        nw = draw.textlength(str(i + 1), font=f_num)
+        draw.text((150 - nw / 2, y + 50), str(i + 1), font=f_num, fill=(20, 20, 25))
+        tfill = GOLD if is_answer else (INK if answer_idx < 0 else MUTED)
+        draw.text((215, y + 48), opt[:18], font=f_opt, fill=tfill)
+        y += 185
+
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
+def make_grade_card(out: Path) -> Path:
+    """퀴즈 엔딩 등급 카드 — 맞은 개수 → 등급 안내."""
+    img = _base()
+    draw = ImageDraw.Draw(img)
+    f_title = _font("Bold", 88)
+    f_row = _font("SemiBold", 54)
+    f_cta = _font("Medium", 44)
+    _center(draw, 260, "몇 개 맞혔나요?", f_title)
+    grades = [("0–1개", "뉴비", MUTED), ("2–3개", "라이트 팬", ACCENT),
+              ("4개", "찐팬", ACCENT2), ("5개", "고인물 👑", GOLD)]
+    y = 560
+    for score, label, color in grades:
+        draw.rounded_rectangle([120, y, CANVAS[0] - 120, y + 140], radius=26,
+                               fill=(26, 24, 38), outline=color, width=3)
+        draw.text((170, y + 42), score, font=f_row, fill=MUTED)
+        w = draw.textlength(label, font=f_row)
+        draw.text((CANVAS[0] - 170 - w, y + 42), label, font=f_row, fill=color)
+        y += 175
+    _center(draw, y + 40, "맞은 개수를 댓글로! (0~5)", f_cta, fill=GOLD)
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
