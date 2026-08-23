@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-23T08:13:43.791057+09:00",
+  "last_run_at": "2026-08-24T08:12:27.542169+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1489,6 +1489,78 @@
       "card_title": "아일릿, 오늘 엠카 출격…일본 걸그룹 HANA 지수·모모카와 스페셜 콜라보",
       "caption_variant": "tease_one",
       "media_id": "18131726842732857",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "20256c7ee5edd7af",
+      "card_title": "한미 합작 걸그룹 캣츠아이, 빌보드 앨범 차트 첫 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "1e7fde79865e40fd",
+      "card_title": "캣츠아이, 미국 빌보드 앨범 차트 첫 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "ed50f723663134fa",
+      "card_title": "캣츠아이, '와일드'로 빌보드 앨범 차트 첫 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "1e7fde79865e40fd",
+      "card_title": "걸그룹 캣츠아이, 미 빌보드 앨범 차트 첫 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "5eecb50efe3b97cc",
+      "card_title": "하이브 캣츠아이, 빌보드 200 1위 달성 — K팝 걸그룹 네 번째",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "8a157fc15d4ca108",
+      "card_title": "하이브 걸그룹 캣츠아이, 구글 검색량 데뷔 후 최고 기록",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "cf1283171e0b0526",
+      "card_title": "캣츠아이, 美 빌보드 앨범 차트 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "c7189f627f0fd068",
+      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, 데뷔 첫 주 글로벌 활동 성료",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-24",
+      "title_hash": "1673e722fc4f8dbc",
+      "card_title": "캣츠아이, 빌보드 200·톱 앨범 세일즈 동시 1위 달성",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17957348229207003",
       "card_style": "minimal"
     }
   ]
