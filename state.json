@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-24T08:12:27.542169+09:00",
+  "last_run_at": "2026-08-25T08:40:54.457047+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1561,6 +1561,78 @@
       "card_title": "캣츠아이, 빌보드 200·톱 앨범 세일즈 동시 1위 달성",
       "caption_variant": "you_wont_believe",
       "media_id": "17957348229207003",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "4081e80119d145b8",
+      "card_title": "캣츠아이, 한미 합작 걸그룹으로 빌보드 200 정상 달성",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "25413bc950bf0142",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡으로 플레이리스트 진출 자신감",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "6b237c4411dadd6e",
+      "card_title": "지효 동생 서연, 하이브 新걸그룹 튜이드 데뷔",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "83e54fcd8dd62883",
+      "card_title": "하이브 신규 걸그룹 '튜이드' 데뷔 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "dcddd3b1fae0e22e",
+      "card_title": "캣츠아이, K-팝 시스템으로 글로벌 성공 — 빌보드 200 정상 달성",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "c874170d7dc0dc4e",
+      "card_title": "하이브 신인 튜이드, 데뷔곡 'SUN KISS' 뮤비 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "4ee95ece09cd72d6",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔 무대 공개 — '소울트로닉'으로 새로운 K-팝 흐름 예고",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "7eba24320d74af17",
+      "card_title": "캣츠아이 '와일드', 빌보드 200 첫 진입 1위 달성",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-25",
+      "title_hash": "ebb63a8079b16f95",
+      "card_title": "하이브 신규 걸그룹 튜이드, 강렬한 개성으로 출격",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18003389891972960",
       "card_style": "minimal"
     }
   ]
