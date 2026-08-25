@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-25T08:40:54.457047+09:00",
+  "last_run_at": "2026-08-26T08:26:05.624998+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1633,6 +1633,78 @@
       "card_title": "하이브 신규 걸그룹 튜이드, 강렬한 개성으로 출격",
       "caption_variant": "headlines_dotted",
       "media_id": "18003389891972960",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "ec8fd0d95eb7d44a",
+      "card_title": "하이브 걸그룹 튜이드, 신세계스퀘어 MV 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "8ab090c3cb68e49b",
+      "card_title": "하이브 신인 걸그룹 '튜이드' 데뷔, 신세계스퀘어서 콘텐츠 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "7302a2ecd3b927b4",
+      "card_title": "하이브 신인 걸그룹 '튜이드' 데뷔 뮤비 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "63e082ed1e40489b",
+      "card_title": "하이브 신인 걸그룹 튜이드, 슈퍼 엘르 9월호 커버 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "8eb59d6da758090e",
+      "card_title": "하이브 신인 걸그룹 튜이드, 신세계百 미디어파사드서 데뷔 뮤비 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "38ac3281c37d25e8",
+      "card_title": "하이브 신인 걸그룹 튜이드, 신세계스퀘어서 데뷔 무대 개최",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "71355ba02017350a",
+      "card_title": "버추얼 걸그룹 오위스, 신곡 '쥬씨'로 활동 재개",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "97a06ea35ca184fa",
+      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡으로 글로벌 팬심 장악",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-26",
+      "title_hash": "ca429da5beed3b9a",
+      "card_title": "하이브 신인 걸그룹, 데뷔곡 전곡 차트인 기록 달성",
+      "caption_variant": "question_hook",
+      "media_id": "18142073908602707",
       "card_style": "minimal"
     }
   ]
