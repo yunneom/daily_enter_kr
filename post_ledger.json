@@ -2473,6 +2473,25 @@
       "youtube_id": "lDOsrvSApRg",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-08-27T22:00:34.818829+09:00",
+      "topic_id": "eng_chemi_w202635",
+      "title": "케미 듀오 투표 2026-W35",
+      "style": "eng_chemi",
+      "seed": null,
+      "ig_media_id": "18129060505670250",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "duos": [
+          "1. 아이브 리즈·레이",
+          "2. 우주소녀 연정·여름",
+          "3. 르세라핌 카즈하·김채원",
+          "4. 에스파 윈터·닝닝"
+        ]
+      }
     }
   ]
 }
