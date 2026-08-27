@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-26T08:26:05.624998+09:00",
+  "last_run_at": "2026-08-27T13:21:10.866392+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1705,6 +1705,78 @@
       "card_title": "하이브 신인 걸그룹, 데뷔곡 전곡 차트인 기록 달성",
       "caption_variant": "question_hook",
       "media_id": "18142073908602707",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "7366e5a684c06835",
+      "card_title": "아워벌스데이, 초동 11만장으로 역대 걸그룹 데뷔앨범 10위 기록",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "7eeca9e3713803af",
+      "card_title": "아워벌스데이, 데뷔 싱글 초동 11만장 돌파",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "a7d04b0693a395ee",
+      "card_title": "하이브 신인 걸그룹 튜이드, 엠카 첫 음방 무대 공개",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "6ddc960696ba7b2d",
+      "card_title": "하이브 신인 걸그룹 튜이드, 27일 엠카 무대로 데뷔 첫 음방",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "379d5398fa4eefd8",
+      "card_title": "버추얼 걸그룹 뮤, 15일 앨범 발매 앞두고 신곡 'Girls Night' MV 선공개",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "41fecc5add65021b",
+      "card_title": "OURBIRTHDAY, 데뷔 싱글 초동 11만 장으로 걸그룹 데뷔 톱10 진입",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "4d2dac2eb6ab620c",
+      "card_title": "아워벌스데이, 데뷔 초동 11만장 역대 걸그룹 10위 기록",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "4f8a9a3617a18442",
+      "card_title": "에스파, 광야의 걸그룹 '넥스트 레벨' 선언",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-27",
+      "title_hash": "dee3515a40e2b48f",
+      "card_title": "걸그룹 iii, 새 싱글 '웨이트'로 시크한 변신",
+      "caption_variant": "tease_one",
+      "media_id": "18021873080861068",
       "card_style": "minimal"
     }
   ]
