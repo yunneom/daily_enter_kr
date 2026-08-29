@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-28T15:35:51.313168+09:00",
+  "last_run_at": "2026-08-29T13:08:40.237378+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1777,6 +1777,78 @@
       "card_title": "캣츠아이, 한미 합작 걸그룹으로 빌보드200 첫 1위 달성",
       "caption_variant": "you_wont_believe",
       "media_id": "18016235762942777",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "3a0e60768594227d",
+      "card_title": "걸그룹 iii, 신곡 'WaiT'으로 새로운 모습 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "224f7ebaf1776d4e",
+      "card_title": "이새롬, 걸그룹 탈퇴 후 유승호와 드라마 '재벌X형사' 출연 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "3256a3533b5bf145",
+      "card_title": "르세라핌 홍은채, 29일 잠실야구장 마운드 등장 — 망곰베어스 페스티벌",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "650e085354514dcd",
+      "card_title": "프로미스나인 박지원, 7년간 무수입 고백",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "cb62820d35aad6cc",
+      "card_title": "하이브 막내 걸그룹 튜이드, 자신만의 색깔 만들어가겠다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "a08c33ee565a72a0",
+      "card_title": "걸그룹 iii, 디지털 싱글 'WaiT' 발매하며 컴백",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "84e833473389d403",
+      "card_title": "JYP·하이브 7인조 걸그룹 신곡 동시 공개 — '휩합' vs '소울트로닉' 맞대결",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "0510c8ccfaa86be3",
+      "card_title": "하이브 신인 걸그룹 튜이드, 오늘 공식 데뷔",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-29",
+      "title_hash": "0510c8ccfaa86be3",
+      "card_title": "하이브 신인 걸그룹 튜이드, 오늘 데뷔 무대 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18111292745053806",
       "card_style": "minimal"
     }
   ]
