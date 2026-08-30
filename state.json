@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-29T13:08:40.237378+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-08-30T10:08:17.262603+09:00",
+  "last_run_status": "skipped_too_few_cards",
   "posted_history": [
-    {
-      "date": "2026-07-30",
-      "title_hash": "b232570917e4e1ed",
-      "card_title": "리센느·돈선태, 썸네일 긴급 수정 — '무섭노' 표현 재검토",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "883464069fa26059",
-      "card_title": "이관희♥유시은, '솔로지옥3'에서 만나 열애 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "9f00c56958ef01ea",
-      "card_title": "문근영, 배우 정평과 결혼 발표…7세 연상 신랑",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "6febac332c8da814",
-      "card_title": "선미, 워터밤 무대로 입소문 — 음원·공연 관심도 상승",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "7a4e6b4c04093170",
-      "card_title": "BTS, 내년 그래미 출품 결정 — '음악에 국경 없다'",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "9d0ac95e5ea6d0dd",
-      "card_title": "김수현, '고 김새론 교제 의혹' 아동복지법 위반 무혐의 처분",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "6b23fc612c67fcec",
-      "card_title": "영화 '원스' 글렌 핸사드, 별세",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "c0e0b40e0e844825",
-      "card_title": "한국 영화 시장, 코로나 이전 수준 회복 — 극장 매출 전년 대비 50% 증가",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-30",
-      "title_hash": "4565a82da9c24803",
-      "card_title": "고지용, 의사 허양임과 2년 전 이혼 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18127185937646225",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-07-31",
       "title_hash": "3967d1b9eea45556",
