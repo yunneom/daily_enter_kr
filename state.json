@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-30T10:08:17.262603+09:00",
-  "last_run_status": "skipped_too_few_cards",
+  "last_run_at": "2026-08-31T10:23:33.210165+09:00",
+  "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-07-31",
-      "title_hash": "3967d1b9eea45556",
-      "card_title": "스파이더맨 부부 복귀, '산양들' 신작 개봉 예정",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "95932e28d100267a",
-      "card_title": "소지섭, '김부장'으로 인생 캐릭터 경신 — '아직도 꿈 같다'",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "ce5825674ee164a6",
-      "card_title": "에릭남, 올마이애닉도츠와 신곡 협력…8월 7일 싱글 발매",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "f91bb3292a5281e0",
-      "card_title": "문근영, 결혼 소식에 '많은 축하 받으며 감동'",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "9be61f43dafd3f62",
-      "card_title": "김선태, 리센느 원이 질문 논란에 즉각 사과 '제 잘못'",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "11c1e6d8d6c7745e",
-      "card_title": "제5회 청룡시리즈어워즈, 7월 31일 인천 개최",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "7d65801cf1ed82c9",
-      "card_title": "BTS 그래미 보이콧에 팬덤 화답, 할리우드도 응원",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "55e743efc9db7ecc",
-      "card_title": "BTS 지민 셔츠, 메시·마돈나 유물 넘어 억대 낙찰가 기록",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-07-31",
-      "title_hash": "29a34af8318d91f9",
-      "card_title": "박진영, 청와대 방문해 글로벌 K-뮤직 페스티벌 추진 계획 공개",
-      "caption_variant": "list_count",
-      "media_id": "18433756972124341",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-01",
       "title_hash": "4ddfba8e05234358",
@@ -1777,6 +1705,78 @@
       "card_title": "하이브 신인 걸그룹 튜이드, 오늘 데뷔 무대 공개",
       "caption_variant": "headlines_dotted",
       "media_id": "18111292745053806",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "def066c9bf8b063c",
+      "card_title": "JYP '아워벌스데이', 하이브 '튜이드' — 주요 기획사 걸그룹 신작 라인업",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "87a0c5982afca78f",
+      "card_title": "LG전자 기획 AI 여자아이돌 5인조 데뷔 — 신기술과 음악의 만남",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "806ed41b4da6342f",
+      "card_title": "튜이드, 데뷔앨범 초동 걸그룹 역사 톱 10 진입",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "81e0d6e09c96455e",
+      "card_title": "LG전자, 가상 걸그룹 '에이아이돌'로 AI 세탁기 기술 선보여",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "27224d41fb69fbcd",
+      "card_title": "하이브 신인 튜이드, 데뷔 첫 주 역대 걸그룹 톱10 진입",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "77e1903cf71de4d2",
+      "card_title": "튜이드, 하이브의 새로운 7인조 걸그룹으로 데뷔",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "095c06ca794f3e85",
+      "card_title": "캣츠아이, 빌보드 HOT100 4곡 동시 진입 — K팝 아이돌과 다른 팝 걸그룹 전략",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "0725efcb3ed2e182",
+      "card_title": "츠키, 걸그룹 최초 마라톤 풀코스 완주 성공",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-08-31",
+      "title_hash": "fd23ac860b0d7ea1",
+      "card_title": "JYP '아워버스데이' vs 하이브 '튜이드'…빅3 걸그룹 신작 경쟁",
+      "caption_variant": "tease_one",
+      "media_id": "17933033469363570",
       "card_style": "minimal"
     }
   ]
