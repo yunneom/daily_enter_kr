@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-08-31T10:23:33.210165+09:00",
+  "last_run_at": "2026-09-01T10:38:12.512487+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-01",
-      "title_hash": "4ddfba8e05234358",
-      "card_title": "쌍둥이 자매 걸그룹 어라이즈, 내달 코리안 페스티벌 무대 확정",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "267d1d76aaaec082",
-      "card_title": "이즈나, 롯데백화점 잠실점 베이커리 팝업 협업 오픈",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "00431e3112c9b0e6",
-      "card_title": "걸그룹 리센느, 티오더 광고 선택 — 엔터 분야 3배 성장",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "194e1b867802f8cc",
-      "card_title": "JYP 신인 걸그룹 '아워버스데이', 7인조 확정…정식 데뷔 임박",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "d67276c5fc476591",
-      "card_title": "JYP의 새 걸그룹 OURBIRTHDAY, 7인 멤버 공개 완료",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "b34fd3d1052232af",
-      "card_title": "아워벌스데이, JYP 신곡과 함께 7인 멤버 공식 공개",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "d9d4ac2127a18007",
-      "card_title": "리센느, 서든어택 게임과 콜라보 — 대세 걸그룹의 새로운 도전",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "06d70d3366d96496",
-      "card_title": "A2O MAY, 이수만 프로듀싱 걸그룹 한국 음악방송 무대 확정",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-01",
-      "title_hash": "44a3fa67b1ed248e",
-      "card_title": "아이브 장원영, 메이저리그 경기 초청…시구 무대 선다",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17925580080384485",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-02",
       "title_hash": "01cea005755c8fb7",
@@ -1777,6 +1705,78 @@
       "card_title": "JYP '아워버스데이' vs 하이브 '튜이드'…빅3 걸그룹 신작 경쟁",
       "caption_variant": "tease_one",
       "media_id": "17933033469363570",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "88f43f2dfd144c0e",
+      "card_title": "시부야계 감성 담은 신예 걸그룹 튜이드, K-팝 신바람 일으킨다",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "5719363726a182b7",
+      "card_title": "튜이드, 데뷔앨범 초동 걸그룹 톱10 진입",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "0663acfa1c730383",
+      "card_title": "리센느, CU와 대규모 브랜드 캠페인 시작 — 온·오프라인 팬덤 공략",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "65e096a6ed0ff9de",
+      "card_title": "포시즈, 데뷔곡 '남겨서 뭐하게'서 베테랑 하모니 입증",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "89e409951057d7f3",
+      "card_title": "튜이드, 데뷔 앨범 11만장 판매 — 역대 걸그룹 초동 TOP 10 진입",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "5ebb397a7b77d072",
+      "card_title": "OURBIRTHDAY, 'SQUEEZY' 퍼포먼스 비디오 공개…Y2K 감성",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "f98b545d7c7a2df2",
+      "card_title": "튜이드, 초동 11만장 돌파…2026년 데뷔 걸그룹 1위",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "6500308162804eba",
+      "card_title": "김세정, 배우 활동 후 아이돌 무드로 재조명 — 센터 미모 다시 화제",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-01",
+      "title_hash": "88f43f2dfd144c0e",
+      "card_title": "시부야계 감성의 신예 걸그룹 튜이드, 데뷔무대 공개",
+      "caption_variant": "question_hook",
+      "media_id": "18368953084208256",
       "card_style": "minimal"
     }
   ]
