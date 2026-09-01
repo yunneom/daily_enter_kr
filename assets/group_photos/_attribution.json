@@ -1,0 +1,86 @@
+{
+  "리센느": {
+    "artist": "티비텐 TV10",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Rescene_250205.jpg",
+    "file": "Rescene 250205.jpg",
+    "license": "CC BY 3.0",
+    "path": "리센느.jpg"
+  },
+  "미야오": {
+    "artist": "TV Ten",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Meovv_250512.jpg",
+    "file": "Meovv 250512.jpg",
+    "license": "CC BY 3.0",
+    "path": "미야오.jpg"
+  },
+  "베이비몬스터": {
+    "artist": "David Lee",
+    "descurl": "https://commons.wikimedia.org/wiki/File:BABYMONSTER_in_Seattle.jpg",
+    "file": "BABYMONSTER in Seattle.jpg",
+    "license": "CC BY 4.0",
+    "path": "베이비몬스터.jpg"
+  },
+  "세이마이네임": {
+    "artist": "TV Ten",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Say_My_Name_250313.jpg",
+    "file": "Say My Name 250313.jpg",
+    "license": "CC BY 3.0",
+    "path": "세이마이네임.jpg"
+  },
+  "아르테미스": {
+    "artist": "티비텐 TV10",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Artms_250613.jpg",
+    "file": "Artms 250613.jpg",
+    "license": "CC BY 3.0",
+    "path": "아르테미스.jpg"
+  },
+  "아일릿": {
+    "artist": "티비텐 TV10",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Illit_240326.jpg",
+    "file": "Illit 240326.jpg",
+    "license": "CC BY 3.0",
+    "path": "아일릿.jpg"
+  },
+  "유니스": {
+    "artist": "티비텐",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Unis_at_First_Brand_Awards,_January_7,_2025.png",
+    "file": "Unis at First Brand Awards, January 7, 2025.png",
+    "license": "CC BY 3.0",
+    "path": "유니스.jpg"
+  },
+  "이즈나": {
+    "artist": "Tv10",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Izna_Mamma_Mia_showcase.jpg",
+    "file": "Izna Mamma Mia showcase.jpg",
+    "license": "CC BY 3.0",
+    "path": "이즈나.jpg"
+  },
+  "캔디샵": {
+    "artist": "K-POPIT 케이팝잇",
+    "descurl": "https://commons.wikimedia.org/wiki/File:240329_Candy_Shop.jpg",
+    "file": "240329 Candy Shop.jpg",
+    "license": "CC BY 3.0",
+    "path": "캔디샵.jpg"
+  },
+  "캣츠아이": {
+    "artist": "Warmtoned",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Katseye_at_Wango_Tango_2025.jpg",
+    "file": "Katseye at Wango Tango 2025.jpg",
+    "license": "CC BY 4.0",
+    "path": "캣츠아이.jpg"
+  },
+  "키키": {
+    "artist": "SBS Radio 에라오",
+    "descurl": "https://commons.wikimedia.org/wiki/File:Kiiikiii_250304.png",
+    "file": "Kiiikiii 250304.png",
+    "license": "CC BY 3.0",
+    "path": "키키.jpg"
+  },
+  "하츠투하츠": {
+    "artist": "티비텐",
+    "descurl": "https://commons.wikimedia.org/wiki/File:250305_%ED%95%98%EC%B8%A0%ED%88%AC%ED%95%98%EC%B8%A0_Hearts2Hearts_SBS_Radio_Commute.jpg",
+    "file": "250305 하츠투하츠 Hearts2Hearts SBS Radio Commute.jpg",
+    "license": "CC BY 3.0",
+    "path": "하츠투하츠.jpg"
+  }
+}
