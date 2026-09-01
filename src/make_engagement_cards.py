@@ -228,6 +228,63 @@ def make_member_photo_card(photo_path: Optional[str], name: str, group: str,
     return out
 
 
+def make_group_rank_card(photo_path: Optional[str], rank: int, name: str,
+                         name_en: str, sub: str, out: Path,
+                         kicker: str = "신인 걸그룹 브랜드평판") -> Path:
+    """그룹 랭킹 카드 — 가로형 '단체 사진'용.
+
+    커먼즈의 그룹 사진은 대부분 가로형이라 풀블리드(cover crop)로 쓰면 멤버가
+    잘려나간다. 대신 원본 비율을 살린 가로 밴드로 중앙 배치하고 위(순위)/아래
+    (그룹명·지수)에 텍스트를 둔다. photo_path 가 None 이면 그룹 컬러 그라디언트.
+    """
+    img = _base()
+    draw = ImageDraw.Draw(img)
+
+    # 상단: 킥커 + 대형 순위
+    f_kick = _font("SemiBold", 42)
+    _center(draw, 130, kicker, f_kick, fill=MUTED)
+    f_big = _font("Bold", 230)
+    rank_txt = str(rank)
+    rw = draw.textlength(rank_txt, font=f_big)
+    draw.text(((CANVAS[0] - rw) / 2, 190), rank_txt, font=f_big, fill=GOLD,
+              stroke_width=8, stroke_fill=(5, 5, 10))
+
+    # 중앙: 사진 밴드 (원본 비율 유지, 높이 상한만 적용)
+    band_top, band_max_h = 540, 780
+    if photo_path and Path(photo_path).exists():
+        try:
+            src = Image.open(photo_path).convert("RGB")
+            bw = CANVAS[0]
+            bh = min(band_max_h, int(bw * src.size[1] / src.size[0]))
+            band = _cover_crop(src, bw, bh)
+        except Exception:
+            band = _photo_or_gradient(None, name, (CANVAS[0], band_max_h))
+            bh = band_max_h
+    else:
+        band = _photo_or_gradient(None, name, (CANVAS[0], band_max_h))
+        bh = band_max_h
+    by = band_top + (band_max_h - bh) // 2
+    img.paste(band, (0, by))
+    draw.line([(0, by - 4), (CANVAS[0], by - 4)], fill=ACCENT, width=4)
+    draw.line([(0, by + bh), (CANVAS[0], by + bh)], fill=ACCENT2, width=4)
+
+    # 하단: 그룹명 · 영문명 · 지수
+    y = band_top + band_max_h + 90
+    f_name = _font("Bold", 100)
+    y = _center(draw, y, name, f_name)
+    if name_en:
+        f_en = _font("SemiBold", 46)
+        y = _center(draw, y + 6, name_en, f_en,
+                    fill=GROUP_COLORS.get(name, (196, 181, 253)))
+    if sub:
+        f_sub = _font("Medium", 42)
+        _center(draw, y + 18, sub, f_sub, fill=MUTED)
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
 def make_unit_grid_card(rows: List[List[dict]], out: Path,
                         title: str = "나만의 드림 유닛",
                         rule: str = "각 줄에서 1명씩 — 예: 1-3-2-1") -> Path:

@@ -1,0 +1,77 @@
+{
+  "_comment": "신인 걸그룹 '단체 사진' 큐레이션 — warm_group_photo_cache.py 가 이 파일에 등록된 커먼즈 파일만 받는다 (다운로드 시점 CC/PD 재검증). 후보 조사 2026-09-01: 전 파일 File: 페이지에서 라이선스 원문 확인. CC BY-SA(Share-Alike) 파일은 캡션 표기 부담이 커서 CC BY 계열만 채택. 튜이드는 커먼즈에 파일 없음(2026-08 데뷔 신인) — 확보되면 추가.",
+  "groups": {
+    "리센느": {
+      "file": "Rescene 250205.jpg",
+      "license": "CC BY 3.0",
+      "author": "티비텐 TV10 (YouTube)",
+      "note": "2025-02-05 쇼케이스 스크린샷"
+    },
+    "키키": {
+      "file": "Kiiikiii 250304.png",
+      "license": "CC BY 3.0",
+      "author": "SBS Radio 에라오 (YouTube)",
+      "note": "2025-03-04 SBS 라디오, 라이선스 리뷰 완료"
+    },
+    "하츠투하츠": {
+      "file": "250305 하츠투하츠 Hearts2Hearts SBS Radio Commute.jpg",
+      "license": "CC BY 3.0",
+      "author": "티비텐 (YouTube)",
+      "note": "2025-03-05 SBS 라디오 출근길, 리뷰 완료"
+    },
+    "아일릿": {
+      "file": "Illit 240326.jpg",
+      "license": "CC BY 3.0",
+      "author": "티비텐 TV10 (YouTube)",
+      "note": "2024-03-26 데뷔 시기 행사"
+    },
+    "베이비몬스터": {
+      "file": "BABYMONSTER in Seattle.jpg",
+      "license": "CC BY 4.0",
+      "author": "David Lee (Flickr)",
+      "note": "2025-09-12 시애틀 콘서트 무대, FlickreviewR 확인"
+    },
+    "캣츠아이": {
+      "file": "Katseye at Wango Tango 2025.jpg",
+      "license": "CC BY 4.0",
+      "author": "Warmtoned",
+      "note": "2025-05-10 Wango Tango 무대"
+    },
+    "미야오": {
+      "file": "Meovv 250512.jpg",
+      "license": "CC BY 3.0",
+      "author": "TV Ten (YouTube)",
+      "note": "2025-05-12 쇼케이스"
+    },
+    "이즈나": {
+      "file": "Izna Mamma Mia showcase.jpg",
+      "license": "CC BY 3.0",
+      "author": "Tv10 (YouTube)",
+      "note": "2025-09-30 쇼케이스, 리뷰 완료"
+    },
+    "아르테미스": {
+      "file": "Artms 250613.jpg",
+      "license": "CC BY 3.0",
+      "author": "티비텐 TV10 (YouTube)",
+      "note": "2025-06-13 쇼케이스"
+    },
+    "캔디샵": {
+      "file": "240329 Candy Shop.jpg",
+      "license": "CC BY 3.0",
+      "author": "K-POPIT 케이팝잇 (YouTube)",
+      "note": "2024-03-29 행사"
+    },
+    "유니스": {
+      "file": "Unis at First Brand Awards, January 7, 2025.png",
+      "license": "CC BY 3.0",
+      "author": "티비텐 (YouTube)",
+      "note": "2025-01-07 퍼스트브랜드대상"
+    },
+    "세이마이네임": {
+      "file": "Say My Name 250313.jpg",
+      "license": "CC BY 3.0",
+      "author": "TV Ten (YouTube)",
+      "note": "2025-03-13 쇼케이스"
+    }
+  }
+}

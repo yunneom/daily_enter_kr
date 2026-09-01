@@ -9,6 +9,7 @@
   금: quiz      걸그룹 상식 등급전 (5문항 퀴즈 릴스, 0~5 댓글)
   토: pause
   일: chemi_result  목요일 투표 집계 → 결과 카드
+  + 매월 2일: rookie    신인 걸그룹 브랜드평판 랭킹 릴스 (해당 월 데이터 1회)
   + 매월 15일: brandrep  브랜드평판 TOP10 카운트다운 릴스 (해당 월 데이터 1회)
 
 사용:
@@ -571,6 +572,91 @@ def run_calendar(date, dry):
                           topic_id, f"컴백 캘린더 {data['period']}", "eng_calendar", dry)
 
 
+# ─────────────── 6.5) 신인 걸그룹 브랜드평판 카운트다운 (월간, 릴스) ──
+# 2026-09 신설 — 한국기업평판연구소 "신인 아이돌그룹 브랜드평판"(보이+걸 통합
+# TOP30, 매월 1일경 발표)에서 걸그룹만 발췌한 월간 랭킹. 데이터는
+# data/rookie_girlgroup_brand_rep.json (뉴스 매체 2곳 이상 교차 검증 후 수기 갱신).
+# 사진은 개인이 아니라 "그룹 단체 사진"(assets/group_photos/, 커먼즈 자유
+# 라이선스 + 다운로드 시점 재검증) — 단체 사진이 없는 그룹은 카드에서 빼되,
+# 순위 번호는 발췌 랭킹 그대로 유지하고 캡션에 전체 순위+제외 사실을 명기한다.
+ROOKIE_PATH = ROOT / "data" / "rookie_girlgroup_brand_rep.json"
+ROOKIE_MIN_CARDS = 6
+
+
+def _group_attribution(groups) -> str:
+    """그룹 단체사진 출처 표기 — 캐시된 그룹당 한 줄."""
+    from warm_group_photo_cache import load_group_cache
+    attr = load_group_cache()
+    lines = []
+    for g in groups:
+        rec = attr.get(g, {})
+        if not rec.get("path"):
+            continue
+        a = rec.get("artist") or "Wikimedia 기여자"
+        lic = rec.get("license") or "CC"
+        lines.append(f"사진 출처: {g} — {a} ({lic}, Wikimedia Commons)")
+    return "\n".join(lines[:12])
+
+
+def run_rookie(date, dry):
+    from warm_group_photo_cache import group_cached_photo
+    data = json.loads(ROOKIE_PATH.read_text(encoding="utf-8"))
+    period = data["period"].replace(" ", "")
+    topic_id = f"eng_rookie_brandrep_{period}"
+    if not dry and _already_posted(topic_id):
+        print(f"✅ {period} 신인 걸그룹 랭킹 이미 게시 — skip")
+        return 0
+    from make_engagement_cards import make_text_cover, make_group_rank_card, make_cta_card
+    from make_video import make_slideshow_video
+
+    ordered = sorted(data["rankings"], key=lambda r: r["gg_rank"])
+    with_photo = [r for r in ordered if group_cached_photo(r["group"])]
+    if len(with_photo) < ROOKIE_MIN_CARDS:
+        raise PhotoCoverageError(
+            f"[rookie] 단체 실사 확보 그룹이 {len(with_photo)}/{len(ordered)}개뿐 "
+            f"(최소 {ROOKIE_MIN_CARDS}) — warm_group_photo_cache.py 로 캐시를 채우세요. "
+            "미확보: " + ", ".join(r["group"] for r in ordered
+                                  if not group_cached_photo(r["group"])))
+    skipped = [r["group"] for r in ordered if not group_cached_photo(r["group"])]
+
+    out = OUT / f"rookie_{period}"
+    cover = make_text_cover([period.replace("년", "년 "), "신인 걸그룹", "브랜드평판 랭킹"],
+                            "이번 달 대세 신인은? 끝까지 확인!",
+                            out / "00_cover.jpg", kicker="공식 데이터", accent_line_idx=1)
+    frames = [cover]
+    for r in sorted(with_photo, key=lambda x: -x["gg_rank"]):  # 하위 → 1위
+        rec = group_cached_photo(r["group"])
+        chg = r.get("change_pct")
+        chg_txt = ("" if chg is None else
+                   f" · 전월 {'▲' if chg >= 0 else '▼'}{abs(chg):.1f}%")
+        frames.append(make_group_rank_card(
+            rec["path"], r["gg_rank"], r["group"], r.get("group_en", ""),
+            (f"브랜드평판 지수 {r['score']:,}{chg_txt}" if r.get("score")
+             else f"보이그룹 포함 통합 {r['overall_rank']}위{chg_txt}"),
+            out / f"rank{r['gg_rank']:02d}.jpg"))
+    frames.append(make_cta_card(
+        ["출처: 한국기업평판연구소", f"{data.get('source_date', '')} 발표",
+         "2023년 이후 데뷔 그룹 대상", "", "다음 달 1위 예측은?", "댓글로 남겨주세요"],
+        out / "99_outro.jpg", emphasis="내 최애 신인 몇 위?"))
+    durations = [1.8] + [2.2] * len(with_photo) + [2.5]
+    mp4 = make_slideshow_video(frames, out / "rookie.mp4", durations=durations,
+                               crossfade=0.25, bgm_path=_bgm(date), bgm_volume=0.35)
+
+    listing = " · ".join(f"{r['gg_rank']}위 {r['group']}" for r in ordered)
+    skip_note = (f"\n(영상은 자유 라이선스 단체 사진이 있는 그룹 기준 — "
+                 f"{', '.join(skipped)}는 순위 텍스트로만 표기)" if skipped else "")
+    attribution = _group_attribution([r["group"] for r in with_photo])
+    caption = (f"{period} 신인 걸그룹 브랜드평판 랭킹 🌱\n"
+               f"{listing}\n"
+               f"출처: 한국기업평판연구소 ({data.get('source_date', '')} 발표, "
+               f"2023년 이후 데뷔 보이+걸그룹 통합 TOP30 중 걸그룹 발췌){skip_note}\n\n"
+               f"{_follow_loop(date)}\n\n{HASHTAGS} #신인걸그룹 #4세대걸그룹"
+               + (f"\n\n{attribution}" if attribution else ""))
+    return _post_reel(mp4, caption, "다음 달 신인 1위 예측 댓글로! 🌱",
+                      topic_id, f"신인 걸그룹 랭킹 {period}", "eng_rookie", dry,
+                      yt_title=f"{period} 신인 걸그룹 브랜드평판 랭킹 카운트다운")
+
+
 # ─────────────────────────────── 7) 걸그룹 상식 등급전 (퀴즈 릴스) ──
 # 스카우트 채택안 3번. 문항은 저장소에서 이미 검증된 데이터(group_rosters·
 # 브랜드평판)에서만 프로그램으로 생성 — 날조 위험 0. 분쟁/활동중단 이슈가 있는
@@ -668,7 +754,7 @@ def run_quiz(date, dry):
 FORMATS = {
     "balance": run_balance, "pause": run_pause, "unit": run_unit,
     "chemi": run_chemi, "chemi_result": run_chemi_result, "brandrep": run_brandrep,
-    "quiz": run_quiz, "calendar": run_calendar,
+    "quiz": run_quiz, "calendar": run_calendar, "rookie": run_rookie,
 }
 # 금: balance → quiz (스카우트 채택 — 취향 일변도에 '정답 있는' 축 추가)
 ROTATION = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
@@ -700,6 +786,14 @@ def main() -> int:
             rc = max(rc, run_calendar(date, args.dry_run))
         except Exception as e:
             print(f"⚠️ 캘린더 게시 실패(비치명): {e}")
+    # 매월 2일: 신인 걸그룹 랭킹 (전월 1일경 발표 데이터 — period 로 멱등)
+    if args.format is None and date.day == 2:
+        print("\n🌱 2일 — 신인 걸그룹 브랜드평판 추가 시도")
+        try:
+            rc = max(rc, run_rookie(date, args.dry_run))
+        except PhotoCoverageError as e:
+            print(f"🛑 신인 랭킹 단체 실사 미확보로 중단: {e}")
+            rc = 1
     if args.format is None and date.day == 15:
         print("\n📊 15일 — 브랜드평판 카운트다운 추가 시도")
         try:

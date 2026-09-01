@@ -1,0 +1,20 @@
+{
+  "_comment": "한국기업평판연구소 '신인 아이돌그룹 브랜드평판'(2023년 이후 데뷔 보이+걸그룹 통합 TOP30, 매월 초 발표)에서 걸그룹만 발췌한 월간 랭킹. 검증: 일간투데이 idxno=789045 전문 + bnt202609010010 + 스타뉴스 2026090106540741334 + 위키트리 1156441 교차 (수치 완전 일치). 지수(score)는 통합 1~5위만 언론에 공개 — 6위 이하는 null 유지(추정 금지). 5위 튜이드는 2026-08-24 데뷔 신규 진입이라 전월 변동 없음. 매월 발표 후 이 파일 갱신 → 매월 2일 run_rookie 가 자동 게시 (period 멱등).",
+  "period": "2026년 9월",
+  "source": "한국기업평판연구소",
+  "source_date": "2026.9.1",
+  "scope": "2023년 이후 데뷔 아이돌그룹 (보이+걸 통합 TOP30 중 걸그룹 발췌)",
+  "analysis_window": "2026-08-01 ~ 2026-09-01",
+  "rankings": [
+    {"gg_rank": 1,  "overall_rank": 1,  "group": "리센느",       "group_en": "RESCENE",       "score": 7457923, "change_pct": 10.03},
+    {"gg_rank": 2,  "overall_rank": 3,  "group": "키키",         "group_en": "KiiiKiii",      "score": 1485176, "change_pct": 7.23},
+    {"gg_rank": 3,  "overall_rank": 4,  "group": "하츠투하츠",   "group_en": "Hearts2Hearts", "score": 1192464, "change_pct": 34.52},
+    {"gg_rank": 4,  "overall_rank": 5,  "group": "튜이드",       "group_en": "TUIDE",         "score": 832440,  "change_pct": null},
+    {"gg_rank": 5,  "overall_rank": 6,  "group": "아일릿",       "group_en": "ILLIT",         "score": null,    "change_pct": null},
+    {"gg_rank": 6,  "overall_rank": 8,  "group": "베이비몬스터", "group_en": "BABYMONSTER",   "score": null,    "change_pct": null},
+    {"gg_rank": 7,  "overall_rank": 9,  "group": "캣츠아이",     "group_en": "KATSEYE",       "score": null,    "change_pct": null},
+    {"gg_rank": 8,  "overall_rank": 10, "group": "미야오",       "group_en": "MEOVV",         "score": null,    "change_pct": null},
+    {"gg_rank": 9,  "overall_rank": 14, "group": "이즈나",       "group_en": "izna",          "score": null,    "change_pct": null},
+    {"gg_rank": 10, "overall_rank": 15, "group": "아르테미스",   "group_en": "ARTMS",         "score": null,    "change_pct": null}
+  ]
+}
