@@ -2701,6 +2701,23 @@
       "youtube_id": "nIVp2T7IIuU",
       "threads_id": null,
       "bgm": null
+    },
+    {
+      "posted_at": "2026-09-01T16:55:40.105390+09:00",
+      "topic_id": "eng_balance_2026-09-01",
+      "title": "밸런스게임 2026-09-01",
+      "style": "eng_balance",
+      "seed": null,
+      "ig_media_id": "18189821209403554",
+      "youtube_id": null,
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q_idx": [
+          29,
+          27
+        ]
+      }
     }
   ]
 }
