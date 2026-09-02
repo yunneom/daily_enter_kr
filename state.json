@@ -1,64 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-01T10:38:12.512487+09:00",
+  "last_run_at": "2026-09-02T09:54:39.006112+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-02",
-      "title_hash": "01cea005755c8fb7",
-      "card_title": "캣츠아이 '애니멀' 영국 싱글 차트 16위 진입",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-02",
-      "title_hash": "0a6c3018004c0563",
-      "card_title": "존박, 걸그룹 커버곡에 집중하는 이유 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-02",
-      "title_hash": "72602f76c2c2502e",
-      "card_title": "아워벌스데이, 4인 유닛 '엠카'로 새로운 활동 시작",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-02",
-      "title_hash": "35ba36e7739a35d1",
-      "card_title": "아워벌스데이, 7인 멤버 공개…JYP 신인 걸그룹 데뷔 임박",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-02",
-      "title_hash": "ab190466122b28b7",
-      "card_title": "아이오아이, '갑자기'로 금영노래방 여자 아이돌 차트 1위 차지",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-02",
-      "title_hash": "3581eec9d450c1af",
-      "card_title": "OURBIRTHDAY, 4개 유닛 프리 데뷔 시작…퍼포먼스 영상 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-02",
-      "title_hash": "f1c9c3d271505744",
-      "card_title": "하이브, 하반기 새 걸그룹 '튜이드' 7인조로 공식 데뷔",
-      "caption_variant": "question_hook",
-      "media_id": "18110624036080022",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-03",
       "title_hash": "b4b244fcedd47514",
@@ -1777,6 +1721,70 @@
       "card_title": "시부야계 감성의 신예 걸그룹 튜이드, 데뷔무대 공개",
       "caption_variant": "question_hook",
       "media_id": "18368953084208256",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "a1cbbdbd53924a53",
+      "card_title": "하이브 신인 튜이드, 외신 호평 — 차세대 걸그룹 계보 주목",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "869eeb347350175a",
+      "card_title": "튜이드, 외신 호평 속 인기 걸그룹의 계보 잇다",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "958f6478c72b6888",
+      "card_title": "하이브 신인 튜이드, 외신 호평 받으며 신세대 인기 걸그룹으로 부상",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "7f0b15a820dd95fb",
+      "card_title": "튜이드, 하이브 신인으로 역대 걸그룹 데뷔 초동 톱10 진입",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "b24afd6d98b1a1be",
+      "card_title": "소녀시대 효리수, 20년차 레전드 멤버들과 6세대 신인 걸그룹 출격",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "12b6cf31605aaefd",
+      "card_title": "리센느, 8월 '최강 걸그룹' 등극…'러브 어택' 음원 1위",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "0c03a3a0bcbe0241",
+      "card_title": "리센느, 8월 브랜드평판 1위 — BTS·임영웅 제치고 톱 달성",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-02",
+      "title_hash": "d0fbcfc7aa279a1f",
+      "card_title": "율희, 과도한 세안이 피부 트러블 부른 이유",
+      "caption_variant": "list_count",
+      "media_id": "18133024087654795",
       "card_style": "minimal"
     }
   ]
