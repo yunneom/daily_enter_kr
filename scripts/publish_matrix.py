@@ -42,6 +42,9 @@ BRAND = "👥 친구 소환 → 조합 대결! · 📲 스토리 공유 · @dail
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
 BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
+# 같은 토픽 재게시 금지 기간. 풀(5토픽) × 주 3슬롯이면 각 토픽이 약 12일에 한 번
+# 돌아오므로 14일이면 재게시가 구조적으로 불가능하다.
+MATRIX_COOLDOWN_DAYS = 14
 REEL_SECONDS = 18.0    # 단일 카드 영상 길이.
                        # 6s 정적 → YouTube Shorts retention 즉사 → 0 view 였음.
                        # 18s + Ken Burns 모션이 YT/IG 양쪽 sweet spot
@@ -626,7 +629,13 @@ def _recent_topic_ids(days: int) -> set:
 
 def _pick_with_cooldown(pool: list, seed: int, cooldown_days: int) -> str:
     """seed 회전 선택 + 최근 cooldown_days 내 게시 토픽 건너뛰기 (동일 자료 재게시 방지).
-    풀 전체가 최근 게시됐으면 seed 기본 픽 폴백."""
+
+    풀 전체가 쿨다운 안이면 "" 를 돌려 슬롯을 건너뛴다 — 예전엔 seed 기본 픽으로
+    폴백해 같은 영상을 재게시했는데, 그게 2026-08 말 조회수 붕괴의 직접 원인이었다
+    (풀 6토픽 × 하루 3슬롯이라 이틀이면 소진 → 4세대 3티어편이 10일간 7회 게시,
+    5,448 → 6 조회로 감쇠. IG 는 재게시/중복 영상을 계정 단위로 강등한다).
+    게시를 거르는 편이 중복 게시보다 항상 낫다.
+    """
     if not pool:
         return ""
     recent = _recent_topic_ids(cooldown_days)
@@ -637,8 +646,8 @@ def _pick_with_cooldown(pool: list, seed: int, cooldown_days: int) -> str:
             if off:
                 print(f"   ⏭️ 쿨다운: seed 픽이 최근 {cooldown_days}일 내 게시됨 → +{off} 회전 → {cand}")
             return cand
-    print(f"   ⚠️ 풀 전체가 최근 {cooldown_days}일 내 게시됨 — 기본 픽 사용")
-    return pool[seed % n]
+    print(f"   ⏸️ 풀 전체가 최근 {cooldown_days}일 내 게시됨 — 이 슬롯은 게시하지 않음 (재게시 금지)")
+    return ""
 
 
 def _pick_balanced(pool: list, seed: int, cooldown_days: int = 8) -> str:
@@ -673,11 +682,14 @@ def _pick_balanced(pool: list, seed: int, cooldown_days: int = 8) -> str:
     if not deficits:
         return _pick_with_cooldown(pool, seed, cooldown_days)
     deficits.sort(reverse=True)         # 결핍 큰 순
-    chosen_cat = deficits[0][1]
-    cat_pool = by_cat[chosen_cat]
-    picked = _pick_with_cooldown(cat_pool, seed, cooldown_days)
-    print(f"   🎯 3-1-2-1 균형: 최근7일 {dict(counts)} → 부족 '{chosen_cat}' 픽")
-    return picked
+    # 가장 부족한 카테고리부터 시도하되, 그 풀이 전부 쿨다운이면 다음 카테고리로.
+    # 전 카테고리가 쿨다운이면 "" (슬롯 스킵) — 재게시 폴백 없음.
+    for _, chosen_cat in deficits:
+        picked = _pick_with_cooldown(by_cat[chosen_cat], seed, cooldown_days)
+        if picked:
+            print(f"   🎯 3-1-2-1 균형: 최근7일 {dict(counts)} → 부족 '{chosen_cat}' 픽")
+            return picked
+    return ""
 
 
 def main() -> int:
@@ -721,7 +733,8 @@ def main() -> int:
         "girlgroup_4gen_tier1_10k",
         "girlgroup_4gen_tier2_10k",
         "girlgroup_4gen_tier3_10k",
-        "slot_girlgroup_5x3",            # 실사 슬롯 (photos=True)
+        # "slot_girlgroup_5x3" — 2026-09 제외: 5회 게시 전부 0~23 조회 (풀 내 최저).
+        #   반응 0 포맷이 슬롯을 먹고 계정 품질 신호만 깎음. 재도입 시 여기 복구.
         "brand_rep_girlgroup",           # 브랜드평판 차트 (authority)
         "community_weekly",              # 필러: nurture
         "kpop_authority_insight",        # 필러: authority
@@ -762,8 +775,13 @@ def main() -> int:
         if not pool:
             print(f"❌ {target} 풀이 비어있음")
             return 1
-        # 카테고리 비율 균형 picker + 최근 8일 쿨다운(동일 자료 재게시 방지).
-        picked = _pick_balanced(pool, seed, cooldown_days=8)
+        # 카테고리 비율 균형 picker + 최근 14일 쿨다운. 풀 전체가 쿨다운이면
+        # 이 슬롯은 건너뛴다 (재게시 금지 — 2026-09 조회수 붕괴 원인 재발 방지).
+        picked = _pick_balanced(pool, seed, cooldown_days=MATRIX_COOLDOWN_DAYS)
+        if not picked:
+            print(f"⏸️ {target} — 풀 {len(pool)}토픽 전부 최근 {MATRIX_COOLDOWN_DAYS}일 내 게시됨. "
+                  "이번 슬롯 게시 없음 (새 토픽을 추가하면 재개).")
+            return 0
         print(f"🤖 {target} 회전 — KST {now_kst.strftime('%a %H시')} → {picked} "
               f"[{_category_of(picked)}]")
         topics_to_post = [(picked, TOPICS[picked])]

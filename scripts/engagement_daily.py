@@ -1,14 +1,10 @@
 """
-참여형(engagement) 데일리 오케스트레이터 — 요일 로테이션으로 5개 포맷 자동 게시.
+참여형(engagement) 데일리 오케스트레이터 — 요일 로테이션으로 포맷 자동 게시.
 
-로테이션 (KST 기준):
-  월: unit      드림 유닛 빌더 (4x3 실물사진 그리드, 댓글로 1-3-2-1 조합)
-  화: balance   밸런스게임 2문항 (텍스트 카드, 1/2 댓글 투표)
-  수: pause     멈춰라 챌린지 (실물사진 고속 순환 릴스)
-  목: chemi     케미 듀오 4팀 투표 (같은 그룹 2인 조합, 1~4 댓글 투표)
+로테이션 (KST 기준, 2026-09 축소 편성 — ROTATION 참고):
   금: quiz      걸그룹 상식 등급전 (5문항 퀴즈 릴스, 0~5 댓글)
-  토: pause
-  일: chemi_result  목요일 투표 집계 → 결과 카드
+  (휴면 — --format 으로 수동만: unit 드림 유닛 / balance 밸런스게임 / pause 멈춰라 /
+   chemi 케미 듀오 투표 / chemi_result 결과. 반응 0 으로 편성 제외)
   + 매월 2일: rookie    신인 걸그룹 브랜드평판 랭킹 릴스 (해당 월 데이터 1회)
   + 매월 15일: brandrep  브랜드평판 TOP10 카운트다운 릴스 (해당 월 데이터 1회)
 
@@ -44,28 +40,43 @@ BAL_PATH = ROOT / "data" / "balance_questions.json"
 OVERRIDES_PATH = ROOT / "data" / "idol_photo_overrides.json"
 BRANDREP_PATH = ROOT / "data" / "girlgroup_brand_rep_top100.json"
 
-HASHTAGS = "#걸그룹 #이상형월드컵 #케이팝 #kpop #아이돌 #밸런스게임"
+# 해시태그는 날짜 시드로 풀에서 6개를 뽑아 매 게시마다 조합이 달라지게 한다 —
+# 모든 게시물에 똑같은 태그 문자열이 붙는 건 IG 가 보는 반복/스팸 신호 중 하나.
+_HASHTAG_POOL = ["#걸그룹", "#케이팝", "#kpop", "#아이돌", "#kpopgirlgroup", "#4세대걸그룹",
+                 "#5세대걸그룹", "#걸그룹추천", "#아이돌추천", "#덕질", "#최애", "#kpopidol",
+                 "#girlgroup", "#케이팝걸그룹"]
 
-# "팔로우할 이유 = 다음 걸 볼 이유" — 요일 로테이션을 예고로 노출해 시리즈성을 만든다.
-# (좋아요는 순간 반응으로 끝난다. 다음 편이 궁금해야 팔로우한다.)
+
+def _rotating_hashtags(n: int = 6) -> str:
+    today = datetime.now(KST).date()
+    rng = random.Random(int(hashlib.sha256(f"{today.isoformat()}:tags".encode()).hexdigest()[:12], 16))
+    picks = ["#걸그룹"] + rng.sample([t for t in _HASHTAG_POOL if t != "#걸그룹"], n - 1)
+    return " ".join(picks)
+
+
+HASHTAGS = _rotating_hashtags()
+
+# "팔로우할 이유 = 다음 걸 볼 이유" — 편성표를 예고로 노출해 시리즈성을 만든다.
+# 2026-09 편성 축소 후: 월·수·금 18:00 만원 조합(매트릭스) / 금 11:30 상식 등급전 /
+# 매월 1일 컴백 캘린더 · 2일 신인 랭킹 · 15일 브랜드평판.
 _NEXT_TEASER = {
-    0: "내일 11:30 밸런스게임",            # 월(유닛) → 화
-    1: "내일 11:30 멈춰라 챌린지",          # 화(밸런스) → 수
-    2: "내일 11:30 케미 듀오 투표",         # 수(퍼즈) → 목
-    3: "내일 11:30 상식 등급전 · 케미 결과는 일요일",  # 목(케미) → 금
-    4: "내일 11:30 멈춰라 챌린지",          # 금(퀴즈) → 토
-    5: "내일 11:30 케미 투표 결과 발표",      # 토(퍼즈) → 일
-    6: "내일 11:30 드림 유닛 빌더",         # 일(결과) → 월
+    0: "수요일 18:00 만원 조합 새 편",       # 월
+    1: "수요일 18:00 만원 조합 새 편",       # 화
+    2: "금요일 11:30 상식 등급전",           # 수
+    3: "내일 11:30 상식 등급전",             # 목
+    4: "월요일 18:00 만원 조합 새 편",       # 금
+    5: "월요일 18:00 만원 조합 새 편",       # 토
+    6: "내일 18:00 만원 조합 새 편",         # 일
 }
 
 
 def _follow_loop(date) -> str:
     """캡션 말미 공통 팔로우 루프 — 예고 + 저장 프레임."""
     teaser = _NEXT_TEASER.get(date.weekday(), "")
-    lines = ["🔔 매일 11:30, 새로운 걸그룹 게임"]
+    lines = ["🔔 월·수·금 18:00 만원 조합 · 금 11:30 상식 등급전"]
     if teaser:
         lines.append(f"⏭ {teaser}")
-    lines.append("🔖 저장해두면 내일 결과 비교할 때 편해요")
+    lines.append("🔖 저장해두면 다음 편 나왔을 때 비교하기 편해요")
     return "\n".join(lines)
 WEB_URL = "https://dailyenterkr.com"
 
@@ -756,9 +767,15 @@ FORMATS = {
     "chemi": run_chemi, "chemi_result": run_chemi_result, "brandrep": run_brandrep,
     "quiz": run_quiz, "calendar": run_calendar, "rookie": run_rookie,
 }
-# 금: balance → quiz (스카우트 채택 — 취향 일변도에 '정답 있는' 축 추가)
-ROTATION = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
-            4: "quiz", 5: "pause", 6: "chemi_result"}
+# 2026-09 편성 축소 — 조회수 붕괴(계정 전체 20~30 조회) 대응.
+# 인사이트 누적(8/22~9/2): pause 27·7·22·0 조회, unit/balance/chemi 캐러셀 좋아요 0~1,
+# chemi_result 는 투표 0표로 매주 생략 → 5개 포맷이 매일 슬롯만 소모하며 계정 품질
+# 신호(반응 0 게시물 누적)를 깎았다. 반응이 있던 quiz(1,225 조회)만 주 1회 유지.
+# 나머지 포맷은 코드 유지(--format 으로 수동 호출 가능), 로테이션에서만 뺀다.
+# 되돌리기: 아래 dict 에 요일 항목 추가.
+ROTATION = {4: "quiz"}
+_ROTATION_LEGACY = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
+                    5: "pause", 6: "chemi_result"}  # 참고용 (미사용)
 
 
 def main() -> int:
@@ -768,10 +785,16 @@ def main() -> int:
     args = ap.parse_args()
 
     date = _today()
-    fmt = args.format or ROTATION[date.weekday()]
-    print(f"📅 {date} ({['월','화','수','목','금','토','일'][date.weekday()]}) → 포맷: {fmt}")
+    fmt = args.format or ROTATION.get(date.weekday())
+    wd = ['월', '화', '수', '목', '금', '토', '일'][date.weekday()]
+    if fmt is None:
+        print(f"📅 {date} ({wd}) → 정기 포맷 없음 (편성 축소) — 월간 추가 게시만 확인")
+        rc = 0
+    else:
+        print(f"📅 {date} ({wd}) → 포맷: {fmt}")
     try:
-        rc = FORMATS[fmt](date, args.dry_run)
+        if fmt is not None:
+            rc = FORMATS[fmt](date, args.dry_run)
     except PhotoCoverageError as e:
         # 실사가 하나라도 빠지면 폴백 카드로 나가지 않게 게시를 중단하고 실패로 끝낸다.
         # 워크플로우가 실패를 감지해 GitHub 이슈로 알린다.
