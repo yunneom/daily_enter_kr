@@ -518,6 +518,75 @@ def make_quiz_card(q_num: int, q_total: int, question: str, options: list,
     return out
 
 
+def split_emojis(text: str) -> List[str]:
+    """이모지 문자열 → 개별 이모지 리스트 (FE0F/키캡/스킨톤 수식자는 앞 글자에 붙임)."""
+    out: List[str] = []
+    for ch in text:
+        cp = ord(ch)
+        if out and (cp in (0xFE0F, 0x20E3) or 0x1F3FB <= cp <= 0x1F3FF):
+            out[-1] += ch
+        elif ch.strip():
+            out.append(ch)
+    return out
+
+
+def make_emoji_quiz_card(q_num: int, q_total: int, emoji_text: str, options: list,
+                         out: Path, answer_idx: int = -1, countdown: str = "",
+                         hint: str = "") -> Path:
+    """이모지 → 걸그룹 맞히기 문항 카드 (벤치마크: YT 이모지 퀴즈 75만/42만 조회).
+
+    이모지는 Twemoji PNG(make_comparison_matrix._get_emoji_image)로 그린다 —
+    Pretendard 는 이모지 글리프가 없어 텍스트로 찍으면 □ 가 나온다. 한 개라도
+    이미지를 못 받으면 RuntimeError → 호출자가 게시를 중단한다 (깨진 카드 방지).
+    """
+    from make_comparison_matrix import _get_emoji_image
+    img = _base()
+    draw = ImageDraw.Draw(img)
+    f_tag = _font("Medium", 40)
+    f_q = _font("Bold", 56)
+    f_opt = _font("SemiBold", 48)
+    f_num = _font("Bold", 44)
+    f_hint = _font("Medium", 38)
+
+    _center(draw, 150, f"Q{q_num}/{q_total}" + (f"  ·  {countdown}" if countdown else ""),
+            f_tag, fill=MUTED)
+    _center(draw, 230, "이 이모지는 어떤 걸그룹?", f_q)
+
+    emojis = split_emojis(emoji_text)
+    size = 220 if len(emojis) <= 3 else 170
+    gap = 40
+    total_w = len(emojis) * size + (len(emojis) - 1) * gap
+    x = (CANVAS[0] - total_w) // 2
+    ey = 360
+    for e in emojis:
+        em = _get_emoji_image(e, size)
+        if em is None:
+            raise RuntimeError(f"이모지 이미지 로드 실패: {e!r} (Q{q_num})")
+        img.paste(em, (x, ey), em)
+        x += size + gap
+
+    y = 660
+    for i, opt in enumerate(options[:4]):
+        is_answer = (i == answer_idx)
+        color = GOLD if is_answer else (BAR_BG if answer_idx >= 0 else ACCENT)
+        fill = (60, 52, 20) if is_answer else (26, 24, 38)
+        draw.rounded_rectangle([90, y, CANVAS[0] - 90, y + 150], radius=26,
+                               fill=fill, outline=color, width=4 if is_answer else 3)
+        draw.ellipse([120, y + 45, 180, y + 105], fill=color)
+        nw = draw.textlength(str(i + 1), font=f_num)
+        draw.text((150 - nw / 2, y + 50), str(i + 1), font=f_num, fill=(20, 20, 25))
+        tfill = GOLD if is_answer else (INK if answer_idx < 0 else MUTED)
+        draw.text((215, y + 48), opt[:18], font=f_opt, fill=tfill)
+        y += 185
+    if answer_idx >= 0 and hint:
+        _center(draw, y + 20, hint, f_hint, fill=MUTED)
+
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
 def make_grade_card(out: Path) -> Path:
     """퀴즈 엔딩 등급 카드 — 맞은 개수 → 등급 안내."""
     img = _base()

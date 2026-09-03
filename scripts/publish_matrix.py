@@ -38,7 +38,7 @@ import music_credit
 import random as _random
 
 
-BRAND = "👥 친구 소환 → 조합 대결! · 📲 스토리 공유 · @daily_enter_kr"
+BRAND = "친구 소환 → 조합 대결 · 스토리 공유 · @daily_enter_kr"  # 이모지 X: Pretendard 에 글리프 없어 □ 로 찍힘
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
 BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
@@ -103,6 +103,23 @@ TOPIC_TAGS = {
                                    "#Kep1er", "#케플러", "#Billlie", "#빌리",
                                    "#fromis_9", "#프로미스나인", "#시은", "#수민",
                                    "#kpop"],
+    # 2026-09 매트릭스 v2 신규 풀
+    "girlgroup_sm_10k": ["#케이팝", "#SM엔터", "#소녀시대", "#레드벨벳", "#에스파", "#하츠투하츠",
+                         "#태연", "#카리나", "#윈터", "#아이린", "#kpop"],
+    "girlgroup_jyp_10k": ["#케이팝", "#JYP", "#트와이스", "#TWICE", "#ITZY", "#있지", "#NMIXX",
+                          "#엔믹스", "#쯔위", "#나연", "#설윤", "#kpop"],
+    "girlgroup_yg_10k": ["#케이팝", "#YG", "#블랙핑크", "#BLACKPINK", "#베이비몬스터",
+                         "#BABYMONSTER", "#2NE1", "#제니", "#지수", "#로제", "#리사", "#kpop"],
+    "girlgroup_hybe_10k": ["#케이팝", "#하이브", "#HYBE", "#르세라핌", "#아일릿", "#ILLIT",
+                           "#캣츠아이", "#KATSEYE", "#김채원", "#카즈하", "#원희", "#kpop"],
+    "girlgroup_3gen_legend_10k": ["#케이팝", "#3세대걸그룹", "#트와이스", "#블랙핑크", "#레드벨벳",
+                                  "#마마무", "#여자친구", "#에이핑크", "#오마이걸", "#레전드", "#kpop"],
+    "girlgroup_2gen_legend_10k": ["#케이팝", "#2세대걸그룹", "#소녀시대", "#원더걸스", "#2NE1",
+                                  "#씨스타", "#미쓰에이", "#추억", "#레전드", "#kpop"],
+    "girlgroup_rookie_10k": ["#케이팝", "#신인걸그룹", "#리센느", "#키키", "#KiiiKiii", "#하츠투하츠",
+                             "#izna", "#이즈나", "#미야오", "#캣츠아이", "#ARTMS", "#kpop"],
+    "girlgroup_official_position_10k": ["#케이팝", "#걸그룹", "#리더", "#메인보컬", "#메인래퍼",
+                                        "#트와이스", "#ITZY", "#블랙핑크", "#레드벨벳", "#kpop"],
     "boygroup_4gen_tier1_10k": ["#케이팝", "#4세대보이그룹", "#스트레이키즈", "#스키즈",
                                   "#엔하이픈", "#투바투", "#TXT", "#RIIZE", "#라이즈",
                                   "#ATEEZ", "#에이티즈", "#제로베이스원", "#ZB1",
@@ -733,6 +750,10 @@ def main() -> int:
         "girlgroup_4gen_tier1_10k",
         "girlgroup_4gen_tier2_10k",
         "girlgroup_4gen_tier3_10k",
+        # ── 2026-09 매트릭스 v2 신규 풀 (소속사·세대·신인·공식포지션 변주) ──
+        "girlgroup_sm_10k", "girlgroup_jyp_10k", "girlgroup_yg_10k", "girlgroup_hybe_10k",
+        "girlgroup_3gen_legend_10k", "girlgroup_2gen_legend_10k",
+        "girlgroup_rookie_10k", "girlgroup_official_position_10k",
         # "slot_girlgroup_5x3" — 2026-09 제외: 5회 게시 전부 0~23 조회 (풀 내 최저).
         #   반응 0 포맷이 슬롯을 먹고 계정 품질 신호만 깎음. 재도입 시 여기 복구.
         "brand_rep_girlgroup",           # 브랜드평판 차트 (authority)

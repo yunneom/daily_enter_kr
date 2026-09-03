@@ -489,7 +489,9 @@ def make_emblem_matrix(
         f_src = ImageFont.truetype(regular_path, 26)
         src_color = (150, 150, 158) if not dark_bg else (210, 210, 210)
         sw = draw.textlength(source_note, font=f_src)
-        draw.text(((CANVAS[0] - sw) / 2, cta_y + 78),
+        # CTA 박스 아래 (y = -228). 브랜드 라인은 -150 으로 내려 겹침 방지
+        # (2026-09: 이전엔 -222 / -210 으로 두 줄이 포개져 출력됐음).
+        draw.text(((CANVAS[0] - sw) / 2, cta_y + 72),
                   source_note, font=f_src, fill=src_color)
 
     # ─── 실물사진 크레딧 (CC 라이선스 준수) — 사진 붙은 셀이 있을 때만 ───
@@ -509,7 +511,7 @@ def make_emblem_matrix(
                 break
             bsize -= 2
         bw = draw.textlength(brand, font=f_b)
-        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 210),
+        draw.text(((CANVAS[0] - bw) / 2, CANVAS[1] - 150),
                   brand, font=f_b, fill=brand_color)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

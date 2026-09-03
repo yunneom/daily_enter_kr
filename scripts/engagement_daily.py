@@ -2,7 +2,7 @@
 참여형(engagement) 데일리 오케스트레이터 — 요일 로테이션으로 포맷 자동 게시.
 
 로테이션 (KST 기준, 2026-09 축소 편성 — ROTATION 참고):
-  금: quiz      걸그룹 상식 등급전 (5문항 퀴즈 릴스, 0~5 댓글)
+  금: friday    ISO 홀수주 quiz(상식 등급전) / 짝수주 emoji_quiz(이모지로 걸그룹 맞히기)
   (휴면 — --format 으로 수동만: unit 드림 유닛 / balance 밸런스게임 / pause 멈춰라 /
    chemi 케미 듀오 투표 / chemi_result 결과. 반응 0 으로 편성 제외)
   + 매월 2일: rookie    신인 걸그룹 브랜드평판 랭킹 릴스 (해당 월 데이터 1회)
@@ -62,8 +62,8 @@ HASHTAGS = _rotating_hashtags()
 _NEXT_TEASER = {
     0: "수요일 18:00 만원 조합 새 편",       # 월
     1: "수요일 18:00 만원 조합 새 편",       # 화
-    2: "금요일 11:30 상식 등급전",           # 수
-    3: "내일 11:30 상식 등급전",             # 목
+    2: "금요일 11:30 걸그룹 퀴즈",           # 수
+    3: "내일 11:30 걸그룹 퀴즈",             # 목
     4: "월요일 18:00 만원 조합 새 편",       # 금
     5: "월요일 18:00 만원 조합 새 편",       # 토
     6: "내일 18:00 만원 조합 새 편",         # 일
@@ -73,7 +73,7 @@ _NEXT_TEASER = {
 def _follow_loop(date) -> str:
     """캡션 말미 공통 팔로우 루프 — 예고 + 저장 프레임."""
     teaser = _NEXT_TEASER.get(date.weekday(), "")
-    lines = ["🔔 월·수·금 18:00 만원 조합 · 금 11:30 상식 등급전"]
+    lines = ["🔔 월·수·금 18:00 만원 조합 · 금 11:30 걸그룹 퀴즈"]
     if teaser:
         lines.append(f"⏭ {teaser}")
     lines.append("🔖 저장해두면 다음 편 나왔을 때 비교하기 편해요")
@@ -761,11 +761,97 @@ def run_quiz(date, dry):
                       yt_title=f"걸그룹 상식 등급전 — 너 얼마나 아는데? #{date.strftime('%m%d')}")
 
 
+# ─────────────────────────── 7b) 이모지로 걸그룹 맞히기 (퀴즈 릴스, 시즌제) ──
+# 2026-09 벤치마크 채택 — YT 'Guess The K-Pop Group (Emoji)' 75만·42만 조회.
+# 사진·음원 0(그룹명 리버스만)이라 저작권 리스크 0. 금요일 퀴즈 슬롯에서 상식
+# 등급전과 격주 교대. Part 번호는 ledger 의 게시 횟수 + 1.
+EMOJI_QUIZ_PATH = ROOT / "data" / "emoji_group_quiz.json"
+EMOJI_QUIZ_N = 6
+
+
+def _emoji_part_no() -> int:
+    import post_ledger
+    led = post_ledger.load_ledger()
+    return 1 + sum(1 for e in led.get("entries", [])
+                   if (e.get("topic_id") or "").startswith("eng_emoji_quiz_"))
+
+
+def _build_emoji_quiz(date, n=EMOJI_QUIZ_N):
+    """(이모지, 보기4, 정답 idx, 힌트) × n — 최근 4회 출제 그룹은 제외해 시즌 내 중복 최소화."""
+    rng = _seed_for(date, "emoji_quiz")
+    items = json.loads(EMOJI_QUIZ_PATH.read_text(encoding="utf-8"))["items"]
+    recent = set()
+    try:
+        import post_ledger
+        led = post_ledger.load_ledger()
+        for e in led.get("entries", [])[-40:]:
+            if (e.get("topic_id") or "").startswith("eng_emoji_quiz_"):
+                recent.update((e.get("meta") or {}).get("groups") or [])
+    except Exception:
+        pass
+    fresh = [i for i in items if i["group"] not in recent] or items
+    picks = rng.sample(fresh, min(n, len(fresh)))
+    all_groups = [i["group"] for i in items]
+    qs = []
+    for it in picks:
+        opts = [it["group"]] + rng.sample([g for g in all_groups if g != it["group"]], 3)
+        rng.shuffle(opts)
+        qs.append((it["emoji"], opts, opts.index(it["group"]), it.get("hint", "")))
+    return qs
+
+
+def run_emoji_quiz(date, dry):
+    topic_id = f"eng_emoji_quiz_{date.isoformat()}"
+    if not dry and _already_posted(topic_id):
+        print("✅ 오늘 이모지 퀴즈 이미 게시 — skip")
+        return 0
+    from make_engagement_cards import make_text_cover, make_emoji_quiz_card, make_cta_card
+    from make_video import make_slideshow_video
+
+    part = _emoji_part_no()
+    qs = _build_emoji_quiz(date)
+    out = OUT / f"emoji_quiz_{date.isoformat()}"
+    cover = make_text_cover(["이모지로", "걸그룹 맞히기", f"Part {part}"],
+                            f"{len(qs)}문항 · 3초 안에 답하기",
+                            out / "00_cover.jpg", kicker="찐팬 테스트", accent_line_idx=2)
+    paths, durations = [cover], [1.8]
+    try:
+        for i, (emo, opts, ans, hint) in enumerate(qs, 1):
+            paths.append(make_emoji_quiz_card(i, len(qs), emo, opts, out / f"q{i}_q.jpg",
+                                              countdown="3초"))
+            durations.append(3.5)
+            paths.append(make_emoji_quiz_card(i, len(qs), emo, opts, out / f"q{i}_a.jpg",
+                                              answer_idx=ans, hint=hint))
+            durations.append(1.4)
+    except RuntimeError as e:
+        raise PhotoCoverageError(f"[emoji_quiz] {e}")  # 깨진 카드로 게시하지 않음
+    paths.append(make_cta_card([f"{len(qs)}개 중 몇 개 맞혔어요?", "댓글로 점수 남기기", "",
+                                f"다음 Part {part + 1}은 2주 뒤 금요일"],
+                               out / "99_cta.jpg", emphasis=f"{len(qs)}/{len(qs)} = 찐팬 인정 👑"))
+    durations.append(3.0)
+    mp4 = make_slideshow_video(paths, out / "emoji_quiz.mp4", durations=durations,
+                               crossfade=0.0, bgm_path=_bgm(date), bgm_volume=0.35)
+    caption = (f"이모지로 걸그룹 맞히기 Part {part} 🧩 {len(qs)}문항, 문항당 3초!\n"
+               f"몇 개 맞혔는지 댓글로 (0~{len(qs)}) — 전부 맞히면 찐팬 인정 👑\n\n"
+               f"{_follow_loop(date)}\n\n{HASHTAGS} #이모지퀴즈 #걸그룹퀴즈")
+    return _post_reel(mp4, caption, f"몇 개 맞혔어요? 0~{len(qs)} 댓글로! 🧩",
+                      topic_id, f"이모지 퀴즈 Part {part}", "eng_emoji_quiz", dry,
+                      yt_title=f"이모지로 걸그룹 맞히기 Part {part} — 찐팬 테스트",
+                      meta={"groups": [q[1][q[2]] for q in qs], "part": part})
+
+
+def run_friday(date, dry):
+    """금요일 퀴즈 슬롯 — ISO 주차 짝수: 이모지 퀴즈 / 홀수: 상식 등급전 (격주 교대)."""
+    week = date.isocalendar()[1]
+    return run_emoji_quiz(date, dry) if week % 2 == 0 else run_quiz(date, dry)
+
+
 # ──────────────────────────────────────────────────────────── main ──
 FORMATS = {
     "balance": run_balance, "pause": run_pause, "unit": run_unit,
     "chemi": run_chemi, "chemi_result": run_chemi_result, "brandrep": run_brandrep,
     "quiz": run_quiz, "calendar": run_calendar, "rookie": run_rookie,
+    "emoji_quiz": run_emoji_quiz, "friday": run_friday,
 }
 # 2026-09 편성 축소 — 조회수 붕괴(계정 전체 20~30 조회) 대응.
 # 인사이트 누적(8/22~9/2): pause 27·7·22·0 조회, unit/balance/chemi 캐러셀 좋아요 0~1,
@@ -773,7 +859,7 @@ FORMATS = {
 # 신호(반응 0 게시물 누적)를 깎았다. 반응이 있던 quiz(1,225 조회)만 주 1회 유지.
 # 나머지 포맷은 코드 유지(--format 으로 수동 호출 가능), 로테이션에서만 뺀다.
 # 되돌리기: 아래 dict 에 요일 항목 추가.
-ROTATION = {4: "quiz"}
+ROTATION = {4: "friday"}  # 금: 상식 등급전 ↔ 이모지 퀴즈 격주
 _ROTATION_LEGACY = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
                     5: "pause", 6: "chemi_result"}  # 참고용 (미사용)
 

@@ -1,0 +1,140 @@
+{
+  "_comment": "이모지 → 걸그룹 맞히기 (벤치마크: YT 'Guess The K-Pop Group Emoji' 75만·42만 조회). 그룹명의 뜻/발음/상징을 이모지로 표현. 사진·음원 0 → 저작권 리스크 0. 항목은 group_rosters.json 키와 일치해야 하며(보기 생성), hint 는 정답 카드에 함께 노출. 새 항목 추가 시 group 키를 로스터와 맞출 것.",
+  "items": [
+    {
+      "group": "블랙핑크",
+      "emoji": "🖤💗",
+      "hint": "블랙 + 핑크"
+    },
+    {
+      "group": "레드벨벳",
+      "emoji": "🔴🧣",
+      "hint": "레드 + 벨벳"
+    },
+    {
+      "group": "소녀시대",
+      "emoji": "👧⏳",
+      "hint": "소녀 + 시대"
+    },
+    {
+      "group": "트와이스",
+      "emoji": "2️⃣✌️",
+      "hint": "두 번(twice) 감동"
+    },
+    {
+      "group": "에이핑크",
+      "emoji": "🅰️💗",
+      "hint": "A + 핑크"
+    },
+    {
+      "group": "여자친구",
+      "emoji": "👩💖👫",
+      "hint": "여자 + 친구"
+    },
+    {
+      "group": "오마이걸",
+      "emoji": "😲👧",
+      "hint": "Oh my + girl"
+    },
+    {
+      "group": "마마무",
+      "emoji": "👶🐮🎤",
+      "hint": "마마(옹알이) + 무(mm)"
+    },
+    {
+      "group": "원더걸스",
+      "emoji": "✨👧👧",
+      "hint": "원더 + 걸스"
+    },
+    {
+      "group": "씨스타",
+      "emoji": "👯⭐",
+      "hint": "시스터 + 스타"
+    },
+    {
+      "group": "에스파",
+      "emoji": "🅰️🌌",
+      "hint": "avatar + experience"
+    },
+    {
+      "group": "IVE",
+      "emoji": "🙋🏆",
+      "hint": "I have"
+    },
+    {
+      "group": "르세라핌",
+      "emoji": "😇🔥",
+      "hint": "I'm fearless 세라핌(천사)"
+    },
+    {
+      "group": "ITZY",
+      "emoji": "👉👧",
+      "hint": "있지!"
+    },
+    {
+      "group": "NMIXX",
+      "emoji": "🎚️🧪",
+      "hint": "N + MIX"
+    },
+    {
+      "group": "Kep1er",
+      "emoji": "🔑1️⃣",
+      "hint": "Kep + 1(one) + er"
+    },
+    {
+      "group": "fromis_9",
+      "emoji": "📨9️⃣",
+      "hint": "from + is + 9"
+    },
+    {
+      "group": "KISS OF LIFE",
+      "emoji": "💋🫀",
+      "hint": "키스 + 생명"
+    },
+    {
+      "group": "(여자)아이들",
+      "emoji": "👧🧒🧒",
+      "hint": "아이들"
+    },
+    {
+      "group": "BABYMONSTER",
+      "emoji": "👶👹",
+      "hint": "베이비 + 몬스터"
+    },
+    {
+      "group": "KATSEYE",
+      "emoji": "🐈👁️",
+      "hint": "cat's eye"
+    },
+    {
+      "group": "MEOVV",
+      "emoji": "😼🎵",
+      "hint": "야옹(meow) + VV"
+    },
+    {
+      "group": "Hearts2Hearts",
+      "emoji": "❤️2️⃣❤️",
+      "hint": "하트 투 하트"
+    },
+    {
+      "group": "KIIIKIII",
+      "emoji": "😆🔑🔑",
+      "hint": "키키(웃음소리)"
+    },
+    {
+      "group": "리센느",
+      "emoji": "🎬🔁",
+      "hint": "re + scene"
+    },
+    {
+      "group": "ARTMS",
+      "emoji": "🏹🌙",
+      "hint": "아르테미스(달의 여신)"
+    },
+    {
+      "group": "Candy Shop",
+      "emoji": "🍬🏪",
+      "hint": "캔디 + 샵"
+    }
+  ]
+}
