@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-02T09:54:39.006112+09:00",
-  "last_run_status": "success",
+  "last_run_at": "2026-09-03T09:55:17.904779+09:00",
+  "last_run_status": "failed_no_news",
   "posted_history": [
-    {
-      "date": "2026-08-03",
-      "title_hash": "b4b244fcedd47514",
-      "card_title": "하이브 신인 걸그룹 튜이드, 8월 'TUNE & PLAY'로 데뷔",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "5125e5f7ae3ee765",
-      "card_title": "하이브 신인 걸그룹 튜이드, 24일 데뷔 무대 확정",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "227772d96db6090f",
-      "card_title": "하이브 新 걸그룹 튜이드, 24일 데뷔..전원 10대 글로벌 멤버",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "8ea0106f23ab9787",
-      "card_title": "A2O MAY, 이수만 프로듀싱 걸그룹 한국 음방 첫 무대",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "e76dff4e5e275ade",
-      "card_title": "하이브 신인 걸그룹 튜이드, 24일 데뷔 무대 공개",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "888fa72dd4b98ce9",
-      "card_title": "하이브 신인 걸그룹 튜이드, 24일 데뷔 무대 공개",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "7db4942f66ccdcc6",
-      "card_title": "하이브 신인 걸그룹 튜이드, 24일 데뷔 확정…첫 앨범 'TUNE & PLAY'",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "78bfe7a682ced612",
-      "card_title": "하이브 ABD 첫 걸그룹 '튜이드', 24일 미니 1집 데뷔",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-03",
-      "title_hash": "dee3ee5442b1eb78",
-      "card_title": "하이브 신인 걸그룹 튜이드, 24일 정식 데뷔",
-      "caption_variant": "list_count",
-      "media_id": "18123924778751367",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-04",
       "title_hash": "64ccc2afeb777671",
