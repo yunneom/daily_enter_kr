@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-03T09:55:17.904779+09:00",
-  "last_run_status": "failed_no_news",
+  "last_run_at": "2026-09-04T09:57:31.191964+09:00",
+  "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-04",
-      "title_hash": "64ccc2afeb777671",
-      "card_title": "트와이스 지효 친동생 서연, 하이브 신인 걸그룹 '튜이드' 데뷔",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "9cc55513a33bf17f",
-      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔 앨범 'TUNE & PLAY' 비주얼 필름 공개",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "9f681fdb9890080c",
-      "card_title": "7인조 걸그룹 튜이드, 24일 공식 데뷔",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "10be03fdc973c77d",
-      "card_title": "강미나, 2번 데뷔 후 가수 길 접다…'하나만 파도 될까 말까'",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "543bb0e2c7028043",
-      "card_title": "리센느, 경주시와 글로벌 관광 홍보 협력",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "c43a8a34368a20ad",
-      "card_title": "하이브 신인 튜이드, 24일 첫 미니앨범으로 공식 데뷔",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "62515800f6c11603",
-      "card_title": "키스오브라이프, 육각형 멤버 구성으로 다채로운 능력치 발휘",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "b5d1f12e03de05f6",
-      "card_title": "서연, 하이브 신인 걸그룹으로 데뷔 확정",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-04",
-      "title_hash": "6f321edce8147162",
-      "card_title": "하이브 새 걸그룹 튜이드, 24일 데뷔 무대 공개",
-      "caption_variant": "tease_one",
-      "media_id": "17930394390381954",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-05",
       "title_hash": "90b66469c4134534",
@@ -1713,6 +1641,78 @@
       "card_title": "율희, 과도한 세안이 피부 트러블 부른 이유",
       "caption_variant": "list_count",
       "media_id": "18133024087654795",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "1824023d88b1e54a",
+      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, '괴물 신인' 등장으로 화제",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "78aafb37d5be6499",
+      "card_title": "하이브 신인 튜이드, 데뷔 앨범 전곡 차트 진입 성공",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "54d8217d5479245a",
+      "card_title": "에이핑크 정은지, 예능 '전참시'서 솔직한 일상 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "fd11f189ee8086bb",
+      "card_title": "베이비몬스터, 유튜브 100억 뷰 돌파 — K팝 걸그룹 최단 기록",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "de87c496eb5a7176",
+      "card_title": "하이브, 인도 걸그룹 오디션 대폭 확대 — 글로벌 아이돌 육성 가속화",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "26de4e88e04725dd",
+      "card_title": "정은지, 예능 출연서 자연스러운 일상 공개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "9ebcdc4d6533db98",
+      "card_title": "베이비몬스터, 유튜브 100억뷰 달성 — K팝 걸그룹 최단 기록",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "8814fa5948b53782",
+      "card_title": "베이비몬스터, 유튜브 100억뷰 돌파 — K팝 걸그룹 최단 기록",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-04",
+      "title_hash": "27b290c001938582",
+      "card_title": "베이비몬스터, 유튜브 100억 조회수 달성 'K팝 걸그룹 최단 기록'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "18467038282113373",
       "card_style": "minimal"
     }
   ]
