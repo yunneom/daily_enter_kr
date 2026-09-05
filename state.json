@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-04T09:57:31.191964+09:00",
+  "last_run_at": "2026-09-05T09:33:54.207183+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-05",
-      "title_hash": "90b66469c4134534",
-      "card_title": "걸그룹 르센느, 한국벤처투자 명예홍보대사 위촉",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "29c31c9cf1566411",
-      "card_title": "JYP·하이브·YG, 신인 걸그룹 시장 경쟁 본격화",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "b8227fe99f65ecc7",
-      "card_title": "HYBE 신인 걸그룹 투이드, 8월 24일 데뷔…첫 EP 'Tune & Play' 발매",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "f341709d5b62f489",
-      "card_title": "JYP 신인 걸그룹 아워벌스데이, 19일 정식 데뷔 확정",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "56e2af246e258559",
-      "card_title": "앳하트, 90년대 명곡 '3! 4!' 리메이크로 컴백",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "d6d2dcdea1a973bc",
-      "card_title": "튜이드, 하이브 신규 레이블 ABD 첫 걸그룹으로 24일 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "c0117e58c82f9590",
-      "card_title": "하이브 신규 걸그룹 튜이드 정식 공개…팀 아이덴티티 주목",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "4f8a9a3617a18442",
-      "card_title": "에스파, '넥스트 레벨'로 K-팝 걸그룹의 새로운 기준 제시",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-05",
-      "title_hash": "72f7da6b60ba88fc",
-      "card_title": "리센느, 신라공주로 변신…천년고도 경주 알린다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18130135999679822",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-06",
       "title_hash": "594cdc1132f732da",
@@ -1713,6 +1641,30 @@
       "card_title": "베이비몬스터, 유튜브 100억 조회수 달성 'K팝 걸그룹 최단 기록'",
       "caption_variant": "you_wont_believe",
       "media_id": "18467038282113373",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-05",
+      "title_hash": "5e1875708491d899",
+      "card_title": "진소리, 미스춘향 선출…걸그룹 멤버이자 뮤지컬 배우의 다재다능함",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18001268489794763",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-05",
+      "title_hash": "5486bb01ac7e3cf1",
+      "card_title": "에이미, 걸그룹 비주얼 돋보이며 포착",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18001268489794763",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-05",
+      "title_hash": "ac526a5be8846067",
+      "card_title": "효리수, 농담에서 시작된 6세대 걸그룹 데뷔 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18001268489794763",
       "card_style": "minimal"
     }
   ]
