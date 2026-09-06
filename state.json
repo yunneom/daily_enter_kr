@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-05T09:33:54.207183+09:00",
+  "last_run_at": "2026-09-06T09:53:09.962379+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-06",
-      "title_hash": "594cdc1132f732da",
-      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선 키스'로 공식 활동 시작",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "7d5acd0ec7f48915",
-      "card_title": "하이브 걸그룹 튜이드, 타이틀곡 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "4b3a8946bf1730ff",
-      "card_title": "하이브 신인 걸그룹 튜이드, 24일 'SUN KISS'로 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "ee932c98ec428651",
-      "card_title": "하이브 새 걸그룹 튜이드, 타이틀곡 '선 키스'로 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "53444bb59b25df5e",
-      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, 19일 정식 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "b0a76f66139f1683",
-      "card_title": "하이브 신인 튜이드, 7인 구성으로 데뷔 — 신곡 '선 키스' 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "0640a28209e00841",
-      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "a5508882d385c4ae",
-      "card_title": "하이브 신인 걸그룹 튜이드, '선 키스'로 데뷔 무대 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-06",
-      "title_hash": "ed11bb124a20d4db",
-      "card_title": "JYP 4년 만의 신인 걸그룹 아워벌스데이, 완전체 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18438026860122006",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-08",
       "title_hash": "4ea632bafca110cf",
@@ -1665,6 +1593,70 @@
       "card_title": "효리수, 농담에서 시작된 6세대 걸그룹 데뷔 확정",
       "caption_variant": "headlines_dotted",
       "media_id": "18001268489794763",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "17e34ee2efea0378",
+      "card_title": "효리수, 30대 중반 신예 걸그룹으로 돌아온다 '요정의 귀환'",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "c19ea53037232d0d",
+      "card_title": "걸그룹 나빌레라, 몽골 '2026 코리아위크' 무대서 기립박수",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "34ee7fbea16fb647",
+      "card_title": "걸그룹 리센느, 수원시 '화성문화제' 홍보어사 위촉",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "46fa4ed1e0e5370e",
+      "card_title": "안유진·유나, 나라사랑카드 얼굴로 선정 — 걸그룹 대전 시작",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "ed56e57f70a7d0c3",
+      "card_title": "걸그룹 캣츠아이, 영국 오피셜 차트 싱글 16위·앨범 22위 진입",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "8b20f46b2d703ef2",
+      "card_title": "걸그룹 리센느, 수원시 홍보어사로 화성문화제 국내외 알리기",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "fedb19ee5845ef29",
+      "card_title": "6세대 걸그룹 효리수, 'Skibidi' 연습 현장 공개",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-06",
+      "title_hash": "a5e110bea927f239",
+      "card_title": "효리수, 새 싱글 'Skibidi'로 걸그룹과 차별화된 음악성 선보여",
+      "caption_variant": "question_hook",
+      "media_id": "17894845332395242",
       "card_style": "minimal"
     }
   ]
