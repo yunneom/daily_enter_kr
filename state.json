@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-06T09:53:09.962379+09:00",
+  "last_run_at": "2026-09-07T09:54:20.327521+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1657,6 +1657,78 @@
       "card_title": "효리수, 새 싱글 'Skibidi'로 걸그룹과 차별화된 음악성 선보여",
       "caption_variant": "question_hook",
       "media_id": "17894845332395242",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "4d711731448e3b40",
+      "card_title": "리센느, 2026 SKA 2관왕 달성",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "2de0b4538c7690fd",
+      "card_title": "걸그룹 리센느, 수원시 홍보대사 '홍보어사' 위촉",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "3ff5e04457f27288",
+      "card_title": "OURBIRTHDAY, 신곡 'SQUEEZY' 콘셉추얼 비디오 공개",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "7eef06859d31ef79",
+      "card_title": "나빌레라, 몽골 2026 코리아위크서 K-POP 무대 펼쳐",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "3125e25e860cb8ce",
+      "card_title": "걸그룹 리센느, 수원시 공식 홍보어사 위촉",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "3cce02f3ca98d401",
+      "card_title": "일본 인기 잡지 화보 논란, 사진 수정 과정에서 실수 지적",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "4bfc221e72bc7ef1",
+      "card_title": "리센느, 새로운 대세 걸그룹으로 등장",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "7d8e0ff6b7ae2e30",
+      "card_title": "있지 예지, 공항 셀카로 담은 여유로운 순간",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-07",
+      "title_hash": "a6e77beeecb92e4f",
+      "card_title": "효연·정은지, 2세대 걸그룹 롱런의 비결은 '변치 않는 의리'",
+      "caption_variant": "list_count",
+      "media_id": "18135907015618171",
       "card_style": "minimal"
     }
   ]
