@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-07T09:54:20.327521+09:00",
+  "last_run_at": "2026-09-08T09:53:36.628502+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-08",
-      "title_hash": "4ea632bafca110cf",
-      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선 키스' 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "d18927a83930860a",
-      "card_title": "블랙핑크, 팝 시장 장악한 K팝 걸그룹의 글로벌 영향력",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "a140e6fa263d0827",
-      "card_title": "블랙핑크, 데뷔 10주년 — K팝 글로벌 아이콘의 여정",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "c0e2e3569d09a42c",
-      "card_title": "걸셋, 미국 빌보드 '21 언더 21' 선정 — JYP 글로벌 걸그룹의 위상",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "ded8de1dc19e6395",
-      "card_title": "하이브 신인 걸그룹 튜이드, 데뷔곡 '선키스' 공개 — 일정표 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "8610973d2055155a",
-      "card_title": "하이브 신인 걸그룹 튜이드, 'SUN KISS'로 데뷔",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "246df404570331eb",
-      "card_title": "해이, 육촌동생이 폴킴 — 걸그룹 출신 음악 집안",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-08",
-      "title_hash": "8d80c579261c534a",
-      "card_title": "해이의 육촌동생은 폴킴, 동생도 걸그룹 출신 '음악 집안'",
-      "caption_variant": "question_hook",
-      "media_id": "18616638220045552",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-11",
       "title_hash": "d5d2ed7e8398eb6e",
@@ -1729,6 +1665,78 @@
       "card_title": "효연·정은지, 2세대 걸그룹 롱런의 비결은 '변치 않는 의리'",
       "caption_variant": "list_count",
       "media_id": "18135907015618171",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "ecebc6bf1368aa9a",
+      "card_title": "하이브, 인도 14억 시장서 걸그룹 발굴부터 IP화까지 추진",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "99c45b14ce66c56f",
+      "card_title": "수영·유리, 6세대 걸그룹의 두 번째 전성기 주목",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "99c45b14ce66c56f",
+      "card_title": "수영·유리, 6세대 걸그룹으로 두 번째 전성기 맞이",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "3f9d2c6f79018abf",
+      "card_title": "걸그룹 리센느, 수원 '홍보어사' 위촉 — 왕의 도시 매력 전 세계로",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "3c9ea32fd4f2d613",
+      "card_title": "BINI 코첼라 데뷔, 노나 1600만뷰…동남아 걸그룹의 약진",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "5ed2a4b7aa70fbaf",
+      "card_title": "니쥬, 28일 첫 미니앨범 '사워 그레이프스'로 국내 컴백",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "017933166373bbb1",
+      "card_title": "걸그룹 키키, 데뷔곡 '404 (New Era)'로 첫 대상 수상",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "46f7e9bd651a9068",
+      "card_title": "에스투잇, 6개월 만에 컴백 — '많이 성장했다' 자신감",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-08",
+      "title_hash": "4f166176e51de137",
+      "card_title": "일본 대세 걸그룹 HANA 지수, 솔로 아티스트 '이지수'로 데뷔 — 싱글 '미스매치' 발매",
+      "caption_variant": "tease_one",
+      "media_id": "17981576886075035",
       "card_style": "minimal"
     }
   ]
