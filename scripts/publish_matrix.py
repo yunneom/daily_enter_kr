@@ -721,6 +721,9 @@ def main() -> int:
     from validate_member_names import gate as _names_gate
     _names_gate()
 
+    from ops_schedule import guard as _ops_guard
+    if _ops_guard("matrix"):
+        return 0
     target = os.environ.get("TOPIC", "all").strip().lower()
     ig_user_id = os.environ.get("INSTAGRAM_USER_ID")
     ig_token = os.environ.get("INSTAGRAM_ACCESS_TOKEN")

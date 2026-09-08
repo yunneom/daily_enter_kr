@@ -870,6 +870,9 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
+    from ops_schedule import guard as _ops_guard
+    if not args.dry_run and _ops_guard("engagement"):
+        return 0
     date = _today()
     fmt = args.format or ROTATION.get(date.weekday())
     wd = ['월', '화', '수', '목', '금', '토', '일'][date.weekday()]

@@ -326,16 +326,30 @@ class InstagramPublisher:
 
         Returns: published media id
         """
-        print(f"[1/3] Reels 컨테이너 생성 (video_url 길이: {len(video_url)})...")
-        container_id = self._create_reel_container(
-            video_url=video_url, caption=caption,
-            cover_url=cover_url, share_to_feed=share_to_feed,
-        )
-        print(f"  ✓ container_id: {container_id}")
-
-        print("[2/3] 비디오 트랜스코딩 대기 (보통 30-90초)...")
-        self._wait_container_ready(container_id)
-        print("  ✓ FINISHED")
+        # 컨테이너 ERROR/EXPIRED/타임아웃은 IG 쪽 일시 장애인 경우가 많다
+        # (2026-09-04 이모지 퀴즈: 같은 파이프라인 영상이 'ERROR: ERROR' 로 1회 거부).
+        # 새 컨테이너로 1회 재시도 — 컨테이너 생성은 게시가 아니라 중복 게시 위험 없음.
+        last_err = None
+        for attempt in range(1, 3):
+            print(f"[1/3] Reels 컨테이너 생성 (video_url 길이: {len(video_url)}, 시도 {attempt}/2)...")
+            container_id = self._create_reel_container(
+                video_url=video_url, caption=caption,
+                cover_url=cover_url, share_to_feed=share_to_feed,
+            )
+            print(f"  ✓ container_id: {container_id}")
+            print("[2/3] 비디오 트랜스코딩 대기 (보통 30-90초)...")
+            try:
+                self._wait_container_ready(container_id)
+                print("  ✓ FINISHED")
+                last_err = None
+                break
+            except (requests.HTTPError, TimeoutError) as e:
+                last_err = e
+                print(f"  ⚠️ 컨테이너 실패: {e}")
+                if attempt < 2:
+                    time.sleep(30)
+        if last_err is not None:
+            raise last_err
 
         print("[3/3] 게시...")
         media_id = self._publish_container(container_id)

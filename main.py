@@ -115,6 +115,9 @@ def upload_with_retry(path: Path) -> str:
 
 
 def main():
+    from ops_schedule import guard as _ops_guard
+    if _ops_guard("news"):
+        return
     apply_cron_jitter()
 
     today = datetime.now()

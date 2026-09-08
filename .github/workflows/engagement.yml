@@ -5,7 +5,8 @@ name: 🎯 참여형 데일리 (요일 로테이션)
 # 매일 11:30 KST — 뉴스(08:00~08:30)·운세(11:00)와 간격 확보.
 on:
   schedule:
-    - cron: '30 2 * * *'   # UTC 02:30 = KST 11:30
+    # cron 지연(2~7h) 보정: 22:00 UTC 에 걸고 wait_until 로 03:00 UTC(KST 12:00) 목표.
+    - cron: '0 22 * * *'   # → 게시 목표 UTC 03:00 = KST 12:00 (다음 날짜 기준)
   workflow_dispatch:
     inputs:
       format:
@@ -30,12 +31,16 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 360   # 대기(최대 300분) + 게시
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait until KST 12:00 (cron 지연 보정, 스케줄 실행만)
+        if: github.event_name == 'schedule'
+        run: python3 scripts/wait_until.py 03:00 --max-minutes 300
 
       - name: Set up Python
         uses: actions/setup-python@v5
