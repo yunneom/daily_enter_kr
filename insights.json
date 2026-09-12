@@ -2,151 +2,6 @@
   "version": 3,
   "snapshots": [
     {
-      "snapshot_at": "2026-06-14T09:17:14.869770+09:00",
-      "posts": [
-        {
-          "media_id": "18094879346246338",
-          "permalink": "https://www.instagram.com/reel/DZi7yyfFN1q/",
-          "timestamp": "2026-06-14T00:16:36+0000",
-          "caption_excerpt": "📌 오늘 K-연예 TOP 8 | 아이오아이 김도연, 10년간 활발한 단톡방…매년 크리스마스마다 만난다...\n\n전체 목록은 본 영상에서 → ▶\n\n",
-          "media_type": "VIDEO",
-          "like_count": 0,
-          "comments_count": 0,
-          "age_hours": 0.0
-        },
-        {
-          "media_id": "18128013907541479",
-          "permalink": "https://www.instagram.com/reel/DZh0casjvDD/",
-          "timestamp": "2026-06-13T13:53:05+0000",
-          "caption_excerpt": "먹을지 vs 운동 갈지\n\n⏸ 일시정지로 메뉴 골라봐!\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 조합이 이겼나 대결!\n📲 스토리에",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 1,
-          "age_hours": 10.4
-        },
-        {
-          "media_id": "18107190049946794",
-          "permalink": "https://www.instagram.com/reel/DZhiIbzAij2/",
-          "timestamp": "2026-06-13T11:13:08+0000",
-          "caption_excerpt": "5만원으로 주말 보내기\n\n각 섹터별 1개씩 골라 합 5만원 만들기\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 조합이 이겼나 대결!",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 1,
-          "age_hours": 13.1
-        },
-        {
-          "media_id": "17976554934026002",
-          "permalink": "https://www.instagram.com/reel/DZhKBK5DBNs/",
-          "timestamp": "2026-06-13T07:42:25+0000",
-          "caption_excerpt": "만원으로 아이돌 올스타 만들기\n\n각 그룹 1명씩 골라 합 1만원 — 당신의 올스타는?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 1,
-          "age_hours": 16.6
-        },
-        {
-          "media_id": "18065757590452456",
-          "permalink": "https://www.instagram.com/reel/DZgzS5QlE-F/",
-          "timestamp": "2026-06-13T04:23:48+0000",
-          "caption_excerpt": "만원으로 축구 드림팀 만들기\n\n각 포지션 1명씩 골라 합 1만원 — 당신의 베스트일레븐은?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 ",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 19.9
-        },
-        {
-          "media_id": "18401716996156883",
-          "permalink": "https://www.instagram.com/reel/DZgXCpQjg4Y/",
-          "timestamp": "2026-06-13T00:16:59+0000",
-          "caption_excerpt": "오늘 K연예에서 가장 핫한 건? 배성재♥김다영, 14살 나이 차 '미끼' 러브스토리 공개\n\n외 7건. 전체 영상 보기 ▶\n\n1. 배성재♥김다영,",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 24.0
-        },
-        {
-          "media_id": "18597005923034666",
-          "permalink": "https://www.instagram.com/reel/DZdyTTpiOfH/",
-          "timestamp": "2026-06-12T00:17:32+0000",
-          "caption_excerpt": "K팝 걸그룹 콜라보 뮤직비디오, 천만 뷰 육박 · 배성재·김다영 신혼 부부, '전현무계획3' 동반출연 · 아이들 미연·우기, 각각의 매력으로 시",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 48.0
-        },
-        {
-          "media_id": "18099562490517934",
-          "permalink": "https://www.instagram.com/reel/DZc4xI7jCdt/",
-          "timestamp": "2026-06-11T15:54:43+0000",
-          "caption_excerpt": "만원으로 아이돌 올스타 만들기\n\n각 그룹 1명씩 골라 합 1만원 — 당신의 올스타는?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 ",
-          "media_type": "VIDEO",
-          "like_count": 9,
-          "comments_count": 7,
-          "age_hours": 56.4
-        },
-        {
-          "media_id": "17869070598543365",
-          "permalink": "https://www.instagram.com/reel/DZbOLbHlPTG/",
-          "timestamp": "2026-06-11T00:23:20+0000",
-          "caption_excerpt": "오늘 K-연예 핫이슈, 다 알고 있나요? 8건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. 오정세, '와일드 씽'으로 음원차트 1위 석권…'",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 71.9
-        },
-        {
-          "media_id": "18066403367432245",
-          "permalink": "https://www.instagram.com/reel/DZaQuIUDhN4/",
-          "timestamp": "2026-06-10T15:26:18+0000",
-          "caption_excerpt": "만원으로 축구 드림팀 만들기\n\n각 포지션 1명씩 골라 합 1만원 — 당신의 베스트일레븐은?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 80.8
-        },
-        {
-          "media_id": "17943138732037194",
-          "permalink": "https://www.instagram.com/reel/DZYtLBWjG_B/",
-          "timestamp": "2026-06-10T00:56:17+0000",
-          "caption_excerpt": "만원으로 이상형 만들기\n\n각 항목 1개씩 골라 합 1만원 만들기\n\n💬 당신의 조합은? 댓글로 알려주세요 ⬇️\n📩 친구 태그하고 같이 골라보세요 ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 2,
-          "age_hours": 95.3
-        },
-        {
-          "media_id": "18127312639713078",
-          "permalink": "https://www.instagram.com/reel/DZYs6p1ANWs/",
-          "timestamp": "2026-06-10T00:54:12+0000",
-          "caption_excerpt": "만원으로 걸그룹 꾸리기\n\n각 포지션 1명씩 골라 합 1만원 만들기\n\n💬 당신의 조합은? 댓글로 알려주세요 ⬇️\n📩 친구 태그하고 같이 골라보세요",
-          "media_type": "VIDEO",
-          "like_count": 19,
-          "comments_count": 3,
-          "age_hours": 95.4
-        },
-        {
-          "media_id": "18113549032894941",
-          "permalink": "https://www.instagram.com/reel/DZYsqOWFMJR/",
-          "timestamp": "2026-06-10T00:51:59+0000",
-          "caption_excerpt": "만 5천원으로 점심 즐기기\n\n각 섹터별 1개씩 골라 합 1.5만원 만들기\n\n💬 당신의 조합은? 댓글로 알려주세요 ⬇️\n📩 친구 태그하고 같이 골",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 95.4
-        },
-        {
-          "media_id": "18341752027218764",
-          "permalink": "https://www.instagram.com/reel/DZYsZZ7GMz3/",
-          "timestamp": "2026-06-10T00:49:40+0000",
-          "caption_excerpt": "5만원으로 주말 보내기\n\n각 섹터별 1개씩 골라 합 5만원 만들기\n\n💬 당신의 조합은? 댓글로 알려주세요 ⬇️\n📩 친구 태그하고 같이 골라보세요",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 95.5
-        }
-      ]
-    },
-    {
       "snapshot_at": "2026-06-15T09:29:41.700440+09:00",
       "posts": [
         {
@@ -52652,6 +52507,206 @@
           "like_count": 0,
           "comments_count": 2,
           "age_hours": 239.9,
+          "views": 25,
+          "reach": 17,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 2,
+          "plays": 25
+        }
+      ]
+    },
+    {
+      "snapshot_at": "2026-09-12T09:46:40.849422+09:00",
+      "account": {
+        "reach": 71,
+        "profile_views": 3,
+        "website_clicks": 0,
+        "accounts_engaged": 1,
+        "followers_count": 43
+      },
+      "posts": [
+        {
+          "media_id": "17981576886075035",
+          "permalink": "https://www.instagram.com/p/DdAcaOiDfN9/",
+          "timestamp": "2026-09-08T00:53:31+0000",
+          "caption_excerpt": "잠깐, 하이브, 인도 14억 시장서 걸그룹 발굴부터 IP화까지 추진 ?\n\n오늘 9건 중 가장 화제된 이슈 + 나머지 ▶\n\n1. 하이브, 인도 1",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 95.9
+        },
+        {
+          "media_id": "18096805367062386",
+          "permalink": "https://www.instagram.com/reel/Dc_VLsECsTU/",
+          "timestamp": "2026-09-07T14:31:33+0000",
+          "caption_excerpt": "만원으로 SM 걸그룹 만들기\n\n소시·레드벨벳·에스파·H2H — 각 포지션 1명씩 합 1만원\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 ",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 2,
+          "age_hours": 106.3,
+          "views": 24,
+          "reach": 19,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 3,
+          "plays": 24
+        },
+        {
+          "media_id": "18135907015618171",
+          "permalink": "https://www.instagram.com/p/Dc93tOSoH_r/",
+          "timestamp": "2026-09-07T00:54:14+0000",
+          "caption_excerpt": "📌 오늘 K-팝 걸그룹 TOP 9 | 리센느, 2026 SKA 2관왕 달성...\n\n전체 목록은 본 영상에서 → ▶\n\n1. 리센느, 2026 SK",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 119.9
+        },
+        {
+          "media_id": "17894845332395242",
+          "permalink": "https://www.instagram.com/p/Dc7SxPVjg_-/",
+          "timestamp": "2026-09-06T00:53:05+0000",
+          "caption_excerpt": "오늘 K연예에서 가장 핫한 건? 효리수, 30대 중반 신예 걸그룹으로 돌아온다 '요정의 귀환'\n\n외 7건. 전체 영상 보기 ▶\n\n1. 효리수, ",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 143.9
+        },
+        {
+          "media_id": "18001268489794763",
+          "permalink": "https://www.instagram.com/p/Dc4rxfuEd3p/",
+          "timestamp": "2026-09-05T00:33:50+0000",
+          "caption_excerpt": "진소리, 미스춘향 선출…걸그룹 멤버이자 뮤지컬 배우의 다재다능함 · 에이미, 걸그룹 비주얼 돋보이며 포착 · 효리수, 농담에서 시작된 6세대 걸",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 168.2
+        },
+        {
+          "media_id": "18624914281053968",
+          "permalink": "https://www.instagram.com/reel/Dc3cSc8IHVv/",
+          "timestamp": "2026-09-04T12:59:33+0000",
+          "caption_excerpt": "만원으로 HYBE 걸그룹 만들기\n\n르세라핌·ILLIT·KATSEYE — 각 포지션 1명씩 합 1만원\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 ",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 1,
+          "age_hours": 179.8,
+          "views": 5,
+          "reach": 4,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 1,
+          "plays": 5
+        },
+        {
+          "media_id": "18467038282113373",
+          "permalink": "https://www.instagram.com/p/Dc2JreMmqHx/",
+          "timestamp": "2026-09-04T00:57:26+0000",
+          "caption_excerpt": "오늘 K-팝 걸그룹 핫이슈, 다 알고 있나요? 9건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. JYP 신인 걸그룹 OURBIRTHDAY, ",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 191.8
+        },
+        {
+          "media_id": "17935599243367813",
+          "permalink": "https://www.instagram.com/reel/DcyUEd-DSiy/",
+          "timestamp": "2026-09-02T13:11:32+0000",
+          "caption_excerpt": "🎰 슬롯머신 걸그룹 조합\n\n멈춰서 본인 픽 만들기!\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 조합이 이겼나 대결!\n📲 스토리에 ",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 2,
+          "age_hours": 227.6,
+          "views": 7,
+          "reach": 3,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 3,
+          "plays": 7
+        },
+        {
+          "media_id": "17973187305129452",
+          "permalink": "https://www.instagram.com/reel/DcxyfBIFE4u/",
+          "timestamp": "2026-09-02T08:18:01+0000",
+          "caption_excerpt": "만원으로 걸그룹 올스타 만들기\n\n각 포지션 1명씩 골라 합 1만원 — 당신의 픽은?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 조",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 1,
+          "age_hours": 232.5,
+          "views": 65,
+          "reach": 51,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 2,
+          "plays": 65
+        },
+        {
+          "media_id": "18023290115699983",
+          "permalink": "https://www.instagram.com/reel/DcxrT50ioMi/",
+          "timestamp": "2026-09-02T07:15:25+0000",
+          "caption_excerpt": "멈춰서 뽑는 오늘의 최애 ✋\n영상을 아무 때나 멈춰보세요 — 멈춘 화면의 멤버가 오늘 당신을 응원합니다.\n누가 나왔는지 댓글로 인증!\n\n🔔 매일",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 1,
+          "age_hours": 233.5,
+          "views": 0,
+          "reach": 0,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 1,
+          "plays": 0
+        },
+        {
+          "media_id": "18050176823800799",
+          "permalink": "https://www.instagram.com/reel/DcxVHySkhVw/",
+          "timestamp": "2026-09-02T04:01:30+0000",
+          "caption_excerpt": "만원으로 4세대 걸그룹 1티어편\n\n각 포지션 1명씩 골라 합 1만원 — 4세대 진짜 1티어?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 2,
+          "age_hours": 236.8,
+          "views": 42,
+          "reach": 33,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 3,
+          "plays": 42
+        },
+        {
+          "media_id": "18133024087654795",
+          "permalink": "https://www.instagram.com/p/Dcw_wqHlXrf/",
+          "timestamp": "2026-09-02T00:54:34+0000",
+          "caption_excerpt": "📌 오늘 K-팝 걸그룹 TOP 8 | 하이브 신인 튜이드, 외신 호평 — 차세대 걸그룹 계보 주목...\n\n전체 목록은 본 영상에서 → ▶\n\n1.",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 239.9
+        },
+        {
+          "media_id": "18342736891265036",
+          "permalink": "https://www.instagram.com/reel/Dcv0U-9iUer/",
+          "timestamp": "2026-09-01T13:55:38+0000",
+          "caption_excerpt": "만원으로 걸그룹 올스타 만들기\n\n각 포지션 1명씩 골라 합 1만원 — 당신의 픽은?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구 조",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 2,
+          "age_hours": 250.9,
+          "views": 33,
+          "reach": 26,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 3,
+          "plays": 33
+        },
+        {
+          "media_id": "18008014487987507",
+          "permalink": "https://www.instagram.com/reel/DcvTMfqlFFX/",
+          "timestamp": "2026-09-01T09:06:12+0000",
+          "caption_excerpt": "만원으로 4세대 걸그룹 1티어편\n\n각 포지션 1명씩 골라 합 1만원 — 4세대 진짜 1티어?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서",
+          "media_type": "VIDEO",
+          "like_count": 0,
+          "comments_count": 2,
+          "age_hours": 255.7,
           "views": 25,
           "reach": 17,
           "saved": 0,
