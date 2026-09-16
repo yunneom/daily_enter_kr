@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-15T10:35:45.296721+09:00",
+  "last_run_at": "2026-09-16T10:08:37.917055+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-16",
-      "title_hash": "8a1f4a314deac949",
-      "card_title": "튜이드, 하이브 5번째 걸그룹으로 데뷔 임박",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "dfd13f012654024f",
-      "card_title": "리센느, 역주행을 넘어 정주행까지…완벽한 '대세' 걸그룹으로 우뚝",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "b30475d0ef7b4949",
-      "card_title": "하이브 튜이드 vs JYP 아워벌스데이, 신인 걸그룹 경쟁 시작",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "cda349b9496f5de4",
-      "card_title": "하이브·JYP 신인 걸그룹 동시 데뷔 선언",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "4a63c88d278a52f8",
-      "card_title": "걸그룹 흡연 루머, 멤버들의 솔직한 해명으로 마무리",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "70761af3b128f1ea",
-      "card_title": "리센느, '놀라운 토요일' 무대서 예능 본능 폭발",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "ddbb5a3fe718c147",
-      "card_title": "레드벨벳 vs 블랙핑크, 8월 아티스트탑텐 K팝 걸 브랜드 투표 개최",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-16",
-      "title_hash": "74e73c8efe89db69",
-      "card_title": "대형 엔터 신인 걸그룹들, 리센느 돌풍 속 자존심 경쟁 시작",
-      "caption_variant": "headlines_dotted",
-      "media_id": "17903273088481067",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-17",
       "title_hash": "ca7c19bd219b1867",
@@ -1481,6 +1417,70 @@
       "card_title": "무신사 & 하이브 신인 튜이드, 2026 FW 캠페인 모델 확정",
       "caption_variant": "question_hook",
       "media_id": "18112886009079154",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "88f43f2dfd144c0e",
+      "card_title": "시부야계 감성 담은 신예 걸그룹 튜이드 주목",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "4001467d49e69859",
+      "card_title": "영파씨, 10월 컴백 예고…힙합 걸그룹의 귀한 신작 출격",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "0f2b0d441e2e8e3c",
+      "card_title": "영파씨, 10월 컴백 확정…힙합 걸그룹 신작 공개",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "01d9707a8099d62c",
+      "card_title": "H//PE Princess, 걸그룹 음악의 공식을 깨다",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "546719b4f4c891fc",
+      "card_title": "젝시믹스, 걸그룹 W!nky와 대만 협력 — 현지 팬 접점 강화",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "c1f8debc55020824",
+      "card_title": "신인 걸그룹 튜이드, 무신사와 26FW 패션 화보 공개",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "23e53692be14dfb2",
+      "card_title": "젝시믹스, 대만 현지 걸그룹과 협업 — 아시아 시장 확장",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-16",
+      "title_hash": "83301eb11efb86b0",
+      "card_title": "걸그룹 멤버, 공연 중 성추행 피해 공개 증언",
+      "caption_variant": "list_count",
+      "media_id": "18006307124988059",
       "card_style": "minimal"
     }
   ]
