@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-16T10:08:37.917055+09:00",
+  "last_run_at": "2026-09-17T10:12:57.969654+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-17",
-      "title_hash": "ca7c19bd219b1867",
-      "card_title": "아일릿, 'I Got Your Back' 한국어 버전 발매 — 한·일 걸그룹 시너지",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "8c62084a92a5435e",
-      "card_title": "10년 차 걸그룹, 결혼·출산 계획 솔직 공개 '현실적 고민 나눠'",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "756c47d6662fe0ba",
-      "card_title": "리센느 원이, 8월 걸그룹 개인 브랜드평판 1위 차지",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "b7bfc34a73554ba5",
-      "card_title": "리센느, 출연 없이도 인기가요 1위 달성",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "bdceeb1fcebb7042",
-      "card_title": "걸그룹 리센느, 음악방송 4관왕 달성",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "7c5328e0aa4c48a9",
-      "card_title": "리센느, 'Pretty Girl' 음방 4관왕 달성",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "639dde585627ccf4",
-      "card_title": "올여름 차 안에서 가장 많이 들린 곡, 깜짝 재결합 걸그룹 노래",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "94b87fa523e2fbfd",
-      "card_title": "리센느 원이X소녀시대 태연, '프리티걸' 챌린지 콜라보",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-17",
-      "title_hash": "2e0da210203d17d7",
-      "card_title": "구구단 소이, 오늘 변호사와 결혼식 올려",
-      "caption_variant": "question_hook",
-      "media_id": "18191728507351793",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-18",
       "title_hash": "6fd6e79de565bfdc",
@@ -1481,6 +1409,54 @@
       "card_title": "걸그룹 멤버, 공연 중 성추행 피해 공개 증언",
       "caption_variant": "list_count",
       "media_id": "18006307124988059",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-17",
+      "title_hash": "96625a6ed6532dfa",
+      "card_title": "효연, 6세대 걸그룹의 세대 차이 언급 '우리한테 오빠가 어디 있어'",
+      "caption_variant": "tease_one",
+      "media_id": "18105578807587648",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-17",
+      "title_hash": "6a50d2af40f4d081",
+      "card_title": "6세대 신인 걸그룹, 데뷔 무대에 헬기 등장 — '무대 체질' 선보인 효리수",
+      "caption_variant": "tease_one",
+      "media_id": "18105578807587648",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-17",
+      "title_hash": "5c2680f61f5b1f39",
+      "card_title": "아린·하영·예린·최유정·효민·츄, 걸그룹 출신 6인 VIP시사회 미모 경연",
+      "caption_variant": "tease_one",
+      "media_id": "18105578807587648",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-17",
+      "title_hash": "6c4ece1a67f3097c",
+      "card_title": "더엔터테인먼트, 팬덤 플랫폼 LiNC와 손잡고 신인 걸그룹 팬덤 구축 시작",
+      "caption_variant": "tease_one",
+      "media_id": "18105578807587648",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-17",
+      "title_hash": "29327bc5363448a5",
+      "card_title": "라잇썸, 일본 데뷔 앨범 타이틀곡 선공개",
+      "caption_variant": "tease_one",
+      "media_id": "18105578807587648",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-17",
+      "title_hash": "f48c88b821555aaf",
+      "card_title": "젝시믹스, 대만 팝업스토어 오픈…현지 걸그룹과 협업 마케팅",
+      "caption_variant": "tease_one",
+      "media_id": "18105578807587648",
       "card_style": "minimal"
     }
   ]
