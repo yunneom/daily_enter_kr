@@ -2806,6 +2806,28 @@
       "youtube_id": "WhE6VSWUog8",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-09-18T12:01:54.585964+09:00",
+      "topic_id": "eng_emoji_quiz_2026-09-18",
+      "title": "이모지 퀴즈 Part 1",
+      "style": "eng_emoji_quiz",
+      "seed": null,
+      "ig_media_id": "18103753249966171",
+      "youtube_id": "LvVvggR5JH4",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "groups": [
+          "NMIXX",
+          "BABYMONSTER",
+          "KIIIKIII",
+          "Candy Shop",
+          "fromis_9",
+          "리센느"
+        ],
+        "part": 1
+      }
     }
   ]
 }
