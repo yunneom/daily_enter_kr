@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-17T10:12:57.969654+09:00",
+  "last_run_at": "2026-09-18T10:04:37.826241+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-18",
-      "title_hash": "6fd6e79de565bfdc",
-      "card_title": "튜이드, 하이브 신설 레이블 첫 걸그룹으로 'TUNE & PLAY' 발표",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "b32959727f4306f9",
-      "card_title": "리센느 원이 8월 걸그룹 브랜드평판 1위 차지",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "57f2d8bd5ab8b8f0",
-      "card_title": "엔믹스, 11월 인천서 월드투어 앙코르 공연 개최",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "5b9953e622c22018",
-      "card_title": "에이투오 메이, 이수만 비경업 약정 종료 후 한국 활동 재개",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "0028392179f147a9",
-      "card_title": "에이페, 라이징 걸그룹 리센느와 손잡다",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "a516726d149098b3",
-      "card_title": "에이투오메이(A2O MAY), 이수만 프로듀싱 걸그룹 한국 음악방송 활동 위해 입국",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "92a57a8e6bc34f05",
-      "card_title": "걸그룹 출신 신부, 변호사 남편 앞에서 축가 무대",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-18",
-      "title_hash": "df2afe038de923fb",
-      "card_title": "이수만 걸그룹 A2O MAY, 한국 음악방송 출격",
-      "caption_variant": "list_count",
-      "media_id": "18219791455332450",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-20",
       "title_hash": "b5ec66dc00b0e491",
@@ -1457,6 +1393,30 @@
       "card_title": "젝시믹스, 대만 팝업스토어 오픈…현지 걸그룹과 협업 마케팅",
       "caption_variant": "tease_one",
       "media_id": "18105578807587648",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-18",
+      "title_hash": "5ee2bc65e5739741",
+      "card_title": "신인 걸그룹, 광고 문의 100개 몰려 주목",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17893241688608369",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-18",
+      "title_hash": "185eb41708c0e510",
+      "card_title": "더엔터테인먼트, 신인 걸그룹 데뷔 준비 — LiNC와 팬덤 플랫폼 협력",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17893241688608369",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-18",
+      "title_hash": "ff4c1aaace81b933",
+      "card_title": "서인영, 걸그룹 행사비 현실 공개 '출연료 100만 원대'",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17893241688608369",
       "card_style": "minimal"
     }
   ]
