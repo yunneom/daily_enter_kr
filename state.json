@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-18T10:04:37.826241+09:00",
+  "last_run_at": "2026-09-19T09:54:23.708173+09:00",
   "last_run_status": "success",
   "posted_history": [
     {
@@ -1417,6 +1417,78 @@
       "card_title": "서인영, 걸그룹 행사비 현실 공개 '출연료 100만 원대'",
       "caption_variant": "you_wont_believe",
       "media_id": "17893241688608369",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "1d566575fd3812b5",
+      "card_title": "효리수, 예능 인기를 넘어 걸그룹의 새로운 미래로",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "a88c031c46becf36",
+      "card_title": "르세라핌, 영국 오피셜 차트 K-팝 걸그룹 최고 순위 기록",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "1824023d88b1e54a",
+      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, 화려한 데뷔 무대 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "0a8ce5d6e00013e4",
+      "card_title": "효리수, 음악방송 이어 '아는형님' 출격 — 6세대 고연차 걸그룹의 예능 활약",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "a82f7a9b94d94cbc",
+      "card_title": "걸그룹 출신 연예인, 시험관 임신 성공 후 만삭 근황 공개",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "27bcfdc5b1d7c1d3",
+      "card_title": "리센느, 11월 3일 컴백 예고… '역주행' 신드롬 이어간다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "512baf5ed3ab236c",
+      "card_title": "르세라핌, 영국 오피셜 차트 진입 — 이번 주 K팝 걸그룹 최고 순위",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "8c42f3aef847395a",
+      "card_title": "아이칠린 주니, 선명한 복근 라인 온라인 화제",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-19",
+      "title_hash": "38203753e7720819",
+      "card_title": "AI 손편지 논란, 아이돌이 직접 사과하며 재검토 약속",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18124163908878532",
       "card_style": "minimal"
     }
   ]
