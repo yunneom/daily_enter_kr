@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-19T09:54:23.708173+09:00",
+  "last_run_at": "2026-09-20T09:46:10.045588+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-20",
-      "title_hash": "b5ec66dc00b0e491",
-      "card_title": "걸그룹 리센느, 거제 수해 복구에 5천만원 기부",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "86cd0acad8e4f256",
-      "card_title": "아워벌스데이, JYP 신인의 책임감 있는 출발 응원",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "4d2ec4704ccf323f",
-      "card_title": "JYP, 4년 만에 새 걸그룹 론칭 … OURBIRTHDAY 'WHIP-HOP'으로 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "b87cf3b4c9e6905b",
-      "card_title": "OURBIRTHDAY, JYP 글로벌 데뷔쇼 성공 개최…NMIXX와 특별 만남",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "543cce5c39ac87dc",
-      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, 오늘 공식 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "350e2e37152f3ce9",
-      "card_title": "걸그룹 리센느, 거제·통영 수해복구에 5000만원 기부",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "0932aa7aa7e228bd",
-      "card_title": "아워벌스데이, JYP 4년 만의 신생 걸그룹 데뷔 — 7인 7색 멤버 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "a65389310e6b7775",
-      "card_title": "아일릿, 오늘 엠카 출격 — 日 걸그룹 HANA와 스페셜 컬래버",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-20",
-      "title_hash": "7cec561ef62d29df",
-      "card_title": "아워벌스데이, JYP 신입 걸그룹으로 공식 데뷔",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17981931936076190",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-21",
       "title_hash": "a3293ce09e2fc78e",
@@ -1489,6 +1417,78 @@
       "card_title": "AI 손편지 논란, 아이돌이 직접 사과하며 재검토 약속",
       "caption_variant": "headlines_dotted",
       "media_id": "18124163908878532",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "3a43d0139fa2fc8c",
+      "card_title": "지역 사랑 운동, K-팝 걸그룹 성공 공식 새로 쓰다",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "df0495a7135c6958",
+      "card_title": "르세라핌, 영국 오피셜 차트 K팝 걸그룹 최고 순위 기록",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "48eccec7a0b6beb7",
+      "card_title": "효리수, 걸그룹의 새로운 가능성을 제시하다",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "c7c270961104fc0f",
+      "card_title": "EXID 혜린, 역주행 후 새로운 도전…안국 타코집 사장으로 활동 중",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "a7c5ed552a538546",
+      "card_title": "리센느 원, 2개월 연속 걸그룹 브랜드 평판 1위 유지",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "cda724484a960b79",
+      "card_title": "리센느, 2026 TMA 2관왕 달성 오케스트라 무대로 부산 점령",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "3a7812952e052e60",
+      "card_title": "NiziU, 1년 6개월 만에 컴백 준비 중",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "a0da6a0249568ec6",
+      "card_title": "르세라핌 'Made My Night', 영국 오피셜 차트 K-팝 걸그룹 최고 순위 기록",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-20",
+      "title_hash": "6b412a6e49e8921f",
+      "card_title": "캣츠아이, VMA 4개 부문 후보 — 빌보드200 1위에 이은 글로벌 돌풍",
+      "caption_variant": "list_count",
+      "media_id": "17963492390983758",
       "card_style": "minimal"
     }
   ]
