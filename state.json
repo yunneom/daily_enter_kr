@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-20T09:46:10.045588+09:00",
+  "last_run_at": "2026-09-21T10:09:32.038857+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-21",
-      "title_hash": "a3293ce09e2fc78e",
-      "card_title": "걸그룹 리센느 메이, 생일 축하 고양시 응원 콘텐츠 화제",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "30eab3eaa22bbc84",
-      "card_title": "JYP 신인 걸그룹 아워버스데이, 데뷔 준비 박차 — 신인상 목표",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "7cf80e8b872ac14e",
-      "card_title": "키비츠, 잠실구장 응원단상 무대 선점 — 5인조 걸그룹의 라이브 퍼포먼스",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "df81aa0e4c55a95f",
-      "card_title": "키비츠, 잠실구장 응원단상서 무대 — 5인조 걸그룹의 특별한 순간",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "69e7fc74418f3a2d",
-      "card_title": "신인 아워벌스데이, JYP 걸그룹 계보 잇다 — 강렬 퍼포먼스로 데뷔",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "d2aa1a97bf566b79",
-      "card_title": "신예 걸그룹 튜이드, 음악과 퍼포먼스로 존재감 드러내다",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "5b1ea3b8827dc9a2",
-      "card_title": "에스파, 신라면 2차 글로벌 광고 캠페인 출연",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "5cd74b66071e9510",
-      "card_title": "아워벌스데이, JYP 신인 걸그룹 데뷔 앞두고 첫 싱글 콘셉트 포토 공개",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-21",
-      "title_hash": "a8688a01c2f8ed7d",
-      "card_title": "리센느, 할리스 창립 28년 만의 첫 광고모델 발탁",
-      "caption_variant": "question_hook",
-      "media_id": "17926147203403880",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-22",
       "title_hash": "b2fa865230f35504",
@@ -1489,6 +1417,78 @@
       "card_title": "캣츠아이, VMA 4개 부문 후보 — 빌보드200 1위에 이은 글로벌 돌풍",
       "caption_variant": "list_count",
       "media_id": "17963492390983758",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "166d21c8b31f3b77",
+      "card_title": "버추얼 걸그룹 OWIS, 교과서 문학 낭독 프로젝트 진행",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "509064bd40d073c5",
+      "card_title": "리센느 원 1위, 9월 걸그룹 개인 브랜드평판 정상",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "345a7aa860e83035",
+      "card_title": "원이, 9월 걸그룹 평판 1위 차지",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "a8097bd5838ef476",
+      "card_title": "핑클, 21년 만에 완전체 활동 재개 — 1세대 걸그룹의 귀환",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "80ea92f57cfffe9e",
+      "card_title": "르세라핌, K-팝 걸그룹 최초 美 아이하트라디오 페스티벌 무대",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "639577b6f083d52c",
+      "card_title": "리센느 원이, 9월 걸그룹 개인 브랜드평판 1위 차지",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "a74579c69da5261c",
+      "card_title": "르세라핌, K-팝 걸그룹 최초 美 대형 페스티벌 헤드라이너 무대",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "a24c362b4a79a235",
+      "card_title": "나빌레라, 싸이 몽골 슈퍼콘서트 초청 공연으로 수만 관객 매료",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-21",
+      "title_hash": "9ca597e6cf365adc",
+      "card_title": "쥬얼리 이지현·박정아, 걸그룹 원조 비주얼 입증",
+      "caption_variant": "tease_one",
+      "media_id": "17884867734492455",
       "card_style": "minimal"
     }
   ]
