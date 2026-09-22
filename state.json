@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-21T10:09:32.038857+09:00",
+  "last_run_at": "2026-09-22T10:35:55.816383+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-22",
-      "title_hash": "b2fa865230f35504",
-      "card_title": "아일릿, 일본 인기 걸그룹과 뮤직뱅크 무대 공개",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "ae36c1bc4e450a96",
-      "card_title": "JYP 4년 만의 신인 걸그룹, 정식 데뷔 무대 공개",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "8107cfe590f13022",
-      "card_title": "하이브 신인 튜이드, '걸스' 퍼포먼스 공개…경쾌한 매력",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "f77ad0579a3191cc",
-      "card_title": "아일릿, 일본 인기 걸그룹과 뮤직뱅크 무대 공개",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "858884817a3c5e99",
-      "card_title": "뉴진스, 하이브 첫 걸그룹 데뷔 약속 — 민희진 측 공식 입장",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "52a4dc60e2994ee5",
-      "card_title": "JYP, 4년 만에 신규 걸그룹 아워벌스데이 출격",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "c35fd238dcd8cf48",
-      "card_title": "베이비몬스터, 공식 채널 1300만 구독자 돌파 — K팝 걸그룹 TOP3 등극",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "0416bb052e791973",
-      "card_title": "르세라핌, 4세대 걸그룹 중 유일 2026 MTV VMA 노미네이트",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-22",
-      "title_hash": "b0bd411506284015",
-      "card_title": "걸그룹 리센느, 거제 수해 복구에 5천만원 기부",
-      "caption_variant": "list_count",
-      "media_id": "18095014880080698",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-23",
       "title_hash": "0d6ad70b456294a6",
@@ -1489,6 +1417,78 @@
       "card_title": "쥬얼리 이지현·박정아, 걸그룹 원조 비주얼 입증",
       "caption_variant": "tease_one",
       "media_id": "17884867734492455",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "90a5bcd34814a59a",
+      "card_title": "핑클, 21년 만에 활동 재개 — 1세대 걸그룹의 귀환",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "90a5bcd34814a59a",
+      "card_title": "핑클, 21년 만에 무대 복귀 — 1세대 걸그룹의 귀환",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "f1b5ebd480385490",
+      "card_title": "리센느, 11월 3일 컴백 확정 — 신곡으로 대세 이어간다",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "74b1b4ceef5c6dc5",
+      "card_title": "핑클, 21년 만에 완전체 재결합 — 1세대 걸그룹의 귀환",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "c9e4bf0fe2f25ea9",
+      "card_title": "리센느, 11월 3일 컴백 예고 — 새로운 변신 기대",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "42801787530b8a7d",
+      "card_title": "리센느, 11월 3일 미니 4집 컴백 확정",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "1e4ea95832f6f1ac",
+      "card_title": "핑클, 21년 만에 완전체 활동 재개",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "f08ade50724cec1a",
+      "card_title": "핑클, 21년 만에 완전체 컴백 — 1세대 톱티어 재결집",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-22",
+      "title_hash": "e33cd7ac05ac62df",
+      "card_title": "라잇썸, 2년 만의 컴백 — 새로운 변신으로 팬들 기대",
+      "caption_variant": "you_wont_believe",
+      "media_id": "17981828589109917",
       "card_style": "minimal"
     }
   ]
