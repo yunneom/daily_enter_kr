@@ -1,56 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-22T10:35:55.816383+09:00",
+  "last_run_at": "2026-09-23T10:17:11.171417+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-23",
-      "title_hash": "0d6ad70b456294a6",
-      "card_title": "수영, 6세대 걸그룹 '효리수' 데뷔 — 새로운 세대의 시작",
-      "caption_variant": "tease_one",
-      "media_id": "18131726842732857",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-23",
-      "title_hash": "573352042a113b04",
-      "card_title": "하이브 신규 글로벌 걸그룹 캣츠아이, 영국 앨범 차트 2위 진입",
-      "caption_variant": "tease_one",
-      "media_id": "18131726842732857",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-23",
-      "title_hash": "2f1d85666c098367",
-      "card_title": "오유진, 새로운 비주얼로 팬심 사로잡다 — 인터뷰 공개",
-      "caption_variant": "tease_one",
-      "media_id": "18131726842732857",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-23",
-      "title_hash": "13b22e5896d8901d",
-      "card_title": "캣츠아이, 영국 오피셜 차트 2위 진입···자체 최고 성적",
-      "caption_variant": "tease_one",
-      "media_id": "18131726842732857",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-23",
-      "title_hash": "ed7451d006cc1a3b",
-      "card_title": "에스파, '넥스트 레벨'로 걸그룹의 새로운 경계 개척",
-      "caption_variant": "tease_one",
-      "media_id": "18131726842732857",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-23",
-      "title_hash": "d2b5fee4dbd1ad76",
-      "card_title": "아일릿, 오늘 엠카 출격…일본 걸그룹 HANA 지수·모모카와 스페셜 콜라보",
-      "caption_variant": "tease_one",
-      "media_id": "18131726842732857",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-24",
       "title_hash": "20256c7ee5edd7af",
@@ -1489,6 +1441,78 @@
       "card_title": "라잇썸, 2년 만의 컴백 — 새로운 변신으로 팬들 기대",
       "caption_variant": "you_wont_believe",
       "media_id": "17981828589109917",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "db1af92cdd57eb7e",
+      "card_title": "LG전자가 선보인 AI 걸그룹 '에이아이돌' — 생활 속 음악의 새로운 경험",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "ccc27a637b8069c6",
+      "card_title": "마바타키모세즈, 10월 1일 안양대 가을축제 무대 확정",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "57531add66135275",
+      "card_title": "LG전자 걸그룹 에이아이돌, 음원·음방 통해 본격 활동 시작",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "e160cfa2db2be6ec",
+      "card_title": "LG전자 AI 걸그룹 '에이아이돌', 5인조로 활동 본격화",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "e4452f21445aa2fa",
+      "card_title": "나빌레라, 몽골 싸이공연 초대 무대 성공",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "92a5da45b047b5ed",
+      "card_title": "톱 걸그룹 멤버, KBS 전국노래자랑 방청석에 깜짝 포착",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "df7661f53c2ec3b2",
+      "card_title": "리센느, 11월 3일 미니 4집 컴백 — 새로운 향기로 돌아온다",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "e07ed78c661f5cef",
+      "card_title": "핑클, 21년 만에 완전체 재결합 — 1세대 걸그룹 귀환",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-23",
+      "title_hash": "4c10755a351e61cf",
+      "card_title": "핑클, 21년만에 완전체 컴백 — '단발성 아닌' 재출발 선언",
+      "caption_variant": "headlines_dotted",
+      "media_id": "18445792297120652",
       "card_style": "minimal"
     }
   ]
