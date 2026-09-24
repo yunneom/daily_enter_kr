@@ -2,459 +2,6 @@
   "version": 3,
   "snapshots": [
     {
-      "snapshot_at": "2026-06-25T20:37:50.801254+09:00",
-      "account": {
-        "reach": 22793,
-        "profile_views": 85,
-        "website_clicks": 1,
-        "accounts_engaged": 170
-      },
-      "posts": [
-        {
-          "media_id": "18140950357558557",
-          "permalink": "https://www.instagram.com/reel/DaAFVGgDiLD/",
-          "timestamp": "2026-06-25T07:57:52+0000",
-          "caption_excerpt": "🏆 32강 결과 — 16강 진출 16명!\n\n  1. 장원영 (아이브)\n 2. 원희 (아일릿)\n 3. 지수 (블랙핑크)\n 4. 닝닝 (에스파)\n ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 1,
-          "age_hours": 3.7
-        },
-        {
-          "media_id": "18066224975446481",
-          "permalink": "https://www.instagram.com/reel/DZ_QTSIlOuO/",
-          "timestamp": "2026-06-25T00:14:34+0000",
-          "caption_excerpt": "오늘 K-연예 핫이슈, 다 알고 있나요? 8건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. 황인엽·이혜리, 신드라마서 첫사랑 로맨스 예고\n2",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 11.4
-        },
-        {
-          "media_id": "18109006186994216",
-          "permalink": "https://www.instagram.com/p/DZ9kyt2lovM/",
-          "timestamp": "2026-06-24T08:34:51+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 대진표\n\n좌 16명 / 우 16명 → 중앙 결승까지 한 눈에!\n숫자 = 브랜드평판 시드순위\n(TOP1-4 분산 → 빅매",
-          "media_type": "IMAGE",
-          "like_count": 3,
-          "comments_count": 2,
-          "age_hours": 27.0
-        },
-        {
-          "media_id": "18166556038437546",
-          "permalink": "https://www.instagram.com/reel/DZ8qq6iHWL_/",
-          "timestamp": "2026-06-24T00:07:17+0000",
-          "caption_excerpt": "잠깐, 기희현♥이상윤, 일본 데이트 포착 — 공개연애 선언 ?\n\n오늘 8건 중 가장 화제된 이슈 + 나머지 ▶\n\n1. 기희현♥이상윤, 일본 데이",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 35.5
-        },
-        {
-          "media_id": "18078375344658404",
-          "permalink": "https://www.instagram.com/reel/DZ6mBo8DsD-/",
-          "timestamp": "2026-06-23T04:48:11+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 8/8\n\n매치 1: 조이 (레드벨벳) vs 윤아 (소녀시대)\n매치 2: 설윤 (엔믹스) vs 최유정 (위키미키)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 4,
-          "comments_count": 5,
-          "age_hours": 54.8
-        },
-        {
-          "media_id": "18049629119612473",
-          "permalink": "https://www.instagram.com/reel/DZ6ljm6j2Ps/",
-          "timestamp": "2026-06-23T04:44:05+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 4/8\n\n매치 1: 닝닝 (에스파) vs 지원 (시그니처)\n매치 2: 태연 (소녀시대) vs 아이린 (레드벨벳)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 4,
-          "comments_count": 4,
-          "age_hours": 54.9
-        },
-        {
-          "media_id": "17866902060572634",
-          "permalink": "https://www.instagram.com/reel/DZ6lE2XD-zM/",
-          "timestamp": "2026-06-23T04:39:57+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 7/8\n\n매치 1: 윈터 (에스파) vs 나연 (트와이스)\n매치 2: 정채연 (다이아) vs 연정 (우주소녀)\n\n💬",
-          "media_type": "VIDEO",
-          "like_count": 5,
-          "comments_count": 4,
-          "age_hours": 55.0
-        },
-        {
-          "media_id": "17956229970140245",
-          "permalink": "https://www.instagram.com/reel/DZ6kdyxjBAJ/",
-          "timestamp": "2026-06-23T04:34:53+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 3/8\n\n매치 1: 지수 (블랙핑크) vs 리즈 (아이브)\n매치 2: 김채원 (르세라핌) vs 이채영 (프로미스나인",
-          "media_type": "VIDEO",
-          "like_count": 14,
-          "comments_count": 13,
-          "age_hours": 55.0
-        },
-        {
-          "media_id": "18379731880200917",
-          "permalink": "https://www.instagram.com/reel/DZ6j_rukWrC/",
-          "timestamp": "2026-06-23T04:30:26+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 6/8\n\n매치 1: 안유진 (아이브) vs 정연 (트와이스)\n매치 2: 원이 (리센느) vs 레이 (아이브)\n\n💬 ",
-          "media_type": "VIDEO",
-          "like_count": 3,
-          "comments_count": 5,
-          "age_hours": 55.1
-        },
-        {
-          "media_id": "18131204374617644",
-          "permalink": "https://www.instagram.com/reel/DZ6jh0rk0NE/",
-          "timestamp": "2026-06-23T04:26:19+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 2/8\n\n매치 1: 원희 (아일릿) vs 모카 (아일릿)\n매치 2: 리사 (블랙핑크) vs 여름 (우주소녀)\n\n💬 ",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 3,
-          "age_hours": 55.2
-        },
-        {
-          "media_id": "18085106771553042",
-          "permalink": "https://www.instagram.com/reel/DZ6jBo9jzUq/",
-          "timestamp": "2026-06-23T04:21:48+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 5/8\n\n매치 1: 로제 (블랙핑크) vs 슬기 (레드벨벳)\n매치 2: 제니 (블랙핑크) vs 미나미 (리센느)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 4,
-          "age_hours": 55.3
-        },
-        {
-          "media_id": "17887144185571055",
-          "permalink": "https://www.instagram.com/reel/DZ6ijgilGpE/",
-          "timestamp": "2026-06-23T04:17:51+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 1/8\n\n매치 1: 장원영 (아이브) vs 지젤 (에스파)\n매치 2: 카리나 (에스파) vs 카즈하 (르세라핌)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 8,
-          "comments_count": 8,
-          "age_hours": 55.3
-        },
-        {
-          "media_id": "17934866295290946",
-          "permalink": "https://www.instagram.com/reel/DZ6G_-lgPS5/",
-          "timestamp": "2026-06-23T00:16:58+0000",
-          "caption_excerpt": "📌 오늘 K-연예 TOP 8 | 지연수, 전 남편 일라이 재혼에 따뜻한 축하 메시지...\n\n전체 목록은 본 영상에서 → ▶\n\n1. 지연수, 전 ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 59.3
-        },
-        {
-          "media_id": "18054227135764788",
-          "permalink": "https://www.instagram.com/reel/DZ5cd9_yal0/",
-          "timestamp": "2026-06-22T18:05:39+0000",
-          "caption_excerpt": "🎰 슬롯머신 보이그룹 조합 — 일시정지로 픽!\n\n3열 × 5명 = 5³ = 125가지 조합\n1열↑ / 2열↓ / 3열↑ 다른 방향으로 회전\n\n⏸",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 1,
-          "age_hours": 65.5
-        }
-      ]
-    },
-    {
-      "snapshot_at": "2026-06-25T23:24:30.814550+09:00",
-      "account": {
-        "reach": 25502,
-        "profile_views": 104,
-        "website_clicks": 1,
-        "accounts_engaged": 191
-      },
-      "posts": [
-        {
-          "media_id": "18140950357558557",
-          "permalink": "https://www.instagram.com/reel/DaAFVGgDiLD/",
-          "timestamp": "2026-06-25T07:57:52+0000",
-          "caption_excerpt": "🏆 32강 결과 — 16강 진출 16명!\n\n  1. 장원영 (아이브)\n 2. 원희 (아일릿)\n 3. 지수 (블랙핑크)\n 4. 닝닝 (에스파)\n ",
-          "media_type": "VIDEO",
-          "like_count": 3,
-          "comments_count": 1,
-          "age_hours": 6.4
-        },
-        {
-          "media_id": "18066224975446481",
-          "permalink": "https://www.instagram.com/reel/DZ_QTSIlOuO/",
-          "timestamp": "2026-06-25T00:14:34+0000",
-          "caption_excerpt": "오늘 K-연예 핫이슈, 다 알고 있나요? 8건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. 황인엽·이혜리, 신드라마서 첫사랑 로맨스 예고\n2",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 14.2
-        },
-        {
-          "media_id": "18109006186994216",
-          "permalink": "https://www.instagram.com/p/DZ9kyt2lovM/",
-          "timestamp": "2026-06-24T08:34:51+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 대진표\n\n좌 16명 / 우 16명 → 중앙 결승까지 한 눈에!\n숫자 = 브랜드평판 시드순위\n(TOP1-4 분산 → 빅매",
-          "media_type": "IMAGE",
-          "like_count": 3,
-          "comments_count": 2,
-          "age_hours": 29.8
-        },
-        {
-          "media_id": "18166556038437546",
-          "permalink": "https://www.instagram.com/reel/DZ8qq6iHWL_/",
-          "timestamp": "2026-06-24T00:07:17+0000",
-          "caption_excerpt": "잠깐, 기희현♥이상윤, 일본 데이트 포착 — 공개연애 선언 ?\n\n오늘 8건 중 가장 화제된 이슈 + 나머지 ▶\n\n1. 기희현♥이상윤, 일본 데이",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 38.3
-        },
-        {
-          "media_id": "18078375344658404",
-          "permalink": "https://www.instagram.com/reel/DZ6mBo8DsD-/",
-          "timestamp": "2026-06-23T04:48:11+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 8/8\n\n매치 1: 조이 (레드벨벳) vs 윤아 (소녀시대)\n매치 2: 설윤 (엔믹스) vs 최유정 (위키미키)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 4,
-          "comments_count": 5,
-          "age_hours": 57.6
-        },
-        {
-          "media_id": "18049629119612473",
-          "permalink": "https://www.instagram.com/reel/DZ6ljm6j2Ps/",
-          "timestamp": "2026-06-23T04:44:05+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 4/8\n\n매치 1: 닝닝 (에스파) vs 지원 (시그니처)\n매치 2: 태연 (소녀시대) vs 아이린 (레드벨벳)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 4,
-          "comments_count": 4,
-          "age_hours": 57.7
-        },
-        {
-          "media_id": "17866902060572634",
-          "permalink": "https://www.instagram.com/reel/DZ6lE2XD-zM/",
-          "timestamp": "2026-06-23T04:39:57+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 7/8\n\n매치 1: 윈터 (에스파) vs 나연 (트와이스)\n매치 2: 정채연 (다이아) vs 연정 (우주소녀)\n\n💬",
-          "media_type": "VIDEO",
-          "like_count": 5,
-          "comments_count": 4,
-          "age_hours": 57.7
-        },
-        {
-          "media_id": "17956229970140245",
-          "permalink": "https://www.instagram.com/reel/DZ6kdyxjBAJ/",
-          "timestamp": "2026-06-23T04:34:53+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 3/8\n\n매치 1: 지수 (블랙핑크) vs 리즈 (아이브)\n매치 2: 김채원 (르세라핌) vs 이채영 (프로미스나인",
-          "media_type": "VIDEO",
-          "like_count": 14,
-          "comments_count": 13,
-          "age_hours": 57.8
-        },
-        {
-          "media_id": "18379731880200917",
-          "permalink": "https://www.instagram.com/reel/DZ6j_rukWrC/",
-          "timestamp": "2026-06-23T04:30:26+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 6/8\n\n매치 1: 안유진 (아이브) vs 정연 (트와이스)\n매치 2: 원이 (리센느) vs 레이 (아이브)\n\n💬 ",
-          "media_type": "VIDEO",
-          "like_count": 3,
-          "comments_count": 5,
-          "age_hours": 57.9
-        },
-        {
-          "media_id": "18131204374617644",
-          "permalink": "https://www.instagram.com/reel/DZ6jh0rk0NE/",
-          "timestamp": "2026-06-23T04:26:19+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 2/8\n\n매치 1: 원희 (아일릿) vs 모카 (아일릿)\n매치 2: 리사 (블랙핑크) vs 여름 (우주소녀)\n\n💬 ",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 3,
-          "age_hours": 58.0
-        },
-        {
-          "media_id": "18085106771553042",
-          "permalink": "https://www.instagram.com/reel/DZ6jBo9jzUq/",
-          "timestamp": "2026-06-23T04:21:48+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 5/8\n\n매치 1: 로제 (블랙핑크) vs 슬기 (레드벨벳)\n매치 2: 제니 (블랙핑크) vs 미나미 (리센느)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 4,
-          "age_hours": 58.0
-        },
-        {
-          "media_id": "17887144185571055",
-          "permalink": "https://www.instagram.com/reel/DZ6ijgilGpE/",
-          "timestamp": "2026-06-23T04:17:51+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 1/8\n\n매치 1: 장원영 (아이브) vs 지젤 (에스파)\n매치 2: 카리나 (에스파) vs 카즈하 (르세라핌)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 8,
-          "comments_count": 8,
-          "age_hours": 58.1
-        },
-        {
-          "media_id": "17934866295290946",
-          "permalink": "https://www.instagram.com/reel/DZ6G_-lgPS5/",
-          "timestamp": "2026-06-23T00:16:58+0000",
-          "caption_excerpt": "📌 오늘 K-연예 TOP 8 | 지연수, 전 남편 일라이 재혼에 따뜻한 축하 메시지...\n\n전체 목록은 본 영상에서 → ▶\n\n1. 지연수, 전 ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 62.1
-        },
-        {
-          "media_id": "18054227135764788",
-          "permalink": "https://www.instagram.com/reel/DZ5cd9_yal0/",
-          "timestamp": "2026-06-22T18:05:39+0000",
-          "caption_excerpt": "🎰 슬롯머신 보이그룹 조합 — 일시정지로 픽!\n\n3열 × 5명 = 5³ = 125가지 조합\n1열↑ / 2열↓ / 3열↑ 다른 방향으로 회전\n\n⏸",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 1,
-          "age_hours": 68.3
-        }
-      ]
-    },
-    {
-      "snapshot_at": "2026-06-26T09:24:20.775685+09:00",
-      "account": {
-        "reach": 30411,
-        "profile_views": 140,
-        "website_clicks": 1,
-        "accounts_engaged": 223
-      },
-      "posts": [
-        {
-          "media_id": "17971584687110678",
-          "permalink": "https://www.instagram.com/reel/DaB2GRMgFr0/",
-          "timestamp": "2026-06-26T00:23:13+0000",
-          "caption_excerpt": "안영미, 25일 둘째 득남…산모와 아이 모두 건강 · 혜리·지수·정호연, 첫 여행 셀카 공개 '화사한 일상' · 원빈, 새로운 작품 준비 중…머",
-          "media_type": "VIDEO",
-          "like_count": 0,
-          "comments_count": 0,
-          "age_hours": 0.0
-        },
-        {
-          "media_id": "18140950357558557",
-          "permalink": "https://www.instagram.com/reel/DaAFVGgDiLD/",
-          "timestamp": "2026-06-25T07:57:52+0000",
-          "caption_excerpt": "🏆 32강 결과 — 16강 진출 16명!\n\n  1. 장원영 (아이브)\n 2. 원희 (아일릿)\n 3. 지수 (블랙핑크)\n 4. 닝닝 (에스파)\n ",
-          "media_type": "VIDEO",
-          "like_count": 3,
-          "comments_count": 1,
-          "age_hours": 16.4
-        },
-        {
-          "media_id": "18066224975446481",
-          "permalink": "https://www.instagram.com/reel/DZ_QTSIlOuO/",
-          "timestamp": "2026-06-25T00:14:34+0000",
-          "caption_excerpt": "오늘 K-연예 핫이슈, 다 알고 있나요? 8건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. 황인엽·이혜리, 신드라마서 첫사랑 로맨스 예고\n2",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 24.2
-        },
-        {
-          "media_id": "18109006186994216",
-          "permalink": "https://www.instagram.com/p/DZ9kyt2lovM/",
-          "timestamp": "2026-06-24T08:34:51+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 대진표\n\n좌 16명 / 우 16명 → 중앙 결승까지 한 눈에!\n숫자 = 브랜드평판 시드순위\n(TOP1-4 분산 → 빅매",
-          "media_type": "IMAGE",
-          "like_count": 3,
-          "comments_count": 2,
-          "age_hours": 39.8
-        },
-        {
-          "media_id": "18166556038437546",
-          "permalink": "https://www.instagram.com/reel/DZ8qq6iHWL_/",
-          "timestamp": "2026-06-24T00:07:17+0000",
-          "caption_excerpt": "잠깐, 기희현♥이상윤, 일본 데이트 포착 — 공개연애 선언 ?\n\n오늘 8건 중 가장 화제된 이슈 + 나머지 ▶\n\n1. 기희현♥이상윤, 일본 데이",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 0,
-          "age_hours": 48.3
-        },
-        {
-          "media_id": "18078375344658404",
-          "permalink": "https://www.instagram.com/reel/DZ6mBo8DsD-/",
-          "timestamp": "2026-06-23T04:48:11+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 8/8\n\n매치 1: 조이 (레드벨벳) vs 윤아 (소녀시대)\n매치 2: 설윤 (엔믹스) vs 최유정 (위키미키)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 4,
-          "comments_count": 5,
-          "age_hours": 67.6
-        },
-        {
-          "media_id": "18049629119612473",
-          "permalink": "https://www.instagram.com/reel/DZ6ljm6j2Ps/",
-          "timestamp": "2026-06-23T04:44:05+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 4/8\n\n매치 1: 닝닝 (에스파) vs 지원 (시그니처)\n매치 2: 태연 (소녀시대) vs 아이린 (레드벨벳)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 4,
-          "comments_count": 4,
-          "age_hours": 67.7
-        },
-        {
-          "media_id": "17866902060572634",
-          "permalink": "https://www.instagram.com/reel/DZ6lE2XD-zM/",
-          "timestamp": "2026-06-23T04:39:57+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 7/8\n\n매치 1: 윈터 (에스파) vs 나연 (트와이스)\n매치 2: 정채연 (다이아) vs 연정 (우주소녀)\n\n💬",
-          "media_type": "VIDEO",
-          "like_count": 5,
-          "comments_count": 4,
-          "age_hours": 67.7
-        },
-        {
-          "media_id": "17956229970140245",
-          "permalink": "https://www.instagram.com/reel/DZ6kdyxjBAJ/",
-          "timestamp": "2026-06-23T04:34:53+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 3/8\n\n매치 1: 지수 (블랙핑크) vs 리즈 (아이브)\n매치 2: 김채원 (르세라핌) vs 이채영 (프로미스나인",
-          "media_type": "VIDEO",
-          "like_count": 14,
-          "comments_count": 13,
-          "age_hours": 67.8
-        },
-        {
-          "media_id": "18379731880200917",
-          "permalink": "https://www.instagram.com/reel/DZ6j_rukWrC/",
-          "timestamp": "2026-06-23T04:30:26+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 6/8\n\n매치 1: 안유진 (아이브) vs 정연 (트와이스)\n매치 2: 원이 (리센느) vs 레이 (아이브)\n\n💬 ",
-          "media_type": "VIDEO",
-          "like_count": 3,
-          "comments_count": 5,
-          "age_hours": 67.9
-        },
-        {
-          "media_id": "18131204374617644",
-          "permalink": "https://www.instagram.com/reel/DZ6jh0rk0NE/",
-          "timestamp": "2026-06-23T04:26:19+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 2/8\n\n매치 1: 원희 (아일릿) vs 모카 (아일릿)\n매치 2: 리사 (블랙핑크) vs 여름 (우주소녀)\n\n💬 ",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 3,
-          "age_hours": 68.0
-        },
-        {
-          "media_id": "18085106771553042",
-          "permalink": "https://www.instagram.com/reel/DZ6jBo9jzUq/",
-          "timestamp": "2026-06-23T04:21:48+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 5/8\n\n매치 1: 로제 (블랙핑크) vs 슬기 (레드벨벳)\n매치 2: 제니 (블랙핑크) vs 미나미 (리센느)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 2,
-          "comments_count": 4,
-          "age_hours": 68.0
-        },
-        {
-          "media_id": "17887144185571055",
-          "permalink": "https://www.instagram.com/reel/DZ6ijgilGpE/",
-          "timestamp": "2026-06-23T04:17:51+0000",
-          "caption_excerpt": "🏆 걸그룹 월드컵 32강 · 1/8\n\n매치 1: 장원영 (아이브) vs 지젤 (에스파)\n매치 2: 카리나 (에스파) vs 카즈하 (르세라핌)\n\n",
-          "media_type": "VIDEO",
-          "like_count": 8,
-          "comments_count": 8,
-          "age_hours": 68.1
-        },
-        {
-          "media_id": "17934866295290946",
-          "permalink": "https://www.instagram.com/reel/DZ6G_-lgPS5/",
-          "timestamp": "2026-06-23T00:16:58+0000",
-          "caption_excerpt": "📌 오늘 K-연예 TOP 8 | 지연수, 전 남편 일라이 재혼에 따뜻한 축하 메시지...\n\n전체 목록은 본 영상에서 → ▶\n\n1. 지연수, 전 ",
-          "media_type": "VIDEO",
-          "like_count": 1,
-          "comments_count": 0,
-          "age_hours": 72.1
-        }
-      ]
-    },
-    {
       "snapshot_at": "2026-06-26T13:16:30.236983+09:00",
       "account": {
         "reach": 33202,
@@ -51897,6 +51444,182 @@
           "like_count": 1,
           "comments_count": 0,
           "age_hours": 368.1
+        }
+      ]
+    },
+    {
+      "snapshot_at": "2026-09-24T10:02:29.137627+09:00",
+      "account": {
+        "reach": 42,
+        "profile_views": 0,
+        "website_clicks": 0,
+        "accounts_engaged": 2,
+        "followers_count": 42
+      },
+      "posts": [
+        {
+          "media_id": "17919684753442200",
+          "permalink": "https://www.instagram.com/p/DdpqJAFldCy/",
+          "timestamp": "2026-09-24T01:02:23+0000",
+          "caption_excerpt": "오늘 K연예에서 가장 핫한 건? LG전자 AI아이돌, 5인조 신인그룹으로 본격 활동 시작\n\n외 6건. 전체 영상 보기 ▶\n\n1. LG전자 AI아",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 0.0
+        },
+        {
+          "media_id": "18116928437093469",
+          "permalink": "https://www.instagram.com/reel/Ddn8J3igU_y/",
+          "timestamp": "2026-09-23T09:01:30+0000",
+          "caption_excerpt": "만원으로 JYP 걸그룹 만들기\n\n트와이스·ITZY·NMIXX — 각 포지션 1명씩 합 1만원\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 1,
+          "age_hours": 16.0,
+          "views": 5,
+          "reach": 4,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 2,
+          "plays": 5
+        },
+        {
+          "media_id": "18445792297120652",
+          "permalink": "https://www.instagram.com/p/DdnHCWtFHe5/",
+          "timestamp": "2026-09-23T01:17:07+0000",
+          "caption_excerpt": "LG전자가 선보인 AI 걸그룹 '에이아이돌' — 생활 속 음악의 새로운 경험 · 마바타키모세즈, 10월 1일 안양대 가을축제 무대 확정 · LG",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 23.8
+        },
+        {
+          "media_id": "17981828589109917",
+          "permalink": "https://www.instagram.com/p/DdkkYaVIHsy/",
+          "timestamp": "2026-09-22T01:35:50+0000",
+          "caption_excerpt": "오늘 K-팝 걸그룹 핫이슈, 다 알고 있나요? 9건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. 핑클, 21년 만에 활동 재개 — 1세대 걸",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 47.4
+        },
+        {
+          "media_id": "18486597961108220",
+          "permalink": "https://www.instagram.com/reel/DdiymHOjMXf/",
+          "timestamp": "2026-09-21T09:01:50+0000",
+          "caption_excerpt": "만원으로 2세대 걸그룹 레전드편\n\n소녀시대·원더걸스·2NE1·씨스타·미쓰에이 — 합 1만원\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 ",
+          "media_type": "VIDEO",
+          "like_count": 2,
+          "comments_count": 2,
+          "age_hours": 64.0,
+          "views": 105,
+          "reach": 74,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 6,
+          "plays": 105
+        },
+        {
+          "media_id": "17884867734492455",
+          "permalink": "https://www.instagram.com/p/Ddh8kHMDgNs/",
+          "timestamp": "2026-09-21T01:09:26+0000",
+          "caption_excerpt": "잠깐, 버추얼 걸그룹 OWIS, 교과서 문학 낭독 프로젝트 진행 ?\n\n오늘 9건 중 가장 화제된 이슈 + 나머지 ▶\n\n1. 버추얼 걸그룹 OWI",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 71.9
+        },
+        {
+          "media_id": "17963492390983758",
+          "permalink": "https://www.instagram.com/p/DdfVGYnoAo6/",
+          "timestamp": "2026-09-20T00:46:05+0000",
+          "caption_excerpt": "📌 오늘 K-팝 걸그룹 TOP 9 | 지역 사랑 운동, K-팝 걸그룹 성공 공식 새로 쓰다...\n\n전체 목록은 본 영상에서 → ▶\n\n1. 지역 ",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 96.3
+        },
+        {
+          "media_id": "18124163908878532",
+          "permalink": "https://www.instagram.com/p/DdcxPxSG6w7/",
+          "timestamp": "2026-09-19T00:54:19+0000",
+          "caption_excerpt": "효리수, 예능 인기를 넘어 걸그룹의 새로운 미래로 · 르세라핌, 영국 오피셜 차트 K-팝 걸그룹 최고 순위 기록 · JYP 신인 걸그룹 OURB",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 120.1
+        },
+        {
+          "media_id": "18115369684777598",
+          "permalink": "https://www.instagram.com/reel/DdbEO3ljNh1/",
+          "timestamp": "2026-09-18T09:01:56+0000",
+          "caption_excerpt": "만원으로 4세대 걸그룹 2티어편\n\n각 포지션 1명씩 골라 합 1만원 — 1티어급 누구?\n\n💬 내 조합 댓글로 남기기 ⬇️\n👥 친구 소환해서 누구",
+          "media_type": "VIDEO",
+          "like_count": 3,
+          "comments_count": 1,
+          "age_hours": 136.0,
+          "views": 155,
+          "reach": 121,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 5,
+          "plays": 155
+        },
+        {
+          "media_id": "18103753249966171",
+          "permalink": "https://www.instagram.com/reel/DdabA8xijST/",
+          "timestamp": "2026-09-18T03:01:40+0000",
+          "caption_excerpt": "이모지로 걸그룹 맞히기 Part 1 🧩 6문항, 문항당 3초!\n몇 개 맞혔는지 댓글로 (0~6) — 전부 맞히면 찐팬 인정 👑\n\n🔔 월·수·금 ",
+          "media_type": "VIDEO",
+          "like_count": 1,
+          "comments_count": 1,
+          "age_hours": 142.0,
+          "views": 343,
+          "reach": 200,
+          "saved": 0,
+          "shares": 0,
+          "total_interactions": 2,
+          "plays": 343
+        },
+        {
+          "media_id": "17893241688608369",
+          "permalink": "https://www.instagram.com/p/DdaNniZo7cK/",
+          "timestamp": "2026-09-18T01:04:32+0000",
+          "caption_excerpt": "오늘 K-팝 걸그룹 핫이슈, 다 알고 있나요? 3건 — 1분 안에 확인\n\n영상으로 한눈에 ▶\n\n1. 신인 걸그룹, 광고 문의 100개 몰려 주목",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 144.0
+        },
+        {
+          "media_id": "18105578807587648",
+          "permalink": "https://www.instagram.com/p/DdXpyJImNoX/",
+          "timestamp": "2026-09-17T01:12:54+0000",
+          "caption_excerpt": "잠깐, 효연, 6세대 걸그룹의 세대 차이 언급 '우리한테 오빠가 어디 있어' ?\n\n오늘 6건 중 가장 화제된 이슈 + 나머지 ▶\n\n1. 효연, ",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 167.8
+        },
+        {
+          "media_id": "18006307124988059",
+          "permalink": "https://www.instagram.com/p/DdVEfX1IOko/",
+          "timestamp": "2026-09-16T01:08:33+0000",
+          "caption_excerpt": "📌 오늘 K-팝 걸그룹 TOP 8 | 시부야계 감성 담은 신예 걸그룹 튜이드 주목...\n\n전체 목록은 본 영상에서 → ▶\n\n1. 시부야계 감성 ",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 1,
+          "comments_count": 0,
+          "age_hours": 191.9
+        },
+        {
+          "media_id": "18112886009079154",
+          "permalink": "https://www.instagram.com/p/DdSizFfkW0f/",
+          "timestamp": "2026-09-15T01:35:40+0000",
+          "caption_excerpt": "오늘 K연예에서 가장 핫한 건? 튜이드, 데뷔 3주 만에 KT 아이폰 광고 모델 발탁\n\n외 8건. 전체 영상 보기 ▶\n\n1. 튜이드, 데뷔 3주",
+          "media_type": "CAROUSEL_ALBUM",
+          "like_count": 0,
+          "comments_count": 0,
+          "age_hours": 215.4
         }
       ]
     }

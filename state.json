@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-23T10:17:11.171417+09:00",
+  "last_run_at": "2026-09-24T10:02:28.438594+09:00",
   "last_run_status": "success",
   "posted_history": [
-    {
-      "date": "2026-08-24",
-      "title_hash": "20256c7ee5edd7af",
-      "card_title": "한미 합작 걸그룹 캣츠아이, 빌보드 앨범 차트 첫 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "1e7fde79865e40fd",
-      "card_title": "캣츠아이, 미국 빌보드 앨범 차트 첫 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "ed50f723663134fa",
-      "card_title": "캣츠아이, '와일드'로 빌보드 앨범 차트 첫 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "1e7fde79865e40fd",
-      "card_title": "걸그룹 캣츠아이, 미 빌보드 앨범 차트 첫 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "5eecb50efe3b97cc",
-      "card_title": "하이브 캣츠아이, 빌보드 200 1위 달성 — K팝 걸그룹 네 번째",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "8a157fc15d4ca108",
-      "card_title": "하이브 걸그룹 캣츠아이, 구글 검색량 데뷔 후 최고 기록",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "cf1283171e0b0526",
-      "card_title": "캣츠아이, 美 빌보드 앨범 차트 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "c7189f627f0fd068",
-      "card_title": "JYP 신인 걸그룹 OURBIRTHDAY, 데뷔 첫 주 글로벌 활동 성료",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-24",
-      "title_hash": "1673e722fc4f8dbc",
-      "card_title": "캣츠아이, 빌보드 200·톱 앨범 세일즈 동시 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "17957348229207003",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-25",
       "title_hash": "4081e80119d145b8",
@@ -1513,6 +1441,62 @@
       "card_title": "핑클, 21년만에 완전체 컴백 — '단발성 아닌' 재출발 선언",
       "caption_variant": "headlines_dotted",
       "media_id": "18445792297120652",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "c43b71737f673441",
+      "card_title": "LG전자 AI아이돌, 5인조 신인그룹으로 본격 활동 시작",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "299f3b86d77f953b",
+      "card_title": "K-팝 걸그룹, 유럽 함부르크 사로잡으며 글로벌 시장 확대",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "31ad4a901bcf7b48",
+      "card_title": "핫한 걸그룹, 광고 섭외 물량 급증 — 음악방송까지 영향",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "641a57fd2710d88b",
+      "card_title": "LG전자 AI 걸그룹 에이아이돌, 본격 활동 시작",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "73671ddb0591f27c",
+      "card_title": "LG전자 신인 걸그룹 에이아이돌, 음악방송 출연으로 활동 본격화",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "48807ccb5326b48e",
+      "card_title": "튜이드, 빌보드 '이머징 아티스트' 차트 1위 달성",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
+      "card_style": "minimal"
+    },
+    {
+      "date": "2026-09-24",
+      "title_hash": "86d696e9b80d8acd",
+      "card_title": "LG전자 AI걸그룹 에이아이돌, 주요 음악방송 본격 활동 시작",
+      "caption_variant": "question_hook",
+      "media_id": "17919684753442200",
       "card_style": "minimal"
     }
   ]
