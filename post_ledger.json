@@ -2861,6 +2861,17 @@
       "youtube_id": "-m7o5Z47iuc",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-09-25T12:01:30.835837+09:00",
+      "topic_id": "eng_quiz_2026-09-25",
+      "title": "상식 등급전 2026-09-25",
+      "style": "eng_quiz",
+      "seed": null,
+      "ig_media_id": "18033459029845651",
+      "youtube_id": "2DdZemx3R1c",
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
