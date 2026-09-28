@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-27T10:08:01.321786+09:00",
+  "last_run_at": "2026-09-28T10:20:29.940761+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-08-28",
-      "title_hash": "4587b27379b0af62",
-      "card_title": "튜이드, 새로운 걸그룹의 탄생 — '다름'으로 만드는 차별성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "040b6ba90aaf7e6f",
-      "card_title": "아워버스데이 vs 튜이드, 7인조 신인 걸그룹의 장르 대결 주목",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "1e57e8321a3312ae",
-      "card_title": "걸그룹 iii, 신곡 '웨이트' 오늘 발매",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "507321dccf33c899",
-      "card_title": "버추얼 걸그룹 OWIS, 신곡 'juicy' MV 티저 공개 — 상큼한 과일 콘셉트 기대",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "6db409ad96d6b465",
-      "card_title": "K-팝 걸그룹과 콜라보한 F&B 프랜차이즈, 젠지 팬덤 사로잡다",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "2f8d7bccb3379fc5",
-      "card_title": "버추얼 걸그룹 MW:MEU, 미니앨범 'With U' 예약판매 시작",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "5b3de7334d8ed460",
-      "card_title": "걸그룹 iii, 디지털 싱글 'WaiT' 뮤비 티저 공개",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "40311a2986456098",
-      "card_title": "장규리, 드라마 '포핸즈'서 송강과 호흡 — '자연스러운 신체 표현이 가장 어렵다'",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-28",
-      "title_hash": "75ab2eaf32afb80e",
-      "card_title": "캣츠아이, 한미 합작 걸그룹으로 빌보드200 첫 1위 달성",
-      "caption_variant": "you_wont_believe",
-      "media_id": "18016235762942777",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-08-29",
       "title_hash": "3a0e60768594227d",
