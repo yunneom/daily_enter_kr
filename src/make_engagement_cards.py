@@ -587,6 +587,98 @@ def make_emoji_quiz_card(q_num: int, q_total: int, emoji_text: str, options: lis
     return out
 
 
+def make_bingo_card(title: str, items: List[str], out: Path,
+                    kicker: str = "", rule: str = "해당하는 칸 체크 → 몇 칸?") -> Path:
+    """덕질 체크리스트 빙고 5×5 (스카우트 2026-W40 채택안 1).
+
+    items 는 25개, index 12 는 가운데 FREE 칸. 사진·인물 0 — 텍스트 타일만.
+    저장해서 캡처·체크하도록 타일 글씨를 크게, 줄바꿈은 2줄까지.
+    """
+    assert len(items) == 25, "bingo needs exactly 25 items"
+    img = _base()
+    draw = ImageDraw.Draw(img)
+    f_kick = _font("SemiBold", 40)
+    f_title = _font("Bold", 84)
+    f_rule = _font("Medium", 40)
+    y = 110
+    if kicker:
+        y = _center(draw, y, kicker, f_kick, fill=(196, 181, 253))
+    y = _center(draw, y + 4, title, f_title)
+    _center(draw, y + 2, rule, f_rule, fill=MUTED)
+
+    n = 5
+    margin, gap = 36, 10
+    gx0, gx1 = margin, CANVAS[0] - margin
+    cw = (gx1 - gx0 - gap * (n - 1)) // n
+    ch = cw  # 정사각 타일
+    grid_top = 470
+    f_cell = _font("SemiBold", 27)
+    f_free = _font("Bold", 44)
+    for idx, text in enumerate(items):
+        r, c = divmod(idx, n)
+        x0 = gx0 + c * (cw + gap)
+        y0 = grid_top + r * (ch + gap)
+        is_free = idx == 12
+        fill = (60, 52, 20) if is_free else (28, 26, 42)
+        outline = GOLD if is_free else (70, 66, 96)
+        draw.rounded_rectangle([x0, y0, x0 + cw, y0 + ch], radius=18, fill=fill,
+                               outline=outline, width=2)
+        if is_free:
+            w = draw.textlength("FREE", font=f_free)
+            draw.text((x0 + (cw - w) / 2, y0 + ch / 2 - 26), "FREE", font=f_free, fill=GOLD)
+            continue
+        lines = _wrap(draw, text, f_cell, cw - 18)
+        if len(lines) > 3:  # 공백 없는 긴 문구 — 글자 단위 폴백
+            lines, cur = [], ""
+            for chx in text:
+                if draw.textlength(cur + chx, font=f_cell) <= cw - 18:
+                    cur += chx
+                else:
+                    lines.append(cur); cur = chx
+            if cur:
+                lines.append(cur)
+        lines = lines[:3]
+        lh = f_cell.size * 1.25
+        ty = y0 + (ch - lh * len(lines)) / 2
+        for ln in lines:
+            w = draw.textlength(ln, font=f_cell)
+            draw.text((x0 + (cw - w) / 2, ty), ln, font=f_cell, fill=INK)
+            ty += lh
+    # 하단 안내
+    f_hint = _font("Medium", 36)
+    _center(draw, grid_top + n * (ch + gap) + 24, "저장 → 캡처해서 체크 → 스토리에 @daily_enter_kr", f_hint, fill=MUTED)
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
+def make_bingo_score_card(tiers: list, out: Path, title: str = "몇 칸 체크했나요?") -> Path:
+    """빙고 점수 → 등급 해설 카드. tiers = [{min,max,name,desc}]."""
+    img = _base()
+    draw = ImageDraw.Draw(img)
+    f_title = _font("Bold", 84)
+    f_range = _font("Bold", 52)
+    f_name = _font("Bold", 64)
+    f_desc = _font("Medium", 38)
+    y = _center(draw, 170, title, f_title)
+    _center(draw, y + 4, "댓글에 숫자만 남겨주세요 (0~25)", _font("Medium", 42), fill=MUTED)
+    y = 480
+    colors = [(124, 58, 237), (14, 165, 233), (219, 39, 119), (250, 204, 21)]
+    for i, t in enumerate(tiers[:4]):
+        color = colors[i % len(colors)]
+        draw.rounded_rectangle([70, y, CANVAS[0] - 70, y + 250], radius=30,
+                               fill=tuple(int(v * 0.22) for v in color), outline=color, width=3)
+        draw.text((110, y + 34), f"{t['min']}~{t['max']}칸", font=f_range, fill=color)
+        draw.text((110, y + 100), t["name"], font=f_name, fill=INK)
+        draw.text((110, y + 186), t["desc"], font=f_desc, fill=MUTED)
+        y += 290
+    _brand_footer(draw)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
 def make_grade_card(out: Path) -> Path:
     """퀴즈 엔딩 등급 카드 — 맞은 개수 → 등급 안내."""
     img = _base()

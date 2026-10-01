@@ -2,11 +2,11 @@
 참여형(engagement) 데일리 오케스트레이터 — 요일 로테이션으로 포맷 자동 게시.
 
 로테이션 (KST 기준, 2026-09 축소 편성 — ROTATION 참고):
+  화: bingo     덕질 체크리스트 빙고 5×5 캐러셀 (시즌제, 저장형)
   금: friday    ISO 홀수주 quiz(상식 등급전) / 짝수주 emoji_quiz(이모지로 걸그룹 맞히기)
   (휴면 — --format 으로 수동만: unit 드림 유닛 / balance 밸런스게임 / pause 멈춰라 /
    chemi 케미 듀오 투표 / chemi_result 결과. 반응 0 으로 편성 제외)
-  + 매월 2일: rookie    신인 걸그룹 브랜드평판 랭킹 릴스 (해당 월 데이터 1회)
-  + 매월 15일: brandrep  브랜드평판 TOP10 카운트다운 릴스 (해당 월 데이터 1회)
+  + 월간(창 안에서 미게시분 1회): calendar 1~10일 / rookie 2~12일 / brandrep 15~24일
 
 사용:
   python scripts/engagement_daily.py                # 오늘 요일 포맷 자동
@@ -60,7 +60,7 @@ HASHTAGS = _rotating_hashtags()
 # 2026-09 편성 축소 후: 월·수·금 18:00 만원 조합(매트릭스) / 금 11:30 상식 등급전 /
 # 매월 1일 컴백 캘린더 · 2일 신인 랭킹 · 15일 브랜드평판.
 _NEXT_TEASER = {
-    0: "수요일 18:00 만원 조합 새 편",       # 월
+    0: "내일 12:00 덕질 빙고 새 시즌",       # 월
     1: "수요일 18:00 만원 조합 새 편",       # 화
     2: "금요일 11:30 걸그룹 퀴즈",           # 수
     3: "내일 11:30 걸그룹 퀴즈",             # 목
@@ -73,7 +73,7 @@ _NEXT_TEASER = {
 def _follow_loop(date) -> str:
     """캡션 말미 공통 팔로우 루프 — 예고 + 저장 프레임."""
     teaser = _NEXT_TEASER.get(date.weekday(), "")
-    lines = ["🔔 월·수·금 18:00 만원 조합 · 금 11:30 걸그룹 퀴즈"]
+    lines = ["🔔 월·수·금 18:00 만원 조합 · 화 12:00 덕질 빙고 · 금 12:00 걸그룹 퀴즈"]
     if teaser:
         lines.append(f"⏭ {teaser}")
     lines.append("🔖 저장해두면 다음 편 나왔을 때 비교하기 편해요")
@@ -846,12 +846,58 @@ def run_friday(date, dry):
     return run_emoji_quiz(date, dry) if week % 2 == 0 else run_quiz(date, dry)
 
 
+# ─────────────────────────── 8) 덕질 체크리스트 빙고 (저장형 캐러셀) ──
+# 스카우트 2026-W40 채택안 1 (추천도 9/10). 사진·실존 인물·사실검증 0 — 팬의
+# '행동' 25칸만. 체크하려면 저장이 필수라 저장 지표를 구조적으로 만든다.
+# 시즌은 data/bingo_seasons.json 순서로 소비(ledger 게시 수 = 다음 시즌 index).
+BINGO_PATH = ROOT / "data" / "bingo_seasons.json"
+
+
+def _bingo_posted_ids() -> set:
+    import post_ledger
+    led = post_ledger.load_ledger()
+    return {(e.get("topic_id") or "")[len("eng_bingo_"):]
+            for e in led.get("entries", []) if (e.get("topic_id") or "").startswith("eng_bingo_")}
+
+
+def run_bingo(date, dry):
+    data = json.loads(BINGO_PATH.read_text(encoding="utf-8"))
+    done = _bingo_posted_ids()
+    pending = [s for s in data["seasons"] if s["id"] not in done]
+    if not pending:
+        print("✅ 빙고 시즌 전부 게시됨 — data/bingo_seasons.json 에 시즌을 추가하면 재개")
+        return 0
+    season = pending[0]
+    topic_id = f"eng_bingo_{season['id']}"
+    from make_engagement_cards import make_text_cover, make_bingo_card, make_bingo_score_card, make_cta_card
+    out = OUT / f"bingo_{season['id']}"
+    n_prev = len(done)
+    cover = make_text_cover(["덕질", "체크리스트 빙고"], f"{season['title'].split('·')[-1].strip()} · 25칸 중 몇 칸?",
+                            out / "00_cover.jpg", kicker=season.get("kicker", ""), accent_line_idx=1)
+    grid = make_bingo_card(season["title"], season["items"], out / "01_bingo.jpg",
+                           kicker=season.get("kicker", ""))
+    score = make_bingo_score_card(data["tiers"], out / "02_score.jpg")
+    cta = make_cta_card(["캡처해서 체크한 다음", "스토리에 올리고 @daily_enter_kr 태그", "",
+                         "댓글엔 숫자만 (0~25)", "다음 시즌은 다음 주 화요일"],
+                        out / "03_cta.jpg", emphasis="저장 필수 🔖")
+    items_txt = " / ".join(i for i in season["items"] if i != "FREE")
+    caption = (f"{season['title']} ✅ 25칸 중 몇 칸?\n"
+               f"{items_txt}\n\n"
+               "🔖 저장해서 캡처 → 체크 → 스토리에 @daily_enter_kr 태그하면 리그램!\n"
+               "댓글에는 숫자만 (0~25) — 20칸 이상이면 고인물 👑\n\n"
+               f"{_follow_loop(date)}\n\n{HASHTAGS} #덕질빙고 #덕질체크리스트")
+    return _post_carousel([cover, grid, score, cta], caption,
+                          "몇 칸 체크했어요? 숫자만 댓글로! (0~25)",
+                          topic_id, f"덕질 빙고 {season['title']}", "eng_bingo", dry,
+                          meta={"season": season["id"], "n_prev": n_prev})
+
+
 # ──────────────────────────────────────────────────────────── main ──
 FORMATS = {
     "balance": run_balance, "pause": run_pause, "unit": run_unit,
     "chemi": run_chemi, "chemi_result": run_chemi_result, "brandrep": run_brandrep,
     "quiz": run_quiz, "calendar": run_calendar, "rookie": run_rookie,
-    "emoji_quiz": run_emoji_quiz, "friday": run_friday,
+    "emoji_quiz": run_emoji_quiz, "friday": run_friday, "bingo": run_bingo,
 }
 # 2026-09 편성 축소 — 조회수 붕괴(계정 전체 20~30 조회) 대응.
 # 인사이트 누적(8/22~9/2): pause 27·7·22·0 조회, unit/balance/chemi 캐러셀 좋아요 0~1,
@@ -859,7 +905,7 @@ FORMATS = {
 # 신호(반응 0 게시물 누적)를 깎았다. 반응이 있던 quiz(1,225 조회)만 주 1회 유지.
 # 나머지 포맷은 코드 유지(--format 으로 수동 호출 가능), 로테이션에서만 뺀다.
 # 되돌리기: 아래 dict 에 요일 항목 추가.
-ROTATION = {4: "friday"}  # 금: 상식 등급전 ↔ 이모지 퀴즈 격주
+ROTATION = {1: "bingo", 4: "friday"}  # 화: 덕질 빙고(시즌 소진 시 자동 중단) / 금: 상식 등급전 ↔ 이모지 퀴즈 격주
 _ROTATION_LEGACY = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
                     5: "pause", 6: "chemi_result"}  # 참고용 (미사용)
 
@@ -891,28 +937,25 @@ def main() -> int:
         print("   조치: python scripts/warm_photo_cache.py 로 캐시를 채운 뒤 재실행하세요.")
         return 1
 
-    # 매월 15일: 브랜드평판 추가 게시 (그 달 데이터 미게시분만)
-    if args.format is None and date.day == 1:
-        print("\n📅 1일 — 월간 컴백 캘린더 추가 시도")
-        try:
-            rc = max(rc, run_calendar(date, args.dry_run))
-        except Exception as e:
-            print(f"⚠️ 캘린더 게시 실패(비치명): {e}")
-    # 매월 2일: 신인 걸그룹 랭킹 (전월 1일경 발표 데이터 — period 로 멱등)
-    if args.format is None and date.day == 2:
-        print("\n🌱 2일 — 신인 걸그룹 브랜드평판 추가 시도")
-        try:
-            rc = max(rc, run_rookie(date, args.dry_run))
-        except PhotoCoverageError as e:
-            print(f"🛑 신인 랭킹 단체 실사 미확보로 중단: {e}")
-            rc = 1
-    if args.format is None and date.day == 15:
-        print("\n📊 15일 — 브랜드평판 카운트다운 추가 시도")
-        try:
-            rc = max(rc, run_brandrep(date, args.dry_run))
-        except PhotoCoverageError as e:
-            print(f"🛑 브랜드평판 실사 미확보로 중단: {e}")
-            rc = 1
+    # 월간 포맷은 "특정 날짜"가 아니라 "그 달의 게시 창(window) 안에서 아직 안 나간
+    # 경우"에 시도한다. 토큰 만료·cron 유실로 1일/2일/15일 실행이 깨지면 그 달
+    # 게시가 통째로 빠지던 문제(2026-10: 토큰 만료로 10/1 캘린더 누락) 방지.
+    # 각 포맷은 topic_id(데이터 period/updated)로 멱등이라 창 안에서 매일 돌아도
+    # 한 번만 게시된다.
+    if args.format is None:
+        for label, lo, hi, fn in (("컴백 캘린더", 1, 10, run_calendar),
+                                  ("신인 걸그룹 랭킹", 2, 12, run_rookie),
+                                  ("브랜드평판 카운트다운", 15, 24, run_brandrep)):
+            if not (lo <= date.day <= hi):
+                continue
+            print(f"\n📅 {date.day}일 — 월간 {label} 시도 (창 {lo}~{hi}일, 미게시분만)")
+            try:
+                rc = max(rc, fn(date, args.dry_run))
+            except PhotoCoverageError as e:
+                print(f"🛑 {label} 실사 미확보로 중단: {e}")
+                rc = 1
+            except Exception as e:
+                print(f"⚠️ {label} 게시 실패(비치명): {e}")
     return rc
 
 

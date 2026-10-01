@@ -13,7 +13,7 @@ on:
         description: '포맷 강제 (비우면 요일 자동)'
         required: false
         type: choice
-        options: ['', 'balance', 'pause', 'unit', 'chemi', 'chemi_result', 'brandrep']
+        options: ['', 'bingo', 'quiz', 'emoji_quiz', 'calendar', 'rookie', 'brandrep', 'balance', 'pause', 'unit', 'chemi', 'chemi_result']
       dry_run:
         description: 'dry-run (렌더만)'
         required: false
