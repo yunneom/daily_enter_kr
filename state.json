@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-09-30T11:08:55.279684+09:00",
+  "last_run_at": "2026-10-01T11:11:09.687400+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-08-31",
-      "title_hash": "def066c9bf8b063c",
-      "card_title": "JYP '아워벌스데이', 하이브 '튜이드' — 주요 기획사 걸그룹 신작 라인업",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "87a0c5982afca78f",
-      "card_title": "LG전자 기획 AI 여자아이돌 5인조 데뷔 — 신기술과 음악의 만남",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "806ed41b4da6342f",
-      "card_title": "튜이드, 데뷔앨범 초동 걸그룹 역사 톱 10 진입",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "81e0d6e09c96455e",
-      "card_title": "LG전자, 가상 걸그룹 '에이아이돌'로 AI 세탁기 기술 선보여",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "27224d41fb69fbcd",
-      "card_title": "하이브 신인 튜이드, 데뷔 첫 주 역대 걸그룹 톱10 진입",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "77e1903cf71de4d2",
-      "card_title": "튜이드, 하이브의 새로운 7인조 걸그룹으로 데뷔",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "095c06ca794f3e85",
-      "card_title": "캣츠아이, 빌보드 HOT100 4곡 동시 진입 — K팝 아이돌과 다른 팝 걸그룹 전략",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "0725efcb3ed2e182",
-      "card_title": "츠키, 걸그룹 최초 마라톤 풀코스 완주 성공",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-08-31",
-      "title_hash": "fd23ac860b0d7ea1",
-      "card_title": "JYP '아워버스데이' vs 하이브 '튜이드'…빅3 걸그룹 신작 경쟁",
-      "caption_variant": "tease_one",
-      "media_id": "17933033469363570",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-09-01",
       "title_hash": "88f43f2dfd144c0e",
