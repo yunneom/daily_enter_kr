@@ -436,7 +436,7 @@ def make_cta_card(lines: List[str], out: Path, emphasis: str = "") -> Path:
 def make_calendar_card(period: str, entries: list, out: Path,
                        disclaimer: str = "공식 발표 기준 · 일정은 변동될 수 있음") -> Path:
     """컴백 캘린더 리스트 카드 — 저장형 자산 (2026-W34 트렌드 스카우트 채택안 1번).
-    entries[i] = {date:'YYYY-MM-DD', name, detail, kind}. 최대 8건/장."""
+    entries[i] = {date:'YYYY-MM-DD', name, detail, kind}. 최대 10건/장(9건↑은 행 축소)."""
     img = _base()
     draw = ImageDraw.Draw(img)
     f_title = _font("Bold", 92)
@@ -450,9 +450,17 @@ def make_calendar_card(period: str, entries: list, out: Path,
     _center(draw, 140, "걸그룹 컴백 캘린더", f_title)
     _center(draw, 265, period, f_sub, fill=GOLD)
 
+    # 8건까지 170px, 그 이상(최대 10건)은 행 높이를 줄여 디스클레이머 영역
+    # (CANVAS 높이 -210) 안에 들어가게 한다. 2026-10: 9건에서 마지막 줄이
+    # 잘리고 디스클레이머와 겹쳤던 문제.
+    shown = entries[:10]
     y = 420
-    row_h = 170
-    for e in entries[:8]:
+    avail = (CANVAS[1] - 240) - y
+    row_h = min(170, avail // max(1, len(shown)))
+    if row_h < 150:
+        f_name = _font("Bold", 48)
+        f_detail = _font("Medium", 32)
+    for e in shown:
         mm, dd = e["date"][5:7], e["date"][8:10]
         # 날짜 배지
         draw.rounded_rectangle([70, y, 250, y + 110], radius=20,
