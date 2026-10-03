@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-10-02T11:03:32.870944+09:00",
+  "last_run_at": "2026-10-03T10:42:58.358180+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-09-02",
-      "title_hash": "a1cbbdbd53924a53",
-      "card_title": "하이브 신인 튜이드, 외신 호평 — 차세대 걸그룹 계보 주목",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "869eeb347350175a",
-      "card_title": "튜이드, 외신 호평 속 인기 걸그룹의 계보 잇다",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "958f6478c72b6888",
-      "card_title": "하이브 신인 튜이드, 외신 호평 받으며 신세대 인기 걸그룹으로 부상",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "7f0b15a820dd95fb",
-      "card_title": "튜이드, 하이브 신인으로 역대 걸그룹 데뷔 초동 톱10 진입",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "b24afd6d98b1a1be",
-      "card_title": "소녀시대 효리수, 20년차 레전드 멤버들과 6세대 신인 걸그룹 출격",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "12b6cf31605aaefd",
-      "card_title": "리센느, 8월 '최강 걸그룹' 등극…'러브 어택' 음원 1위",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "0c03a3a0bcbe0241",
-      "card_title": "리센느, 8월 브랜드평판 1위 — BTS·임영웅 제치고 톱 달성",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-02",
-      "title_hash": "d0fbcfc7aa279a1f",
-      "card_title": "율희, 과도한 세안이 피부 트러블 부른 이유",
-      "caption_variant": "list_count",
-      "media_id": "18133024087654795",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-09-04",
       "title_hash": "1824023d88b1e54a",
