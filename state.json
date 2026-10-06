@@ -1,32 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-10-05T10:29:14.588848+09:00",
+  "last_run_at": "2026-10-06T11:52:59.350020+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-09-05",
-      "title_hash": "5e1875708491d899",
-      "card_title": "진소리, 미스춘향 선출…걸그룹 멤버이자 뮤지컬 배우의 다재다능함",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18001268489794763",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-05",
-      "title_hash": "5486bb01ac7e3cf1",
-      "card_title": "에이미, 걸그룹 비주얼 돋보이며 포착",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18001268489794763",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-05",
-      "title_hash": "ac526a5be8846067",
-      "card_title": "효리수, 농담에서 시작된 6세대 걸그룹 데뷔 확정",
-      "caption_variant": "headlines_dotted",
-      "media_id": "18001268489794763",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-09-06",
       "title_hash": "17e34ee2efea0378",
