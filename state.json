@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-10-15T10:06:34.875889+09:00",
+  "last_run_at": "2026-10-16T10:16:23.191479+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-09-15",
-      "title_hash": "357dc314fba40a3d",
-      "card_title": "튜이드, 데뷔 3주 만에 KT 아이폰 광고 모델 발탁",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "0033a51ad7a70c12",
-      "card_title": "젝시믹스, 대만 걸그룹 W!nky와 협업…아시아 시장 확대",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "c2a0a6ff3dfd4e23",
-      "card_title": "젝시믹스, 대만 걸그룹 W!nky와 협업 — 아시아 시장 확대",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "5d2177cefcd18b7b",
-      "card_title": "젝시믹스, 대만 걸그룹 W!nky와 손잡고 아시아 시장 확장",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "bf67e6af2f0e6774",
-      "card_title": "무신사 × 걸그룹 튜이드, 26FW 신상 화보 공개",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "b5676a621f18c1c5",
-      "card_title": "하이브 신인 걸그룹 '튜이드', 무신사 모델로 활동 시작",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "042f751c0e661cbb",
-      "card_title": "젝시믹스, 대만 걸그룹 W!nky와 협업…아시아 시장 확대",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "ef98bc158a086252",
-      "card_title": "젝시믹스, 대만 걸그룹과 콜라보 팝업 성황",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-15",
-      "title_hash": "449d37fb26fc781b",
-      "card_title": "무신사 & 하이브 신인 튜이드, 2026 FW 캠페인 모델 확정",
-      "caption_variant": "question_hook",
-      "media_id": "18112886009079154",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-09-16",
       "title_hash": "88f43f2dfd144c0e",
