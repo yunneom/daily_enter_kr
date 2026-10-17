@@ -1,72 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-10-16T10:16:23.191479+09:00",
+  "last_run_at": "2026-10-17T10:22:03.515993+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-09-16",
-      "title_hash": "88f43f2dfd144c0e",
-      "card_title": "시부야계 감성 담은 신예 걸그룹 튜이드 주목",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "4001467d49e69859",
-      "card_title": "영파씨, 10월 컴백 예고…힙합 걸그룹의 귀한 신작 출격",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "0f2b0d441e2e8e3c",
-      "card_title": "영파씨, 10월 컴백 확정…힙합 걸그룹 신작 공개",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "01d9707a8099d62c",
-      "card_title": "H//PE Princess, 걸그룹 음악의 공식을 깨다",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "546719b4f4c891fc",
-      "card_title": "젝시믹스, 걸그룹 W!nky와 대만 협력 — 현지 팬 접점 강화",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "c1f8debc55020824",
-      "card_title": "신인 걸그룹 튜이드, 무신사와 26FW 패션 화보 공개",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "23e53692be14dfb2",
-      "card_title": "젝시믹스, 대만 현지 걸그룹과 협업 — 아시아 시장 확장",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-16",
-      "title_hash": "83301eb11efb86b0",
-      "card_title": "걸그룹 멤버, 공연 중 성추행 피해 공개 증언",
-      "caption_variant": "list_count",
-      "media_id": "18006307124988059",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-09-17",
       "title_hash": "96625a6ed6532dfa",
