@@ -1,80 +1,8 @@
 {
   "version": 1,
-  "last_run_at": "2026-10-20T10:50:17.483497+09:00",
+  "last_run_at": "2026-10-21T10:32:00.169189+09:00",
   "last_run_status": "failed_token_invalid",
   "posted_history": [
-    {
-      "date": "2026-09-20",
-      "title_hash": "3a43d0139fa2fc8c",
-      "card_title": "지역 사랑 운동, K-팝 걸그룹 성공 공식 새로 쓰다",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "df0495a7135c6958",
-      "card_title": "르세라핌, 영국 오피셜 차트 K팝 걸그룹 최고 순위 기록",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "48eccec7a0b6beb7",
-      "card_title": "효리수, 걸그룹의 새로운 가능성을 제시하다",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "c7c270961104fc0f",
-      "card_title": "EXID 혜린, 역주행 후 새로운 도전…안국 타코집 사장으로 활동 중",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "a7c5ed552a538546",
-      "card_title": "리센느 원, 2개월 연속 걸그룹 브랜드 평판 1위 유지",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "cda724484a960b79",
-      "card_title": "리센느, 2026 TMA 2관왕 달성 오케스트라 무대로 부산 점령",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "3a7812952e052e60",
-      "card_title": "NiziU, 1년 6개월 만에 컴백 준비 중",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "a0da6a0249568ec6",
-      "card_title": "르세라핌 'Made My Night', 영국 오피셜 차트 K-팝 걸그룹 최고 순위 기록",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
-    {
-      "date": "2026-09-20",
-      "title_hash": "6b412a6e49e8921f",
-      "card_title": "캣츠아이, VMA 4개 부문 후보 — 빌보드200 1위에 이은 글로벌 돌풍",
-      "caption_variant": "list_count",
-      "media_id": "17963492390983758",
-      "card_style": "minimal"
-    },
     {
       "date": "2026-09-21",
       "title_hash": "166d21c8b31f3b77",
