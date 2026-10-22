@@ -1,9 +1,10 @@
 name: Daily — daily_enter_kr (K-연예)
 
 on:
-  schedule:
-    # 한국시간 오전 8시 (UTC 23:00). main.py가 0-30분 랜덤 jitter 적용 → 게시 윈도우 08:00-08:30.
-    - cron: '0 23 * * *'
+  # 2026-10-22 채널 재설정('만원 조합' 올인): 뉴스 캐러셀 103건 조회 0 → 자동 게시 중단.
+  # 되돌리려면 schedule 블록 주석 해제. 수동 dispatch 는 그대로 가능.
+  # schedule:
+  #   - cron: '0 23 * * *'   # KST 08:00 + 0-30분 jitter
   workflow_dispatch:
 
 permissions:

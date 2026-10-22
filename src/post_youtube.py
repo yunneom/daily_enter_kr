@@ -27,6 +27,7 @@ YouTube Shorts 자동 업로드 (YouTube Data API v3).
 - Shorts 인식 조건: 세로 영상 + 길이 3분 이내 + 제목/설명에 #Shorts
 """
 
+from brand import IG_URL
 import os
 import sys
 import json
@@ -71,7 +72,7 @@ def _refresh_access_token() -> Optional[str]:
 
 
 def build_youtube_meta(title: str, hint: str, hashtags: List[str],
-                       bio_url: str = "https://yunneom.github.io/daily_enter_kr/",
+                       bio_url: str = "",
                        disclosure: str = "", music_block: str = "") -> tuple:
     """YouTube Shorts 제목 + 설명 빌드 — 2026 알고리즘 최적화.
 
@@ -99,8 +100,8 @@ def build_youtube_meta(title: str, hint: str, hashtags: List[str],
         "",
         hint,
         "",
-        "👉 매일 새로운 밸런스 시리즈! 구독 + 좋아요로 응원해주세요",
-        f"📲 추천템·전체 시리즈: {bio_url}",
+        "👉 만원으로 걸그룹 조합하기 — 구독 + 좋아요로 응원해주세요",
+        f"📲 인스타에서 조합 대결: {bio_url or IG_URL}",
         "",
     ]
     # abc 송 음악 크레딧 — YT 설명은 외부 링크 클릭 가능 → 가장 강한 트래픽 경로

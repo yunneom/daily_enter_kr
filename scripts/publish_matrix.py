@@ -36,9 +36,10 @@ import post_threads
 import post_ledger
 import music_credit
 import random as _random
+from brand import handle_tag
 
 
-BRAND = "친구 소환 → 조합 대결 · 스토리 공유 · @daily_enter_kr"  # 이모지 X: Pretendard 에 글리프 없어 □ 로 찍힘
+BRAND = f"친구 소환 → 조합 대결 · 스토리 공유 · {handle_tag()}"  # 이모지 X: Pretendard 에 글리프 없어 □ 로 찍힘
 OUTPUT_DIR = ROOT / "output_enter" / "publish"
 BGM_DIR = ROOT / "assets" / "bgm"
 INTER_POST_SLEEP = 90  # 초
@@ -182,8 +183,9 @@ TOPIC_TAGS = {
                            "#엔하이픈", "#RIIZE", "#릴스", "#reels"],
 }
 
-COMMON_TAGS = ["#밸런스게임", "#카드뉴스", "#일상공감", "#밈", "#콘텐츠",
-               "#릴스", "#reels", "#korea"]
+# 2026-10 채널 재설정: 범용 태그(#카드뉴스 #일상공감) 대신 채널 정체성 태그.
+COMMON_TAGS = ["#만원으로걸그룹", "#걸그룹조합", "#걸그룹", "#케이팝", "#kpop",
+               "#kpopgirlgroup", "#릴스", "#reels"]
 
 
 def _title_of(topic: dict, topic_id: str) -> str:

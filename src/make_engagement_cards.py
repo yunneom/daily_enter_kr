@@ -25,6 +25,7 @@ from typing import List, Optional, Tuple
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 from make_card import _resolve_font
+from brand import handle_tag
 
 CANVAS = (1080, 1920)
 BG_TOP = (18, 16, 30)
@@ -96,7 +97,8 @@ def _photo_or_gradient(photo_path: Optional[str], group: str, size: Tuple[int, i
     return _vgrad(size, c, dark)
 
 
-def _brand_footer(draw: ImageDraw.ImageDraw, text: str = "@daily_enter_kr"):
+def _brand_footer(draw: ImageDraw.ImageDraw, text: str = ""):
+    text = text or handle_tag()
     f = _font("Medium", 34)
     w = draw.textlength(text, font=f)
     draw.text(((CANVAS[0] - w) / 2, CANVAS[1] - 110), text, font=f, fill=MUTED)
@@ -654,7 +656,7 @@ def make_bingo_card(title: str, items: List[str], out: Path,
             ty += lh
     # 하단 안내
     f_hint = _font("Medium", 36)
-    _center(draw, grid_top + n * (ch + gap) + 24, "저장 → 캡처해서 체크 → 스토리에 @daily_enter_kr", f_hint, fill=MUTED)
+    _center(draw, grid_top + n * (ch + gap) + 24, f"저장 → 캡처해서 체크 → 스토리에 {handle_tag()}", f_hint, fill=MUTED)
     _brand_footer(draw)
     out.parent.mkdir(parents=True, exist_ok=True)
     img.save(out, quality=92)

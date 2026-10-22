@@ -11,7 +11,7 @@ on:
   schedule:
     # GitHub cron 이 2~7시간 늦게 시작되므로(실측) 03:00 UTC 로 걸고, 잡 안에서
     # scripts/wait_until.py 가 09:00 UTC(KST 18:00)까지 대기한 뒤 게시한다.
-    - cron: '0 3 * * 1,3,5'   # → 실제 게시 목표 UTC 09:00 = KST 18:00, 월·수·금
+    - cron: '0 3 * * 0,1,3,5'   # → 실제 게시 목표 UTC 09:00 = KST 18:00, 일·월·수·금 (2026-10 채널 올인: 주 4편)
   workflow_dispatch:
     inputs:
       topic:
