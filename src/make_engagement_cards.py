@@ -689,6 +689,100 @@ def make_bingo_score_card(tiers: list, out: Path, title: str = "몇 칸 체크�
     return out
 
 
+def make_pick3_card(question: str, highlight: str, picks: List[dict], out: Path,
+                    footer_q: str = "당신의 선택은?") -> Path:
+    """'딱 한 명' 3지선다 카드 (레퍼런스 @soominiverse 스타일: 흰 배경 + 굵은 검정
+    헤드라인 + 빨강 강조, A/B/C 3열 실사, 하단 '이유는 댓글로').
+
+    picks = [{label:'A', name, group, photo_path}] × 3. 9:16 릴스용.
+    """
+    W, H = CANVAS
+    img = Image.new("RGB", CANVAS, (246, 244, 240))
+    draw = ImageDraw.Draw(img)
+    RED = (214, 32, 39)
+    BLACK = (17, 17, 20)
+    f_q = _font("Bold", 76)
+    # 헤드라인 2~3줄, 강조어는 빨강
+    import re as _re
+
+    def _wrap_q(font):
+        # 쉼표에서 먼저 끊고, '딱 한 명X' 는 한 덩어리로 유지(어절 중간 줄바꿈 방지).
+        out = []
+        for seg in [x.strip() for x in question.split(",") if x.strip()]:
+            seg = seg + ("," if seg != question.split(",")[-1].strip() else "")
+            toks = _re.findall(r"딱 한 명\S*|\S+", seg)
+            cur = ""
+            for t in toks:
+                cand = (cur + " " + t).strip()
+                if draw.textlength(cand, font=font) <= W - 100 or not cur:
+                    cur = cand
+                else:
+                    out.append(cur); cur = t
+            if cur:
+                out.append(cur)
+        return out
+
+    lines = _wrap_q(f_q)
+    while (len(lines) > 3 or any(draw.textlength(l, font=f_q) > W - 60 for l in lines)) and f_q.size > 52:
+        f_q = _font("Bold", f_q.size - 6)
+        lines = _wrap_q(f_q)
+    y = 150
+    for ln in lines[:3]:
+        lw = draw.textlength(ln, font=f_q)
+        x = (W - lw) / 2
+        if highlight and highlight in ln:
+            pre, post = ln.split(highlight, 1)
+            for seg, col in ((pre, BLACK), (highlight, RED), (post, BLACK)):
+                if seg:
+                    draw.text((x, y), seg, font=f_q, fill=col)
+                    x += draw.textlength(seg, font=f_q)
+        else:
+            draw.text((x, y), ln, font=f_q, fill=BLACK)
+        y += int(f_q.size * 1.28)
+
+    # 3열 실사
+    top = max(y + 50, 520)
+    gap, mx = 14, 30
+    cw = (W - mx * 2 - gap * 2) // 3
+    ch = 760
+    colors = [(37, 99, 235), (219, 39, 119), (234, 179, 8)]
+    f_lab = _font("Bold", 52)
+    f_name = _font("Bold", 50)
+    f_grp = _font("Medium", 32)
+    for i, p in enumerate(picks[:3]):
+        x0 = mx + i * (cw + gap)
+        tile = _photo_or_gradient(p.get("photo_path"), p.get("group", ""), (cw, ch))
+        img.paste(tile, (x0, top))
+        # 라벨 바
+        draw.rectangle([x0, top, x0 + cw, top + 70], fill=colors[i])
+        lw = draw.textlength(p["label"], font=f_lab)
+        draw.text((x0 + (cw - lw) / 2, top + 6), p["label"], font=f_lab, fill=(255, 255, 255))
+        # 이름 / 그룹
+        nm = f"{p['label']}. {p['name']}"
+        nw = draw.textlength(nm, font=f_name)
+        draw.text((x0 + (cw - nw) / 2, top + ch + 22), nm, font=f_name, fill=BLACK)
+        gl = f"({p.get('group', '')})"
+        gw = draw.textlength(gl, font=f_grp)
+        draw.text((x0 + (cw - gw) / 2, top + ch + 86), gl, font=f_grp, fill=(110, 110, 120))
+
+    # 하단 CTA
+    f_cta = _font("Bold", 66)
+    f_sub = _font("SemiBold", 40)
+    cy = top + ch + 170
+    cw2 = draw.textlength(footer_q, font=f_cta)
+    draw.text(((W - cw2) / 2, cy), footer_q, font=f_cta, fill=BLACK)
+    sub = "A · B · C 이유는 댓글로 — 친구 소환해서 대결"
+    sw = draw.textlength(sub, font=f_sub)
+    draw.text(((W - sw) / 2, cy + 92), sub, font=f_sub, fill=RED)
+    hl = handle_tag()
+    f_h = _font("Medium", 32)
+    hw = draw.textlength(hl, font=f_h)
+    draw.text(((W - hw) / 2, H - 90), hl, font=f_h, fill=(140, 140, 150))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
 def make_grade_card(out: Path) -> Path:
     """퀴즈 엔딩 등급 카드 — 맞은 개수 → 등급 안내."""
     img = _base()

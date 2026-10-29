@@ -72,7 +72,7 @@ _NEXT_TEASER = {
 def _follow_loop(date) -> str:
     """캡션 말미 공통 팔로우 루프 — 예고 + 저장 프레임."""
     teaser = _NEXT_TEASER.get(date.weekday(), "")
-    lines = ["🔔 일·월·수·금 18:00 만원 조합 새 편 · 금 12:00 걸그룹 퀴즈"]
+    lines = ["🔔 일·월·수·금 18:00 만원 조합 · 화·목 12:00 딱 한 명 · 금 12:00 퀴즈"]
     if teaser:
         lines.append(f"⏭ {teaser}")
     lines.append("🔖 저장해두면 다음 편 나왔을 때 비교하기 편해요")
@@ -891,12 +891,78 @@ def run_bingo(date, dry):
                           meta={"season": season["id"], "n_prev": n_prev})
 
 
+# ─────────────────────── 9) '딱 한 명' 3지선다 (레퍼런스 카피, 2026-10-29) ──
+# @soominiverse(3만 팔로워) 의 'OO에 딱 한 명을 데려갈 수 있다면? A/B/C' 포맷을
+# 채널 규칙으로 변형: 상황/능력 질문만(연애·외모·친척사칭 금지), 만 18세 이상 +
+# 커먼즈 검증 실사 멤버만, 3명 모두 다른 그룹. 정지 카드 + Ken Burns 릴스.
+PICK3_PATH = ROOT / "data" / "pick3_scenarios.json"
+
+
+def _build_pick3(date):
+    from idol_photo import _adult_gate
+    cfg = json.loads(PICK3_PATH.read_text(encoding="utf-8"))
+    rng = _seed_for(date, "pick3")
+    import post_ledger
+    recent_q, recent_m = set(), set()
+    for e in post_ledger.load_ledger().get("entries", [])[-60:]:
+        if (e.get("topic_id") or "").startswith("eng_pick3_"):
+            m = e.get("meta") or {}
+            recent_q.add(m.get("q")); recent_m.update(m.get("members") or [])
+    sc = [x for x in cfg["scenarios"] if x["q"] not in recent_q] or cfg["scenarios"]
+    scenario = rng.choice(sc)
+    pool = [(r, n, g) for r, n, g in _load_pool()
+            if n not in cfg.get("exclude_members", []) and _adult_gate(n)]
+    fresh = [p for p in pool if p[1] not in recent_m] or pool
+    rng.shuffle(fresh)
+    picks, groups = [], set()
+    for r, n, g in fresh:
+        if g in groups:
+            continue
+        picks.append((r, n, g)); groups.add(g)
+        if len(picks) == 3:
+            break
+    if len(picks) < 3:
+        raise PhotoCoverageError("[pick3] 서로 다른 그룹의 성인 실사 멤버 3명을 확보하지 못함")
+    return scenario, picks
+
+
+def run_pick3(date, dry):
+    topic_id = f"eng_pick3_{date.isoformat()}"
+    if not dry and _already_posted(topic_id):
+        print("✅ 오늘 3지선다 이미 게시 — skip")
+        return 0
+    from make_engagement_cards import make_pick3_card
+    from make_video import make_motion_video
+    scenario, picks = _build_pick3(date)
+    fetched = _fetch_photos(picks)
+    _require_all_photos(fetched, "pick3")
+    labels = "ABC"
+    cards = [{"label": labels[i], "name": f["name"], "group": f["group"],
+              "photo_path": f["photo_path"]} for i, f in enumerate(fetched)]
+    out = OUT / f"pick3_{date.isoformat()}"
+    jpg = make_pick3_card(scenario["q"], scenario.get("hl", ""), cards, out / "pick3.jpg")
+    mp4 = make_motion_video(image_path=jpg, output_path=out / "pick3.mp4",
+                            duration=12.0, bgm_path=_bgm(date), motion="kenburns_in")
+    names = [c["name"] for c in cards]
+    listing = " / ".join(f"{c['label']}. {c['name']}({c['group']})" for c in cards)
+    caption = (f"{scenario['q']}\n{listing}\n\n"
+               "A · B · C 중 하나 + 이유를 댓글로!\n"
+               "👥 친구 태그해서 누구 픽이 맞는지 대결\n\n"
+               f"{_follow_loop(date)}\n\n{HASHTAGS} #밸런스게임 #걸그룹조합"
+               + (f"\n\n{_attribution(names)}" if _attribution(names) else ""))
+    return _post_reel(mp4, caption, "A · B · C 중 당신의 선택은? 이유도 같이!",
+                      topic_id, f"딱 한 명 3지선다 {date.isoformat()}", "eng_pick3", dry,
+                      yt_title=f"{scenario['q']} #걸그룹 #밸런스게임",
+                      meta={"q": scenario["q"], "members": names})
+
+
 # ──────────────────────────────────────────────────────────── main ──
 FORMATS = {
     "balance": run_balance, "pause": run_pause, "unit": run_unit,
     "chemi": run_chemi, "chemi_result": run_chemi_result, "brandrep": run_brandrep,
     "quiz": run_quiz, "calendar": run_calendar, "rookie": run_rookie,
     "emoji_quiz": run_emoji_quiz, "friday": run_friday, "bingo": run_bingo,
+    "pick3": run_pick3,
 }
 # 2026-09 편성 축소 — 조회수 붕괴(계정 전체 20~30 조회) 대응.
 # 인사이트 누적(8/22~9/2): pause 27·7·22·0 조회, unit/balance/chemi 캐러셀 좋아요 0~1,
@@ -906,7 +972,7 @@ FORMATS = {
 # 되돌리기: 아래 dict 에 요일 항목 추가.
 # 2026-10 채널 재설정(만원 조합 올인): 정기 참여형은 금요일 퀴즈만. 빙고·캘린더·
 # 신인랭킹·브랜드평판은 코드 유지(--format 수동) 하되 자동 편성에서 제외.
-ROTATION = {4: "friday"}
+ROTATION = {1: "pick3", 3: "pick3", 4: "friday"}  # 화·목 12:00 딱 한 명 3지선다 / 금 퀴즈
 MONTHLY_FORMATS_ENABLED = False
 _ROTATION_LEGACY = {0: "unit", 1: "balance", 2: "pause", 3: "chemi",
                     5: "pause", 6: "chemi_result"}  # 참고용 (미사용)
