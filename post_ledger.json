@@ -2,193 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-06-22T18:43:57.936245+09:00",
-      "topic_id": "lunch_15k",
-      "title": "만 5천원으로 점심 즐기기",
-      "style": "photo",
-      "seed": 1921,
-      "ig_media_id": "18088289132626599",
-      "youtube_id": "Uo8lN9XInDM",
-      "threads_id": null,
-      "bgm": "ambient_calm.mp3"
-    },
-    {
-      "posted_at": "2026-06-22T23:35:54.490294+09:00",
-      "topic_id": "boygroup_4gen_10k",
-      "title": "만원으로 4세대 보이그룹 만들기",
-      "style": "emblem",
-      "seed": 1926,
-      "ig_media_id": "17880895143456259",
-      "youtube_id": "FxbjyhecgR0",
-      "threads_id": null,
-      "bgm": "ambient_warm.mp3"
-    },
-    {
-      "posted_at": "2026-06-23T01:51:38.142125+09:00",
-      "topic_id": "spinner_food_man",
-      "title": "먹을지 vs 운동 갈지",
-      "style": "spinner",
-      "seed": 1915,
-      "ig_media_id": "17901908937298312",
-      "youtube_id": "bfoMiCYjBVw",
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-24T17:35:25.494877+09:00",
-      "topic_id": "worldcup_bracket",
-      "title": "걸그룹 월드컵 32강 대진표",
-      "style": "worldcup_bracket",
-      "seed": null,
-      "ig_media_id": "18109006186994216",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-27T06:48:04.834071+09:00",
-      "topic_id": "worldcup_bracket_r16",
-      "title": "걸그룹 월드컵 대진표 (R16)",
-      "style": "worldcup_bracket",
-      "seed": null,
-      "ig_media_id": "18066698843705272",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T12:25:52.185749+09:00",
-      "topic_id": "worldcup_promo_r16_carousel",
-      "title": "16강 전체 매치 캐러셀",
-      "style": "worldcup_promo",
-      "seed": null,
-      "ig_media_id": "18069879191387036",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T12:26:10.014922+09:00",
-      "topic_id": "worldcup_promo_r16_teaser",
-      "title": "16강 D-1 티저",
-      "style": "worldcup_promo",
-      "seed": null,
-      "ig_media_id": "18271561330291435",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T12:27:43.999115+09:00",
-      "topic_id": "worldcup_promo_r16_zone_a",
-      "title": "16강 A조 릴스",
-      "style": "worldcup_promo",
-      "seed": null,
-      "ig_media_id": "18177909112410464",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T12:29:32.519284+09:00",
-      "topic_id": "worldcup_promo_r16_zone_b",
-      "title": "16강 B조 릴스",
-      "style": "worldcup_promo",
-      "seed": null,
-      "ig_media_id": "17990987723813963",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T12:30:48.695838+09:00",
-      "topic_id": "worldcup_promo_r16_zone_c",
-      "title": "16강 C조 릴스",
-      "style": "worldcup_promo",
-      "seed": null,
-      "ig_media_id": "18102623054150174",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T12:32:04.898398+09:00",
-      "topic_id": "worldcup_promo_r16_zone_d",
-      "title": "16강 D조 릴스",
-      "style": "worldcup_promo",
-      "seed": null,
-      "ig_media_id": "18467564878111734",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T16:36:55.954885+09:00",
-      "topic_id": "worldcup_hf_r8_bracket",
-      "title": "걸그룹 월드컵 R8 HF 대진표",
-      "style": "worldcup_hf",
-      "seed": null,
-      "ig_media_id": "18404766130153646",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-29T18:03:48.497952+09:00",
-      "topic_id": "worldcup_hf_r8_bracket",
-      "title": "걸그룹 월드컵 R8 HF 대진표",
-      "style": "worldcup_hf",
-      "seed": null,
-      "ig_media_id": "17980248651019000",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-30T10:07:16.809817+09:00",
-      "topic_id": "worldcup_r8_match_promo",
-      "title": "걸그룹 월드컵 8강 매치 홍보",
-      "style": "worldcup_r8_promo",
-      "seed": null,
-      "ig_media_id": "18216129193328548",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-06-30T10:29:31.224949+09:00",
-      "topic_id": "worldcup_hf_r16",
-      "title": "걸그룹 월드컵 R16 HF 릴스",
-      "style": "worldcup_hf",
-      "seed": null,
-      "ig_media_id": "17978021042880606",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-01T11:14:01.730996+09:00",
-      "topic_id": "worldcup_r4_entrants_promo",
-      "title": "걸그룹 월드컵 4강 진출자 홍보",
-      "style": "worldcup_r4_promo",
-      "seed": null,
-      "ig_media_id": "17944632393247410",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-02T10:18:59.817245+09:00",
-      "topic_id": "worldcup_hf_r4_bracket",
-      "title": "걸그룹 월드컵 R4 HF 대진표",
-      "style": "worldcup_hf",
-      "seed": null,
-      "ig_media_id": "18382063894167467",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
       "posted_at": "2026-07-05T00:33:24.574226+09:00",
       "topic_id": "worldcup_r2_finals_promo",
       "title": "걸그룹 월드컵 결승 대진 홍보",
@@ -2883,6 +2696,26 @@
       "youtube_id": "E4uWCLlU_hk",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-01T02:40:37.979048+09:00",
+      "topic_id": "eng_pick3_2026-11-01",
+      "title": "딱 한 명 3지선다 2026-11-01",
+      "style": "eng_pick3",
+      "seed": null,
+      "ig_media_id": "18126081512473022",
+      "youtube_id": "49hztybz-_M",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q": "무인도에 딱 한 명만 데려갈 수 있다면?",
+        "members": [
+          "윤",
+          "로제",
+          "소람"
+        ],
+        "style": "scene"
+      }
     }
   ]
 }
