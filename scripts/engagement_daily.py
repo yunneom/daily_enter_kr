@@ -926,6 +926,94 @@ def _build_pick3(date):
     return scenario, picks
 
 
+SCENE_CACHE = ROOT / "output_enter" / "pick3_scenes"
+
+
+def _pick3_style(date) -> str:
+    """'scene'(AI 장면 + 이름 카드) / 'photo'(커먼즈 실사). ISO 주차 격주 A/B.
+    PICK3_STYLE 환경변수로 강제 가능."""
+    forced = os.environ.get("PICK3_STYLE", "").strip()
+    if forced in ("scene", "photo"):
+        return forced
+    return "scene" if date.isocalendar()[1] % 2 == 0 else "photo"
+
+
+_KO_GROUP = {"Billlie": "빌리", "Hearts2Hearts": "하츠투하츠", "ITZY": "있지", "KIIIKIII": "키키",
+             "KISS OF LIFE": "키스오브라이프", "Kep1er": "케플러", "MEOVV": "미야오", "STAYC": "스테이씨"}
+
+
+def _korean_group_name(key: str, roster: dict) -> str:
+    if key in _KO_GROUP:
+        return _KO_GROUP[key]
+    if re.search(r"[가-힣]", key):
+        return key
+    for a in roster.get("aliases_of_group") or []:
+        if re.search(r"[가-힣]", a):
+            return a
+    return key
+
+
+def _build_pick3_names(date, scenario):
+    """장면판 인물: 검증 로스터 전체의 성인 걸그룹 멤버(생년 확인 필수), 3명 다른 그룹."""
+    cfg = json.loads(PICK3_PATH.read_text(encoding="utf-8"))
+    rosters = json.loads((ROOT / "data" / "group_rosters.json").read_text(encoding="utf-8"))["groups"]
+    excl = set(cfg.get("scene_exclude_members", [])) | set(cfg.get("exclude_members", []))
+    rng = _seed_for(date, "pick3_names")
+    import post_ledger
+    recent = set()
+    for e in post_ledger.load_ledger().get("entries", [])[-60:]:
+        if (e.get("topic_id") or "").startswith("eng_pick3_"):
+            recent.update((e.get("meta") or {}).get("members") or [])
+    pool = []
+    for gkey, r in rosters.items():
+        if gkey in QUIZ_EXCLUDE_GROUPS:  # 보이그룹·분쟁/활동중단 그룹 제외
+            continue
+        gname = _korean_group_name(gkey, r)
+        for m in r.get("members", []):
+            b = (r.get("birthdays") or {}).get(m)
+            if not b or m in excl or m in (r.get("former") or []):
+                continue
+            by, bm, bd = (int(x) for x in b.split("-"))
+            age = date.year - by - ((date.month, date.day) < (bm, bd))
+            if age >= 18:
+                pool.append((m, gname))
+    fresh = [p for p in pool if p[0] not in recent] or pool
+    rng.shuffle(fresh)
+    picks, groups = [], set()
+    for m, g in fresh:
+        if g in groups:
+            continue
+        picks.append((m, g)); groups.add(g)
+        if len(picks) == 3:
+            break
+    if len(picks) < 3:
+        raise PhotoCoverageError("[pick3] 장면판 성인 멤버 3명을 확보하지 못함")
+    return picks
+
+
+def _scene_image(slug: str):
+    """Cloudinary manwon/pick3_scenes/<slug> → 로컬 캐시. 실패 시 None."""
+    path = SCENE_CACHE / f"{slug}.jpg"
+    if path.exists() and path.stat().st_size > 5000:
+        return path
+    cloud = os.environ.get("CLOUDINARY_CLOUD_NAME", "").strip()
+    if not cloud:
+        return None
+    import requests
+    url = (f"https://res.cloudinary.com/{cloud}/image/upload/"
+           f"c_fill,w_1020,h_608,q_88/manwon/pick3_scenes/{slug}.jpg")
+    try:
+        r = requests.get(url, timeout=30)
+        if r.ok and len(r.content) > 5000:
+            SCENE_CACHE.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(r.content)
+            return path
+        print(f"⚠️ 장면 이미지 HTTP {r.status_code}: {slug}")
+    except Exception as e:
+        print(f"⚠️ 장면 이미지 다운로드 실패: {slug} — {e}")
+    return None
+
+
 def run_pick3(date, dry):
     topic_id = f"eng_pick3_{date.isoformat()}"
     if not dry and _already_posted(topic_id):
@@ -933,14 +1021,27 @@ def run_pick3(date, dry):
         return 0
     from make_engagement_cards import make_pick3_card
     from make_video import make_motion_video
-    scenario, picks = _build_pick3(date)
-    fetched = _fetch_photos(picks)
-    _require_all_photos(fetched, "pick3")
+    scenario, photo_picks = _build_pick3(date)
+    style = _pick3_style(date)
+    scene = _scene_image(scenario["scene"]) if style == "scene" and scenario.get("scene") else None
+    if style == "scene" and scene is None:
+        print("⚠️ 장면 이미지 없음 — 실사판으로 대체")
+        style = "photo"
     labels = "ABC"
-    cards = [{"label": labels[i], "name": f["name"], "group": f["group"],
-              "photo_path": f["photo_path"]} for i, f in enumerate(fetched)]
     out = OUT / f"pick3_{date.isoformat()}"
-    jpg = make_pick3_card(scenario["q"], scenario.get("hl", ""), cards, out / "pick3.jpg")
+    if style == "scene":
+        cards = [{"label": labels[i], "name": m, "group": g}
+                 for i, (m, g) in enumerate(_build_pick3_names(date, scenario))]
+        jpg = make_pick3_card(scenario["q"], scenario.get("hl", ""), cards, out / "pick3.jpg",
+                              scene_path=str(scene))
+        credit = "장면 일러스트: AI 생성"
+    else:
+        fetched = _fetch_photos(photo_picks)
+        _require_all_photos(fetched, "pick3")
+        cards = [{"label": labels[i], "name": f["name"], "group": f["group"],
+                  "photo_path": f["photo_path"]} for i, f in enumerate(fetched)]
+        jpg = make_pick3_card(scenario["q"], scenario.get("hl", ""), cards, out / "pick3.jpg")
+        credit = _attribution([c["name"] for c in cards])
     mp4 = make_motion_video(image_path=jpg, output_path=out / "pick3.mp4",
                             duration=12.0, bgm_path=_bgm(date), motion="kenburns_in")
     names = [c["name"] for c in cards]
@@ -949,11 +1050,11 @@ def run_pick3(date, dry):
                "A · B · C 중 하나 + 이유를 댓글로!\n"
                "👥 친구 태그해서 누구 픽이 맞는지 대결\n\n"
                f"{_follow_loop(date)}\n\n{HASHTAGS} #밸런스게임 #걸그룹조합"
-               + (f"\n\n{_attribution(names)}" if _attribution(names) else ""))
+               + (f"\n\n{credit}" if credit else ""))
     return _post_reel(mp4, caption, "A · B · C 중 당신의 선택은? 이유도 같이!",
                       topic_id, f"딱 한 명 3지선다 {date.isoformat()}", "eng_pick3", dry,
                       yt_title=f"{scenario['q']} #걸그룹 #밸런스게임",
-                      meta={"q": scenario["q"], "members": names})
+                      meta={"q": scenario["q"], "members": names, "style": style})
 
 
 # ──────────────────────────────────────────────────────────── main ──

@@ -690,7 +690,7 @@ def make_bingo_score_card(tiers: list, out: Path, title: str = "몇 칸 체크�
 
 
 def make_pick3_card(question: str, highlight: str, picks: List[dict], out: Path,
-                    footer_q: str = "당신의 선택은?") -> Path:
+                    footer_q: str = "당신의 선택은?", scene_path: Optional[str] = None) -> Path:
     """'딱 한 명' 3지선다 카드 (레퍼런스 @soominiverse 스타일: 흰 배경 + 굵은 검정
     헤드라인 + 빨강 강조, A/B/C 3열 실사, 하단 '이유는 댓글로').
 
@@ -740,6 +740,9 @@ def make_pick3_card(question: str, highlight: str, picks: List[dict], out: Path,
             draw.text((x, y), ln, font=f_q, fill=BLACK)
         y += int(f_q.size * 1.28)
 
+    if scene_path:
+        return _pick3_scene_body(img, draw, y, picks, scene_path, footer_q, out)
+
     # 3열 실사
     top = max(y + 50, 520)
     gap, mx = 14, 30
@@ -778,6 +781,69 @@ def make_pick3_card(question: str, highlight: str, picks: List[dict], out: Path,
     f_h = _font("Medium", 32)
     hw = draw.textlength(hl, font=f_h)
     draw.text(((W - hw) / 2, H - 90), hl, font=f_h, fill=(140, 140, 150))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, quality=92)
+    return out
+
+
+def _pick3_scene_body(img, draw, y, picks, scene_path, footer_q, out):
+    """장면판 본문: AI 장면 일러스트(인물 없음) 밴드 + A/B/C 이름 카드.
+
+    실존 인물 얼굴을 쓰지 않으므로 커먼즈 실사 풀(30명) 제약 없이 검증 로스터
+    전체 성인 멤버를 출제할 수 있다.
+    """
+    W, H = CANVAS
+    BLACK = (17, 17, 20)
+    RED = (214, 32, 39)
+    top = max(y + 40, 470)
+    band_h = 608
+    try:
+        sc = Image.open(scene_path).convert("RGB")
+        sc = _cover_crop(sc, W - 60, band_h)
+        mask = Image.new("L", (W - 60, band_h), 0)
+        ImageDraw.Draw(mask).rounded_rectangle([0, 0, W - 60, band_h], radius=28, fill=255)
+        img.paste(sc, (30, top), mask)
+    except Exception:
+        draw.rounded_rectangle([30, top, W - 30, top + band_h], radius=28, fill=(230, 226, 220))
+    colors = [(37, 99, 235), (219, 39, 119), (234, 179, 8)]
+    f_lab = _font("Bold", 64)
+    f_name = _font("Bold", 56)
+    f_grp = _font("Medium", 34)
+    cy0 = top + band_h + 34
+    gap, mx = 14, 30
+    cw = (W - mx * 2 - gap * 2) // 3
+    ch = 300
+    for i, p in enumerate(picks[:3]):
+        x0 = mx + i * (cw + gap)
+        draw.rounded_rectangle([x0, cy0, x0 + cw, cy0 + ch], radius=24, fill=(255, 255, 255),
+                               outline=colors[i], width=5)
+        draw.rounded_rectangle([x0, cy0, x0 + cw, cy0 + 86], radius=24, fill=colors[i])
+        draw.rectangle([x0, cy0 + 50, x0 + cw, cy0 + 86], fill=colors[i])
+        lw = draw.textlength(p["label"], font=f_lab)
+        draw.text((x0 + (cw - lw) / 2, cy0 + 6), p["label"], font=f_lab, fill=(255, 255, 255))
+        fn = f_name
+        while draw.textlength(p["name"], font=fn) > cw - 30 and fn.size > 36:
+            fn = _font("Bold", fn.size - 4)
+        nw = draw.textlength(p["name"], font=fn)
+        draw.text((x0 + (cw - nw) / 2, cy0 + 118), p["name"], font=fn, fill=BLACK)
+        gl = p.get("group", "")
+        fg = f_grp
+        while draw.textlength(gl, font=fg) > cw - 30 and fg.size > 24:
+            fg = _font("Medium", fg.size - 2)
+        gw = draw.textlength(gl, font=fg)
+        draw.text((x0 + (cw - gw) / 2, cy0 + 200), gl, font=fg, fill=(110, 110, 120))
+    f_cta = _font("Bold", 66)
+    f_sub = _font("SemiBold", 40)
+    cy = cy0 + ch + 60
+    cw2 = draw.textlength(footer_q, font=f_cta)
+    draw.text(((W - cw2) / 2, cy), footer_q, font=f_cta, fill=BLACK)
+    sub = "A · B · C 이유는 댓글로 — 친구 소환해서 대결"
+    sw = draw.textlength(sub, font=f_sub)
+    draw.text(((W - sw) / 2, cy + 92), sub, font=f_sub, fill=RED)
+    f_h = _font("Medium", 30)
+    note = f"장면 일러스트: AI 생성 · {handle_tag()}"
+    hw = draw.textlength(note, font=f_h)
+    draw.text(((W - hw) / 2, H - 90), note, font=f_h, fill=(140, 140, 150))
     out.parent.mkdir(parents=True, exist_ok=True)
     img.save(out, quality=92)
     return out
