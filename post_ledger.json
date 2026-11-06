@@ -2,17 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-08T22:56:16.275985+09:00",
-      "topic_id": "spinner_food_man",
-      "title": "먹을지 vs 운동 갈지",
-      "style": "spinner",
-      "seed": 2101,
-      "ig_media_id": "17890713363571334",
-      "youtube_id": "fU8xEH_VNxQ",
-      "threads_id": null,
-      "bgm": null
-    },
-    {
       "posted_at": "2026-07-10T00:30:14.425912+09:00",
       "topic_id": "fortune_saju_love_2026-07-10",
       "title": "오늘의 띠별 연애운 2026년 7월 10일",
@@ -2679,6 +2668,17 @@
         ],
         "style": "photo"
       }
+    },
+    {
+      "posted_at": "2026-11-06T12:01:41.432348+09:00",
+      "topic_id": "eng_quiz_2026-11-06",
+      "title": "상식 등급전 2026-11-06",
+      "style": "eng_quiz",
+      "seed": null,
+      "ig_media_id": "18435182908147749",
+      "youtube_id": "48f2vt3Qoyw",
+      "threads_id": null,
+      "bgm": null
     }
   ]
 }
