@@ -2,149 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-10T00:30:14.425912+09:00",
-      "topic_id": "fortune_saju_love_2026-07-10",
-      "title": "오늘의 띠별 연애운 2026년 7월 10일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "17974889835119895",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-10T12:50:32.557442+09:00",
-      "topic_id": "breaking_rescene_melon1_20260709",
-      "title": "리센느 '러브 어택' 멜론 TOP100 1위",
-      "style": "breaking_news",
-      "seed": null,
-      "ig_media_id": "18088106687631608",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-10T12:57:16.410210+09:00",
-      "topic_id": "community_weekly",
-      "title": "",
-      "style": "message",
-      "seed": 2113,
-      "ig_media_id": "18012004001867740",
-      "youtube_id": "wmsmTC3gAgo",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-10T16:31:31.864739+09:00",
-      "topic_id": "join_conversion",
-      "title": "",
-      "style": "message",
-      "seed": 2117,
-      "ig_media_id": "18054403241759034",
-      "youtube_id": "I86GHreaE3A",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-10T20:49:01.339575+09:00",
-      "topic_id": "kpop_authority_insight",
-      "title": "",
-      "style": "message",
-      "seed": 2121,
-      "ig_media_id": "18136473724599743",
-      "youtube_id": "_ZqZ6zoR6PQ",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-11T12:23:41.758771+09:00",
-      "topic_id": "community_weekly",
-      "title": "",
-      "style": "message",
-      "seed": 2124,
-      "ig_media_id": "17935747167289953",
-      "youtube_id": "jl06oDexNoY",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-11T14:18:17.649194+09:00",
-      "topic_id": "fortune_saju_love_2026-07-11",
-      "title": "오늘의 띠별 연애운 2026년 7월 11일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "18100490012269994",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-11T15:10:07.827289+09:00",
-      "topic_id": "kpop_authority_insight",
-      "title": "",
-      "style": "message",
-      "seed": 2127,
-      "ig_media_id": "18107585078318701",
-      "youtube_id": "LN-jJdy-UUk",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-11T19:13:21.385676+09:00",
-      "topic_id": "join_conversion",
-      "title": "",
-      "style": "message",
-      "seed": 2131,
-      "ig_media_id": "17915187114216211",
-      "youtube_id": "dDQjC_onrt8",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-12T12:35:01.118947+09:00",
-      "topic_id": "girlgroup_allstar_photo_10k",
-      "title": "만원으로 걸그룹 올스타 만들기",
-      "style": "emblem",
-      "seed": 2135,
-      "ig_media_id": "17901787929461668",
-      "youtube_id": "IScHhCxDOe0",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-12T14:33:25.687654+09:00",
-      "topic_id": "fortune_saju_love_2026-07-12",
-      "title": "오늘의 띠별 연애운 2026년 7월 12일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "17948296008229778",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-12T15:28:51.592839+09:00",
-      "topic_id": "brand_rep_girlgroup",
-      "title": "걸그룹 개인 브랜드평판 TOP30",
-      "style": "brand_chart",
-      "seed": 2138,
-      "ig_media_id": "18137824999576082",
-      "youtube_id": "0KWOYQlQGNY",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_c.mp3"
-    },
-    {
-      "posted_at": "2026-07-12T19:24:53.066538+09:00",
-      "topic_id": "community_weekly",
-      "title": "",
-      "style": "message",
-      "seed": 2142,
-      "ig_media_id": "18071090417416814",
-      "youtube_id": "qr2gwAFNuao",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-13T12:37:44.395794+09:00",
       "topic_id": "boygroup_5gen_tier1_10k",
       "title": "만원으로 5세대 보이그룹 1티어편",
@@ -2688,6 +2545,17 @@
       "seed": 3429,
       "ig_media_id": "17963494590251483",
       "youtube_id": "LDpiBzzNCbM",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-09T19:32:56.201358+09:00",
+      "topic_id": "girlgroup_4gen_tier3_10k",
+      "title": "만원으로 4세대 걸그룹 3티어편",
+      "style": "emblem",
+      "seed": 3462,
+      "ig_media_id": "18118068917468204",
+      "youtube_id": "SDFipLIbsIw",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
     }
