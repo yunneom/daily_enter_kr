@@ -2,17 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-13T12:37:44.395794+09:00",
-      "topic_id": "boygroup_5gen_tier1_10k",
-      "title": "만원으로 5세대 보이그룹 1티어편",
-      "style": "emblem",
-      "seed": 2146,
-      "ig_media_id": "18151433530500819",
-      "youtube_id": "18O17zY9aiA",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-13T14:42:13.235647+09:00",
       "topic_id": "fortune_saju_love_2026-07-13",
       "title": "오늘의 띠별 연애운 2026년 7월 13일",
@@ -2558,6 +2547,26 @@
       "youtube_id": "SDFipLIbsIw",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-10T13:08:29.748375+09:00",
+      "topic_id": "eng_pick3_2026-11-10",
+      "title": "딱 한 명 3지선다 2026-11-10",
+      "style": "eng_pick3",
+      "seed": null,
+      "ig_media_id": "18121245719074356",
+      "youtube_id": "jj_bvjD4GYg",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q": "운동회 계주 마지막 주자, 딱 한 명을 뽑는다면?",
+        "members": [
+          "방지민",
+          "사나",
+          "진현주"
+        ],
+        "style": "scene"
+      }
     }
   ]
 }
