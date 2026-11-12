@@ -2,28 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-14T19:43:46.304744+09:00",
-      "topic_id": "ballad_concert_10k",
-      "title": "만원으로 발라드 콘서트 가기",
-      "style": "emblem",
-      "seed": 2164,
-      "ig_media_id": "18088576466188544",
-      "youtube_id": "2L-qBbVsde8",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-15T11:57:32.503836+09:00",
-      "topic_id": "community_weekly",
-      "title": "",
-      "style": "message",
-      "seed": 2167,
-      "ig_media_id": "18113746841478993",
-      "youtube_id": "Ppsxg0Pkk8A",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-15T15:12:04.577151+09:00",
       "topic_id": "boygroup_4gen_tier2_10k",
       "title": "만원으로 4세대 보이그룹 2티어편",
@@ -2424,6 +2402,26 @@
       "youtube_id": "l9RsVg-qPb4",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-12T12:01:37.238886+09:00",
+      "topic_id": "eng_pick3_2026-11-12",
+      "title": "딱 한 명 3지선다 2026-11-12",
+      "style": "eng_pick3",
+      "seed": null,
+      "ig_media_id": "18347202397282328",
+      "youtube_id": "Dz6U7jnwfMM",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q": "캠핑 요리 담당, 딱 한 명을 정한다면?",
+        "members": [
+          "메간",
+          "원이",
+          "사쿠라"
+        ],
+        "style": "scene"
+      }
     }
   ]
 }
