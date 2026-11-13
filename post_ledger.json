@@ -2,39 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-16T12:19:09.937664+09:00",
-      "topic_id": "soccer_nationalteam_1000eok",
-      "title": "1000억으로 국대 영입하기",
-      "style": "soccer_squad",
-      "seed": 2179,
-      "ig_media_id": "17906566056532194",
-      "youtube_id": "2kR0h0RG7q4",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-16T13:56:19.801498+09:00",
-      "topic_id": "fortune_saju_2026-07-16",
-      "title": "오늘의 띠별 운세 2026년 7월 16일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "18118629940882443",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-16T15:13:29.747833+09:00",
-      "topic_id": "spot_diff_bear",
-      "title": "다른 곰은 하나!",
-      "style": "spot_difference",
-      "seed": 2182,
-      "ig_media_id": "17888331699418504",
-      "youtube_id": "nudPuWTQFJE",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-16T19:56:39.418378+09:00",
       "topic_id": "idealtype_10k",
       "title": "만원으로 이상형 만들기",
@@ -2422,6 +2389,17 @@
         ],
         "part": 2
       }
+    },
+    {
+      "posted_at": "2026-11-13T19:14:02.343826+09:00",
+      "topic_id": "girlgroup_3gen_legend_10k",
+      "title": "만원으로 3세대 걸그룹 레전드편",
+      "style": "emblem",
+      "seed": 3506,
+      "ig_media_id": "18110409394958633",
+      "youtube_id": "pWMQWXBqxhU",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
