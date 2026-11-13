@@ -2,28 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-15T15:12:04.577151+09:00",
-      "topic_id": "boygroup_4gen_tier2_10k",
-      "title": "만원으로 4세대 보이그룹 2티어편",
-      "style": "emblem",
-      "seed": 2171,
-      "ig_media_id": "18120870100764148",
-      "youtube_id": "B3X9a5bJGJs",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-15T19:47:18.531045+09:00",
-      "topic_id": "kpop_authority_insight",
-      "title": "",
-      "style": "message",
-      "seed": 2175,
-      "ig_media_id": "18021082241898290",
-      "youtube_id": "GFLagKHAuqg",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-16T12:19:09.937664+09:00",
       "topic_id": "soccer_nationalteam_1000eok",
       "title": "1000억으로 국대 영입하기",
@@ -2421,6 +2399,28 @@
           "사쿠라"
         ],
         "style": "scene"
+      }
+    },
+    {
+      "posted_at": "2026-11-13T12:01:44.513027+09:00",
+      "topic_id": "eng_emoji_quiz_2026-11-13",
+      "title": "이모지 퀴즈 Part 2",
+      "style": "eng_emoji_quiz",
+      "seed": null,
+      "ig_media_id": "18115206340887431",
+      "youtube_id": "sCc-6gVZSqI",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "groups": [
+          "여자친구",
+          "마마무",
+          "씨스타",
+          "(여자)아이들",
+          "트와이스",
+          "Kep1er"
+        ],
+        "part": 2
       }
     }
   ]
