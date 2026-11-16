@@ -2,50 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-18T19:17:32.026828+09:00",
-      "topic_id": "weekend_5man",
-      "title": "5만원으로 주말 보내기",
-      "style": "photo",
-      "seed": 2208,
-      "ig_media_id": "18571144159070340",
-      "youtube_id": "CWmRbKRdWyo",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-19T12:32:24.080445+09:00",
-      "topic_id": "travel_30man",
-      "title": "30만원으로 해외여행 가기",
-      "style": "photo",
-      "seed": 2212,
-      "ig_media_id": "18601537522053434",
-      "youtube_id": "AI_Nkl9y0vA",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-19T14:28:24.275935+09:00",
-      "topic_id": "fortune_saju_2026-07-19",
-      "title": "오늘의 띠별 운세 2026년 7월 19일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "17913325731429655",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-19T15:26:40.599863+09:00",
-      "topic_id": "trot_concert_10k",
-      "title": "만원으로 트로트 라이브 가기",
-      "style": "emblem",
-      "seed": 2215,
-      "ig_media_id": "17976569832071170",
-      "youtube_id": "DQP_y1kCFT8",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-20T12:45:19.762648+09:00",
       "topic_id": "powerpick_teacher",
       "title": "단 하나의 초능력만 고를 수 있다면?",
@@ -2266,6 +2222,17 @@
       "seed": 3528,
       "ig_media_id": "18118306181023997",
       "youtube_id": "FQSDTDGj1G8",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-16T19:19:08.348647+09:00",
+      "topic_id": "girlgroup_4gen_tier2_10k",
+      "title": "만원으로 4세대 걸그룹 2티어편",
+      "style": "emblem",
+      "seed": 3539,
+      "ig_media_id": "18084192611721516",
+      "youtube_id": "vzOVkx5IMXQ",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
     }
