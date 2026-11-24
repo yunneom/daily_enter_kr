@@ -2176,6 +2176,26 @@
       "youtube_id": "ZE4tMOfPzAc",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-24T14:50:38.619037+09:00",
+      "topic_id": "eng_pick3_2026-11-24",
+      "title": "딱 한 명 3지선다 2026-11-24",
+      "style": "eng_pick3",
+      "seed": null,
+      "ig_media_id": "18105390845626766",
+      "youtube_id": "4fenBYNQgto",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q": "조별과제 딱 한 명을 같은 조로 데려올 수 있다면?",
+        "members": [
+          "하늘",
+          "희진",
+          "지효"
+        ],
+        "style": "scene"
+      }
     }
   ]
 }
