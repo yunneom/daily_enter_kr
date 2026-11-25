@@ -2,78 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-27T23:59:18.096081+09:00",
-      "topic_id": "eng_unit_2026-07-27",
-      "title": "드림 유닛 빌더 2026-07-27",
-      "style": "eng_unit",
-      "seed": null,
-      "ig_media_id": "18116092738915284",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-28T12:16:01.202559+09:00",
-      "topic_id": "slot_girlgroup_5x3",
-      "title": "🎰 슬롯머신 걸그룹 조합",
-      "style": "slot_machine",
-      "seed": 2311,
-      "ig_media_id": "17988306668843027",
-      "youtube_id": "NVSNRqw9iuA",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-28T14:19:26.467564+09:00",
-      "topic_id": "fortune_saju_2026-07-28",
-      "title": "오늘의 띠별 운세 2026년 7월 28일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "18075482132339308",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-28T14:29:49.127017+09:00",
-      "topic_id": "eng_balance_2026-07-28",
-      "title": "밸런스게임 2026-07-28",
-      "style": "eng_balance",
-      "seed": null,
-      "ig_media_id": "18065547251723013",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null,
-      "meta": {
-        "q_idx": [
-          26,
-          37
-        ]
-      }
-    },
-    {
-      "posted_at": "2026-07-28T15:23:16.017789+09:00",
-      "topic_id": "weekend_5man",
-      "title": "5만원으로 주말 보내기",
-      "style": "photo",
-      "seed": 2314,
-      "ig_media_id": "17856601620696339",
-      "youtube_id": "ryXWKgTSX4s",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-28T20:15:19.135425+09:00",
-      "topic_id": "trot_concert_10k",
-      "title": "만원으로 트로트 라이브 가기",
-      "style": "emblem",
-      "seed": 2319,
-      "ig_media_id": "18121778144497934",
-      "youtube_id": "Z9dh2t1019E",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-29T12:20:34.727381+09:00",
       "topic_id": "girlgroup_4gen_tier1_10k",
       "title": "만원으로 4세대 걸그룹 1티어편",
@@ -2196,6 +2124,17 @@
         ],
         "style": "scene"
       }
+    },
+    {
+      "posted_at": "2026-11-25T20:51:33.670099+09:00",
+      "topic_id": "girlgroup_official_position_10k",
+      "title": "만원으로 공식 포지션 드림팀",
+      "style": "emblem",
+      "seed": 3639,
+      "ig_media_id": "18109907681289397",
+      "youtube_id": "IPSVgqMrK7U",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
