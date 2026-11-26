@@ -2,17 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-29T12:20:34.727381+09:00",
-      "topic_id": "girlgroup_4gen_tier1_10k",
-      "title": "만원으로 4세대 걸그룹 1티어편",
-      "style": "emblem",
-      "seed": 2322,
-      "ig_media_id": "18121357598507801",
-      "youtube_id": "j6xtwN-tb8o",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-29T14:37:12.904592+09:00",
       "topic_id": "eng_pause_2026-07-29",
       "title": "퍼즈 챌린지 2026-07-29",
@@ -2135,6 +2124,26 @@
       "youtube_id": "IPSVgqMrK7U",
       "threads_id": null,
       "bgm": "daily_enter_theme_a.mp3"
+    },
+    {
+      "posted_at": "2026-11-26T13:03:47.567022+09:00",
+      "topic_id": "eng_pick3_2026-11-26",
+      "title": "딱 한 명 3지선다 2026-11-26",
+      "style": "eng_pick3",
+      "seed": null,
+      "ig_media_id": "18127432025301857",
+      "youtube_id": "w9sgXGmlGGg",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "q": "이사하는 날, 딱 한 명에게 도움을 받을 수 있다면?",
+        "members": [
+          "최리",
+          "나나",
+          "정연"
+        ],
+        "style": "scene"
+      }
     }
   ]
 }
