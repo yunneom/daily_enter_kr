@@ -2,58 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-30T14:13:48.667616+09:00",
-      "topic_id": "fortune_saju_2026-07-30",
-      "title": "오늘의 띠별 운세 2026년 7월 30일",
-      "style": "fortune_carousel",
-      "seed": null,
-      "ig_media_id": "18136748698585902",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-30T14:23:35.952329+09:00",
-      "topic_id": "eng_chemi_w202631",
-      "title": "케미 듀오 투표 2026-W31",
-      "style": "eng_chemi",
-      "seed": null,
-      "ig_media_id": "18124830145703400",
-      "youtube_id": null,
-      "threads_id": null,
-      "bgm": null,
-      "meta": {
-        "duos": [
-          "1. 르세라핌 김채원·카즈하",
-          "2. 아이브 안유진·리즈",
-          "3. 트와이스 나연·정연",
-          "4. 우주소녀 연정·여름"
-        ]
-      }
-    },
-    {
-      "posted_at": "2026-07-30T15:23:02.695326+09:00",
-      "topic_id": "job_pick_10k",
-      "title": "만원으로 다닐 직장 구하기",
-      "style": "drawing",
-      "seed": 2336,
-      "ig_media_id": "18017922482871833",
-      "youtube_id": "r9--gMoeCQo",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-30T20:06:06.384148+09:00",
-      "topic_id": "lunch_15k",
-      "title": "만 5천원으로 점심 즐기기",
-      "style": "photo",
-      "seed": 2341,
-      "ig_media_id": "17886996018438172",
-      "youtube_id": "bRuoZZXtjpw",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-31T12:35:07.620823+09:00",
       "topic_id": "travel_30man",
       "title": "30만원으로 해외여행 가기",
@@ -2122,6 +2070,17 @@
         ],
         "part": 3
       }
+    },
+    {
+      "posted_at": "2026-11-27T20:33:36.344184+09:00",
+      "topic_id": "girlgroup_3gen_legend_10k",
+      "title": "만원으로 3세대 걸그룹 레전드편",
+      "style": "emblem",
+      "seed": 3661,
+      "ig_media_id": "18146514739524998",
+      "youtube_id": "KZigsHl2bA8",
+      "threads_id": null,
+      "bgm": "daily_enter_theme_a.mp3"
     }
   ]
 }
