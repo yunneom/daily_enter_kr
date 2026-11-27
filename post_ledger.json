@@ -2,50 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "posted_at": "2026-07-29T14:37:12.904592+09:00",
-      "topic_id": "eng_pause_2026-07-29",
-      "title": "퍼즈 챌린지 2026-07-29",
-      "style": "eng_pause",
-      "seed": null,
-      "ig_media_id": "18111318557512398",
-      "youtube_id": "Qqfv3_UiMDM",
-      "threads_id": null,
-      "bgm": null
-    },
-    {
-      "posted_at": "2026-07-29T15:27:26.264443+09:00",
-      "topic_id": "girlgroup_4gen_tier3_10k",
-      "title": "만원으로 4세대 걸그룹 3티어편",
-      "style": "emblem",
-      "seed": 2325,
-      "ig_media_id": "18332584804262440",
-      "youtube_id": "QEWBGXW7dk8",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-29T20:23:39.052815+09:00",
-      "topic_id": "powerpick_student",
-      "title": "단 하나의 초능력만 고를 수 있다면?",
-      "style": "powerpick",
-      "seed": 2330,
-      "ig_media_id": "17942364801266826",
-      "youtube_id": "1PB-7m4Q1co",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
-      "posted_at": "2026-07-30T11:52:57.384688+09:00",
-      "topic_id": "powerpick_neet",
-      "title": "단 하나의 초능력만 고를 수 있다면?",
-      "style": "powerpick",
-      "seed": 2332,
-      "ig_media_id": "17876759205685433",
-      "youtube_id": "7BElCPmdP-g",
-      "threads_id": null,
-      "bgm": "daily_enter_theme_a.mp3"
-    },
-    {
       "posted_at": "2026-07-30T14:13:48.667616+09:00",
       "topic_id": "fortune_saju_2026-07-30",
       "title": "오늘의 띠별 운세 2026년 7월 30일",
@@ -2143,6 +2099,28 @@
           "정연"
         ],
         "style": "scene"
+      }
+    },
+    {
+      "posted_at": "2026-11-27T13:01:09.109219+09:00",
+      "topic_id": "eng_emoji_quiz_2026-11-27",
+      "title": "이모지 퀴즈 Part 3",
+      "style": "eng_emoji_quiz",
+      "seed": null,
+      "ig_media_id": "18099625874672192",
+      "youtube_id": "j6BB-fbA898",
+      "threads_id": null,
+      "bgm": null,
+      "meta": {
+        "groups": [
+          "IVE",
+          "에스파",
+          "KISS OF LIFE",
+          "에이핑크",
+          "소녀시대",
+          "Hearts2Hearts"
+        ],
+        "part": 3
       }
     }
   ]
